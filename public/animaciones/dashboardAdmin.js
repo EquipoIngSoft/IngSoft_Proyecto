@@ -210,7 +210,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const btnLogout = document.getElementById('btn-logout');
         if (btnLogout) {
             btnLogout.addEventListener('click', () => {
-                window.location.href = 'logIn.html';
+                window.location.href = '/';
             });
         }
     }
