@@ -52,6 +52,9 @@
                 <div class="form-group">
                     <label for="password">Contraseña</label>
                     <input type="password" id="password" name="password" placeholder="Ingresa tu contraseña" required minlength="6">
+                    <div class="forgot-wrapper">
+                        <a href="#" class="forgot-link">¿Olvidaste tu contraseña?</a>
+                    </div>
                     <span class="error-msg" id="error-password"></span>
                 </div>
 

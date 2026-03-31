@@ -174,6 +174,25 @@ body {
     box-shadow: 0 0 0 3px rgba(224, 92, 42, 0.15);
 }
 
+/* ---- Olvidé mi contraseña ---- */
+.forgot-wrapper {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 6px;
+}
+
+.forgot-link {
+    color: #888;
+    text-decoration: none;
+    font-size: 12.5px;
+    font-weight: 500;
+    transition: color 0.2s;
+}
+
+.forgot-link:hover {
+    color: #e05c2a;
+}
+
 /* ---- Botón principal ---- */
 .login-btn {
     width: 100%;
