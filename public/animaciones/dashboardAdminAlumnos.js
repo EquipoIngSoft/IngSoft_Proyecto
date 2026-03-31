@@ -129,6 +129,65 @@ document.addEventListener('DOMContentLoaded', () => {
                 aplicarFiltros();
             });
         }
+
+        // ---- Lógica para Form Dropdowns (Independiente de Filtros) ----
+        const formDropdowns = document.querySelectorAll('.form-dropdown');
+        formDropdowns.forEach(dropdown => {
+            const trigger = dropdown.querySelector('.form-select-trigger');
+            const options = dropdown.querySelectorAll('.form-option');
+            const selectedText = dropdown.querySelector('.selected-text');
+            const hiddenInput = dropdown.querySelector('input[type="hidden"]');
+
+            if (!trigger || !selectedText) return;
+
+            // Abrir / Cerrar Dropdown
+            trigger.addEventListener('click', (e) => {
+                e.stopPropagation();
+                // Cerrar cualquier otro abierto
+                formDropdowns.forEach(d => {
+                    if (d !== dropdown) d.classList.remove('open');
+                });
+                dropdown.classList.toggle('open');
+            });
+
+            // Seleccionar opción
+            options.forEach(option => {
+                option.addEventListener('click', (e) => {
+                    e.stopPropagation();
+
+                    // Quitar clase selected a los demás
+                    options.forEach(opt => opt.classList.remove('selected'));
+                    option.classList.add('selected');
+
+                    // Actualizar texto y valor en el trigger
+                    const val = option.getAttribute('data-value');
+                    const text = option.textContent;
+
+                    selectedText.textContent = text;
+                    selectedText.setAttribute('data-value', val);
+
+                    if (hiddenInput) {
+                        hiddenInput.value = val;
+                    }
+
+                    // Cerrar el dropdown
+                    dropdown.classList.remove('open');
+
+                    // Limpiar error visual si es un campo de formulario
+                    if (val !== "") {
+                        dropdown.classList.remove('input-error');
+                        const errorMsg = document.querySelector(`#err-${hiddenInput.id}`);
+                        if (errorMsg) errorMsg.textContent = '';
+                    }
+                });
+            });
+        });
+
+        // Cerrar dropdown si se hace clic fuera
+        document.addEventListener('click', () => {
+            formDropdowns.forEach(dropdown => dropdown.classList.remove('open'));
+        });
+
     }
 
     // ---- Modal: Agregar Alumno ----
@@ -147,6 +206,26 @@ document.addEventListener('DOMContentLoaded', () => {
         if (modalOverlay) modalOverlay.classList.remove('open');
         document.body.style.overflow = '';
         if (formAgregar) formAgregar.reset();
+        // Limpiar form-dropdowns
+        document.querySelectorAll('.form-dropdown').forEach(dropdown => {
+            const options = dropdown.querySelectorAll('.form-option');
+            const selectedText = dropdown.querySelector('.selected-text');
+            const hiddenInput = dropdown.querySelector('input[type="hidden"]');
+            
+            dropdown.classList.remove('input-error', 'input-ok');
+            options.forEach(opt => opt.classList.remove('selected'));
+            
+            if (options.length > 0) {
+                // Selecciona una opción...
+                options[0].classList.add('selected');
+                if (selectedText) {
+                    selectedText.textContent = options[0].textContent;
+                    selectedText.setAttribute('data-value', options[0].getAttribute('data-value'));
+                }
+                if (hiddenInput) hiddenInput.value = options[0].getAttribute('data-value');
+            }
+        });
+
         // Limpiar estados de validación
         document.querySelectorAll('.form-group-modal input').forEach(inp => {
             inp.classList.remove('input-error', 'input-ok');
@@ -232,6 +311,20 @@ document.addEventListener('DOMContentLoaded', () => {
                 setError('al-correo', 'err-al-correo', 'Ingresa un correo válido.');
                 valido = false;
             } else { setOk('al-correo', 'err-al-correo'); }
+
+            // Género alumno
+            const alGenero = document.getElementById('al-genero');
+            if (!alGenero || alGenero.value === '') {
+                setError('dropdown-al-genero', 'err-al-genero', 'Selecciona un género.');
+                valido = false;
+            } else { setOk('dropdown-al-genero', 'err-al-genero'); }
+
+            // Dirección alumno
+            const alDireccion = document.getElementById('al-direccion');
+            if (!alDireccion || alDireccion.value.trim() === '') {
+                setError('al-direccion', 'err-al-direccion', 'La dirección es requerida.');
+                valido = false;
+            } else { setOk('al-direccion', 'err-al-direccion'); }
 
             // Contraseña alumno
             const alPass = document.getElementById('al-password');

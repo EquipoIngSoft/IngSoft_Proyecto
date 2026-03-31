@@ -357,6 +357,28 @@
                                     maxlength="10">
                                 <span class="error-msg-modal" id="err-al-telefono"></span>
                             </div>
+                            <div class="form-group-modal">
+                                <label for="al-genero">Género</label>
+                                <div class="form-dropdown" id="dropdown-al-genero" tabindex="0">
+                                    <div class="form-select-trigger" id="trigger-al-genero">
+                                        <span class="selected-text" data-value="">Selecciona una opción</span>
+                                        <i class="ri-arrow-down-s-line"></i>
+                                    </div>
+                                    <div class="form-options-container">
+                                        <div class="form-option" data-value="F">Femenino (F)</div>
+                                        <div class="form-option" data-value="M">Masculino (M)</div>
+                                        <div class="form-option" data-value="O">Otro (O)</div>
+                                    </div>
+                                    <input type="hidden" id="al-genero" name="al_genero" value="">
+                                </div>
+                                <span class="error-msg-modal" id="err-al-genero"></span>
+                            </div>
+                            <div class="form-group-modal modal-col-full">
+                                <label for="al-direccion">Dirección</label>
+                                <input type="text" id="al-direccion" name="al_direccion"
+                                    placeholder="Calle, número, colonia...">
+                                <span class="error-msg-modal" id="err-al-direccion"></span>
+                            </div>
                             <div class="form-group-modal modal-col-full">
                                 <label for="al-correo">Correo Electrónico</label>
                                 <input type="email" id="al-correo" name="al_correo" placeholder="correo@ejemplo.com"
