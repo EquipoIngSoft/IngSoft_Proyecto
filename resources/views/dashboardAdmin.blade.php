@@ -309,6 +309,128 @@
             </div><!-- /card -->
         </section>
 
+        <!-- ===================== MODAL: AGREGAR ALUMNO ===================== -->
+        <div class="modal-overlay" id="modal-agregar-alumno">
+            <div class="modal-box">
+
+                <!-- Cabecera del modal -->
+                <div class="modal-header">
+                    <div class="modal-title-group">
+                        <i class="ri-user-add-line modal-title-icon"></i>
+                        <h2 class="modal-title">Agregar Alumno</h2>
+                    </div>
+                    <button class="modal-close-btn" id="modal-close" title="Cerrar">
+                        <i class="ri-close-line"></i>
+                    </button>
+                </div>
+
+                <!-- Cuerpo del modal con scroll -->
+                <div class="modal-body">
+                    <form id="form-agregar-alumno" novalidate>
+
+                        <!-- ===== SECCIÓN: Datos del Alumno ===== -->
+                        <div class="modal-section-label">
+                            <i class="ri-graduation-cap-line"></i> Datos del Alumno
+                        </div>
+
+                        <div class="modal-grid">
+                            <div class="form-group-modal">
+                                <label for="al-nombre">Nombre</label>
+                                <input type="text" id="al-nombre" name="al_nombre" placeholder="Nombre(s)" required>
+                                <span class="error-msg-modal" id="err-al-nombre"></span>
+                            </div>
+                            <div class="form-group-modal">
+                                <label for="al-ap-paterno">Apellido Paterno</label>
+                                <input type="text" id="al-ap-paterno" name="al_ap_paterno" placeholder="Apellido paterno" required>
+                                <span class="error-msg-modal" id="err-al-ap-paterno"></span>
+                            </div>
+                            <div class="form-group-modal">
+                                <label for="al-ap-materno">Apellido Materno</label>
+                                <input type="text" id="al-ap-materno" name="al_ap_materno" placeholder="Apellido materno">
+                            </div>
+                            <div class="form-group-modal">
+                                <label for="al-telefono">Número de Teléfono</label>
+                                <input type="tel" id="al-telefono" name="al_telefono" placeholder="10 dígitos" maxlength="10">
+                                <span class="error-msg-modal" id="err-al-telefono"></span>
+                            </div>
+                            <div class="form-group-modal modal-col-full">
+                                <label for="al-correo">Correo Electrónico</label>
+                                <input type="email" id="al-correo" name="al_correo" placeholder="correo@ejemplo.com" required>
+                                <span class="error-msg-modal" id="err-al-correo"></span>
+                            </div>
+                            <div class="form-group-modal">
+                                <label for="al-password">Contraseña</label>
+                                <div class="input-password-wrapper">
+                                    <input type="password" id="al-password" name="al_password" placeholder="Mínimo 6 caracteres" required minlength="6">
+                                    <button type="button" class="toggle-password" data-target="al-password" title="Mostrar/Ocultar">
+                                        <i class="ri-eye-line"></i>
+                                    </button>
+                                </div>
+                                <span class="error-msg-modal" id="err-al-password"></span>
+                            </div>
+                            <div class="form-group-modal">
+                                <label for="al-password-confirm">Confirmar Contraseña</label>
+                                <div class="input-password-wrapper">
+                                    <input type="password" id="al-password-confirm" name="al_password_confirm" placeholder="Repite la contraseña" required>
+                                    <button type="button" class="toggle-password" data-target="al-password-confirm" title="Mostrar/Ocultar">
+                                        <i class="ri-eye-line"></i>
+                                    </button>
+                                </div>
+                                <span class="error-msg-modal" id="err-al-password-confirm"></span>
+                            </div>
+                        </div>
+
+                        <!-- ===== DIVISOR ===== -->
+                        <div class="modal-divider">
+                            <span>Datos del Tutor</span>
+                        </div>
+
+                        <!-- ===== SECCIÓN: Datos del Tutor ===== -->
+                        <div class="modal-section-label">
+                            <i class="ri-parent-line"></i> Información del Tutor
+                        </div>
+
+                        <div class="modal-grid">
+                            <div class="form-group-modal">
+                                <label for="tu-nombre">Nombre</label>
+                                <input type="text" id="tu-nombre" name="tu_nombre" placeholder="Nombre(s)">
+                                <span class="error-msg-modal" id="err-tu-nombre"></span>
+                            </div>
+                            <div class="form-group-modal">
+                                <label for="tu-ap-paterno">Apellido Paterno</label>
+                                <input type="text" id="tu-ap-paterno" name="tu_ap_paterno" placeholder="Apellido paterno">
+                                <span class="error-msg-modal" id="err-tu-ap-paterno"></span>
+                            </div>
+                            <div class="form-group-modal">
+                                <label for="tu-ap-materno">Apellido Materno</label>
+                                <input type="text" id="tu-ap-materno" name="tu_ap_materno" placeholder="Apellido materno">
+                            </div>
+                            <div class="form-group-modal">
+                                <label for="tu-telefono">Número de Teléfono</label>
+                                <input type="tel" id="tu-telefono" name="tu_telefono" placeholder="10 dígitos" maxlength="10">
+                                <span class="error-msg-modal" id="err-tu-telefono"></span>
+                            </div>
+                            <div class="form-group-modal modal-col-full">
+                                <label for="tu-correo">Correo Electrónico</label>
+                                <input type="email" id="tu-correo" name="tu_correo" placeholder="correo@ejemplo.com">
+                                <span class="error-msg-modal" id="err-tu-correo"></span>
+                            </div>
+                        </div>
+
+                        <!-- ===== PIE DEL FORMULARIO ===== -->
+                        <div class="modal-footer">
+                            <button type="button" class="btn-modal-cancel" id="btn-cancelar-modal">Cancelar</button>
+                            <button type="submit" class="btn-modal-submit">
+                                <i class="ri-save-line"></i> Guardar Alumno
+                            </button>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+
+
         <!-- ======================= OTRAS SECCIONES ======================= -->
         <section class="section-content" id="section-profesores" style="display: none;">
             <div class="section-header">
@@ -376,6 +498,7 @@
         </section>
 
     </main>
+
 
     <!-- JS -->
     <script src="{{ asset('animaciones/dashboardAdmin.js') }}"></script>
