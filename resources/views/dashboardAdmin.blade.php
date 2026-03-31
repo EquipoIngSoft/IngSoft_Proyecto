@@ -11,8 +11,9 @@
         rel="stylesheet">
     <!-- Iconos (Remix Icons) -->
     <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet">
-    <!-- Hoja de estilos -->
+    <!-- Hojas de estilos -->
     <link rel="stylesheet" href="{{ asset('css/dashboardAdmin.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/dashboardAdminAlumnos.css') }}">
 </head>
 
 <body>
@@ -89,6 +90,10 @@
 
         <!-- Topbar -->
         <header class="topbar">
+            <!-- Botón hamburguesa -->
+            <button class="menu-toggle" id="menu-toggle" title="Ocultar/Mostrar menú">
+                <i class="ri-menu-line"></i>
+            </button>
             <div class="topbar-right">
                 <div class="profile-menu-wrapper" id="profile-menu">
                     <!-- Área clickeable (Nombre + Círculo) -->
@@ -96,7 +101,7 @@
                         <span class="admin-name">Administrador</span>
                         <div class="avatar">A</div>
                     </div>
-                    
+
                     <!-- Menú desplegable flotante -->
                     <div class="profile-dropdown">
                         <div class="profile-header">
@@ -105,7 +110,8 @@
                         </div>
                         <ul class="profile-options">
                             <li id="btn-config-perfil"><i class="ri-settings-3-line"></i> Configuración</li>
-                            <li id="btn-logout" class="text-danger"><i class="ri-logout-box-r-line"></i> Cerrar sesión</li>
+                            <li id="btn-logout" class="text-danger"><i class="ri-logout-box-r-line"></i> Cerrar sesión
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -294,7 +300,6 @@
 
                 <!-- Paginación -->
                 <div class="pagination">
-                    <span class="pagination-info">Mostrando 1–6 de 6 alumnos</span>
                     <div class="pagination-btns">
                         <button class="pag-btn" disabled><i class="ri-arrow-left-s-line"></i></button>
                         <button class="pag-btn active">1</button>
@@ -305,13 +310,148 @@
             </div><!-- /card -->
         </section>
 
+        <!-- ===================== MODAL: AGREGAR ALUMNO ===================== -->
+        <div class="modal-overlay" id="modal-agregar-alumno">
+            <div class="modal-box">
+
+                <!-- Cabecera del modal -->
+                <div class="modal-header">
+                    <div class="modal-title-group">
+                        <i class="ri-user-add-line modal-title-icon"></i>
+                        <h2 class="modal-title">Agregar Alumno</h2>
+                    </div>
+                    <button class="modal-close-btn" id="modal-close" title="Cerrar">
+                        <i class="ri-close-line"></i>
+                    </button>
+                </div>
+
+                <!-- Cuerpo del modal con scroll -->
+                <div class="modal-body">
+                    <form id="form-agregar-alumno" novalidate>
+
+                        <!-- ===== SECCIÓN: Datos del Alumno ===== -->
+                        <div class="modal-section-label">
+                            <i class="ri-graduation-cap-line"></i> Datos del Alumno
+                        </div>
+
+                        <div class="modal-grid">
+                            <div class="form-group-modal">
+                                <label for="al-nombre">Nombre</label>
+                                <input type="text" id="al-nombre" name="al_nombre" placeholder="Nombre(s)" required>
+                                <span class="error-msg-modal" id="err-al-nombre"></span>
+                            </div>
+                            <div class="form-group-modal">
+                                <label for="al-ap-paterno">Apellido Paterno</label>
+                                <input type="text" id="al-ap-paterno" name="al_ap_paterno"
+                                    placeholder="Apellido paterno" required>
+                                <span class="error-msg-modal" id="err-al-ap-paterno"></span>
+                            </div>
+                            <div class="form-group-modal">
+                                <label for="al-ap-materno">Apellido Materno</label>
+                                <input type="text" id="al-ap-materno" name="al_ap_materno"
+                                    placeholder="Apellido materno">
+                            </div>
+                            <div class="form-group-modal">
+                                <label for="al-telefono">Número de Teléfono</label>
+                                <input type="tel" id="al-telefono" name="al_telefono" placeholder="10 dígitos"
+                                    maxlength="10">
+                                <span class="error-msg-modal" id="err-al-telefono"></span>
+                            </div>
+                            <div class="form-group-modal modal-col-full">
+                                <label for="al-correo">Correo Electrónico</label>
+                                <input type="email" id="al-correo" name="al_correo" placeholder="correo@ejemplo.com"
+                                    required>
+                                <span class="error-msg-modal" id="err-al-correo"></span>
+                            </div>
+                            <div class="form-group-modal">
+                                <label for="al-password">Contraseña</label>
+                                <div class="input-password-wrapper">
+                                    <input type="password" id="al-password" name="al_password"
+                                        placeholder="Mínimo 6 caracteres" required minlength="6">
+                                    <button type="button" class="toggle-password" data-target="al-password"
+                                        title="Mostrar/Ocultar">
+                                        <i class="ri-eye-line"></i>
+                                    </button>
+                                </div>
+                                <span class="error-msg-modal" id="err-al-password"></span>
+                            </div>
+                            <div class="form-group-modal">
+                                <label for="al-password-confirm">Confirmar Contraseña</label>
+                                <div class="input-password-wrapper">
+                                    <input type="password" id="al-password-confirm" name="al_password_confirm"
+                                        placeholder="Repite la contraseña" required>
+                                    <button type="button" class="toggle-password" data-target="al-password-confirm"
+                                        title="Mostrar/Ocultar">
+                                        <i class="ri-eye-line"></i>
+                                    </button>
+                                </div>
+                                <span class="error-msg-modal" id="err-al-password-confirm"></span>
+                            </div>
+                        </div>
+
+                        <!-- ===== DIVISOR ===== -->
+                        <div class="modal-divider">
+                            <span>Datos del Tutor</span>
+                        </div>
+
+                        <!-- ===== SECCIÓN: Datos del Tutor ===== -->
+                        <div class="modal-section-label">
+                            <i class="ri-parent-line"></i> Información del Tutor
+                        </div>
+
+                        <div class="modal-grid">
+                            <div class="form-group-modal">
+                                <label for="tu-nombre">Nombre</label>
+                                <input type="text" id="tu-nombre" name="tu_nombre" placeholder="Nombre(s)">
+                                <span class="error-msg-modal" id="err-tu-nombre"></span>
+                            </div>
+                            <div class="form-group-modal">
+                                <label for="tu-ap-paterno">Apellido Paterno</label>
+                                <input type="text" id="tu-ap-paterno" name="tu_ap_paterno"
+                                    placeholder="Apellido paterno">
+                                <span class="error-msg-modal" id="err-tu-ap-paterno"></span>
+                            </div>
+                            <div class="form-group-modal">
+                                <label for="tu-ap-materno">Apellido Materno</label>
+                                <input type="text" id="tu-ap-materno" name="tu_ap_materno"
+                                    placeholder="Apellido materno">
+                            </div>
+                            <div class="form-group-modal">
+                                <label for="tu-telefono">Número de Teléfono</label>
+                                <input type="tel" id="tu-telefono" name="tu_telefono" placeholder="10 dígitos"
+                                    maxlength="10">
+                                <span class="error-msg-modal" id="err-tu-telefono"></span>
+                            </div>
+                            <div class="form-group-modal modal-col-full">
+                                <label for="tu-correo">Correo Electrónico</label>
+                                <input type="email" id="tu-correo" name="tu_correo" placeholder="correo@ejemplo.com">
+                                <span class="error-msg-modal" id="err-tu-correo"></span>
+                            </div>
+                        </div>
+
+                        <!-- ===== PIE DEL FORMULARIO ===== -->
+                        <div class="modal-footer">
+                            <button type="button" class="btn-modal-cancel" id="btn-cancelar-modal">Cancelar</button>
+                            <button type="submit" class="btn-modal-submit">
+                                <i class="ri-save-line"></i> Guardar Alumno
+                            </button>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+
+
         <!-- ======================= OTRAS SECCIONES ======================= -->
         <section class="section-content" id="section-profesores" style="display: none;">
             <div class="section-header">
                 <h1 class="section-title">Gestión de Profesores</h1>
-                <button class="btn-primary" style="opacity: 0.5; pointer-events: none;"><i class="ri-add-line"></i> Agregar Profesor</button>
+                <button class="btn-primary" style="opacity: 0.5; pointer-events: none;"><i class="ri-add-line"></i>
+                    Agregar Profesor</button>
             </div>
-            <div class="card" style="min-height: 480px; display: flex; align-items: center; justify-content: center; color: var(--texto-suave);">
+            <div class="card"
+                style="min-height: 480px; display: flex; align-items: center; justify-content: center; color: var(--texto-suave);">
                 Página en construcción
             </div>
         </section>
@@ -320,7 +460,8 @@
             <div class="section-header">
                 <h1 class="section-title">Gestión de Grupos</h1>
             </div>
-            <div class="card" style="min-height: 480px; display: flex; align-items: center; justify-content: center; color: var(--texto-suave);">
+            <div class="card"
+                style="min-height: 480px; display: flex; align-items: center; justify-content: center; color: var(--texto-suave);">
                 Página en construcción
             </div>
         </section>
@@ -329,7 +470,8 @@
             <div class="section-header">
                 <h1 class="section-title">Extraescolares</h1>
             </div>
-            <div class="card" style="min-height: 480px; display: flex; align-items: center; justify-content: center; color: var(--texto-suave);">
+            <div class="card"
+                style="min-height: 480px; display: flex; align-items: center; justify-content: center; color: var(--texto-suave);">
                 Página en construcción
             </div>
         </section>
@@ -338,7 +480,8 @@
             <div class="section-header">
                 <h1 class="section-title">Status</h1>
             </div>
-            <div class="card" style="min-height: 480px; display: flex; align-items: center; justify-content: center; color: var(--texto-suave);">
+            <div class="card"
+                style="min-height: 480px; display: flex; align-items: center; justify-content: center; color: var(--texto-suave);">
                 Página en construcción
             </div>
         </section>
@@ -347,7 +490,8 @@
             <div class="section-header">
                 <h1 class="section-title">Pagos</h1>
             </div>
-            <div class="card" style="min-height: 480px; display: flex; align-items: center; justify-content: center; color: var(--texto-suave);">
+            <div class="card"
+                style="min-height: 480px; display: flex; align-items: center; justify-content: center; color: var(--texto-suave);">
                 Página en construcción
             </div>
         </section>
@@ -356,7 +500,8 @@
             <div class="section-header">
                 <h1 class="section-title">Niveles</h1>
             </div>
-            <div class="card" style="min-height: 480px; display: flex; align-items: center; justify-content: center; color: var(--texto-suave);">
+            <div class="card"
+                style="min-height: 480px; display: flex; align-items: center; justify-content: center; color: var(--texto-suave);">
                 Página en construcción
             </div>
         </section>
@@ -366,15 +511,19 @@
             <div class="section-header">
                 <h1 class="section-title">Configuración</h1>
             </div>
-            <div class="card" style="min-height: 480px; display: flex; align-items: center; justify-content: center; color: var(--texto-suave);">
+            <div class="card"
+                style="min-height: 480px; display: flex; align-items: center; justify-content: center; color: var(--texto-suave);">
                 Página en construcción (Ajustes del sistema)
             </div>
         </section>
 
     </main>
 
-    <!-- JS -->
+
+    <!-- JS General -->
     <script src="{{ asset('animaciones/dashboardAdmin.js') }}"></script>
+    <!-- JS Sección Alumnos -->
+    <script src="{{ asset('animaciones/dashboardAdminAlumnos.js') }}"></script>
 
 </body>
 
