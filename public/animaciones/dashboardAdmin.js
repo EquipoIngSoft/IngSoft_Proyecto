@@ -5,13 +5,23 @@
 
 document.addEventListener('DOMContentLoaded', () => {
 
-    // ---- Toggle del sidebar en móvil ----
+    // ---- Toggle del sidebar (Móvil y Escritorio) ----
     const menuToggle = document.getElementById('menu-toggle');
     const sidebar = document.getElementById('sidebar');
+    const mainContent = document.querySelector('.main-content');
 
     if (menuToggle && sidebar) {
         menuToggle.addEventListener('click', () => {
-            sidebar.classList.toggle('open');
+            if (window.innerWidth <= 768) {
+                // Modo móvil: Abrir/Cerrar drawer
+                sidebar.classList.toggle('open');
+            } else {
+                // Modo escritorio: Colapsar/Expandir con ajuste de contenido
+                sidebar.classList.toggle('collapsed');
+                if (mainContent) {
+                    mainContent.classList.toggle('sidebar-hidden');
+                }
+            }
         });
 
         // Cerrar sidebar al hacer clic fuera en móvil

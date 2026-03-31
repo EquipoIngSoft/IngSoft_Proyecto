@@ -89,6 +89,10 @@
 
         <!-- Topbar -->
         <header class="topbar">
+            <!-- Botón hamburguesa -->
+            <button class="menu-toggle" id="menu-toggle" title="Ocultar/Mostrar menú">
+                <i class="ri-menu-line"></i>
+            </button>
             <div class="topbar-right">
                 <div class="profile-menu-wrapper" id="profile-menu">
                     <!-- Área clickeable (Nombre + Círculo) -->
