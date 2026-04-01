@@ -375,6 +375,36 @@ body {
     transform: scale(0.98);
 }
 
+/* Botón secundario anaranjado */
+.btn-secondary {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 19px; /* un pixel menos por el borde paramantener tamaño */
+    background-color: transparent;
+    color: var(--naranja);
+    border: 1px solid var(--naranja);
+    border-radius: 10px;
+    font-size: 14px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s, box-shadow 0.2s, color 0.2s, transform 0.1s;
+}
+
+.btn-secondary i {
+    font-size: 16px;
+}
+
+.btn-secondary:hover {
+    background-color: var(--naranja-light);
+    box-shadow: 0 4px 14px rgba(224, 92, 42, 0.15);
+}
+
+.btn-secondary:active {
+    transform: scale(0.98);
+}
+
 /* =============================================
    TARJETA / CARD
    ============================================= */
