@@ -14,6 +14,8 @@
     <!-- Hojas de estilos -->
     <link rel="stylesheet" href="{{ asset('css/dashboardAdmin.css') }}">
     <link rel="stylesheet" href="{{ asset('css/dashboardAdminAlumnos.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/dashboardAdminProfesores.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/dashboardAdminGrupos.css') }}">
 </head>
 
 <body>
@@ -357,6 +359,28 @@
                                     maxlength="10">
                                 <span class="error-msg-modal" id="err-al-telefono"></span>
                             </div>
+                            <div class="form-group-modal">
+                                <label for="al-genero">Género</label>
+                                <div class="form-dropdown" id="dropdown-al-genero" tabindex="0">
+                                    <div class="form-select-trigger" id="trigger-al-genero">
+                                        <span class="selected-text" data-value="">Selecciona una opción</span>
+                                        <i class="ri-arrow-down-s-line"></i>
+                                    </div>
+                                    <div class="form-options-container">
+                                        <div class="form-option" data-value="F">Femenino (F)</div>
+                                        <div class="form-option" data-value="M">Masculino (M)</div>
+                                        <div class="form-option" data-value="O">Otro (O)</div>
+                                    </div>
+                                    <input type="hidden" id="al-genero" name="al_genero" value="">
+                                </div>
+                                <span class="error-msg-modal" id="err-al-genero"></span>
+                            </div>
+                            <div class="form-group-modal modal-col-full">
+                                <label for="al-direccion">Dirección</label>
+                                <input type="text" id="al-direccion" name="al_direccion"
+                                    placeholder="Calle, número, colonia...">
+                                <span class="error-msg-modal" id="err-al-direccion"></span>
+                            </div>
                             <div class="form-group-modal modal-col-full">
                                 <label for="al-correo">Correo Electrónico</label>
                                 <input type="email" id="al-correo" name="al_correo" placeholder="correo@ejemplo.com"
@@ -443,28 +467,620 @@
         </div>
 
 
-        <!-- ======================= OTRAS SECCIONES ======================= -->
+        <!-- ======================= SECCIÓN PROFESORES ======================= -->
         <section class="section-content" id="section-profesores" style="display: none;">
+
+            <!-- Cabecera de sección -->
             <div class="section-header">
-                <h1 class="section-title">Gestión de Profesores</h1>
-                <button class="btn-primary" style="opacity: 0.5; pointer-events: none;"><i class="ri-add-line"></i>
-                    Agregar Profesor</button>
+                <h1 class="section-title">Profesores</h1>
+                <button class="btn-primary" id="btn-agregar-profesor">
+                    <i class="ri-add-line"></i> Agregar Profesor
+                </button>
             </div>
-            <div class="card"
-                style="min-height: 480px; display: flex; align-items: center; justify-content: center; color: var(--texto-suave);">
-                Página en construcción
+
+            <!-- Buscador -->
+            <div class="search-bar" style="margin-bottom: 24px;">
+                <i class="ri-search-line search-icon"></i>
+                <input type="text" id="buscador-profesores" placeholder="Buscar profesor por nombre, especialidad o email..." autocomplete="off">
             </div>
+
+            <!-- Grid de tarjetas -->
+            <div class="profesores-grid" id="grid-profesores">
+
+                <div class="profesor-card" data-nombre="Maestro González" data-email="gonzalez@egau.edu">
+                    <div class="profesor-card-body">
+                        <h3 class="profesor-nombre">Maestro González</h3>
+                        <div class="profesor-info">
+                            <span><i class="ri-mail-line"></i> gonzalez@egau.edu</span>
+                            <span><i class="ri-phone-line"></i> 555-0101</span>
+                        </div>
+                    </div>
+                    <div class="profesor-card-footer">
+                        <button class="btn-profesor-editar"><i class="ri-edit-line"></i> Editar</button>
+                        <button class="btn-profesor-eliminar"><i class="ri-delete-bin-line"></i></button>
+                    </div>
+                </div>
+
+                <div class="profesor-card" data-nombre="Maestra Ramírez" data-email="ramirez@egau.edu">
+                    <div class="profesor-card-body">
+                        <h3 class="profesor-nombre">Maestra Ramírez</h3>
+                        <div class="profesor-info">
+                            <span><i class="ri-mail-line"></i> ramirez@egau.edu</span>
+                            <span><i class="ri-phone-line"></i> 555-0102</span>
+                        </div>
+                    </div>
+                    <div class="profesor-card-footer">
+                        <button class="btn-profesor-editar"><i class="ri-edit-line"></i> Editar</button>
+                        <button class="btn-profesor-eliminar"><i class="ri-delete-bin-line"></i></button>
+                    </div>
+                </div>
+
+                <div class="profesor-card" data-nombre="Maestro López" data-email="lopez@egau.edu">
+                    <div class="profesor-card-body">
+                        <h3 class="profesor-nombre">Maestro López</h3>
+                        <div class="profesor-info">
+                            <span><i class="ri-mail-line"></i> lopez@egau.edu</span>
+                            <span><i class="ri-phone-line"></i> 555-0103</span>
+                        </div>
+                    </div>
+                    <div class="profesor-card-footer">
+                        <button class="btn-profesor-editar"><i class="ri-edit-line"></i> Editar</button>
+                        <button class="btn-profesor-eliminar"><i class="ri-delete-bin-line"></i></button>
+                    </div>
+                </div>
+
+            </div>
+            <!-- Mensaje sin resultados -->
+            <p class="profesores-empty" id="profesores-empty" style="display:none;">No se encontraron profesores.</p>
+
         </section>
 
+        <!-- ======================= MODAL: AGREGAR PROFESOR ======================= -->
+        <div class="modal-overlay" id="modal-agregar-profesor">
+            <div class="modal-box">
+
+                <!-- Header -->
+                <div class="modal-header">
+                    <div class="modal-title-group">
+                        <span class="modal-title-icon"><i class="ri-user-star-line"></i></span>
+                        <h2 class="modal-title">Agregar Profesor</h2>
+                    </div>
+                    <button type="button" class="modal-close-btn" id="modal-close-profesor" title="Cerrar">
+                        <i class="ri-close-line"></i>
+                    </button>
+                </div>
+
+                <!-- Cuerpo con scroll -->
+                <div class="modal-body">
+                    <form id="form-agregar-profesor" novalidate>
+                        @csrf
+                        <input type="hidden" name="rol" value="profesor">
+
+                        <!-- ===== DATOS PERSONALES ===== -->
+                        <div class="modal-section-label">
+                            <i class="ri-user-line"></i> Información del Profesor
+                        </div>
+
+                        <div class="modal-grid">
+                            <div class="form-group-modal">
+                                <label for="pr-nombre">Nombre <span style="color:var(--naranja)">*</span></label>
+                                <input type="text" id="pr-nombre" name="pr_nombre" placeholder="Nombre(s)" required>
+                                <span class="error-msg-modal" id="err-pr-nombre"></span>
+                            </div>
+                            <div class="form-group-modal">
+                                <label for="pr-ap-paterno">Apellido Paterno <span style="color:var(--naranja)">*</span></label>
+                                <input type="text" id="pr-ap-paterno" name="pr_ap_paterno" placeholder="Apellido paterno" required>
+                                <span class="error-msg-modal" id="err-pr-ap-paterno"></span>
+                            </div>
+                            <div class="form-group-modal">
+                                <label for="pr-ap-materno">Apellido Materno</label>
+                                <input type="text" id="pr-ap-materno" name="pr_ap_materno" placeholder="Apellido materno">
+                            </div>
+                            <div class="form-group-modal">
+                                <label for="pr-telefono">Número de Teléfono</label>
+                                <input type="tel" id="pr-telefono" name="pr_telefono" placeholder="10 dígitos" maxlength="10">
+                                <span class="error-msg-modal" id="err-pr-telefono"></span>
+                            </div>
+                            <div class="form-group-modal">
+                                <label for="pr-genero">Género</label>
+                                <div class="form-dropdown" id="dropdown-pr-genero" tabindex="0">
+                                    <div class="form-select-trigger" id="trigger-pr-genero">
+                                        <span class="selected-text" data-value="">Selecciona una opción</span>
+                                        <i class="ri-arrow-down-s-line"></i>
+                                    </div>
+                                    <div class="form-options-container">
+                                        <div class="form-option" data-value="F">Femenino (F)</div>
+                                        <div class="form-option" data-value="M">Masculino (M)</div>
+                                        <div class="form-option" data-value="O">Otro (O)</div>
+                                    </div>
+                                    <input type="hidden" id="pr-genero" name="pr_genero" value="">
+                                </div>
+                                <span class="error-msg-modal" id="err-pr-genero"></span>
+                            </div>
+                            <div class="form-group-modal modal-col-full">
+                                <label for="pr-direccion">Dirección</label>
+                                <input type="text" id="pr-direccion" name="pr_direccion" placeholder="Calle, número, colonia...">
+                                <span class="error-msg-modal" id="err-pr-direccion"></span>
+                            </div>
+                            <div class="form-group-modal modal-col-full">
+                                <label for="pr-correo">Correo Electrónico <span style="color:var(--naranja)">*</span></label>
+                                <input type="email" id="pr-correo" name="pr_correo" placeholder="correo@ejemplo.com" required>
+                                <span class="error-msg-modal" id="err-pr-correo"></span>
+                            </div>
+                            <div class="form-group-modal">
+                                <label for="pr-password">Contraseña <span style="color:var(--naranja)">*</span></label>
+                                <div class="input-password-wrapper">
+                                    <input type="password" id="pr-password" name="pr_password" placeholder="Mínimo 6 caracteres" required minlength="6">
+                                    <button type="button" class="toggle-password" data-target="pr-password" title="Mostrar/Ocultar">
+                                        <i class="ri-eye-line"></i>
+                                    </button>
+                                </div>
+                                <span class="error-msg-modal" id="err-pr-password"></span>
+                            </div>
+                            <div class="form-group-modal">
+                                <label for="pr-password-confirm">Confirmar Contraseña <span style="color:var(--naranja)">*</span></label>
+                                <div class="input-password-wrapper">
+                                    <input type="password" id="pr-password-confirm" name="pr_password_confirm" placeholder="Repite la contraseña" required>
+                                    <button type="button" class="toggle-password" data-target="pr-password-confirm" title="Mostrar/Ocultar">
+                                        <i class="ri-eye-line"></i>
+                                    </button>
+                                </div>
+                                <span class="error-msg-modal" id="err-pr-password-confirm"></span>
+                            </div>
+                        </div>
+
+                        <!-- ===== PIE DEL FORMULARIO ===== -->
+                        <div class="modal-footer">
+                            <button type="button" class="btn-modal-cancel" id="btn-cancelar-modal-profesor">Cancelar</button>
+                            <button type="submit" class="btn-modal-submit">
+                                <i class="ri-save-line"></i> Guardar Profesor
+                            </button>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- ======================= SECCIÓN GRUPOS ======================= -->
         <section class="section-content" id="section-grupos" style="display: none;">
+
+            <!-- Cabecera de sección -->
             <div class="section-header">
-                <h1 class="section-title">Gestión de Grupos</h1>
+                <h1 class="section-title">Grupos y Cursos</h1>
+                <div style="display: flex; gap: 12px;">
+                    <button class="btn-secondary" id="btn-agregar-curso">
+                        <i class="ri-book-open-line"></i> Crear Curso
+                    </button>
+                    <button class="btn-primary" id="btn-agregar-grupo">
+                        <i class="ri-add-line"></i> Crear Grupo
+                    </button>
+                </div>
             </div>
-            <div class="card"
-                style="min-height: 480px; display: flex; align-items: center; justify-content: center; color: var(--texto-suave);">
-                Página en construcción
+
+            <!-- Buscador -->
+            <div class="search-bar" style="margin-bottom: 24px;">
+                <i class="ri-search-line search-icon"></i>
+                <input type="text" id="buscador-grupos" placeholder="Buscar grupo por nombre, nivel o profesor..." autocomplete="off">
             </div>
+
+            <!-- Grid de tarjetas de grupos -->
+            <div class="grupos-grid" id="grid-grupos">
+
+                <!-- Tarjeta 1 -->
+                <div class="grupo-card" data-nombre="Grupo A" data-nivel="principiantes" data-profesor="Maestro González">
+                    <div class="grupo-card-header">
+                        <h3 class="grupo-nombre">Grupo A</h3>
+                        <span class="badge badge-principiantes">Principiantes</span>
+                    </div>
+                    <div class="grupo-card-body">
+                        <div class="grupo-info-line">
+                            <i class="ri-user-star-line"></i> Maestro González
+                        </div>
+                        <div class="grupo-info-line">
+                            <i class="ri-group-line"></i> 15 estudiantes
+                        </div>
+                        <div class="grupo-info-line">
+                            <i class="ri-time-line"></i> Lunes y Miércoles 14:00-15:30
+                        </div>
+                    </div>
+                    <div class="grupo-card-footer">
+                        <button class="btn-grupo-editar"><i class="ri-edit-line"></i> Editar</button>
+                        <button class="btn-grupo-eliminar"><i class="ri-delete-bin-line"></i></button>
+                    </div>
+                </div>
+
+                <!-- Tarjeta 2 -->
+                <div class="grupo-card" data-nombre="Grupo B" data-nivel="intermedios" data-profesor="Maestra Ramírez">
+                    <div class="grupo-card-header">
+                        <h3 class="grupo-nombre">Grupo B</h3>
+                        <span class="badge badge-intermedios">Intermedios</span>
+                    </div>
+                    <div class="grupo-card-body">
+                        <div class="grupo-info-line">
+                            <i class="ri-user-star-line"></i> Maestra Ramírez
+                        </div>
+                        <div class="grupo-info-line">
+                            <i class="ri-group-line"></i> 12 estudiantes
+                        </div>
+                        <div class="grupo-info-line">
+                            <i class="ri-time-line"></i> Martes y Jueves 16:00-17:30
+                        </div>
+                    </div>
+                    <div class="grupo-card-footer">
+                        <button class="btn-grupo-editar"><i class="ri-edit-line"></i> Editar</button>
+                        <button class="btn-grupo-eliminar"><i class="ri-delete-bin-line"></i></button>
+                    </div>
+                </div>
+
+                <!-- Tarjeta 3 -->
+                <div class="grupo-card" data-nombre="Grupo C" data-nivel="avanzados" data-profesor="Maestro López">
+                    <div class="grupo-card-header">
+                        <h3 class="grupo-nombre">Grupo C</h3>
+                        <span class="badge badge-avanzados">Avanzados</span>
+                    </div>
+                    <div class="grupo-card-body">
+                        <div class="grupo-info-line">
+                            <i class="ri-user-star-line"></i> Maestro López
+                        </div>
+                        <div class="grupo-info-line">
+                            <i class="ri-group-line"></i> 8 estudiantes
+                        </div>
+                        <div class="grupo-info-line">
+                            <i class="ri-time-line"></i> Viernes 17:00-19:00
+                        </div>
+                    </div>
+                    <div class="grupo-card-footer">
+                        <button class="btn-grupo-editar"><i class="ri-edit-line"></i> Editar</button>
+                        <button class="btn-grupo-eliminar"><i class="ri-delete-bin-line"></i></button>
+                    </div>
+                </div>
+
+            </div>
+            <!-- Mensaje sin resultados -->
+            <p class="grupos-empty" id="grupos-empty" style="display:none;">No se encontraron grupos.</p>
+
+            <!-- ======================= TABLA DEMOSTRATIVA DE CURSOS ======================= -->
+            <div style="margin-top: 40px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; gap: 24px;">
+                    <h2 style="font-family: 'Inter', sans-serif; font-size: 18px; color: var(--texto); margin: 0; white-space: nowrap;">Catálogo de Cursos</h2>
+                    <div class="search-bar" style="flex-grow: 1; max-width: 600px; margin: 0;">
+                        <i class="ri-search-line search-icon"></i>
+                        <input type="text" id="buscador-tabla-cursos" placeholder="Buscar por clave, nombre o sede..." autocomplete="off">
+                    </div>
+                </div>
+                
+                <div style="overflow-x: auto; background-color: var(--blanco); border-radius: 12px; border: 1px solid var(--borde); box-shadow: 0 4px 12px rgba(0,0,0,0.02);">
+                    <table id="tabla-cursos" style="width: 100%; border-collapse: collapse; text-align: left;">
+                        <thead style="background-color: #fafafa; border-bottom: 1px solid var(--borde);">
+                            <tr>
+                                <th style="padding: 16px; font-weight: 600; font-size: 13px; color: var(--texto-suave);">ID</th>
+                                <th style="padding: 16px; font-weight: 600; font-size: 13px; color: var(--texto-suave);">Nombre del Curso</th>
+                                <th style="padding: 16px; font-weight: 600; font-size: 13px; color: var(--texto-suave);">Nivel</th>
+                                <th style="padding: 16px; font-weight: 600; font-size: 13px; color: var(--texto-suave);">Duración</th>
+                                <th style="padding: 16px; font-weight: 600; font-size: 13px; color: var(--texto-suave);">Costo Base</th>
+                                <th style="padding: 16px; font-weight: 600; font-size: 13px; color: var(--texto-suave);">Sede</th>
+                                <th style="padding: 16px; font-weight: 600; font-size: 13px; color: var(--texto-suave);">Estatus</th>
+                                <th style="padding: 16px; font-weight: 600; font-size: 13px; color: var(--texto-suave); text-align: center;">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr style="border-bottom: 1px solid var(--borde); transition: background-color 0.2s;">
+                                <td style="padding: 16px; font-size: 14px; color: var(--texto);">1</td>
+                                <td style="padding: 16px; font-size: 14px; color: var(--texto); font-weight: 500;">Ajedrez Principiantes</td>
+                                <td style="padding: 16px;"><span class="badge badge-principiantes">Principiante</span></td>
+                                <td style="padding: 16px; font-size: 14px; color: var(--texto);">12 Semanas (24 hrs)</td>
+                                <td style="padding: 16px; font-size: 14px; color: var(--texto);">$1,200.00</td>
+                                <td style="padding: 16px; font-size: 14px; color: var(--texto);">Sede Central</td>
+                                <td style="padding: 16px;"><span style="color: #1e8e3e; font-size: 12px; font-weight: 600;"><i class="ri-checkbox-circle-fill"></i> Activo</span></td>
+                                <td style="padding: 16px; text-align: center;">
+                                    <div style="display: flex; gap: 8px; justify-content: center;">
+                                        <button title="Editar" style="background:none; border:none; color:var(--texto-suave); font-size:18px; cursor:pointer;" onmouseover="this.style.color='var(--naranja)'" onmouseout="this.style.color='var(--texto-suave)'"><i class="ri-edit-line"></i></button>
+                                        <button title="Eliminar" style="background:none; border:none; color:var(--texto-suave); font-size:18px; cursor:pointer;" onmouseover="this.style.color='#d93025'" onmouseout="this.style.color='var(--texto-suave)'"><i class="ri-delete-bin-line"></i></button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--borde); transition: background-color 0.2s;">
+                                <td style="padding: 16px; font-size: 14px; color: var(--texto);">2</td>
+                                <td style="padding: 16px; font-size: 14px; color: var(--texto); font-weight: 500;">Ajedrez Intermedio (Táctica)</td>
+                                <td style="padding: 16px;"><span class="badge badge-intermedios">Intermedio</span></td>
+                                <td style="padding: 16px; font-size: 14px; color: var(--texto);">16 Semanas (48 hrs)</td>
+                                <td style="padding: 16px; font-size: 14px; color: var(--texto);">$1,800.00</td>
+                                <td style="padding: 16px; font-size: 14px; color: var(--texto);">Sede Norte</td>
+                                <td style="padding: 16px;"><span style="color: #1e8e3e; font-size: 12px; font-weight: 600;"><i class="ri-checkbox-circle-fill"></i> Activo</span></td>
+                                <td style="padding: 16px; text-align: center;">
+                                    <div style="display: flex; gap: 8px; justify-content: center;">
+                                        <button title="Editar" style="background:none; border:none; color:var(--texto-suave); font-size:18px; cursor:pointer;" onmouseover="this.style.color='var(--naranja)'" onmouseout="this.style.color='var(--texto-suave)'"><i class="ri-edit-line"></i></button>
+                                        <button title="Eliminar" style="background:none; border:none; color:var(--texto-suave); font-size:18px; cursor:pointer;" onmouseover="this.style.color='#d93025'" onmouseout="this.style.color='var(--texto-suave)'"><i class="ri-delete-bin-line"></i></button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr style="transition: background-color 0.2s;">
+                                <td style="padding: 16px; font-size: 14px; color: var(--texto);">3</td>
+                                <td style="padding: 16px; font-size: 14px; color: var(--texto); font-weight: 500;">Estrategia y Finales</td>
+                                <td style="padding: 16px;"><span class="badge badge-avanzados">Avanzado</span></td>
+                                <td style="padding: 16px; font-size: 14px; color: var(--texto);">20 Semanas (60 hrs)</td>
+                                <td style="padding: 16px; font-size: 14px; color: var(--texto);">$2,500.00</td>
+                                <td style="padding: 16px; font-size: 14px; color: var(--texto);">Sede Central</td>
+                                <td style="padding: 16px;"><span style="color: var(--texto-suave); font-size: 12px; font-weight: 600;"><i class="ri-close-circle-fill"></i> Inactivo</span></td>
+                                <td style="padding: 16px; text-align: center;">
+                                    <div style="display: flex; gap: 8px; justify-content: center;">
+                                        <button title="Editar" style="background:none; border:none; color:var(--texto-suave); font-size:18px; cursor:pointer;" onmouseover="this.style.color='var(--naranja)'" onmouseout="this.style.color='var(--texto-suave)'"><i class="ri-edit-line"></i></button>
+                                        <button title="Eliminar" style="background:none; border:none; color:var(--texto-suave); font-size:18px; cursor:pointer;" onmouseover="this.style.color='#d93025'" onmouseout="this.style.color='var(--texto-suave)'"><i class="ri-delete-bin-line"></i></button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
         </section>
+
+        <!-- ======================= MODAL: AGREGAR GRUPO ======================= -->
+        <div class="modal-overlay" id="modal-agregar-grupo">
+            <div class="modal-box modal-box-large"> <!-- Una clase extra por si es más ancho debido a los horarios -->
+
+                <div class="modal-header">
+                    <div class="modal-title-group">
+                        <span class="modal-title-icon"><i class="ri-group-line"></i></span>
+                        <h2 class="modal-title">Crear Nuevo Grupo</h2>
+                    </div>
+                    <button type="button" class="modal-close-btn" id="modal-close-grupo" title="Cerrar">
+                        <i class="ri-close-line"></i>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+                    <form id="form-agregar-grupo" novalidate>
+                        @csrf
+                        
+                        <!-- ===== DATOS DEL GRUPO ===== -->
+                        <div class="modal-section-label">
+                            <i class="ri-information-line"></i> Datos Generales
+                        </div>
+                        <div class="modal-grid">
+                            
+                            <!-- Curso (Dropdown en vez de ID) -->
+                            <div class="form-group-modal">
+                                <label for="gr-curso">Curso <span style="color:var(--naranja)">*</span></label>
+                                <div class="form-dropdown" id="dropdown-gr-curso" tabindex="0">
+                                    <div class="form-select-trigger" id="trigger-gr-curso">
+                                        <span class="selected-text" data-value="">Selecciona un curso...</span>
+                                        <i class="ri-arrow-down-s-line"></i>
+                                    </div>
+                                    <div class="form-options-container">
+                                        <!-- Esto se llenará con un loop de Laravel en un futuro -->
+                                        <div class="form-option" data-value="1">Ajedrez Principiantes</div>
+                                        <div class="form-option" data-value="2">Ajedrez Intermedio</div>
+                                        <div class="form-option" data-value="3">Ajedrez Avanzado (Estrategia)</div>
+                                    </div>
+                                    <input type="hidden" id="gr-curso" name="id_curso" value="">
+                                </div>
+                                <span class="error-msg-modal" id="err-gr-curso"></span>
+                            </div>
+
+                            <!-- Instructor (Dropdown en vez de ID) -->
+                            <div class="form-group-modal">
+                                <label for="gr-instructor">Instructor <span style="color:var(--naranja)">*</span></label>
+                                <div class="form-dropdown" id="dropdown-gr-instructor" tabindex="0">
+                                    <div class="form-select-trigger" id="trigger-gr-instructor">
+                                        <span class="selected-text" data-value="">Asignar un profesor...</span>
+                                        <i class="ri-arrow-down-s-line"></i>
+                                    </div>
+                                    <div class="form-options-container">
+                                        <!-- Simulación de Profesores -->
+                                        <div class="form-option" data-value="1">Maestro González</div>
+                                        <div class="form-option" data-value="2">Maestra Ramírez</div>
+                                        <div class="form-option" data-value="3">Maestro López</div>
+                                    </div>
+                                    <input type="hidden" id="gr-instructor" name="id_instructor" value="">
+                                </div>
+                                <span class="error-msg-modal" id="err-gr-instructor"></span>
+                            </div>
+
+                            <div class="form-group-modal">
+                                <label for="gr-codigo">Código de Grupo <span style="color:var(--naranja)">*</span></label>
+                                <input type="text" id="gr-codigo" name="codigo_grupo" placeholder="Ej. AJE-PRIN-01" required>
+                                <span class="error-msg-modal" id="err-gr-codigo"></span>
+                            </div>
+
+                            <div class="form-group-modal">
+                                <label for="gr-periodo">Periodo</label>
+                                <input type="text" id="gr-periodo" name="periodo" placeholder="Ej. 2026-A" maxlength="10">
+                            </div>
+
+                            <div class="form-group-modal">
+                                <label for="gr-fecha-inicio">Fecha de Inicio <span style="color:var(--naranja)">*</span></label>
+                                <input type="date" id="gr-fecha-inicio" name="fecha_inicio" required>
+                                <span class="error-msg-modal" id="err-gr-fecha-inicio"></span>
+                            </div>
+
+                            <div class="form-group-modal">
+                                <label for="gr-fecha-fin">Fecha de Fin <span style="color:var(--naranja)">*</span></label>
+                                <input type="date" id="gr-fecha-fin" name="fecha_fin" required>
+                                <span class="error-msg-modal" id="err-gr-fecha-fin"></span>
+                            </div>
+
+                            <div class="form-group-modal">
+                                <label for="gr-cupo-maximo">Cupo Máximo <span style="color:var(--naranja)">*</span></label>
+                                <input type="number" id="gr-cupo-maximo" name="cupo_maximo" placeholder="Número de estudiantes" min="1" required>
+                                <span class="error-msg-modal" id="err-gr-cupo-maximo"></span>
+                            </div>
+
+                            <div class="form-group-modal">
+                                <label for="gr-estatus-general">Estatus Módulo</label>
+                                <div class="form-dropdown" id="dropdown-gr-estatus" tabindex="0">
+                                    <div class="form-select-trigger" id="trigger-gr-estatus">
+                                        <span class="selected-text" data-value="activo">Activo</span>
+                                        <i class="ri-arrow-down-s-line"></i>
+                                    </div>
+                                    <div class="form-options-container">
+                                        <div class="form-option selected" data-value="activo">Activo</div>
+                                        <div class="form-option" data-value="inactivo">Inactivo</div>
+                                        <div class="form-option" data-value="cerrado">Cerrado</div>
+                                    </div>
+                                    <input type="hidden" id="gr-estatus-general" name="estatus" value="activo">
+                                </div>
+                            </div>
+
+                            <div class="form-group-modal modal-col-full">
+                                <label for="gr-aula">Aula / Ubicación por defecto</label>
+                                <input type="text" id="gr-aula" name="aula" placeholder="Ej. Salón 3 - Planta Alta" maxlength="20">
+                            </div>
+
+                        </div>
+
+                        <!-- ===== HORARIOS (DINÁMICOS) ===== -->
+                        <div class="modal-section-label" style="margin-top:20px; display:flex; justify-content:space-between; align-items:center;">
+                            <span><i class="ri-calendar-todo-fill"></i> Horarios de Clases</span>
+                            <button type="button" class="btn-agregar-horario" id="btn-add-horario">
+                                <i class="ri-add-line"></i> Añadir día
+                            </button>
+                        </div>
+                        <p style="font-size:13px; color:var(--texto-suave); margin-bottom:12px;">Agrega los días de la semana y las horas en las que se impartirá este grupo.</p>
+                        
+                        <div class="horarios-container" id="horarios-list">
+                            <!-- Aquí se insertan dinámicamente las filas de horarios -->
+                        </div>
+                        <span class="error-msg-modal" id="err-gr-horarios" style="display:block; margin-top:5px; margin-bottom: 20px;"></span>
+
+
+                        <!-- ===== PIE DEL FORMULARIO ===== -->
+                        <div class="modal-footer">
+                            <button type="button" class="btn-modal-cancel" id="btn-cancelar-modal-grupo">Cancelar</button>
+                            <button type="submit" class="btn-modal-submit">
+                                <i class="ri-save-line"></i> Guardar Grupo
+                            </button>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- ======================= MODAL: AGREGAR CURSO ======================= -->
+        <div class="modal-overlay" id="modal-agregar-curso">
+            <div class="modal-box">
+                <div class="modal-header">
+                    <div class="modal-title-group">
+                        <span class="modal-title-icon"><i class="ri-book-open-line"></i></span>
+                        <h2 class="modal-title">Crear Nuevo Curso</h2>
+                    </div>
+                    <button type="button" class="modal-close-btn" id="modal-close-curso" title="Cerrar">
+                        <i class="ri-close-line"></i>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+                    <form id="form-agregar-curso" novalidate>
+                        @csrf
+                        
+                        <div class="modal-section-label">
+                            <i class="ri-information-line"></i> Datos del Curso
+                        </div>
+                        <div class="modal-grid">
+                            
+                            <!-- Nombre -->
+                            <div class="form-group-modal modal-col-full">
+                                <label for="cu-nombre">Nombre <span style="color:var(--naranja)">*</span></label>
+                                <input type="text" id="cu-nombre" name="nombre" placeholder="Ej. Táctica y Estrategia Avanzada" required>
+                                <span class="error-msg-modal" id="err-cu-nombre"></span>
+                            </div>
+
+                            <!-- Sede (Dropdown) -->
+                            <div class="form-group-modal">
+                                <label for="cu-sede">Sede <span style="color:var(--naranja)">*</span></label>
+                                <div class="form-dropdown" id="dropdown-cu-sede" tabindex="0">
+                                    <div class="form-select-trigger" id="trigger-cu-sede">
+                                        <span class="selected-text" data-value="">Selecciona una sede...</span>
+                                        <i class="ri-arrow-down-s-line"></i>
+                                    </div>
+                                    <div class="form-options-container" style="z-index:100;">
+                                        <div class="form-option" data-value="1">Sede Central</div>
+                                        <div class="form-option" data-value="2">Sede Norte</div>
+                                    </div>
+                                    <input type="hidden" id="cu-sede" name="id_sede" value="">
+                                </div>
+                                <span class="error-msg-modal" id="err-cu-sede"></span>
+                            </div>
+
+                            <!-- Nivel -->
+                            <div class="form-group-modal">
+                                <label for="cu-nivel">Nivel</label>
+                                <div class="form-dropdown" id="dropdown-cu-nivel" tabindex="0">
+                                    <div class="form-select-trigger" id="trigger-cu-nivel">
+                                        <span class="selected-text" data-value="">Selecciona un nivel...</span>
+                                        <i class="ri-arrow-down-s-line"></i>
+                                    </div>
+                                    <div class="form-options-container" style="z-index:99;">
+                                        <div class="form-option" data-value="Principiante">Principiante</div>
+                                        <div class="form-option" data-value="Intermedio">Intermedio</div>
+                                        <div class="form-option" data-value="Avanzado">Avanzado</div>
+                                    </div>
+                                    <input type="hidden" id="cu-nivel" name="nivel" value="">
+                                </div>
+                            </div>
+
+                            <!-- Duración Semanas -->
+                            <div class="form-group-modal">
+                                <label for="cu-duracion">Duración (Semanas)</label>
+                                <input type="number" id="cu-duracion" name="duracion_semanas" placeholder="Ej. 16" min="1">
+                            </div>
+
+                            <!-- Horas Totales -->
+                            <div class="form-group-modal">
+                                <label for="cu-horas">Horas Totales</label>
+                                <input type="number" id="cu-horas" name="horas_totales" placeholder="Ej. 48" min="1">
+                            </div>
+
+                            <!-- Costo Base -->
+                            <div class="form-group-modal">
+                                <label for="cu-costo">Costo Base ($)</label>
+                                <input type="number" id="cu-costo" name="costo_base" placeholder="Ej. 1500.00" min="0" step="0.01">
+                            </div>
+
+                            <!-- Estatus -->
+                            <div class="form-group-modal">
+                                <label for="cu-estatus">Estatus</label>
+                                <div class="form-dropdown" id="dropdown-cu-estatus" tabindex="0">
+                                    <div class="form-select-trigger" id="trigger-cu-estatus">
+                                        <span class="selected-text" data-value="1">Activo</span>
+                                        <i class="ri-arrow-down-s-line"></i>
+                                    </div>
+                                    <div class="form-options-container">
+                                        <div class="form-option selected" data-value="1">Activo</div>
+                                        <div class="form-option" data-value="0">Inactivo</div>
+                                    </div>
+                                    <input type="hidden" id="cu-estatus" name="estatus" value="1">
+                                </div>
+                            </div>
+
+                            <!-- Descripción -->
+                            <div class="form-group-modal modal-col-full">
+                                <label for="cu-descripcion">Descripción</label>
+                                <textarea id="cu-descripcion" name="descripcion" placeholder="Breve descripción del curso..." rows="3" style="width:100%; padding:10px; border:1px solid var(--borde); border-radius:8px; font-family:'Inter', sans-serif; resize:vertical;"></textarea>
+                            </div>
+
+                            <!-- Requisitos -->
+                            <div class="form-group-modal modal-col-full">
+                                <label for="cu-requisitos">Requisitos</label>
+                                <textarea id="cu-requisitos" name="requisitos" placeholder="Requisitos previos para tomar el curso..." rows="2" style="width:100%; padding:10px; border:1px solid var(--borde); border-radius:8px; font-family:'Inter', sans-serif; resize:vertical;"></textarea>
+                            </div>
+
+                        </div>
+
+                        <!-- ===== PIE DEL FORMULARIO ===== -->
+                        <div class="modal-footer">
+                            <button type="button" class="btn-modal-cancel" id="btn-cancelar-modal-curso">Cancelar</button>
+                            <button type="submit" class="btn-modal-submit">
+                                <i class="ri-save-line"></i> Guardar Curso
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
 
         <section class="section-content" id="section-extraescolares" style="display: none;">
             <div class="section-header">
@@ -524,6 +1140,10 @@
     <script src="{{ asset('animaciones/dashboardAdmin.js') }}"></script>
     <!-- JS Sección Alumnos -->
     <script src="{{ asset('animaciones/dashboardAdminAlumnos.js') }}"></script>
+    <!-- JS Sección Profesores -->
+    <script src="{{ asset('animaciones/dashboardAdminProfesores.js') }}"></script>
+    <!-- JS Sección Grupos -->
+    <script src="{{ asset('animaciones/dashboardAdminGrupos.js') }}"></script>
 
 </body>
 

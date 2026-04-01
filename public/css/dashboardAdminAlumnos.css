@@ -194,6 +194,135 @@
     background-color: #e4e7ed;
 }
 
+/* ---- Form Dropdown (Modal y Formularios) independizado visualmente de los filtros ---- */
+.form-dropdown {
+    position: relative;
+    user-select: none;
+    width: 100%;
+}
+
+.form-select-trigger {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #fafafa;
+    border: 2px solid var(--borde);
+    color: var(--texto);
+    padding: 11px 14px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-family: 'Inter', sans-serif;
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+
+.form-dropdown.input-error .form-select-trigger {
+    border-color: #d93025;
+    box-shadow: 0 0 0 3px rgba(217, 48, 37, 0.1);
+}
+
+.form-dropdown.input-ok .form-select-trigger {
+    border-color: #2e7d32;
+    box-shadow: 0 0 0 3px rgba(46, 125, 50, 0.08);
+}
+
+.form-select-trigger:focus,
+.form-dropdown:focus .form-select-trigger,
+.form-select-trigger:hover,
+.form-dropdown.open .form-select-trigger {
+    border-color: var(--naranja);
+    background-color: var(--blanco);
+    box-shadow: 0 0 0 3px rgba(224, 92, 42, 0.12);
+}
+
+.form-select-trigger i {
+    font-size: 18px;
+    color: var(--naranja);
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.form-dropdown.open .form-select-trigger i {
+    transform: rotate(180deg);
+}
+
+.form-options-container {
+    position: absolute;
+    top: calc(100% + 5px);
+    left: 0;
+    width: 100%;
+    background-color: var(--blanco);
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    border: 1px solid var(--borde);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px) scale(0.98);
+    transform-origin: top center;
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: 100;
+    padding: 8px;
+    max-height: 240px;
+    overflow-y: auto;
+}
+
+.form-dropdown.open .form-options-container {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0) scale(1);
+}
+
+.form-option {
+    padding: 10px 14px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--texto);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin-bottom: 2px;
+    display: flex;
+    align-items: center;
+}
+
+.form-option::before {
+    content: '';
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    margin-right: 10px;
+    background-color: transparent;
+    transition: background-color 0.2s;
+}
+
+.form-option:last-child {
+    margin-bottom: 0;
+}
+
+.form-option:hover {
+    background-color: var(--naranja-light);
+    color: var(--naranja);
+    transform: translateX(4px);
+}
+
+.form-option.selected {
+    background-color: var(--naranja);
+    color: var(--blanco);
+}
+
+.form-option.selected::before {
+    background-color: var(--blanco);
+}
+
+.form-options-container::-webkit-scrollbar {
+    width: 6px;
+}
+
+.form-options-container::-webkit-scrollbar-thumb {
+    background-color: var(--borde);
+    border-radius: 6px;
+}
+
 /* =============================================
    TABLA
    ============================================= */
@@ -543,7 +672,8 @@
     color: var(--texto);
 }
 
-.form-group-modal input {
+.form-group-modal input,
+.form-group-modal select {
     width: 100%;
     padding: 11px 14px;
     border: 2px solid var(--borde);
@@ -556,18 +686,21 @@
     transition: border-color 0.2s, box-shadow 0.2s, background-color 0.2s;
 }
 
-.form-group-modal input:focus {
+.form-group-modal input:focus,
+.form-group-modal select:focus {
     border-color: var(--naranja);
     background-color: var(--blanco);
     box-shadow: 0 0 0 3px rgba(224, 92, 42, 0.12);
 }
 
-.form-group-modal input.input-error {
+.form-group-modal input.input-error,
+.form-group-modal select.input-error {
     border-color: #d93025;
     box-shadow: 0 0 0 3px rgba(217, 48, 37, 0.1);
 }
 
-.form-group-modal input.input-ok {
+.form-group-modal input.input-ok,
+.form-group-modal select.input-ok {
     border-color: #2e7d32;
     box-shadow: 0 0 0 3px rgba(46, 125, 50, 0.08);
 }
