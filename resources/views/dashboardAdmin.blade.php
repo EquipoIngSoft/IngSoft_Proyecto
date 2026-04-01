@@ -415,7 +415,7 @@
 
                         <!-- ===== DIVISOR ===== -->
                         <div class="modal-divider">
-                            <span>Datos del Tutor</span>
+                            <span>Datos del Tutor (OPCIONAL)</span>
                         </div>
 
                         <!-- ===== SECCIÓN: Datos del Tutor ===== -->
@@ -481,7 +481,8 @@
             <!-- Buscador -->
             <div class="search-bar" style="margin-bottom: 24px;">
                 <i class="ri-search-line search-icon"></i>
-                <input type="text" id="buscador-profesores" placeholder="Buscar profesor por nombre, especialidad o email..." autocomplete="off">
+                <input type="text" id="buscador-profesores"
+                    placeholder="Buscar profesor por nombre, especialidad o email..." autocomplete="off">
             </div>
 
             <!-- Grid de tarjetas -->
@@ -568,17 +569,21 @@
                                 <span class="error-msg-modal" id="err-pr-nombre"></span>
                             </div>
                             <div class="form-group-modal">
-                                <label for="pr-ap-paterno">Apellido Paterno <span style="color:var(--naranja)">*</span></label>
-                                <input type="text" id="pr-ap-paterno" name="pr_ap_paterno" placeholder="Apellido paterno" required>
+                                <label for="pr-ap-paterno">Apellido Paterno <span
+                                        style="color:var(--naranja)">*</span></label>
+                                <input type="text" id="pr-ap-paterno" name="pr_ap_paterno"
+                                    placeholder="Apellido paterno" required>
                                 <span class="error-msg-modal" id="err-pr-ap-paterno"></span>
                             </div>
                             <div class="form-group-modal">
                                 <label for="pr-ap-materno">Apellido Materno</label>
-                                <input type="text" id="pr-ap-materno" name="pr_ap_materno" placeholder="Apellido materno">
+                                <input type="text" id="pr-ap-materno" name="pr_ap_materno"
+                                    placeholder="Apellido materno">
                             </div>
                             <div class="form-group-modal">
                                 <label for="pr-telefono">Número de Teléfono</label>
-                                <input type="tel" id="pr-telefono" name="pr_telefono" placeholder="10 dígitos" maxlength="10">
+                                <input type="tel" id="pr-telefono" name="pr_telefono" placeholder="10 dígitos"
+                                    maxlength="10">
                                 <span class="error-msg-modal" id="err-pr-telefono"></span>
                             </div>
                             <div class="form-group-modal">
@@ -599,29 +604,37 @@
                             </div>
                             <div class="form-group-modal modal-col-full">
                                 <label for="pr-direccion">Dirección</label>
-                                <input type="text" id="pr-direccion" name="pr_direccion" placeholder="Calle, número, colonia...">
+                                <input type="text" id="pr-direccion" name="pr_direccion"
+                                    placeholder="Calle, número, colonia...">
                                 <span class="error-msg-modal" id="err-pr-direccion"></span>
                             </div>
                             <div class="form-group-modal modal-col-full">
-                                <label for="pr-correo">Correo Electrónico <span style="color:var(--naranja)">*</span></label>
-                                <input type="email" id="pr-correo" name="pr_correo" placeholder="correo@ejemplo.com" required>
+                                <label for="pr-correo">Correo Electrónico <span
+                                        style="color:var(--naranja)">*</span></label>
+                                <input type="email" id="pr-correo" name="pr_correo" placeholder="correo@ejemplo.com"
+                                    required>
                                 <span class="error-msg-modal" id="err-pr-correo"></span>
                             </div>
                             <div class="form-group-modal">
                                 <label for="pr-password">Contraseña <span style="color:var(--naranja)">*</span></label>
                                 <div class="input-password-wrapper">
-                                    <input type="password" id="pr-password" name="pr_password" placeholder="Mínimo 6 caracteres" required minlength="6">
-                                    <button type="button" class="toggle-password" data-target="pr-password" title="Mostrar/Ocultar">
+                                    <input type="password" id="pr-password" name="pr_password"
+                                        placeholder="Mínimo 6 caracteres" required minlength="6">
+                                    <button type="button" class="toggle-password" data-target="pr-password"
+                                        title="Mostrar/Ocultar">
                                         <i class="ri-eye-line"></i>
                                     </button>
                                 </div>
                                 <span class="error-msg-modal" id="err-pr-password"></span>
                             </div>
                             <div class="form-group-modal">
-                                <label for="pr-password-confirm">Confirmar Contraseña <span style="color:var(--naranja)">*</span></label>
+                                <label for="pr-password-confirm">Confirmar Contraseña <span
+                                        style="color:var(--naranja)">*</span></label>
                                 <div class="input-password-wrapper">
-                                    <input type="password" id="pr-password-confirm" name="pr_password_confirm" placeholder="Repite la contraseña" required>
-                                    <button type="button" class="toggle-password" data-target="pr-password-confirm" title="Mostrar/Ocultar">
+                                    <input type="password" id="pr-password-confirm" name="pr_password_confirm"
+                                        placeholder="Repite la contraseña" required>
+                                    <button type="button" class="toggle-password" data-target="pr-password-confirm"
+                                        title="Mostrar/Ocultar">
                                         <i class="ri-eye-line"></i>
                                     </button>
                                 </div>
@@ -631,7 +644,8 @@
 
                         <!-- ===== PIE DEL FORMULARIO ===== -->
                         <div class="modal-footer">
-                            <button type="button" class="btn-modal-cancel" id="btn-cancelar-modal-profesor">Cancelar</button>
+                            <button type="button" class="btn-modal-cancel"
+                                id="btn-cancelar-modal-profesor">Cancelar</button>
                             <button type="submit" class="btn-modal-submit">
                                 <i class="ri-save-line"></i> Guardar Profesor
                             </button>
@@ -661,14 +675,16 @@
             <!-- Buscador -->
             <div class="search-bar" style="margin-bottom: 24px;">
                 <i class="ri-search-line search-icon"></i>
-                <input type="text" id="buscador-grupos" placeholder="Buscar grupo por nombre, nivel o profesor..." autocomplete="off">
+                <input type="text" id="buscador-grupos" placeholder="Buscar grupo por nombre, nivel o profesor..."
+                    autocomplete="off">
             </div>
 
             <!-- Grid de tarjetas de grupos -->
             <div class="grupos-grid" id="grid-grupos">
 
                 <!-- Tarjeta 1 -->
-                <div class="grupo-card" data-nombre="Grupo A" data-nivel="principiantes" data-profesor="Maestro González">
+                <div class="grupo-card" data-nombre="Grupo A" data-nivel="principiantes"
+                    data-profesor="Maestro González">
                     <div class="grupo-card-header">
                         <h3 class="grupo-nombre">Grupo A</h3>
                         <span class="badge badge-principiantes">Principiantes</span>
@@ -677,8 +693,13 @@
                         <div class="grupo-info-line">
                             <i class="ri-user-star-line"></i> Maestro González
                         </div>
-                        <div class="grupo-info-line">
-                            <i class="ri-group-line"></i> 15 estudiantes
+                        <div class="grupo-inscritos-wrapper">
+                            <div class="grupo-info-line">
+                                <i class="ri-group-line"></i> 15 / 20 inscritos
+                            </div>
+                            <div class="progress-bar-container">
+                                <div class="progress-bar-fill" style="width: 75%;"></div>
+                            </div>
                         </div>
                         <div class="grupo-info-line">
                             <i class="ri-time-line"></i> Lunes y Miércoles 14:00-15:30
@@ -700,8 +721,13 @@
                         <div class="grupo-info-line">
                             <i class="ri-user-star-line"></i> Maestra Ramírez
                         </div>
-                        <div class="grupo-info-line">
-                            <i class="ri-group-line"></i> 12 estudiantes
+                        <div class="grupo-inscritos-wrapper">
+                            <div class="grupo-info-line">
+                                <i class="ri-group-line"></i> 12 / 15 inscritos
+                            </div>
+                            <div class="progress-bar-container">
+                                <div class="progress-bar-fill" style="width: 80%;"></div>
+                            </div>
                         </div>
                         <div class="grupo-info-line">
                             <i class="ri-time-line"></i> Martes y Jueves 16:00-17:30
@@ -723,8 +749,13 @@
                         <div class="grupo-info-line">
                             <i class="ri-user-star-line"></i> Maestro López
                         </div>
-                        <div class="grupo-info-line">
-                            <i class="ri-group-line"></i> 8 estudiantes
+                        <div class="grupo-inscritos-wrapper">
+                            <div class="grupo-info-line">
+                                <i class="ri-group-line"></i> 8 / 20 inscritos
+                            </div>
+                            <div class="progress-bar-container">
+                                <div class="progress-bar-fill" style="width: 40%;"></div>
+                            </div>
                         </div>
                         <div class="grupo-info-line">
                             <i class="ri-time-line"></i> Viernes 17:00-19:00
@@ -742,71 +773,129 @@
 
             <!-- ======================= TABLA DEMOSTRATIVA DE CURSOS ======================= -->
             <div style="margin-top: 40px;">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; gap: 24px;">
-                    <h2 style="font-family: 'Inter', sans-serif; font-size: 18px; color: var(--texto); margin: 0; white-space: nowrap;">Catálogo de Cursos</h2>
+                <div
+                    style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; gap: 24px;">
+                    <h2
+                        style="font-family: 'Inter', sans-serif; font-size: 18px; color: var(--texto); margin: 0; white-space: nowrap;">
+                        Catálogo de Cursos</h2>
                     <div class="search-bar" style="flex-grow: 1; max-width: 600px; margin: 0;">
                         <i class="ri-search-line search-icon"></i>
-                        <input type="text" id="buscador-tabla-cursos" placeholder="Buscar por clave, nombre o sede..." autocomplete="off">
+                        <input type="text" id="buscador-tabla-cursos" placeholder="Buscar por clave, nombre o sede..."
+                            autocomplete="off">
                     </div>
                 </div>
-                
-                <div style="overflow-x: auto; background-color: var(--blanco); border-radius: 12px; border: 1px solid var(--borde); box-shadow: 0 4px 12px rgba(0,0,0,0.02);">
+
+                <div
+                    style="overflow-x: auto; background-color: var(--blanco); border-radius: 12px; border: 1px solid var(--borde); box-shadow: 0 4px 12px rgba(0,0,0,0.02);">
                     <table id="tabla-cursos" style="width: 100%; border-collapse: collapse; text-align: left;">
                         <thead style="background-color: #fafafa; border-bottom: 1px solid var(--borde);">
                             <tr>
-                                <th style="padding: 16px; font-weight: 600; font-size: 13px; color: var(--texto-suave);">ID</th>
-                                <th style="padding: 16px; font-weight: 600; font-size: 13px; color: var(--texto-suave);">Nombre del Curso</th>
-                                <th style="padding: 16px; font-weight: 600; font-size: 13px; color: var(--texto-suave);">Nivel</th>
-                                <th style="padding: 16px; font-weight: 600; font-size: 13px; color: var(--texto-suave);">Duración</th>
-                                <th style="padding: 16px; font-weight: 600; font-size: 13px; color: var(--texto-suave);">Costo Base</th>
-                                <th style="padding: 16px; font-weight: 600; font-size: 13px; color: var(--texto-suave);">Sede</th>
-                                <th style="padding: 16px; font-weight: 600; font-size: 13px; color: var(--texto-suave);">Estatus</th>
-                                <th style="padding: 16px; font-weight: 600; font-size: 13px; color: var(--texto-suave); text-align: center;">Acciones</th>
+                                <th
+                                    style="padding: 16px; font-weight: 600; font-size: 13px; color: var(--texto-suave);">
+                                    ID</th>
+                                <th
+                                    style="padding: 16px; font-weight: 600; font-size: 13px; color: var(--texto-suave);">
+                                    Nombre del Curso</th>
+                                <th
+                                    style="padding: 16px; font-weight: 600; font-size: 13px; color: var(--texto-suave);">
+                                    Nivel</th>
+                                <th
+                                    style="padding: 16px; font-weight: 600; font-size: 13px; color: var(--texto-suave);">
+                                    Duración</th>
+                                <th
+                                    style="padding: 16px; font-weight: 600; font-size: 13px; color: var(--texto-suave);">
+                                    Costo Base</th>
+                                <th
+                                    style="padding: 16px; font-weight: 600; font-size: 13px; color: var(--texto-suave);">
+                                    Sede</th>
+                                <th
+                                    style="padding: 16px; font-weight: 600; font-size: 13px; color: var(--texto-suave);">
+                                    Estatus</th>
+                                <th
+                                    style="padding: 16px; font-weight: 600; font-size: 13px; color: var(--texto-suave); text-align: center;">
+                                    Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr style="border-bottom: 1px solid var(--borde); transition: background-color 0.2s;">
                                 <td style="padding: 16px; font-size: 14px; color: var(--texto);">1</td>
-                                <td style="padding: 16px; font-size: 14px; color: var(--texto); font-weight: 500;">Ajedrez Principiantes</td>
-                                <td style="padding: 16px;"><span class="badge badge-principiantes">Principiante</span></td>
-                                <td style="padding: 16px; font-size: 14px; color: var(--texto);">12 Semanas (24 hrs)</td>
+                                <td style="padding: 16px; font-size: 14px; color: var(--texto); font-weight: 500;">
+                                    Ajedrez Principiantes</td>
+                                <td style="padding: 16px;"><span class="badge badge-principiantes">Principiante</span>
+                                </td>
+                                <td style="padding: 16px; font-size: 14px; color: var(--texto);">12 Semanas (24 hrs)
+                                </td>
                                 <td style="padding: 16px; font-size: 14px; color: var(--texto);">$1,200.00</td>
                                 <td style="padding: 16px; font-size: 14px; color: var(--texto);">Sede Central</td>
-                                <td style="padding: 16px;"><span style="color: #1e8e3e; font-size: 12px; font-weight: 600;"><i class="ri-checkbox-circle-fill"></i> Activo</span></td>
+                                <td style="padding: 16px;"><span
+                                        style="color: #1e8e3e; font-size: 12px; font-weight: 600;"><i
+                                            class="ri-checkbox-circle-fill"></i> Activo</span></td>
                                 <td style="padding: 16px; text-align: center;">
                                     <div style="display: flex; gap: 8px; justify-content: center;">
-                                        <button title="Editar" style="background:none; border:none; color:var(--texto-suave); font-size:18px; cursor:pointer;" onmouseover="this.style.color='var(--naranja)'" onmouseout="this.style.color='var(--texto-suave)'"><i class="ri-edit-line"></i></button>
-                                        <button title="Eliminar" style="background:none; border:none; color:var(--texto-suave); font-size:18px; cursor:pointer;" onmouseover="this.style.color='#d93025'" onmouseout="this.style.color='var(--texto-suave)'"><i class="ri-delete-bin-line"></i></button>
+                                        <button title="Editar"
+                                            style="background:none; border:none; color:var(--texto-suave); font-size:18px; cursor:pointer;"
+                                            onmouseover="this.style.color='var(--naranja)'"
+                                            onmouseout="this.style.color='var(--texto-suave)'"><i
+                                                class="ri-edit-line"></i></button>
+                                        <button title="Eliminar"
+                                            style="background:none; border:none; color:var(--texto-suave); font-size:18px; cursor:pointer;"
+                                            onmouseover="this.style.color='#d93025'"
+                                            onmouseout="this.style.color='var(--texto-suave)'"><i
+                                                class="ri-delete-bin-line"></i></button>
                                     </div>
                                 </td>
                             </tr>
                             <tr style="border-bottom: 1px solid var(--borde); transition: background-color 0.2s;">
                                 <td style="padding: 16px; font-size: 14px; color: var(--texto);">2</td>
-                                <td style="padding: 16px; font-size: 14px; color: var(--texto); font-weight: 500;">Ajedrez Intermedio (Táctica)</td>
+                                <td style="padding: 16px; font-size: 14px; color: var(--texto); font-weight: 500;">
+                                    Ajedrez Intermedio (Táctica)</td>
                                 <td style="padding: 16px;"><span class="badge badge-intermedios">Intermedio</span></td>
-                                <td style="padding: 16px; font-size: 14px; color: var(--texto);">16 Semanas (48 hrs)</td>
+                                <td style="padding: 16px; font-size: 14px; color: var(--texto);">16 Semanas (48 hrs)
+                                </td>
                                 <td style="padding: 16px; font-size: 14px; color: var(--texto);">$1,800.00</td>
                                 <td style="padding: 16px; font-size: 14px; color: var(--texto);">Sede Norte</td>
-                                <td style="padding: 16px;"><span style="color: #1e8e3e; font-size: 12px; font-weight: 600;"><i class="ri-checkbox-circle-fill"></i> Activo</span></td>
+                                <td style="padding: 16px;"><span
+                                        style="color: #1e8e3e; font-size: 12px; font-weight: 600;"><i
+                                            class="ri-checkbox-circle-fill"></i> Activo</span></td>
                                 <td style="padding: 16px; text-align: center;">
                                     <div style="display: flex; gap: 8px; justify-content: center;">
-                                        <button title="Editar" style="background:none; border:none; color:var(--texto-suave); font-size:18px; cursor:pointer;" onmouseover="this.style.color='var(--naranja)'" onmouseout="this.style.color='var(--texto-suave)'"><i class="ri-edit-line"></i></button>
-                                        <button title="Eliminar" style="background:none; border:none; color:var(--texto-suave); font-size:18px; cursor:pointer;" onmouseover="this.style.color='#d93025'" onmouseout="this.style.color='var(--texto-suave)'"><i class="ri-delete-bin-line"></i></button>
+                                        <button title="Editar"
+                                            style="background:none; border:none; color:var(--texto-suave); font-size:18px; cursor:pointer;"
+                                            onmouseover="this.style.color='var(--naranja)'"
+                                            onmouseout="this.style.color='var(--texto-suave)'"><i
+                                                class="ri-edit-line"></i></button>
+                                        <button title="Eliminar"
+                                            style="background:none; border:none; color:var(--texto-suave); font-size:18px; cursor:pointer;"
+                                            onmouseover="this.style.color='#d93025'"
+                                            onmouseout="this.style.color='var(--texto-suave)'"><i
+                                                class="ri-delete-bin-line"></i></button>
                                     </div>
                                 </td>
                             </tr>
                             <tr style="transition: background-color 0.2s;">
                                 <td style="padding: 16px; font-size: 14px; color: var(--texto);">3</td>
-                                <td style="padding: 16px; font-size: 14px; color: var(--texto); font-weight: 500;">Estrategia y Finales</td>
+                                <td style="padding: 16px; font-size: 14px; color: var(--texto); font-weight: 500;">
+                                    Estrategia y Finales</td>
                                 <td style="padding: 16px;"><span class="badge badge-avanzados">Avanzado</span></td>
-                                <td style="padding: 16px; font-size: 14px; color: var(--texto);">20 Semanas (60 hrs)</td>
+                                <td style="padding: 16px; font-size: 14px; color: var(--texto);">20 Semanas (60 hrs)
+                                </td>
                                 <td style="padding: 16px; font-size: 14px; color: var(--texto);">$2,500.00</td>
                                 <td style="padding: 16px; font-size: 14px; color: var(--texto);">Sede Central</td>
-                                <td style="padding: 16px;"><span style="color: var(--texto-suave); font-size: 12px; font-weight: 600;"><i class="ri-close-circle-fill"></i> Inactivo</span></td>
+                                <td style="padding: 16px;"><span
+                                        style="color: var(--texto-suave); font-size: 12px; font-weight: 600;"><i
+                                            class="ri-close-circle-fill"></i> Inactivo</span></td>
                                 <td style="padding: 16px; text-align: center;">
                                     <div style="display: flex; gap: 8px; justify-content: center;">
-                                        <button title="Editar" style="background:none; border:none; color:var(--texto-suave); font-size:18px; cursor:pointer;" onmouseover="this.style.color='var(--naranja)'" onmouseout="this.style.color='var(--texto-suave)'"><i class="ri-edit-line"></i></button>
-                                        <button title="Eliminar" style="background:none; border:none; color:var(--texto-suave); font-size:18px; cursor:pointer;" onmouseover="this.style.color='#d93025'" onmouseout="this.style.color='var(--texto-suave)'"><i class="ri-delete-bin-line"></i></button>
+                                        <button title="Editar"
+                                            style="background:none; border:none; color:var(--texto-suave); font-size:18px; cursor:pointer;"
+                                            onmouseover="this.style.color='var(--naranja)'"
+                                            onmouseout="this.style.color='var(--texto-suave)'"><i
+                                                class="ri-edit-line"></i></button>
+                                        <button title="Eliminar"
+                                            style="background:none; border:none; color:var(--texto-suave); font-size:18px; cursor:pointer;"
+                                            onmouseover="this.style.color='#d93025'"
+                                            onmouseout="this.style.color='var(--texto-suave)'"><i
+                                                class="ri-delete-bin-line"></i></button>
                                     </div>
                                 </td>
                             </tr>
@@ -834,13 +923,13 @@
                 <div class="modal-body">
                     <form id="form-agregar-grupo" novalidate>
                         @csrf
-                        
+
                         <!-- ===== DATOS DEL GRUPO ===== -->
                         <div class="modal-section-label">
                             <i class="ri-information-line"></i> Datos Generales
                         </div>
                         <div class="modal-grid">
-                            
+
                             <!-- Curso (Dropdown en vez de ID) -->
                             <div class="form-group-modal">
                                 <label for="gr-curso">Curso <span style="color:var(--naranja)">*</span></label>
@@ -862,7 +951,8 @@
 
                             <!-- Instructor (Dropdown en vez de ID) -->
                             <div class="form-group-modal">
-                                <label for="gr-instructor">Instructor <span style="color:var(--naranja)">*</span></label>
+                                <label for="gr-instructor">Instructor <span
+                                        style="color:var(--naranja)">*</span></label>
                                 <div class="form-dropdown" id="dropdown-gr-instructor" tabindex="0">
                                     <div class="form-select-trigger" id="trigger-gr-instructor">
                                         <span class="selected-text" data-value="">Asignar un profesor...</span>
@@ -880,31 +970,38 @@
                             </div>
 
                             <div class="form-group-modal">
-                                <label for="gr-codigo">Código de Grupo <span style="color:var(--naranja)">*</span></label>
-                                <input type="text" id="gr-codigo" name="codigo_grupo" placeholder="Ej. AJE-PRIN-01" required>
+                                <label for="gr-codigo">Código de Grupo <span
+                                        style="color:var(--naranja)">*</span></label>
+                                <input type="text" id="gr-codigo" name="codigo_grupo" placeholder="Ej. AJE-PRIN-01"
+                                    required>
                                 <span class="error-msg-modal" id="err-gr-codigo"></span>
                             </div>
 
                             <div class="form-group-modal">
                                 <label for="gr-periodo">Periodo</label>
-                                <input type="text" id="gr-periodo" name="periodo" placeholder="Ej. 2026-A" maxlength="10">
+                                <input type="text" id="gr-periodo" name="periodo" placeholder="Ej. 2026-A"
+                                    maxlength="10">
                             </div>
 
                             <div class="form-group-modal">
-                                <label for="gr-fecha-inicio">Fecha de Inicio <span style="color:var(--naranja)">*</span></label>
+                                <label for="gr-fecha-inicio">Fecha de Inicio <span
+                                        style="color:var(--naranja)">*</span></label>
                                 <input type="date" id="gr-fecha-inicio" name="fecha_inicio" required>
                                 <span class="error-msg-modal" id="err-gr-fecha-inicio"></span>
                             </div>
 
                             <div class="form-group-modal">
-                                <label for="gr-fecha-fin">Fecha de Fin <span style="color:var(--naranja)">*</span></label>
+                                <label for="gr-fecha-fin">Fecha de Fin <span
+                                        style="color:var(--naranja)">*</span></label>
                                 <input type="date" id="gr-fecha-fin" name="fecha_fin" required>
                                 <span class="error-msg-modal" id="err-gr-fecha-fin"></span>
                             </div>
 
                             <div class="form-group-modal">
-                                <label for="gr-cupo-maximo">Cupo Máximo <span style="color:var(--naranja)">*</span></label>
-                                <input type="number" id="gr-cupo-maximo" name="cupo_maximo" placeholder="Número de estudiantes" min="1" required>
+                                <label for="gr-cupo-maximo">Cupo Máximo <span
+                                        style="color:var(--naranja)">*</span></label>
+                                <input type="number" id="gr-cupo-maximo" name="cupo_maximo"
+                                    placeholder="Número de estudiantes" min="1" required>
                                 <span class="error-msg-modal" id="err-gr-cupo-maximo"></span>
                             </div>
 
@@ -926,29 +1023,34 @@
 
                             <div class="form-group-modal modal-col-full">
                                 <label for="gr-aula">Aula / Ubicación por defecto</label>
-                                <input type="text" id="gr-aula" name="aula" placeholder="Ej. Salón 3 - Planta Alta" maxlength="20">
+                                <input type="text" id="gr-aula" name="aula" placeholder="Ej. Salón 3 - Planta Alta"
+                                    maxlength="20">
                             </div>
 
                         </div>
 
                         <!-- ===== HORARIOS (DINÁMICOS) ===== -->
-                        <div class="modal-section-label" style="margin-top:20px; display:flex; justify-content:space-between; align-items:center;">
+                        <div class="modal-section-label"
+                            style="margin-top:20px; display:flex; justify-content:space-between; align-items:center;">
                             <span><i class="ri-calendar-todo-fill"></i> Horarios de Clases</span>
                             <button type="button" class="btn-agregar-horario" id="btn-add-horario">
                                 <i class="ri-add-line"></i> Añadir día
                             </button>
                         </div>
-                        <p style="font-size:13px; color:var(--texto-suave); margin-bottom:12px;">Agrega los días de la semana y las horas en las que se impartirá este grupo.</p>
-                        
+                        <p style="font-size:13px; color:var(--texto-suave); margin-bottom:12px;">Agrega los días de la
+                            semana y las horas en las que se impartirá este grupo.</p>
+
                         <div class="horarios-container" id="horarios-list">
                             <!-- Aquí se insertan dinámicamente las filas de horarios -->
                         </div>
-                        <span class="error-msg-modal" id="err-gr-horarios" style="display:block; margin-top:5px; margin-bottom: 20px;"></span>
+                        <span class="error-msg-modal" id="err-gr-horarios"
+                            style="display:block; margin-top:5px; margin-bottom: 20px;"></span>
 
 
                         <!-- ===== PIE DEL FORMULARIO ===== -->
                         <div class="modal-footer">
-                            <button type="button" class="btn-modal-cancel" id="btn-cancelar-modal-grupo">Cancelar</button>
+                            <button type="button" class="btn-modal-cancel"
+                                id="btn-cancelar-modal-grupo">Cancelar</button>
                             <button type="submit" class="btn-modal-submit">
                                 <i class="ri-save-line"></i> Guardar Grupo
                             </button>
@@ -975,16 +1077,17 @@
                 <div class="modal-body">
                     <form id="form-agregar-curso" novalidate>
                         @csrf
-                        
+
                         <div class="modal-section-label">
                             <i class="ri-information-line"></i> Datos del Curso
                         </div>
                         <div class="modal-grid">
-                            
+
                             <!-- Nombre -->
                             <div class="form-group-modal modal-col-full">
                                 <label for="cu-nombre">Nombre <span style="color:var(--naranja)">*</span></label>
-                                <input type="text" id="cu-nombre" name="nombre" placeholder="Ej. Táctica y Estrategia Avanzada" required>
+                                <input type="text" id="cu-nombre" name="nombre"
+                                    placeholder="Ej. Táctica y Estrategia Avanzada" required>
                                 <span class="error-msg-modal" id="err-cu-nombre"></span>
                             </div>
 
@@ -1025,7 +1128,8 @@
                             <!-- Duración Semanas -->
                             <div class="form-group-modal">
                                 <label for="cu-duracion">Duración (Semanas)</label>
-                                <input type="number" id="cu-duracion" name="duracion_semanas" placeholder="Ej. 16" min="1">
+                                <input type="number" id="cu-duracion" name="duracion_semanas" placeholder="Ej. 16"
+                                    min="1">
                             </div>
 
                             <!-- Horas Totales -->
@@ -1037,7 +1141,8 @@
                             <!-- Costo Base -->
                             <div class="form-group-modal">
                                 <label for="cu-costo">Costo Base ($)</label>
-                                <input type="number" id="cu-costo" name="costo_base" placeholder="Ej. 1500.00" min="0" step="0.01">
+                                <input type="number" id="cu-costo" name="costo_base" placeholder="Ej. 1500.00" min="0"
+                                    step="0.01">
                             </div>
 
                             <!-- Estatus -->
@@ -1059,20 +1164,25 @@
                             <!-- Descripción -->
                             <div class="form-group-modal modal-col-full">
                                 <label for="cu-descripcion">Descripción</label>
-                                <textarea id="cu-descripcion" name="descripcion" placeholder="Breve descripción del curso..." rows="3" style="width:100%; padding:10px; border:1px solid var(--borde); border-radius:8px; font-family:'Inter', sans-serif; resize:vertical;"></textarea>
+                                <textarea id="cu-descripcion" name="descripcion"
+                                    placeholder="Breve descripción del curso..." rows="3"
+                                    style="width:100%; padding:10px; border:1px solid var(--borde); border-radius:8px; font-family:'Inter', sans-serif; resize:vertical;"></textarea>
                             </div>
 
                             <!-- Requisitos -->
                             <div class="form-group-modal modal-col-full">
                                 <label for="cu-requisitos">Requisitos</label>
-                                <textarea id="cu-requisitos" name="requisitos" placeholder="Requisitos previos para tomar el curso..." rows="2" style="width:100%; padding:10px; border:1px solid var(--borde); border-radius:8px; font-family:'Inter', sans-serif; resize:vertical;"></textarea>
+                                <textarea id="cu-requisitos" name="requisitos"
+                                    placeholder="Requisitos previos para tomar el curso..." rows="2"
+                                    style="width:100%; padding:10px; border:1px solid var(--borde); border-radius:8px; font-family:'Inter', sans-serif; resize:vertical;"></textarea>
                             </div>
 
                         </div>
 
                         <!-- ===== PIE DEL FORMULARIO ===== -->
                         <div class="modal-footer">
-                            <button type="button" class="btn-modal-cancel" id="btn-cancelar-modal-curso">Cancelar</button>
+                            <button type="button" class="btn-modal-cancel"
+                                id="btn-cancelar-modal-curso">Cancelar</button>
                             <button type="submit" class="btn-modal-submit">
                                 <i class="ri-save-line"></i> Guardar Curso
                             </button>
