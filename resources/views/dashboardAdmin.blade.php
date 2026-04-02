@@ -1278,6 +1278,12 @@
                                 <span class="error-msg-modal" id="err-ex-cupo-maximo"></span>
                             </div>
 
+                            <!-- Duración (Semanas) -->
+                            <div class="form-group-modal">
+                                <label for="ex-semanas">Duración (Semanas)</label>
+                                <input type="number" id="ex-semanas" name="semanas_duracion" placeholder="Ej. 6" min="1">
+                            </div>
+
                             <!-- Costo -->
                             <div class="form-group-modal">
                                 <label for="ex-costo">Costo ($)</label>
@@ -1312,6 +1318,12 @@
                                     </div>
                                     <input type="hidden" id="ex-estatus" name="estatus" value="1">
                                 </div>
+                            </div>
+
+                            <!-- Ubicación -->
+                            <div class="form-group-modal modal-col-full">
+                                <label for="ex-ubicacion">Ubicación</label>
+                                <input type="text" id="ex-ubicacion" name="ubicacion" placeholder="Ej. Aula 4, Cancha Principal..." maxlength="100">
                             </div>
 
                             <!-- Descripción -->
