@@ -1,17 +1,28 @@
 // ==============================================
-//  dashboard.js — Interactividad del Dashboard
+//  dashboardAdmin.js — Interactividad General
+//  Sidebar, Navegación y Menú de Perfil
 //  EGAU Chess | AMAAC
 // ==============================================
 
 document.addEventListener('DOMContentLoaded', () => {
 
-    // ---- Toggle del sidebar en móvil ----
+    // ---- Toggle del sidebar (Móvil y Escritorio) ----
     const menuToggle = document.getElementById('menu-toggle');
     const sidebar = document.getElementById('sidebar');
+    const mainContent = document.querySelector('.main-content');
 
     if (menuToggle && sidebar) {
         menuToggle.addEventListener('click', () => {
-            sidebar.classList.toggle('open');
+            if (window.innerWidth <= 768) {
+                // Modo móvil: Abrir/Cerrar drawer
+                sidebar.classList.toggle('open');
+            } else {
+                // Modo escritorio: Colapsar/Expandir con ajuste de contenido
+                sidebar.classList.toggle('collapsed');
+                if (mainContent) {
+                    mainContent.classList.toggle('sidebar-hidden');
+                }
+            }
         });
 
         // Cerrar sidebar al hacer clic fuera en móvil
@@ -52,137 +63,12 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // ---- Búsqueda y Filtros Custom ----
-    const buscador = document.getElementById('buscador');
-    const btnLimpiar = document.getElementById('btn-limpiar');
-    const tabla = document.getElementById('tabla-alumnos');
-
-    if (tabla) {
-        const filas = tabla.querySelectorAll('tbody tr');
-        const info = document.querySelector('.pagination-info');
-
-        // Función Principal de Filtrado
-        const aplicarFiltros = () => {
-            const query = buscador ? buscador.value.toLowerCase().trim() : '';
-            
-            // Obtener el valor de "data-value" del trigger de cada custom select
-            const triggerNivel = document.querySelector('#dropdown-nivel .selected-text');
-            const triggerGrupo = document.querySelector('#dropdown-grupo .selected-text');
-            const triggerStatus = document.querySelector('#dropdown-status .selected-text');
-
-            const nivel = triggerNivel ? triggerNivel.getAttribute('data-value') : '';
-            const grupo = triggerGrupo ? triggerGrupo.getAttribute('data-value') : '';
-            const status = triggerStatus ? triggerStatus.getAttribute('data-value') : '';
-
-            let visibles = 0;
-
-            filas.forEach(fila => {
-                const textoGeneral = fila.textContent.toLowerCase();
-                const tdNivel = fila.cells[3].textContent.toLowerCase();
-                const tdGrupo = fila.cells[4].textContent.toLowerCase();
-                const tdStatus = fila.cells[5].textContent.toLowerCase();
-
-                const coincideTexto = textoGeneral.includes(query);
-                const coincideNivel = nivel === '' || tdNivel.includes(nivel);
-                const coincideGrupo = grupo === '' || tdGrupo.includes(grupo);
-                const coincideStatus = status === '' || tdStatus.includes(status);
-
-                if (coincideTexto && coincideNivel && coincideGrupo && coincideStatus) {
-                    fila.style.display = '';
-                    visibles++;
-                } else {
-                    fila.style.display = 'none';
-                }
-            });
-
-            if (info) {
-                info.textContent = `Mostrando ${visibles} resultado${visibles !== 1 ? 's' : ''}`;
-            }
-        };
-
-        // Escuchar input en buscar
-        if (buscador) buscador.addEventListener('input', aplicarFiltros);
-
-        // Lógica de los Custom Dropdowns
-        const customDropdowns = document.querySelectorAll('.custom-dropdown');
-
-        customDropdowns.forEach(dropdown => {
-            const trigger = dropdown.querySelector('.custom-select-trigger');
-            const options = dropdown.querySelectorAll('.custom-option');
-            const selectedText = dropdown.querySelector('.selected-text');
-
-            // Abrir / Cerrar Dropdown
-            trigger.addEventListener('click', (e) => {
-                e.stopPropagation();
-                // Cerrar cualquier otro abierto
-                customDropdowns.forEach(d => {
-                    if (d !== dropdown) d.classList.remove('open');
-                });
-                dropdown.classList.toggle('open');
-            });
-
-            // Seleccionar opción
-            options.forEach(option => {
-                option.addEventListener('click', (e) => {
-                    e.stopPropagation();
-
-                    // Quitar clase selected a los demás
-                    options.forEach(opt => opt.classList.remove('selected'));
-                    option.classList.add('selected');
-
-                    // Actualizar texto y valor en el trigger
-                    const val = option.getAttribute('data-value');
-                    const text = option.textContent;
-                    
-                    selectedText.textContent = text;
-                    selectedText.setAttribute('data-value', val);
-
-                    // Cerrar el dropdown
-                    dropdown.classList.remove('open');
-
-                    // Aplicar Filtros a la tabla
-                    aplicarFiltros();
-                });
-            });
-        });
-
-        // Cerrar dropdown si se hace clic fuera
-        document.addEventListener('click', () => {
-            customDropdowns.forEach(dropdown => dropdown.classList.remove('open'));
-        });
-
-        // Botón Limpiar
-        if (btnLimpiar) {
-            btnLimpiar.addEventListener('click', () => {
-                if (buscador) buscador.value = '';
-                
-                // Reiniciar custom dropdowns
-                customDropdowns.forEach(dropdown => {
-                    const options = dropdown.querySelectorAll('.custom-option');
-                    const selectedText = dropdown.querySelector('.selected-text');
-                    
-                    options.forEach(opt => opt.classList.remove('selected'));
-                    
-                    // Elegir por default el primer option que en teoría es "Todos..."
-                    if (options.length > 0) {
-                        const firstOpt = options[0];
-                        firstOpt.classList.add('selected');
-                        selectedText.textContent = firstOpt.textContent;
-                        selectedText.setAttribute('data-value', firstOpt.getAttribute('data-value'));
-                    }
-                });
-
-                aplicarFiltros();
-            });
-        }
-    }
-
     // ---- Menú de Perfil (Cuenta Administrador) ----
     const profileMenu = document.getElementById('profile-menu');
-    
+
     if (profileMenu) {
         const profileTrigger = profileMenu.querySelector('.profile-trigger');
-        
+
         // Abrir / Cerrar al hacer clic en el nombre u avatar
         profileTrigger.addEventListener('click', (e) => {
             e.stopPropagation(); // Prevenir que el listener global lo cierre de inmediato
@@ -210,7 +96,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const btnLogout = document.getElementById('btn-logout');
         if (btnLogout) {
             btnLogout.addEventListener('click', () => {
-                window.location.href = 'logIn.html';
+                window.location.href = '/';
             });
         }
     }
