@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="{{ asset('css/dashboardAdminAlumnos.css') }}">
     <link rel="stylesheet" href="{{ asset('css/dashboardAdminProfesores.css') }}">
     <link rel="stylesheet" href="{{ asset('css/dashboardAdminGrupos.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/dashboardAdminExtraescolares.css') }}">
 </head>
 
 <body>
@@ -1192,15 +1193,152 @@
             </div>
         </div>
 
+        <!-- ======================= SECCIÓN EXTRAESCOLARES ======================= -->
         <section class="section-content" id="section-extraescolares" style="display: none;">
+
             <div class="section-header">
-                <h1 class="section-title">Extraescolares</h1>
+                <h1 class="section-title">Actividades Extraescolares</h1>
+                <button class="btn-primary" id="btn-agregar-extraescolar">
+                    <i class="ri-add-line"></i> Agregar Actividad
+                </button>
             </div>
-            <div class="card"
-                style="min-height: 480px; display: flex; align-items: center; justify-content: center; color: var(--texto-suave);">
-                Página en construcción
+
+            <div class="search-bar" style="margin-bottom: 24px;">
+                <i class="ri-search-line search-icon"></i>
+                <input type="text" id="buscador-extraescolares" placeholder="Buscar actividad por nombre..." autocomplete="off">
             </div>
+
+            <div class="extraescolares-grid" id="grid-extraescolares">
+                <!-- Tarjeta de ejemplo -->
+                <div class="extraescolar-card" data-nombre="Taller de Ajedrez Rápido">
+                    <div class="extraescolar-card-header">
+                        <h3 class="extraescolar-nombre">Taller de Ajedrez Rápido</h3>
+                    </div>
+                    <div class="extraescolar-card-body">
+                        <div class="extraescolar-info-line">
+                            <i class="ri-text-wrap"></i> Técnicas avanzadas de Blitz y Bullet.
+                        </div>
+                        <div class="extraescolar-inscritos-wrapper">
+                            <div class="extraescolar-info-line">
+                                <i class="ri-group-line"></i> 5 / 20 inscritos
+                            </div>
+                            <div class="progress-bar-container">
+                                <div class="progress-bar-fill" style="width: 25%;"></div>
+                            </div>
+                        </div>
+                        <div class="extraescolar-info-line">
+                            <i class="ri-money-dollar-circle-line"></i> Costo: $300.00
+                        </div>
+                        <div class="extraescolar-info-line">
+                            <i class="ri-calendar-line"></i> 2026-05-01 / 2026-06-15
+                        </div>
+                    </div>
+                    <div class="extraescolar-card-footer">
+                        <button class="btn-extraescolar-editar"><i class="ri-edit-line"></i> Editar</button>
+                        <button class="btn-extraescolar-eliminar"><i class="ri-delete-bin-line"></i></button>
+                    </div>
+                </div>
+            </div>
+            <p class="extraescolares-empty" id="extraescolares-empty" style="display:none;">No se encontraron actividades.</p>
+
         </section>
+
+        <!-- ======================= MODAL: AGREGAR EXTRAESCOLAR ======================= -->
+        <div class="modal-overlay" id="modal-agregar-extraescolar">
+            <div class="modal-box">
+                <div class="modal-header">
+                    <div class="modal-title-group">
+                        <span class="modal-title-icon"><i class="ri-bar-chart-2-line"></i></span>
+                        <h2 class="modal-title">Agregar Actividad Extraescolar</h2>
+                    </div>
+                    <button type="button" class="modal-close-btn" id="modal-close-extraescolar" title="Cerrar">
+                        <i class="ri-close-line"></i>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+                    <form id="form-agregar-extraescolar" novalidate>
+                        @csrf
+                        <div class="modal-section-label">
+                            <i class="ri-information-line"></i> Datos de la Actividad
+                        </div>
+                        <div class="modal-grid">
+
+                            <!-- Nombre -->
+                            <div class="form-group-modal modal-col-full">
+                                <label for="ex-nombre">Nombre <span style="color:var(--naranja)">*</span></label>
+                                <input type="text" id="ex-nombre" name="nombre" placeholder="Ej. Taller de Ajedrez Computarizado" required maxlength="100">
+                                <span class="error-msg-modal" id="err-ex-nombre"></span>
+                            </div>
+
+                            <!-- Cupo máximo -->
+                            <div class="form-group-modal">
+                                <label for="ex-cupo-maximo">Cupo Máximo <span style="color:var(--naranja)">*</span></label>
+                                <input type="number" id="ex-cupo-maximo" name="cupo_maximo" placeholder="Ej. 30" required min="1">
+                                <span class="error-msg-modal" id="err-ex-cupo-maximo"></span>
+                            </div>
+
+                            <!-- Costo -->
+                            <div class="form-group-modal">
+                                <label for="ex-costo">Costo ($)</label>
+                                <input type="number" id="ex-costo" name="costo" placeholder="Ej. 500.00" min="0" step="0.01">
+                            </div>
+
+                            <!-- Fecha Inicio -->
+                            <div class="form-group-modal">
+                                <label for="ex-fecha-inicio">Fecha de Inicio <span style="color:var(--naranja)">*</span></label>
+                                <input type="date" id="ex-fecha-inicio" name="fecha_inicio" required>
+                                <span class="error-msg-modal" id="err-ex-fecha-inicio"></span>
+                            </div>
+
+                            <!-- Fecha Fin -->
+                            <div class="form-group-modal">
+                                <label for="ex-fecha-fin">Fecha de Fin <span style="color:var(--naranja)">*</span></label>
+                                <input type="date" id="ex-fecha-fin" name="fecha_fin" required>
+                                <span class="error-msg-modal" id="err-ex-fecha-fin"></span>
+                            </div>
+
+                            <!-- Estatus -->
+                            <div class="form-group-modal">
+                                <label for="ex-estatus">Estatus</label>
+                                <div class="form-dropdown" id="dropdown-ex-estatus" tabindex="0">
+                                    <div class="form-select-trigger" id="trigger-ex-estatus">
+                                        <span class="selected-text" data-value="1">Activo</span>
+                                        <i class="ri-arrow-down-s-line"></i>
+                                    </div>
+                                    <div class="form-options-container">
+                                        <div class="form-option selected" data-value="1">Activo</div>
+                                        <div class="form-option" data-value="0">Inactivo</div>
+                                    </div>
+                                    <input type="hidden" id="ex-estatus" name="estatus" value="1">
+                                </div>
+                            </div>
+
+                            <!-- Descripción -->
+                            <div class="form-group-modal modal-col-full">
+                                <label for="ex-descripcion">Descripción</label>
+                                <textarea id="ex-descripcion" name="descripcion" placeholder="Breve descripción de la actividad..." rows="3" style="width:100%; padding:10px; border:1px solid var(--borde); border-radius:8px; font-family:'Inter', sans-serif; resize:vertical;"></textarea>
+                            </div>
+
+                            <!-- Requisitos -->
+                            <div class="form-group-modal modal-col-full">
+                                <label for="ex-requisitos">Requisitos</label>
+                                <textarea id="ex-requisitos" name="requisitos" placeholder="Requisitos previos..." rows="2" style="width:100%; padding:10px; border:1px solid var(--borde); border-radius:8px; font-family:'Inter', sans-serif; resize:vertical;"></textarea>
+                            </div>
+
+                        </div>
+
+                        <!-- ===== PIE DEL FORMULARIO ===== -->
+                        <div class="modal-footer">
+                            <button type="button" class="btn-modal-cancel" id="btn-cancelar-modal-extraescolar">Cancelar</button>
+                            <button type="submit" class="btn-modal-submit">
+                                <i class="ri-save-line"></i> Guardar Actividad
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
 
         <section class="section-content" id="section-status" style="display: none;">
             <div class="section-header">
@@ -1254,6 +1392,8 @@
     <script src="{{ asset('animaciones/dashboardAdminProfesores.js') }}"></script>
     <!-- JS Sección Grupos -->
     <script src="{{ asset('animaciones/dashboardAdminGrupos.js') }}"></script>
+    <!-- JS Sección Extraescolares -->
+    <script src="{{ asset('animaciones/dashboardAdminExtraescolares.js') }}"></script>
 
 </body>
 
