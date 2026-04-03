@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="{{ asset('css/dashboardAdminProfesores.css') }}">
     <link rel="stylesheet" href="{{ asset('css/dashboardAdminGrupos.css') }}">
     <link rel="stylesheet" href="{{ asset('css/dashboardAdminExtraescolares.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/dashboardAdminNiveles.css') }}">
 </head>
 
 <body>
@@ -1374,13 +1375,159 @@
 
         <section class="section-content" id="section-niveles" style="display: none;">
             <div class="section-header">
-                <h1 class="section-title">Niveles</h1>
+                <h1 class="section-title">Niveles de Estudiantes</h1>
             </div>
-            <div class="card"
-                style="min-height: 480px; display: flex; align-items: center; justify-content: center; color: var(--texto-suave);">
-                Página en construcción
+
+            <!-- KPI Cards -->
+            <div class="niveles-kpi-container">
+                <div class="niveles-kpi-card">
+                    <span class="kpi-label">Promedio de Puntos</span>
+                    <span class="kpi-value">1169</span>
+                </div>
+                <div class="niveles-kpi-card">
+                    <span class="kpi-label">Nivel Promedio</span>
+                    <span class="kpi-value">4.4</span>
+                </div>
+                <div class="niveles-kpi-card">
+                    <span class="kpi-label">Total Estudiantes</span>
+                    <span class="kpi-value">5</span>
+                </div>
+            </div>
+
+            <!-- Main Content Card -->
+            <div class="card card-niveles">
+                <!-- Controls -->
+                <div class="niveles-controls">
+                    <div class="search-bar search-niveles">
+                        <i class="ri-search-line search-icon"></i>
+                        <input type="text" id="buscador-niveles" placeholder="Buscar estudiante por nombre...">
+                    </div>
+
+                    <div class="select-wrapper custom-dropdown" id="dropdown-niv-sede">
+                        <div class="custom-select-trigger niveles-select">
+                            <span class="selected-text" data-value="">Sede</span>
+                            <i class="ri-arrow-down-s-line"></i>
+                        </div>
+                        <div class="custom-options-container">
+                            <div class="custom-option selected" data-value="">Sede</div>
+                            <div class="custom-option" data-value="Sede Central">Sede Central</div>
+                            <div class="custom-option" data-value="Sede Norte">Sede Norte</div>
+                        </div>
+                    </div>
+
+                    <div class="select-wrapper custom-dropdown" id="dropdown-niv-nivel">
+                        <div class="custom-select-trigger niveles-select">
+                            <span class="selected-text" data-value="">Nivel</span>
+                            <i class="ri-arrow-down-s-line"></i>
+                        </div>
+                        <div class="custom-options-container">
+                            <div class="custom-option selected" data-value="">Nivel</div>
+                            <div class="custom-option" data-value="3">Nivel 3</div>
+                            <div class="custom-option" data-value="4">Nivel 4</div>
+                            <div class="custom-option" data-value="5">Nivel 5</div>
+                            <div class="custom-option" data-value="6">Nivel 6</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Table -->
+                <div class="table-wrapper">
+                    <table class="data-table" id="tabla-niveles">
+                        <thead>
+                            <tr>
+                                <th>Alumno</th>
+                                <th>Puntos</th>
+                                <th>Nivel</th>
+                                <th>Sede</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Ana García</td>
+                                <td><span class="puntos-actual">1450</span> <span class="puntos-max">/ 2000</span></td>
+                                <td><div class="badge-nivel badge-nivel-5"><span class="badge-nivel-texto">Nivel</span> <span class="badge-nivel-num">5</span></div></td>
+                                <td>Sede Central</td>
+                                <td class="acciones-puntos">
+                                    <button class="btn-modificar-puntos"><i class="ri-edit-line"></i> Modificar</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Carlos López</td>
+                                <td><span class="puntos-actual">875</span> <span class="puntos-max">/ 2000</span></td>
+                                <td><div class="badge-nivel badge-nivel-4"><span class="badge-nivel-texto">Nivel</span> <span class="badge-nivel-num">4</span></div></td>
+                                <td>Sede Norte</td>
+                                <td class="acciones-puntos">
+                                    <button class="btn-modificar-puntos"><i class="ri-edit-line"></i> Modificar</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>María Rodríguez</td>
+                                <td><span class="puntos-actual">1720</span> <span class="puntos-max">/ 2000</span></td>
+                                <td><div class="badge-nivel badge-nivel-6"><span class="badge-nivel-texto">Nivel</span> <span class="badge-nivel-num">6</span></div></td>
+                                <td>Sede Central</td>
+                                <td class="acciones-puntos">
+                                    <button class="btn-modificar-puntos"><i class="ri-edit-line"></i> Modificar</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Juan Sánchez</td>
+                                <td><span class="puntos-actual">650</span> <span class="puntos-max">/ 2000</span></td>
+                                <td><div class="badge-nivel badge-nivel-3"><span class="badge-nivel-texto">Nivel</span> <span class="badge-nivel-num">3</span></div></td>
+                                <td>Sede Norte</td>
+                                <td class="acciones-puntos">
+                                    <button class="btn-modificar-puntos"><i class="ri-edit-line"></i> Modificar</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Laura Fernández</td>
+                                <td><span class="puntos-actual">1150</span> <span class="puntos-max">/ 2000</span></td>
+                                <td><div class="badge-nivel badge-nivel-4"><span class="badge-nivel-texto">Nivel</span> <span class="badge-nivel-num">4</span></div></td>
+                                <td>Sede Central</td>
+                                <td class="acciones-puntos">
+                                    <button class="btn-modificar-puntos"><i class="ri-edit-line"></i> Modificar</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </section>
+
+        <!-- ======================= MODAL: MODIFICAR PUNTOS ======================= -->
+        <div class="modal-overlay" id="modal-modificar-puntos">
+            <div class="modal-box" style="max-width: 400px; width: 90%;">
+                <div class="modal-header">
+                    <div class="modal-title-group">
+                        <span class="modal-title-icon"><i class="ri-award-line"></i></span>
+                        <h2 class="modal-title">Modificar Puntuación</h2>
+                    </div>
+                    <button type="button" class="modal-close-btn" id="modal-close-puntos" title="Cerrar">
+                        <i class="ri-close-line"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="modal-puntos-info">
+                        <h3 id="puntos-modal-nombre">Nombre Alumno</h3>
+                        <p style="color: var(--texto-suave); font-size: 14px; margin: 0;">Puntos actuales: <strong id="puntos-modal-actuales" style="color: var(--naranja); font-size: 18px;">0</strong> / 2000</p>
+                    </div>
+
+                    <div class="form-group-modal">
+                        <label for="puntos-modal-cantidad" class="puntos-modal-label">Cantidad de puntos:</label>
+                        <input type="number" id="puntos-modal-cantidad" placeholder="Ej. 50" min="1" max="2000">
+                    </div>
+
+                    <div class="modal-puntos-actions">
+                        <button type="button" id="btn-puntos-restar" class="btn-modal-action btn-modal-restar">
+                            <i class="ri-subtract-line"></i> Quitar
+                        </button>
+                        <button type="button" id="btn-puntos-sumar" class="btn-modal-action btn-modal-sumar">
+                            <i class="ri-add-line"></i> Añadir
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <!-- Nueva sección Opciones / Configuración -->
         <section class="section-content" id="section-opciones" style="display: none;">
@@ -1406,6 +1553,8 @@
     <script src="{{ asset('animaciones/dashboardAdminGrupos.js') }}"></script>
     <!-- JS Sección Extraescolares -->
     <script src="{{ asset('animaciones/dashboardAdminExtraescolares.js') }}"></script>
+    <!-- JS Sección Niveles -->
+    <script src="{{ asset('animaciones/dashboardAdminNiveles.js') }}"></script>
 
 </body>
 
