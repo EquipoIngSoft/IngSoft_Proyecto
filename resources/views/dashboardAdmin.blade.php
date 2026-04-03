@@ -16,6 +16,8 @@
     <link rel="stylesheet" href="{{ asset('css/dashboardAdminAlumnos.css') }}">
     <link rel="stylesheet" href="{{ asset('css/dashboardAdminProfesores.css') }}">
     <link rel="stylesheet" href="{{ asset('css/dashboardAdminGrupos.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/dashboardAdminExtraescolares.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/dashboardAdminNiveles.css') }}">
 </head>
 
 <body>
@@ -415,7 +417,7 @@
 
                         <!-- ===== DIVISOR ===== -->
                         <div class="modal-divider">
-                            <span>Datos del Tutor</span>
+                            <span>Datos del Tutor (OPCIONAL)</span>
                         </div>
 
                         <!-- ===== SECCIÓN: Datos del Tutor ===== -->
@@ -481,7 +483,8 @@
             <!-- Buscador -->
             <div class="search-bar" style="margin-bottom: 24px;">
                 <i class="ri-search-line search-icon"></i>
-                <input type="text" id="buscador-profesores" placeholder="Buscar profesor por nombre, especialidad o email..." autocomplete="off">
+                <input type="text" id="buscador-profesores"
+                    placeholder="Buscar profesor por nombre, especialidad o email..." autocomplete="off">
             </div>
 
             <!-- Grid de tarjetas -->
@@ -568,17 +571,21 @@
                                 <span class="error-msg-modal" id="err-pr-nombre"></span>
                             </div>
                             <div class="form-group-modal">
-                                <label for="pr-ap-paterno">Apellido Paterno <span style="color:var(--naranja)">*</span></label>
-                                <input type="text" id="pr-ap-paterno" name="pr_ap_paterno" placeholder="Apellido paterno" required>
+                                <label for="pr-ap-paterno">Apellido Paterno <span
+                                        style="color:var(--naranja)">*</span></label>
+                                <input type="text" id="pr-ap-paterno" name="pr_ap_paterno"
+                                    placeholder="Apellido paterno" required>
                                 <span class="error-msg-modal" id="err-pr-ap-paterno"></span>
                             </div>
                             <div class="form-group-modal">
                                 <label for="pr-ap-materno">Apellido Materno</label>
-                                <input type="text" id="pr-ap-materno" name="pr_ap_materno" placeholder="Apellido materno">
+                                <input type="text" id="pr-ap-materno" name="pr_ap_materno"
+                                    placeholder="Apellido materno">
                             </div>
                             <div class="form-group-modal">
                                 <label for="pr-telefono">Número de Teléfono</label>
-                                <input type="tel" id="pr-telefono" name="pr_telefono" placeholder="10 dígitos" maxlength="10">
+                                <input type="tel" id="pr-telefono" name="pr_telefono" placeholder="10 dígitos"
+                                    maxlength="10">
                                 <span class="error-msg-modal" id="err-pr-telefono"></span>
                             </div>
                             <div class="form-group-modal">
@@ -599,29 +606,37 @@
                             </div>
                             <div class="form-group-modal modal-col-full">
                                 <label for="pr-direccion">Dirección</label>
-                                <input type="text" id="pr-direccion" name="pr_direccion" placeholder="Calle, número, colonia...">
+                                <input type="text" id="pr-direccion" name="pr_direccion"
+                                    placeholder="Calle, número, colonia...">
                                 <span class="error-msg-modal" id="err-pr-direccion"></span>
                             </div>
                             <div class="form-group-modal modal-col-full">
-                                <label for="pr-correo">Correo Electrónico <span style="color:var(--naranja)">*</span></label>
-                                <input type="email" id="pr-correo" name="pr_correo" placeholder="correo@ejemplo.com" required>
+                                <label for="pr-correo">Correo Electrónico <span
+                                        style="color:var(--naranja)">*</span></label>
+                                <input type="email" id="pr-correo" name="pr_correo" placeholder="correo@ejemplo.com"
+                                    required>
                                 <span class="error-msg-modal" id="err-pr-correo"></span>
                             </div>
                             <div class="form-group-modal">
                                 <label for="pr-password">Contraseña <span style="color:var(--naranja)">*</span></label>
                                 <div class="input-password-wrapper">
-                                    <input type="password" id="pr-password" name="pr_password" placeholder="Mínimo 6 caracteres" required minlength="6">
-                                    <button type="button" class="toggle-password" data-target="pr-password" title="Mostrar/Ocultar">
+                                    <input type="password" id="pr-password" name="pr_password"
+                                        placeholder="Mínimo 6 caracteres" required minlength="6">
+                                    <button type="button" class="toggle-password" data-target="pr-password"
+                                        title="Mostrar/Ocultar">
                                         <i class="ri-eye-line"></i>
                                     </button>
                                 </div>
                                 <span class="error-msg-modal" id="err-pr-password"></span>
                             </div>
                             <div class="form-group-modal">
-                                <label for="pr-password-confirm">Confirmar Contraseña <span style="color:var(--naranja)">*</span></label>
+                                <label for="pr-password-confirm">Confirmar Contraseña <span
+                                        style="color:var(--naranja)">*</span></label>
                                 <div class="input-password-wrapper">
-                                    <input type="password" id="pr-password-confirm" name="pr_password_confirm" placeholder="Repite la contraseña" required>
-                                    <button type="button" class="toggle-password" data-target="pr-password-confirm" title="Mostrar/Ocultar">
+                                    <input type="password" id="pr-password-confirm" name="pr_password_confirm"
+                                        placeholder="Repite la contraseña" required>
+                                    <button type="button" class="toggle-password" data-target="pr-password-confirm"
+                                        title="Mostrar/Ocultar">
                                         <i class="ri-eye-line"></i>
                                     </button>
                                 </div>
@@ -631,7 +646,8 @@
 
                         <!-- ===== PIE DEL FORMULARIO ===== -->
                         <div class="modal-footer">
-                            <button type="button" class="btn-modal-cancel" id="btn-cancelar-modal-profesor">Cancelar</button>
+                            <button type="button" class="btn-modal-cancel"
+                                id="btn-cancelar-modal-profesor">Cancelar</button>
                             <button type="submit" class="btn-modal-submit">
                                 <i class="ri-save-line"></i> Guardar Profesor
                             </button>
@@ -661,14 +677,16 @@
             <!-- Buscador -->
             <div class="search-bar" style="margin-bottom: 24px;">
                 <i class="ri-search-line search-icon"></i>
-                <input type="text" id="buscador-grupos" placeholder="Buscar grupo por nombre, nivel o profesor..." autocomplete="off">
+                <input type="text" id="buscador-grupos" placeholder="Buscar grupo por nombre, nivel o profesor..."
+                    autocomplete="off">
             </div>
 
             <!-- Grid de tarjetas de grupos -->
             <div class="grupos-grid" id="grid-grupos">
 
                 <!-- Tarjeta 1 -->
-                <div class="grupo-card" data-nombre="Grupo A" data-nivel="principiantes" data-profesor="Maestro González">
+                <div class="grupo-card" data-nombre="Grupo A" data-nivel="principiantes"
+                    data-profesor="Maestro González">
                     <div class="grupo-card-header">
                         <h3 class="grupo-nombre">Grupo A</h3>
                         <span class="badge badge-principiantes">Principiantes</span>
@@ -677,8 +695,13 @@
                         <div class="grupo-info-line">
                             <i class="ri-user-star-line"></i> Maestro González
                         </div>
-                        <div class="grupo-info-line">
-                            <i class="ri-group-line"></i> 15 estudiantes
+                        <div class="grupo-inscritos-wrapper">
+                            <div class="grupo-info-line">
+                                <i class="ri-group-line"></i> 15 / 20 inscritos
+                            </div>
+                            <div class="progress-bar-container">
+                                <div class="progress-bar-fill" style="width: 75%;"></div>
+                            </div>
                         </div>
                         <div class="grupo-info-line">
                             <i class="ri-time-line"></i> Lunes y Miércoles 14:00-15:30
@@ -700,8 +723,13 @@
                         <div class="grupo-info-line">
                             <i class="ri-user-star-line"></i> Maestra Ramírez
                         </div>
-                        <div class="grupo-info-line">
-                            <i class="ri-group-line"></i> 12 estudiantes
+                        <div class="grupo-inscritos-wrapper">
+                            <div class="grupo-info-line">
+                                <i class="ri-group-line"></i> 12 / 15 inscritos
+                            </div>
+                            <div class="progress-bar-container">
+                                <div class="progress-bar-fill" style="width: 80%;"></div>
+                            </div>
                         </div>
                         <div class="grupo-info-line">
                             <i class="ri-time-line"></i> Martes y Jueves 16:00-17:30
@@ -723,8 +751,13 @@
                         <div class="grupo-info-line">
                             <i class="ri-user-star-line"></i> Maestro López
                         </div>
-                        <div class="grupo-info-line">
-                            <i class="ri-group-line"></i> 8 estudiantes
+                        <div class="grupo-inscritos-wrapper">
+                            <div class="grupo-info-line">
+                                <i class="ri-group-line"></i> 8 / 20 inscritos
+                            </div>
+                            <div class="progress-bar-container">
+                                <div class="progress-bar-fill" style="width: 40%;"></div>
+                            </div>
                         </div>
                         <div class="grupo-info-line">
                             <i class="ri-time-line"></i> Viernes 17:00-19:00
@@ -742,71 +775,129 @@
 
             <!-- ======================= TABLA DEMOSTRATIVA DE CURSOS ======================= -->
             <div style="margin-top: 40px;">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; gap: 24px;">
-                    <h2 style="font-family: 'Inter', sans-serif; font-size: 18px; color: var(--texto); margin: 0; white-space: nowrap;">Catálogo de Cursos</h2>
+                <div
+                    style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; gap: 24px;">
+                    <h2
+                        style="font-family: 'Inter', sans-serif; font-size: 18px; color: var(--texto); margin: 0; white-space: nowrap;">
+                        Catálogo de Cursos</h2>
                     <div class="search-bar" style="flex-grow: 1; max-width: 600px; margin: 0;">
                         <i class="ri-search-line search-icon"></i>
-                        <input type="text" id="buscador-tabla-cursos" placeholder="Buscar por clave, nombre o sede..." autocomplete="off">
+                        <input type="text" id="buscador-tabla-cursos" placeholder="Buscar por clave, nombre o sede..."
+                            autocomplete="off">
                     </div>
                 </div>
-                
-                <div style="overflow-x: auto; background-color: var(--blanco); border-radius: 12px; border: 1px solid var(--borde); box-shadow: 0 4px 12px rgba(0,0,0,0.02);">
+
+                <div
+                    style="overflow-x: auto; background-color: var(--blanco); border-radius: 12px; border: 1px solid var(--borde); box-shadow: 0 4px 12px rgba(0,0,0,0.02);">
                     <table id="tabla-cursos" style="width: 100%; border-collapse: collapse; text-align: left;">
                         <thead style="background-color: #fafafa; border-bottom: 1px solid var(--borde);">
                             <tr>
-                                <th style="padding: 16px; font-weight: 600; font-size: 13px; color: var(--texto-suave);">ID</th>
-                                <th style="padding: 16px; font-weight: 600; font-size: 13px; color: var(--texto-suave);">Nombre del Curso</th>
-                                <th style="padding: 16px; font-weight: 600; font-size: 13px; color: var(--texto-suave);">Nivel</th>
-                                <th style="padding: 16px; font-weight: 600; font-size: 13px; color: var(--texto-suave);">Duración</th>
-                                <th style="padding: 16px; font-weight: 600; font-size: 13px; color: var(--texto-suave);">Costo Base</th>
-                                <th style="padding: 16px; font-weight: 600; font-size: 13px; color: var(--texto-suave);">Sede</th>
-                                <th style="padding: 16px; font-weight: 600; font-size: 13px; color: var(--texto-suave);">Estatus</th>
-                                <th style="padding: 16px; font-weight: 600; font-size: 13px; color: var(--texto-suave); text-align: center;">Acciones</th>
+                                <th
+                                    style="padding: 16px; font-weight: 600; font-size: 13px; color: var(--texto-suave);">
+                                    ID</th>
+                                <th
+                                    style="padding: 16px; font-weight: 600; font-size: 13px; color: var(--texto-suave);">
+                                    Nombre del Curso</th>
+                                <th
+                                    style="padding: 16px; font-weight: 600; font-size: 13px; color: var(--texto-suave);">
+                                    Nivel</th>
+                                <th
+                                    style="padding: 16px; font-weight: 600; font-size: 13px; color: var(--texto-suave);">
+                                    Duración</th>
+                                <th
+                                    style="padding: 16px; font-weight: 600; font-size: 13px; color: var(--texto-suave);">
+                                    Costo Base</th>
+                                <th
+                                    style="padding: 16px; font-weight: 600; font-size: 13px; color: var(--texto-suave);">
+                                    Sede</th>
+                                <th
+                                    style="padding: 16px; font-weight: 600; font-size: 13px; color: var(--texto-suave);">
+                                    Estatus</th>
+                                <th
+                                    style="padding: 16px; font-weight: 600; font-size: 13px; color: var(--texto-suave); text-align: center;">
+                                    Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr style="border-bottom: 1px solid var(--borde); transition: background-color 0.2s;">
                                 <td style="padding: 16px; font-size: 14px; color: var(--texto);">1</td>
-                                <td style="padding: 16px; font-size: 14px; color: var(--texto); font-weight: 500;">Ajedrez Principiantes</td>
-                                <td style="padding: 16px;"><span class="badge badge-principiantes">Principiante</span></td>
-                                <td style="padding: 16px; font-size: 14px; color: var(--texto);">12 Semanas (24 hrs)</td>
+                                <td style="padding: 16px; font-size: 14px; color: var(--texto); font-weight: 500;">
+                                    Ajedrez Principiantes</td>
+                                <td style="padding: 16px;"><span class="badge badge-principiantes">Principiante</span>
+                                </td>
+                                <td style="padding: 16px; font-size: 14px; color: var(--texto);">12 Semanas (24 hrs)
+                                </td>
                                 <td style="padding: 16px; font-size: 14px; color: var(--texto);">$1,200.00</td>
                                 <td style="padding: 16px; font-size: 14px; color: var(--texto);">Sede Central</td>
-                                <td style="padding: 16px;"><span style="color: #1e8e3e; font-size: 12px; font-weight: 600;"><i class="ri-checkbox-circle-fill"></i> Activo</span></td>
+                                <td style="padding: 16px;"><span
+                                        style="color: #1e8e3e; font-size: 12px; font-weight: 600;"><i
+                                            class="ri-checkbox-circle-fill"></i> Activo</span></td>
                                 <td style="padding: 16px; text-align: center;">
                                     <div style="display: flex; gap: 8px; justify-content: center;">
-                                        <button title="Editar" style="background:none; border:none; color:var(--texto-suave); font-size:18px; cursor:pointer;" onmouseover="this.style.color='var(--naranja)'" onmouseout="this.style.color='var(--texto-suave)'"><i class="ri-edit-line"></i></button>
-                                        <button title="Eliminar" style="background:none; border:none; color:var(--texto-suave); font-size:18px; cursor:pointer;" onmouseover="this.style.color='#d93025'" onmouseout="this.style.color='var(--texto-suave)'"><i class="ri-delete-bin-line"></i></button>
+                                        <button title="Editar"
+                                            style="background:none; border:none; color:var(--texto-suave); font-size:18px; cursor:pointer;"
+                                            onmouseover="this.style.color='var(--naranja)'"
+                                            onmouseout="this.style.color='var(--texto-suave)'"><i
+                                                class="ri-edit-line"></i></button>
+                                        <button title="Eliminar"
+                                            style="background:none; border:none; color:var(--texto-suave); font-size:18px; cursor:pointer;"
+                                            onmouseover="this.style.color='#d93025'"
+                                            onmouseout="this.style.color='var(--texto-suave)'"><i
+                                                class="ri-delete-bin-line"></i></button>
                                     </div>
                                 </td>
                             </tr>
                             <tr style="border-bottom: 1px solid var(--borde); transition: background-color 0.2s;">
                                 <td style="padding: 16px; font-size: 14px; color: var(--texto);">2</td>
-                                <td style="padding: 16px; font-size: 14px; color: var(--texto); font-weight: 500;">Ajedrez Intermedio (Táctica)</td>
+                                <td style="padding: 16px; font-size: 14px; color: var(--texto); font-weight: 500;">
+                                    Ajedrez Intermedio (Táctica)</td>
                                 <td style="padding: 16px;"><span class="badge badge-intermedios">Intermedio</span></td>
-                                <td style="padding: 16px; font-size: 14px; color: var(--texto);">16 Semanas (48 hrs)</td>
+                                <td style="padding: 16px; font-size: 14px; color: var(--texto);">16 Semanas (48 hrs)
+                                </td>
                                 <td style="padding: 16px; font-size: 14px; color: var(--texto);">$1,800.00</td>
                                 <td style="padding: 16px; font-size: 14px; color: var(--texto);">Sede Norte</td>
-                                <td style="padding: 16px;"><span style="color: #1e8e3e; font-size: 12px; font-weight: 600;"><i class="ri-checkbox-circle-fill"></i> Activo</span></td>
+                                <td style="padding: 16px;"><span
+                                        style="color: #1e8e3e; font-size: 12px; font-weight: 600;"><i
+                                            class="ri-checkbox-circle-fill"></i> Activo</span></td>
                                 <td style="padding: 16px; text-align: center;">
                                     <div style="display: flex; gap: 8px; justify-content: center;">
-                                        <button title="Editar" style="background:none; border:none; color:var(--texto-suave); font-size:18px; cursor:pointer;" onmouseover="this.style.color='var(--naranja)'" onmouseout="this.style.color='var(--texto-suave)'"><i class="ri-edit-line"></i></button>
-                                        <button title="Eliminar" style="background:none; border:none; color:var(--texto-suave); font-size:18px; cursor:pointer;" onmouseover="this.style.color='#d93025'" onmouseout="this.style.color='var(--texto-suave)'"><i class="ri-delete-bin-line"></i></button>
+                                        <button title="Editar"
+                                            style="background:none; border:none; color:var(--texto-suave); font-size:18px; cursor:pointer;"
+                                            onmouseover="this.style.color='var(--naranja)'"
+                                            onmouseout="this.style.color='var(--texto-suave)'"><i
+                                                class="ri-edit-line"></i></button>
+                                        <button title="Eliminar"
+                                            style="background:none; border:none; color:var(--texto-suave); font-size:18px; cursor:pointer;"
+                                            onmouseover="this.style.color='#d93025'"
+                                            onmouseout="this.style.color='var(--texto-suave)'"><i
+                                                class="ri-delete-bin-line"></i></button>
                                     </div>
                                 </td>
                             </tr>
                             <tr style="transition: background-color 0.2s;">
                                 <td style="padding: 16px; font-size: 14px; color: var(--texto);">3</td>
-                                <td style="padding: 16px; font-size: 14px; color: var(--texto); font-weight: 500;">Estrategia y Finales</td>
+                                <td style="padding: 16px; font-size: 14px; color: var(--texto); font-weight: 500;">
+                                    Estrategia y Finales</td>
                                 <td style="padding: 16px;"><span class="badge badge-avanzados">Avanzado</span></td>
-                                <td style="padding: 16px; font-size: 14px; color: var(--texto);">20 Semanas (60 hrs)</td>
+                                <td style="padding: 16px; font-size: 14px; color: var(--texto);">20 Semanas (60 hrs)
+                                </td>
                                 <td style="padding: 16px; font-size: 14px; color: var(--texto);">$2,500.00</td>
                                 <td style="padding: 16px; font-size: 14px; color: var(--texto);">Sede Central</td>
-                                <td style="padding: 16px;"><span style="color: var(--texto-suave); font-size: 12px; font-weight: 600;"><i class="ri-close-circle-fill"></i> Inactivo</span></td>
+                                <td style="padding: 16px;"><span
+                                        style="color: var(--texto-suave); font-size: 12px; font-weight: 600;"><i
+                                            class="ri-close-circle-fill"></i> Inactivo</span></td>
                                 <td style="padding: 16px; text-align: center;">
                                     <div style="display: flex; gap: 8px; justify-content: center;">
-                                        <button title="Editar" style="background:none; border:none; color:var(--texto-suave); font-size:18px; cursor:pointer;" onmouseover="this.style.color='var(--naranja)'" onmouseout="this.style.color='var(--texto-suave)'"><i class="ri-edit-line"></i></button>
-                                        <button title="Eliminar" style="background:none; border:none; color:var(--texto-suave); font-size:18px; cursor:pointer;" onmouseover="this.style.color='#d93025'" onmouseout="this.style.color='var(--texto-suave)'"><i class="ri-delete-bin-line"></i></button>
+                                        <button title="Editar"
+                                            style="background:none; border:none; color:var(--texto-suave); font-size:18px; cursor:pointer;"
+                                            onmouseover="this.style.color='var(--naranja)'"
+                                            onmouseout="this.style.color='var(--texto-suave)'"><i
+                                                class="ri-edit-line"></i></button>
+                                        <button title="Eliminar"
+                                            style="background:none; border:none; color:var(--texto-suave); font-size:18px; cursor:pointer;"
+                                            onmouseover="this.style.color='#d93025'"
+                                            onmouseout="this.style.color='var(--texto-suave)'"><i
+                                                class="ri-delete-bin-line"></i></button>
                                     </div>
                                 </td>
                             </tr>
@@ -834,13 +925,13 @@
                 <div class="modal-body">
                     <form id="form-agregar-grupo" novalidate>
                         @csrf
-                        
+
                         <!-- ===== DATOS DEL GRUPO ===== -->
                         <div class="modal-section-label">
                             <i class="ri-information-line"></i> Datos Generales
                         </div>
                         <div class="modal-grid">
-                            
+
                             <!-- Curso (Dropdown en vez de ID) -->
                             <div class="form-group-modal">
                                 <label for="gr-curso">Curso <span style="color:var(--naranja)">*</span></label>
@@ -862,7 +953,8 @@
 
                             <!-- Instructor (Dropdown en vez de ID) -->
                             <div class="form-group-modal">
-                                <label for="gr-instructor">Instructor <span style="color:var(--naranja)">*</span></label>
+                                <label for="gr-instructor">Instructor <span
+                                        style="color:var(--naranja)">*</span></label>
                                 <div class="form-dropdown" id="dropdown-gr-instructor" tabindex="0">
                                     <div class="form-select-trigger" id="trigger-gr-instructor">
                                         <span class="selected-text" data-value="">Asignar un profesor...</span>
@@ -880,31 +972,38 @@
                             </div>
 
                             <div class="form-group-modal">
-                                <label for="gr-codigo">Código de Grupo <span style="color:var(--naranja)">*</span></label>
-                                <input type="text" id="gr-codigo" name="codigo_grupo" placeholder="Ej. AJE-PRIN-01" required>
+                                <label for="gr-codigo">Código de Grupo <span
+                                        style="color:var(--naranja)">*</span></label>
+                                <input type="text" id="gr-codigo" name="codigo_grupo" placeholder="Ej. AJE-PRIN-01"
+                                    required>
                                 <span class="error-msg-modal" id="err-gr-codigo"></span>
                             </div>
 
                             <div class="form-group-modal">
                                 <label for="gr-periodo">Periodo</label>
-                                <input type="text" id="gr-periodo" name="periodo" placeholder="Ej. 2026-A" maxlength="10">
+                                <input type="text" id="gr-periodo" name="periodo" placeholder="Ej. 2026-A"
+                                    maxlength="10">
                             </div>
 
                             <div class="form-group-modal">
-                                <label for="gr-fecha-inicio">Fecha de Inicio <span style="color:var(--naranja)">*</span></label>
+                                <label for="gr-fecha-inicio">Fecha de Inicio <span
+                                        style="color:var(--naranja)">*</span></label>
                                 <input type="date" id="gr-fecha-inicio" name="fecha_inicio" required>
                                 <span class="error-msg-modal" id="err-gr-fecha-inicio"></span>
                             </div>
 
                             <div class="form-group-modal">
-                                <label for="gr-fecha-fin">Fecha de Fin <span style="color:var(--naranja)">*</span></label>
+                                <label for="gr-fecha-fin">Fecha de Fin <span
+                                        style="color:var(--naranja)">*</span></label>
                                 <input type="date" id="gr-fecha-fin" name="fecha_fin" required>
                                 <span class="error-msg-modal" id="err-gr-fecha-fin"></span>
                             </div>
 
                             <div class="form-group-modal">
-                                <label for="gr-cupo-maximo">Cupo Máximo <span style="color:var(--naranja)">*</span></label>
-                                <input type="number" id="gr-cupo-maximo" name="cupo_maximo" placeholder="Número de estudiantes" min="1" required>
+                                <label for="gr-cupo-maximo">Cupo Máximo <span
+                                        style="color:var(--naranja)">*</span></label>
+                                <input type="number" id="gr-cupo-maximo" name="cupo_maximo"
+                                    placeholder="Número de estudiantes" min="1" required>
                                 <span class="error-msg-modal" id="err-gr-cupo-maximo"></span>
                             </div>
 
@@ -926,29 +1025,34 @@
 
                             <div class="form-group-modal modal-col-full">
                                 <label for="gr-aula">Aula / Ubicación por defecto</label>
-                                <input type="text" id="gr-aula" name="aula" placeholder="Ej. Salón 3 - Planta Alta" maxlength="20">
+                                <input type="text" id="gr-aula" name="aula" placeholder="Ej. Salón 3 - Planta Alta"
+                                    maxlength="20">
                             </div>
 
                         </div>
 
                         <!-- ===== HORARIOS (DINÁMICOS) ===== -->
-                        <div class="modal-section-label" style="margin-top:20px; display:flex; justify-content:space-between; align-items:center;">
+                        <div class="modal-section-label"
+                            style="margin-top:20px; display:flex; justify-content:space-between; align-items:center;">
                             <span><i class="ri-calendar-todo-fill"></i> Horarios de Clases</span>
                             <button type="button" class="btn-agregar-horario" id="btn-add-horario">
                                 <i class="ri-add-line"></i> Añadir día
                             </button>
                         </div>
-                        <p style="font-size:13px; color:var(--texto-suave); margin-bottom:12px;">Agrega los días de la semana y las horas en las que se impartirá este grupo.</p>
-                        
+                        <p style="font-size:13px; color:var(--texto-suave); margin-bottom:12px;">Agrega los días de la
+                            semana y las horas en las que se impartirá este grupo.</p>
+
                         <div class="horarios-container" id="horarios-list">
                             <!-- Aquí se insertan dinámicamente las filas de horarios -->
                         </div>
-                        <span class="error-msg-modal" id="err-gr-horarios" style="display:block; margin-top:5px; margin-bottom: 20px;"></span>
+                        <span class="error-msg-modal" id="err-gr-horarios"
+                            style="display:block; margin-top:5px; margin-bottom: 20px;"></span>
 
 
                         <!-- ===== PIE DEL FORMULARIO ===== -->
                         <div class="modal-footer">
-                            <button type="button" class="btn-modal-cancel" id="btn-cancelar-modal-grupo">Cancelar</button>
+                            <button type="button" class="btn-modal-cancel"
+                                id="btn-cancelar-modal-grupo">Cancelar</button>
                             <button type="submit" class="btn-modal-submit">
                                 <i class="ri-save-line"></i> Guardar Grupo
                             </button>
@@ -975,16 +1079,17 @@
                 <div class="modal-body">
                     <form id="form-agregar-curso" novalidate>
                         @csrf
-                        
+
                         <div class="modal-section-label">
                             <i class="ri-information-line"></i> Datos del Curso
                         </div>
                         <div class="modal-grid">
-                            
+
                             <!-- Nombre -->
                             <div class="form-group-modal modal-col-full">
                                 <label for="cu-nombre">Nombre <span style="color:var(--naranja)">*</span></label>
-                                <input type="text" id="cu-nombre" name="nombre" placeholder="Ej. Táctica y Estrategia Avanzada" required>
+                                <input type="text" id="cu-nombre" name="nombre"
+                                    placeholder="Ej. Táctica y Estrategia Avanzada" required>
                                 <span class="error-msg-modal" id="err-cu-nombre"></span>
                             </div>
 
@@ -1025,7 +1130,8 @@
                             <!-- Duración Semanas -->
                             <div class="form-group-modal">
                                 <label for="cu-duracion">Duración (Semanas)</label>
-                                <input type="number" id="cu-duracion" name="duracion_semanas" placeholder="Ej. 16" min="1">
+                                <input type="number" id="cu-duracion" name="duracion_semanas" placeholder="Ej. 16"
+                                    min="1">
                             </div>
 
                             <!-- Horas Totales -->
@@ -1037,7 +1143,8 @@
                             <!-- Costo Base -->
                             <div class="form-group-modal">
                                 <label for="cu-costo">Costo Base ($)</label>
-                                <input type="number" id="cu-costo" name="costo_base" placeholder="Ej. 1500.00" min="0" step="0.01">
+                                <input type="number" id="cu-costo" name="costo_base" placeholder="Ej. 1500.00" min="0"
+                                    step="0.01">
                             </div>
 
                             <!-- Estatus -->
@@ -1059,20 +1166,25 @@
                             <!-- Descripción -->
                             <div class="form-group-modal modal-col-full">
                                 <label for="cu-descripcion">Descripción</label>
-                                <textarea id="cu-descripcion" name="descripcion" placeholder="Breve descripción del curso..." rows="3" style="width:100%; padding:10px; border:1px solid var(--borde); border-radius:8px; font-family:'Inter', sans-serif; resize:vertical;"></textarea>
+                                <textarea id="cu-descripcion" name="descripcion"
+                                    placeholder="Breve descripción del curso..." rows="3"
+                                    style="width:100%; padding:10px; border:1px solid var(--borde); border-radius:8px; font-family:'Inter', sans-serif; resize:vertical;"></textarea>
                             </div>
 
                             <!-- Requisitos -->
                             <div class="form-group-modal modal-col-full">
                                 <label for="cu-requisitos">Requisitos</label>
-                                <textarea id="cu-requisitos" name="requisitos" placeholder="Requisitos previos para tomar el curso..." rows="2" style="width:100%; padding:10px; border:1px solid var(--borde); border-radius:8px; font-family:'Inter', sans-serif; resize:vertical;"></textarea>
+                                <textarea id="cu-requisitos" name="requisitos"
+                                    placeholder="Requisitos previos para tomar el curso..." rows="2"
+                                    style="width:100%; padding:10px; border:1px solid var(--borde); border-radius:8px; font-family:'Inter', sans-serif; resize:vertical;"></textarea>
                             </div>
 
                         </div>
 
                         <!-- ===== PIE DEL FORMULARIO ===== -->
                         <div class="modal-footer">
-                            <button type="button" class="btn-modal-cancel" id="btn-cancelar-modal-curso">Cancelar</button>
+                            <button type="button" class="btn-modal-cancel"
+                                id="btn-cancelar-modal-curso">Cancelar</button>
                             <button type="submit" class="btn-modal-submit">
                                 <i class="ri-save-line"></i> Guardar Curso
                             </button>
@@ -1082,15 +1194,164 @@
             </div>
         </div>
 
+        <!-- ======================= SECCIÓN EXTRAESCOLARES ======================= -->
         <section class="section-content" id="section-extraescolares" style="display: none;">
+
             <div class="section-header">
-                <h1 class="section-title">Extraescolares</h1>
+                <h1 class="section-title">Actividades Extraescolares</h1>
+                <button class="btn-primary" id="btn-agregar-extraescolar">
+                    <i class="ri-add-line"></i> Agregar Actividad
+                </button>
             </div>
-            <div class="card"
-                style="min-height: 480px; display: flex; align-items: center; justify-content: center; color: var(--texto-suave);">
-                Página en construcción
+
+            <div class="search-bar" style="margin-bottom: 24px;">
+                <i class="ri-search-line search-icon"></i>
+                <input type="text" id="buscador-extraescolares" placeholder="Buscar actividad por nombre..." autocomplete="off">
             </div>
+
+            <div class="extraescolares-grid" id="grid-extraescolares">
+                <!-- Tarjeta de ejemplo -->
+                <div class="extraescolar-card" data-nombre="Taller de Ajedrez Rápido">
+                    <div class="extraescolar-card-header">
+                        <h3 class="extraescolar-nombre">Taller de Ajedrez Rápido</h3>
+                    </div>
+                    <div class="extraescolar-card-body">
+                        <div class="extraescolar-info-line">
+                            <i class="ri-text-wrap"></i> Técnicas avanzadas de Blitz y Bullet.
+                        </div>
+                        <div class="extraescolar-inscritos-wrapper">
+                            <div class="extraescolar-info-line">
+                                <i class="ri-group-line"></i> 5 / 20 inscritos
+                            </div>
+                            <div class="progress-bar-container">
+                                <div class="progress-bar-fill" style="width: 25%;"></div>
+                            </div>
+                        </div>
+                        <div class="extraescolar-info-line">
+                            <i class="ri-money-dollar-circle-line"></i> Costo: $300.00
+                        </div>
+                        <div class="extraescolar-info-line">
+                            <i class="ri-calendar-line"></i> 2026-05-01 / 2026-06-15
+                        </div>
+                    </div>
+                    <div class="extraescolar-card-footer">
+                        <button class="btn-extraescolar-editar"><i class="ri-edit-line"></i> Editar</button>
+                        <button class="btn-extraescolar-eliminar"><i class="ri-delete-bin-line"></i></button>
+                    </div>
+                </div>
+            </div>
+            <p class="extraescolares-empty" id="extraescolares-empty" style="display:none;">No se encontraron actividades.</p>
+
         </section>
+
+        <!-- ======================= MODAL: AGREGAR EXTRAESCOLAR ======================= -->
+        <div class="modal-overlay" id="modal-agregar-extraescolar">
+            <div class="modal-box">
+                <div class="modal-header">
+                    <div class="modal-title-group">
+                        <span class="modal-title-icon"><i class="ri-bar-chart-2-line"></i></span>
+                        <h2 class="modal-title">Agregar Actividad Extraescolar</h2>
+                    </div>
+                    <button type="button" class="modal-close-btn" id="modal-close-extraescolar" title="Cerrar">
+                        <i class="ri-close-line"></i>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+                    <form id="form-agregar-extraescolar" novalidate>
+                        @csrf
+                        <div class="modal-section-label">
+                            <i class="ri-information-line"></i> Datos de la Actividad
+                        </div>
+                        <div class="modal-grid">
+
+                            <!-- Nombre -->
+                            <div class="form-group-modal modal-col-full">
+                                <label for="ex-nombre">Nombre <span style="color:var(--naranja)">*</span></label>
+                                <input type="text" id="ex-nombre" name="nombre" placeholder="Ej. Taller de Ajedrez Computarizado" required maxlength="100">
+                                <span class="error-msg-modal" id="err-ex-nombre"></span>
+                            </div>
+
+                            <!-- Cupo máximo -->
+                            <div class="form-group-modal">
+                                <label for="ex-cupo-maximo">Cupo Máximo <span style="color:var(--naranja)">*</span></label>
+                                <input type="number" id="ex-cupo-maximo" name="cupo_maximo" placeholder="Ej. 30" required min="1">
+                                <span class="error-msg-modal" id="err-ex-cupo-maximo"></span>
+                            </div>
+
+                            <!-- Duración (Semanas) -->
+                            <div class="form-group-modal">
+                                <label for="ex-semanas">Duración (Semanas)</label>
+                                <input type="number" id="ex-semanas" name="semanas_duracion" placeholder="Ej. 6" min="1">
+                            </div>
+
+                            <!-- Costo -->
+                            <div class="form-group-modal">
+                                <label for="ex-costo">Costo ($)</label>
+                                <input type="number" id="ex-costo" name="costo" placeholder="Ej. 500.00" min="0" step="0.01">
+                            </div>
+
+                            <!-- Fecha Inicio -->
+                            <div class="form-group-modal">
+                                <label for="ex-fecha-inicio">Fecha de Inicio <span style="color:var(--naranja)">*</span></label>
+                                <input type="date" id="ex-fecha-inicio" name="fecha_inicio" required>
+                                <span class="error-msg-modal" id="err-ex-fecha-inicio"></span>
+                            </div>
+
+                            <!-- Fecha Fin -->
+                            <div class="form-group-modal">
+                                <label for="ex-fecha-fin">Fecha de Fin <span style="color:var(--naranja)">*</span></label>
+                                <input type="date" id="ex-fecha-fin" name="fecha_fin" required>
+                                <span class="error-msg-modal" id="err-ex-fecha-fin"></span>
+                            </div>
+
+                            <!-- Estatus -->
+                            <div class="form-group-modal">
+                                <label for="ex-estatus">Estatus</label>
+                                <div class="form-dropdown" id="dropdown-ex-estatus" tabindex="0">
+                                    <div class="form-select-trigger" id="trigger-ex-estatus">
+                                        <span class="selected-text" data-value="1">Activo</span>
+                                        <i class="ri-arrow-down-s-line"></i>
+                                    </div>
+                                    <div class="form-options-container">
+                                        <div class="form-option selected" data-value="1">Activo</div>
+                                        <div class="form-option" data-value="0">Inactivo</div>
+                                    </div>
+                                    <input type="hidden" id="ex-estatus" name="estatus" value="1">
+                                </div>
+                            </div>
+
+                            <!-- Ubicación -->
+                            <div class="form-group-modal modal-col-full">
+                                <label for="ex-ubicacion">Ubicación</label>
+                                <input type="text" id="ex-ubicacion" name="ubicacion" placeholder="Ej. Aula 4, Cancha Principal..." maxlength="100">
+                            </div>
+
+                            <!-- Descripción -->
+                            <div class="form-group-modal modal-col-full">
+                                <label for="ex-descripcion">Descripción</label>
+                                <textarea id="ex-descripcion" name="descripcion" placeholder="Breve descripción de la actividad..." rows="3" style="width:100%; padding:10px; border:1px solid var(--borde); border-radius:8px; font-family:'Inter', sans-serif; resize:vertical;"></textarea>
+                            </div>
+
+                            <!-- Requisitos -->
+                            <div class="form-group-modal modal-col-full">
+                                <label for="ex-requisitos">Requisitos</label>
+                                <textarea id="ex-requisitos" name="requisitos" placeholder="Requisitos previos..." rows="2" style="width:100%; padding:10px; border:1px solid var(--borde); border-radius:8px; font-family:'Inter', sans-serif; resize:vertical;"></textarea>
+                            </div>
+
+                        </div>
+
+                        <!-- ===== PIE DEL FORMULARIO ===== -->
+                        <div class="modal-footer">
+                            <button type="button" class="btn-modal-cancel" id="btn-cancelar-modal-extraescolar">Cancelar</button>
+                            <button type="submit" class="btn-modal-submit">
+                                <i class="ri-save-line"></i> Guardar Actividad
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
 
         <section class="section-content" id="section-status" style="display: none;">
             <div class="section-header">
@@ -1114,13 +1375,159 @@
 
         <section class="section-content" id="section-niveles" style="display: none;">
             <div class="section-header">
-                <h1 class="section-title">Niveles</h1>
+                <h1 class="section-title">Niveles de Estudiantes</h1>
             </div>
-            <div class="card"
-                style="min-height: 480px; display: flex; align-items: center; justify-content: center; color: var(--texto-suave);">
-                Página en construcción
+
+            <!-- KPI Cards -->
+            <div class="niveles-kpi-container">
+                <div class="niveles-kpi-card">
+                    <span class="kpi-label">Promedio de Puntos</span>
+                    <span class="kpi-value">1169</span>
+                </div>
+                <div class="niveles-kpi-card">
+                    <span class="kpi-label">Nivel Promedio</span>
+                    <span class="kpi-value">4.4</span>
+                </div>
+                <div class="niveles-kpi-card">
+                    <span class="kpi-label">Total Estudiantes</span>
+                    <span class="kpi-value">5</span>
+                </div>
+            </div>
+
+            <!-- Main Content Card -->
+            <div class="card card-niveles">
+                <!-- Controls -->
+                <div class="niveles-controls">
+                    <div class="search-bar search-niveles">
+                        <i class="ri-search-line search-icon"></i>
+                        <input type="text" id="buscador-niveles" placeholder="Buscar estudiante por nombre...">
+                    </div>
+
+                    <div class="select-wrapper custom-dropdown" id="dropdown-niv-sede">
+                        <div class="custom-select-trigger niveles-select">
+                            <span class="selected-text" data-value="">Sede</span>
+                            <i class="ri-arrow-down-s-line"></i>
+                        </div>
+                        <div class="custom-options-container">
+                            <div class="custom-option selected" data-value="">Sede</div>
+                            <div class="custom-option" data-value="Sede Central">Sede Central</div>
+                            <div class="custom-option" data-value="Sede Norte">Sede Norte</div>
+                        </div>
+                    </div>
+
+                    <div class="select-wrapper custom-dropdown" id="dropdown-niv-nivel">
+                        <div class="custom-select-trigger niveles-select">
+                            <span class="selected-text" data-value="">Nivel</span>
+                            <i class="ri-arrow-down-s-line"></i>
+                        </div>
+                        <div class="custom-options-container">
+                            <div class="custom-option selected" data-value="">Nivel</div>
+                            <div class="custom-option" data-value="3">Nivel 3</div>
+                            <div class="custom-option" data-value="4">Nivel 4</div>
+                            <div class="custom-option" data-value="5">Nivel 5</div>
+                            <div class="custom-option" data-value="6">Nivel 6</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Table -->
+                <div class="table-wrapper">
+                    <table class="data-table" id="tabla-niveles">
+                        <thead>
+                            <tr>
+                                <th>Alumno</th>
+                                <th>Puntos</th>
+                                <th>Nivel</th>
+                                <th>Sede</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Ana García</td>
+                                <td><span class="puntos-actual">1450</span> <span class="puntos-max">/ 2000</span></td>
+                                <td><div class="badge-nivel badge-nivel-5"><span class="badge-nivel-texto">Nivel</span> <span class="badge-nivel-num">5</span></div></td>
+                                <td>Sede Central</td>
+                                <td class="acciones-puntos">
+                                    <button class="btn-modificar-puntos"><i class="ri-edit-line"></i> Modificar</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Carlos López</td>
+                                <td><span class="puntos-actual">875</span> <span class="puntos-max">/ 2000</span></td>
+                                <td><div class="badge-nivel badge-nivel-4"><span class="badge-nivel-texto">Nivel</span> <span class="badge-nivel-num">4</span></div></td>
+                                <td>Sede Norte</td>
+                                <td class="acciones-puntos">
+                                    <button class="btn-modificar-puntos"><i class="ri-edit-line"></i> Modificar</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>María Rodríguez</td>
+                                <td><span class="puntos-actual">1720</span> <span class="puntos-max">/ 2000</span></td>
+                                <td><div class="badge-nivel badge-nivel-6"><span class="badge-nivel-texto">Nivel</span> <span class="badge-nivel-num">6</span></div></td>
+                                <td>Sede Central</td>
+                                <td class="acciones-puntos">
+                                    <button class="btn-modificar-puntos"><i class="ri-edit-line"></i> Modificar</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Juan Sánchez</td>
+                                <td><span class="puntos-actual">650</span> <span class="puntos-max">/ 2000</span></td>
+                                <td><div class="badge-nivel badge-nivel-3"><span class="badge-nivel-texto">Nivel</span> <span class="badge-nivel-num">3</span></div></td>
+                                <td>Sede Norte</td>
+                                <td class="acciones-puntos">
+                                    <button class="btn-modificar-puntos"><i class="ri-edit-line"></i> Modificar</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Laura Fernández</td>
+                                <td><span class="puntos-actual">1150</span> <span class="puntos-max">/ 2000</span></td>
+                                <td><div class="badge-nivel badge-nivel-4"><span class="badge-nivel-texto">Nivel</span> <span class="badge-nivel-num">4</span></div></td>
+                                <td>Sede Central</td>
+                                <td class="acciones-puntos">
+                                    <button class="btn-modificar-puntos"><i class="ri-edit-line"></i> Modificar</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </section>
+
+        <!-- ======================= MODAL: MODIFICAR PUNTOS ======================= -->
+        <div class="modal-overlay" id="modal-modificar-puntos">
+            <div class="modal-box" style="max-width: 400px; width: 90%;">
+                <div class="modal-header">
+                    <div class="modal-title-group">
+                        <span class="modal-title-icon"><i class="ri-award-line"></i></span>
+                        <h2 class="modal-title">Modificar Puntuación</h2>
+                    </div>
+                    <button type="button" class="modal-close-btn" id="modal-close-puntos" title="Cerrar">
+                        <i class="ri-close-line"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="modal-puntos-info">
+                        <h3 id="puntos-modal-nombre">Nombre Alumno</h3>
+                        <p style="color: var(--texto-suave); font-size: 14px; margin: 0;">Puntos actuales: <strong id="puntos-modal-actuales" style="color: var(--naranja); font-size: 18px;">0</strong> / 2000</p>
+                    </div>
+
+                    <div class="form-group-modal">
+                        <label for="puntos-modal-cantidad" class="puntos-modal-label">Cantidad de puntos:</label>
+                        <input type="number" id="puntos-modal-cantidad" placeholder="Ej. 50" min="1" max="2000">
+                    </div>
+
+                    <div class="modal-puntos-actions">
+                        <button type="button" id="btn-puntos-restar" class="btn-modal-action btn-modal-restar">
+                            <i class="ri-subtract-line"></i> Quitar
+                        </button>
+                        <button type="button" id="btn-puntos-sumar" class="btn-modal-action btn-modal-sumar">
+                            <i class="ri-add-line"></i> Añadir
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <!-- Nueva sección Opciones / Configuración -->
         <section class="section-content" id="section-opciones" style="display: none;">
@@ -1144,6 +1551,10 @@
     <script src="{{ asset('animaciones/dashboardAdminProfesores.js') }}"></script>
     <!-- JS Sección Grupos -->
     <script src="{{ asset('animaciones/dashboardAdminGrupos.js') }}"></script>
+    <!-- JS Sección Extraescolares -->
+    <script src="{{ asset('animaciones/dashboardAdminExtraescolares.js') }}"></script>
+    <!-- JS Sección Niveles -->
+    <script src="{{ asset('animaciones/dashboardAdminNiveles.js') }}"></script>
 
 </body>
 
