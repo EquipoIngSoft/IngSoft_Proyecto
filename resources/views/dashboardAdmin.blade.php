@@ -12,12 +12,12 @@
     <!-- Iconos (Remix Icons) -->
     <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet">
     <!-- Hojas de estilos -->
-    <link rel="stylesheet" href="{{ asset('css/dashboardAdmin.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/dashboardAdminAlumnos.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/dashboardAdminProfesores.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/dashboardAdminGrupos.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/dashboardAdminExtraescolares.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/dashboardAdminNiveles.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/admin/dashboardAdmin.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/admin/dashboardAdminAlumnos.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/admin/dashboardAdminProfesores.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/admin/dashboardAdminGrupos.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/admin/dashboardAdminExtraescolares.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/admin/dashboardAdminNiveles.css') }}">
 </head>
 
 <body>
@@ -1544,17 +1544,17 @@
 
 
     <!-- JS General -->
-    <script src="{{ asset('animaciones/dashboardAdmin.js') }}"></script>
+    <script src="{{ asset('animaciones/admin/dashboardAdmin.js') }}"></script>
     <!-- JS Sección Alumnos -->
-    <script src="{{ asset('animaciones/dashboardAdminAlumnos.js') }}"></script>
+    <script src="{{ asset('animaciones/admin/dashboardAdminAlumnos.js') }}"></script>
     <!-- JS Sección Profesores -->
-    <script src="{{ asset('animaciones/dashboardAdminProfesores.js') }}"></script>
+    <script src="{{ asset('animaciones/admin/dashboardAdminProfesores.js') }}"></script>
     <!-- JS Sección Grupos -->
-    <script src="{{ asset('animaciones/dashboardAdminGrupos.js') }}"></script>
+    <script src="{{ asset('animaciones/admin/dashboardAdminGrupos.js') }}"></script>
     <!-- JS Sección Extraescolares -->
-    <script src="{{ asset('animaciones/dashboardAdminExtraescolares.js') }}"></script>
+    <script src="{{ asset('animaciones/admin/dashboardAdminExtraescolares.js') }}"></script>
     <!-- JS Sección Niveles -->
-    <script src="{{ asset('animaciones/dashboardAdminNiveles.js') }}"></script>
+    <script src="{{ asset('animaciones/admin/dashboardAdminNiveles.js') }}"></script>
 
 </body>
 
