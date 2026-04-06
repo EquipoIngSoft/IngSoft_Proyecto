@@ -13,8 +13,10 @@
     <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet">
     <!-- Hojas de estilos -->
     <link rel="stylesheet" href="{{ asset('css/admin/dashboardAdmin.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/admin/dashboardAdminPersonal.css') }}">
     <link rel="stylesheet" href="{{ asset('css/admin/dashboardAdminAlumnos.css') }}">
     <link rel="stylesheet" href="{{ asset('css/admin/dashboardAdminProfesores.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/admin/dashboardAdminSede.css') }}">
     <link rel="stylesheet" href="{{ asset('css/admin/dashboardAdminGrupos.css') }}">
     <link rel="stylesheet" href="{{ asset('css/admin/dashboardAdminExtraescolares.css') }}">
     <link rel="stylesheet" href="{{ asset('css/admin/dashboardAdminNiveles.css') }}">
@@ -34,6 +36,12 @@
         <!-- Navegación -->
         <nav class="sidebar-nav">
             <ul>
+                <li class="nav-item" data-section="personal">
+                    <a href="#">
+                        <i class="ri-user-settings-line"></i>
+                        <span>Personal</span>
+                    </a>
+                </li>
                 <li class="nav-item active" data-section="alumnos">
                     <a href="#">
                         <i class="ri-group-line"></i>
@@ -44,6 +52,12 @@
                     <a href="#">
                         <i class="ri-user-star-line"></i>
                         <span>Profesores</span>
+                    </a>
+                </li>
+                <li class="nav-item" data-section="sede">
+                    <a href="#">
+                        <i class="ri-map-pin-line"></i>
+                        <span>Sede</span>
                     </a>
                 </li>
                 <li class="nav-item" data-section="grupos">
@@ -122,7 +136,105 @@
             </div>
         </header>
 
-        <!-- Área de sección activa -->
+        <!-- Área de sección activa: PERSONAL -->
+        <section class="section-content" id="section-personal" style="display: none;">
+
+            <!-- Cabecera de sección -->
+            <div class="section-header">
+                <h1 class="section-title">Gestión de Personal</h1>
+                <button class="btn-primary" id="btn-agregar-personal">
+                    <i class="ri-add-line"></i> Agregar Personal
+                </button>
+            </div>
+
+            <!-- Tarjeta de tabla -->
+            <div class="card">
+
+                <!-- Cabecera de controles: Búsqueda y Filtros -->
+                <div class="controls-container">
+                    <!-- Buscador -->
+                    <div class="search-bar">
+                        <i class="ri-search-line search-icon"></i>
+                        <input type="text" id="buscador-personal" placeholder="Buscar personal..." autocomplete="off">
+                    </div>
+
+                    <!-- Filtros -->
+                    <div class="filters-row">
+                        <!-- Puesto -->
+                        <div class="select-wrapper custom-dropdown" id="dropdown-nivel-personal">
+                            <div class="custom-select-trigger">
+                                <span class="selected-text" data-value="">Todos los puestos</span>
+                                <i class="ri-arrow-down-s-line"></i>
+                            </div>
+                            <div class="custom-options-container">
+                                <div class="custom-option selected" data-value="">Todos los puestos</div>
+                                <div class="custom-option" data-value="administrativo">Administrativo</div>
+                                <div class="custom-option" data-value="mantenimiento">Mantenimiento</div>
+                                <div class="custom-option" data-value="seguridad">Seguridad</div>
+                            </div>
+                        </div>
+
+                        <!-- Status -->
+                        <div class="select-wrapper custom-dropdown" id="dropdown-status-personal">
+                            <div class="custom-select-trigger">
+                                <span class="selected-text" data-value="">Todos los estatus</span>
+                                <i class="ri-arrow-down-s-line"></i>
+                            </div>
+                            <div class="custom-options-container">
+                                <div class="custom-option selected" data-value="">Todos los estatus</div>
+                                <div class="custom-option" data-value="activo">Activo</div>
+                                <div class="custom-option" data-value="inactivo">Inactivo</div>
+                            </div>
+                        </div>
+
+                        <button id="btn-limpiar-personal" class="btn-clear-filters">
+                            Limpiar filtros
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Tabla -->
+                <div class="table-wrapper">
+                    <table class="data-table" id="tabla-personal">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Nombre</th>
+                                <th>Puesto</th>
+                                <th>Status</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>Roberto Sánchez</td>
+                                <td>Administrativo</td>
+                                <td><span class="badge badge-activo">Activo</span></td>
+                                <td class="acciones">
+                                    <button class="btn-icon btn-ver" title="Ver"><i class="ri-eye-line"></i></button>
+                                    <button class="btn-icon btn-editar" title="Editar"><i class="ri-edit-line"></i></button>
+                                    <button class="btn-icon btn-eliminar" title="Eliminar"><i class="ri-delete-bin-line"></i></button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Paginación -->
+                <div class="pagination">
+                    <div class="pagination-info">Mostrando 1 resultado</div>
+                    <div class="pagination-btns">
+                        <button class="pag-btn" disabled><i class="ri-arrow-left-s-line"></i></button>
+                        <button class="pag-btn active">1</button>
+                        <button class="pag-btn" disabled><i class="ri-arrow-right-s-line"></i></button>
+                    </div>
+                </div>
+
+            </div><!-- /card -->
+        </section>
+
+        <!-- Área de sección activa: ALUMNOS -->
         <section class="section-content" id="section-alumnos">
 
             <!-- Cabecera de sección -->
@@ -313,6 +425,96 @@
 
             </div><!-- /card -->
         </section>
+
+        <!-- ===================== MODAL: AGREGAR PERSONAL ===================== -->
+        <div class="modal-overlay" id="modal-agregar-personal">
+            <div class="modal-box">
+
+                <!-- Cabecera del modal -->
+                <div class="modal-header">
+                    <div class="modal-title-group">
+                        <i class="ri-user-add-line modal-title-icon"></i>
+                        <h2 class="modal-title">Agregar Personal</h2>
+                    </div>
+                    <button class="modal-close-btn" id="modal-close" title="Cerrar">
+                        <i class="ri-close-line"></i>
+                    </button>
+                </div>
+
+                <!-- Cuerpo del modal con scroll -->
+                <div class="modal-body">
+                    <form id="form-agregar-personal" novalidate>
+
+                        <div class="modal-section-label">
+                            <i class="ri-id-card-line"></i> Datos del Personal
+                        </div>
+
+                        <div class="modal-grid">
+                            <div class="form-group-modal">
+                                <label for="pe-nombre">Nombre</label>
+                                <input type="text" id="pe-nombre" name="pe_nombre" placeholder="Nombre(s)" required>
+                                <span class="error-msg-modal" id="err-pe-nombre"></span>
+                            </div>
+                            <div class="form-group-modal">
+                                <label for="pe-ap-paterno">Apellido Paterno</label>
+                                <input type="text" id="pe-ap-paterno" name="pe_ap_paterno"
+                                    placeholder="Apellido paterno" required>
+                                <span class="error-msg-modal" id="err-pe-ap-paterno"></span>
+                            </div>
+                            <div class="form-group-modal">
+                                <label for="pe-puesto">Puesto</label>
+                                <div class="form-dropdown" id="dropdown-pe-puesto" tabindex="0">
+                                    <div class="form-select-trigger">
+                                        <span class="selected-text" data-value="">Selecciona una opción</span>
+                                        <i class="ri-arrow-down-s-line"></i>
+                                    </div>
+                                    <div class="form-options-container">
+                                        <div class="form-option" data-value="administrativo">Administrativo</div>
+                                        <div class="form-option" data-value="mantenimiento">Mantenimiento</div>
+                                        <div class="form-option" data-value="seguridad">Seguridad</div>
+                                    </div>
+                                    <input type="hidden" id="pe-puesto" name="pe_puesto" value="">
+                                </div>
+                                <span class="error-msg-modal" id="err-pe-puesto"></span>
+                            </div>
+                            <div class="form-group-modal">
+                                <label for="pe-correo">Correo Electrónico</label>
+                                <input type="email" id="pe-correo" name="pe_correo" placeholder="correo@ejemplo.com" required>
+                                <span class="error-msg-modal" id="err-pe-correo"></span>
+                            </div>
+                            <div class="form-group-modal">
+                                <label for="pe-password">Contraseña</label>
+                                <div class="input-password-wrapper">
+                                    <input type="password" id="pe-password" name="pe_password" placeholder="Mínimo 6 caracteres" required>
+                                    <button type="button" class="toggle-password" data-target="pe-password">
+                                        <i class="ri-eye-line"></i>
+                                    </button>
+                                </div>
+                                <span class="error-msg-modal" id="err-pe-password"></span>
+                            </div>
+                            <div class="form-group-modal">
+                                <label for="pe-password-confirm">Confirmar Contraseña</label>
+                                <div class="input-password-wrapper">
+                                    <input type="password" id="pe-password-confirm" name="pe_password_confirm" placeholder="Repite la contraseña" required>
+                                    <button type="button" class="toggle-password" data-target="pe-password-confirm">
+                                        <i class="ri-eye-line"></i>
+                                    </button>
+                                </div>
+                                <span class="error-msg-modal" id="err-pe-password-confirm"></span>
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn-modal-cancel" id="btn-cancelar-modal-personal">Cancelar</button>
+                            <button type="submit" class="btn-modal-submit">
+                                <i class="ri-save-line"></i> Guardar Personal
+                            </button>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
 
         <!-- ===================== MODAL: AGREGAR ALUMNO ===================== -->
         <div class="modal-overlay" id="modal-agregar-alumno">
@@ -538,6 +740,57 @@
 
         </section>
 
+        <!-- ======================= SECCIÓN SEDES ======================= -->
+        <section class="section-content" id="section-sede" style="display: none;">
+
+            <!-- Cabecera de sección -->
+            <div class="section-header">
+                <h1 class="section-title">Gestión de Sedes</h1>
+                <button class="btn-primary" id="btn-agregar-sede">
+                    <i class="ri-add-line"></i> Agregar Sede
+                </button>
+            </div>
+
+            <!-- Tarjeta de tabla -->
+            <div class="card card-sedes">
+                <div class="controls-container" style="padding: 24px;">
+                    <div class="search-bar search-sede">
+                        <i class="ri-search-line search-icon"></i>
+                        <input type="text" id="buscador-sedes" placeholder="Buscar sede por nombre o dirección..." autocomplete="off">
+                    </div>
+                </div>
+
+                <div class="table-wrapper">
+                    <table class="data-table" id="tabla-sedes">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Nombre</th>
+                                <th>Dirección</th>
+                                <th>Teléfono</th>
+                                <th>Tipo</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>Sede Central</td>
+                                <td>Av. Universidad 123, Col. Centro</td>
+                                <td>555-0100</td>
+                                <td><span class="sede-status-badge status-principal">Principal</span></td>
+                                <td class="acciones">
+                                    <button class="btn-icon btn-ver" title="Ver"><i class="ri-eye-line"></i></button>
+                                    <button class="btn-icon btn-editar" title="Editar"><i class="ri-edit-line"></i></button>
+                                    <button class="btn-icon btn-eliminar" title="Eliminar"><i class="ri-delete-bin-line"></i></button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
         <!-- ======================= MODAL: AGREGAR PROFESOR ======================= -->
         <div class="modal-overlay" id="modal-agregar-profesor">
             <div class="modal-box">
@@ -653,6 +906,42 @@
                             </button>
                         </div>
 
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- ======================= MODAL: AGREGAR SEDE ======================= -->
+        <div class="modal-overlay" id="modal-agregar-sede">
+            <div class="modal-box" style="max-width: 500px;">
+                <div class="modal-header">
+                    <div class="modal-title-group">
+                        <span class="modal-title-icon"><i class="ri-map-pin-line"></i></span>
+                        <h2 class="modal-title">Agregar Sede</h2>
+                    </div>
+                    <button type="button" class="modal-close-btn" id="modal-close" title="Cerrar">
+                        <i class="ri-close-line"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="form-agregar-sede" novalidate>
+                        <div class="form-group-modal modal-col-full">
+                            <label for="se-nombre">Nombre de la Sede</label>
+                            <input type="text" id="se-nombre" name="se_nombre" placeholder="Ej. Sede Norte" required>
+                            <span class="error-msg-modal" id="err-se-nombre"></span>
+                        </div>
+                        <div class="form-group-modal modal-col-full">
+                            <label for="se-direccion">Dirección</label>
+                            <input type="text" id="se-direccion" name="se_direccion" placeholder="Calle, número, colonia...">
+                        </div>
+                        <div class="form-group-modal modal-col-full">
+                            <label for="se-telefono">Teléfono</label>
+                            <input type="tel" id="se-telefono" name="se_telefono" placeholder="10 dígitos">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn-modal-cancel" id="btn-cancelar-modal-sede">Cancelar</button>
+                            <button type="submit" class="btn-modal-submit">Guardar Sede</button>
+                        </div>
                     </form>
                 </div>
             </div>
@@ -1545,10 +1834,14 @@
 
     <!-- JS General -->
     <script src="{{ asset('animaciones/admin/dashboardAdmin.js') }}"></script>
+    <!-- JS Sección Personal -->
+    <script src="{{ asset('animaciones/admin/dashboardAdminPersonal.js') }}"></script>
     <!-- JS Sección Alumnos -->
     <script src="{{ asset('animaciones/admin/dashboardAdminAlumnos.js') }}"></script>
     <!-- JS Sección Profesores -->
     <script src="{{ asset('animaciones/admin/dashboardAdminProfesores.js') }}"></script>
+    <!-- JS Sección Sede -->
+    <script src="{{ asset('animaciones/admin/dashboardAdminSede.js') }}"></script>
     <!-- JS Sección Grupos -->
     <script src="{{ asset('animaciones/admin/dashboardAdminGrupos.js') }}"></script>
     <!-- JS Sección Extraescolares -->

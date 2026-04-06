@@ -1,0 +1,274 @@
+/* ==============================================
+   dashboardAdminPersonal.js — Sección Personal
+   Búsqueda, Filtros, Modal y Validación
+   EGAU Chess | AMAAC
+   ============================================== */
+
+document.addEventListener('DOMContentLoaded', () => {
+
+    // ---- Búsqueda y Filtros Custom ----
+    const buscador = document.getElementById('buscador-personal');
+    const btnLimpiar = document.getElementById('btn-limpiar-personal');
+    const tabla = document.getElementById('tabla-personal');
+
+    if (tabla) {
+        const filas = tabla.querySelectorAll('tbody tr');
+        const info = document.querySelector('#section-personal .pagination-info');
+
+        // Función Principal de Filtrado
+        const aplicarFiltros = () => {
+            const query = buscador ? buscador.value.toLowerCase().trim() : '';
+
+            // Obtener el valor de "data-value" del trigger de cada custom select
+            const triggerNivel = document.querySelector('#dropdown-nivel-personal .selected-text');
+            const triggerGrupo = document.querySelector('#dropdown-grupo-personal .selected-text');
+            const triggerStatus = document.querySelector('#dropdown-status-personal .selected-text');
+
+            const nivel = triggerNivel ? triggerNivel.getAttribute('data-value') : '';
+            const grupo = triggerGrupo ? triggerGrupo.getAttribute('data-value') : '';
+            const status = triggerStatus ? triggerStatus.getAttribute('data-value') : '';
+
+            let visibles = 0;
+
+            filas.forEach(fila => {
+                const textoGeneral = fila.textContent.toLowerCase();
+                const tdNivel = fila.cells[3] ? fila.cells[3].textContent.toLowerCase() : '';
+                const tdGrupo = fila.cells[4] ? fila.cells[4].textContent.toLowerCase() : '';
+                const tdStatus = fila.cells[5] ? fila.cells[5].textContent.toLowerCase() : '';
+
+                const coincideTexto = textoGeneral.includes(query);
+                const coincideNivel = nivel === '' || tdNivel.includes(nivel);
+                const coincideGrupo = grupo === '' || tdGrupo.includes(grupo);
+                const coincideStatus = status === '' || tdStatus.includes(status);
+
+                if (coincideTexto && coincideNivel && coincideGrupo && coincideStatus) {
+                    fila.style.display = '';
+                    visibles++;
+                } else {
+                    fila.style.display = 'none';
+                }
+            });
+
+            if (info) {
+                info.textContent = `Mostrando ${visibles} resultado${visibles !== 1 ? 's' : ''}`;
+            }
+        };
+
+        // Escuchar input en buscar
+        if (buscador) buscador.addEventListener('input', aplicarFiltros);
+
+        // Lógica de los Custom Dropdowns (Específicos de Personal)
+        const customDropdowns = document.querySelectorAll('#section-personal .custom-dropdown');
+
+        customDropdowns.forEach(dropdown => {
+            const trigger = dropdown.querySelector('.custom-select-trigger');
+            const options = dropdown.querySelectorAll('.custom-option');
+            const selectedText = dropdown.querySelector('.selected-text');
+
+            trigger.addEventListener('click', (e) => {
+                e.stopPropagation();
+                customDropdowns.forEach(d => {
+                    if (d !== dropdown) d.classList.remove('open');
+                });
+                dropdown.classList.toggle('open');
+            });
+
+            options.forEach(option => {
+                option.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    options.forEach(opt => opt.classList.remove('selected'));
+                    option.classList.add('selected');
+
+                    const val = option.getAttribute('data-value');
+                    const text = option.textContent;
+
+                    selectedText.textContent = text;
+                    selectedText.setAttribute('data-value', val);
+
+                    dropdown.classList.remove('open');
+                    aplicarFiltros();
+                });
+            });
+        });
+
+        // Cerrar dropdown si se hace clic fuera
+        document.addEventListener('click', () => {
+            customDropdowns.forEach(dropdown => dropdown.classList.remove('open'));
+        });
+
+        // Botón Limpiar
+        if (btnLimpiar) {
+            btnLimpiar.addEventListener('click', () => {
+                if (buscador) buscador.value = '';
+                customDropdowns.forEach(dropdown => {
+                    const options = dropdown.querySelectorAll('.custom-option');
+                    const selectedText = dropdown.querySelector('.selected-text');
+                    options.forEach(opt => opt.classList.remove('selected'));
+                    if (options.length > 0) {
+                        const firstOpt = options[0];
+                        firstOpt.classList.add('selected');
+                        selectedText.textContent = firstOpt.textContent;
+                        selectedText.setAttribute('data-value', firstOpt.getAttribute('data-value'));
+                    }
+                });
+                aplicarFiltros();
+            });
+        }
+
+        // ---- Lógica para Form Dropdowns (Dentro del modal de Personal) ----
+        const formDropdowns = document.querySelectorAll('#modal-agregar-personal .form-dropdown');
+        formDropdowns.forEach(dropdown => {
+            const trigger = dropdown.querySelector('.form-select-trigger');
+            const options = dropdown.querySelectorAll('.form-option');
+            const selectedText = dropdown.querySelector('.selected-text');
+            const hiddenInput = dropdown.querySelector('input[type="hidden"]');
+
+            if (!trigger || !selectedText) return;
+
+            trigger.addEventListener('click', (e) => {
+                e.stopPropagation();
+                formDropdowns.forEach(d => {
+                    if (d !== dropdown) d.classList.remove('open');
+                });
+                dropdown.classList.toggle('open');
+            });
+
+            options.forEach(option => {
+                option.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    options.forEach(opt => opt.classList.remove('selected'));
+                    option.classList.add('selected');
+
+                    const val = option.getAttribute('data-value');
+                    const text = option.textContent;
+
+                    selectedText.textContent = text;
+                    selectedText.setAttribute('data-value', val);
+                    if (hiddenInput) hiddenInput.value = val;
+
+                    dropdown.classList.remove('open');
+
+                    if (val !== "") {
+                        dropdown.classList.remove('input-error');
+                        const errorMsg = document.querySelector(`#err-pe-${hiddenInput.id}`); // Ajustado para personal
+                        if (errorMsg) errorMsg.textContent = '';
+                    }
+                });
+            });
+        });
+
+        document.addEventListener('click', () => {
+            formDropdowns.forEach(dropdown => dropdown.classList.remove('open'));
+        });
+    }
+
+    // ---- Modal: Agregar Personal ----
+    const modalOverlay = document.getElementById('modal-agregar-personal');
+    const btnAgregar = document.getElementById('btn-agregar-personal');
+    const btnCerrarModal = document.querySelector('#modal-agregar-personal #modal-close');
+    const btnCancelarModal = document.getElementById('btn-cancelar-modal-personal');
+    const formAgregar = document.getElementById('form-agregar-personal');
+
+    const abrirModal = () => {
+        if (modalOverlay) modalOverlay.classList.add('open');
+        document.body.style.overflow = 'hidden';
+    };
+
+    const cerrarModal = () => {
+        if (modalOverlay) modalOverlay.classList.remove('open');
+        document.body.style.overflow = '';
+        if (formAgregar) formAgregar.reset();
+        
+        // Limpiar form-dropdowns
+        document.querySelectorAll('#modal-agregar-personal .form-dropdown').forEach(dropdown => {
+            const options = dropdown.querySelectorAll('.form-option');
+            const selectedText = dropdown.querySelector('.selected-text');
+            const hiddenInput = dropdown.querySelector('input[type="hidden"]');
+            dropdown.classList.remove('input-error', 'input-ok');
+            options.forEach(opt => opt.classList.remove('selected'));
+            if (options.length > 0) {
+                options[0].classList.add('selected');
+                if (selectedText) {
+                    selectedText.textContent = options[0].textContent;
+                    selectedText.setAttribute('data-value', options[0].getAttribute('data-value'));
+                }
+                if (hiddenInput) hiddenInput.value = options[0].getAttribute('data-value');
+            }
+        });
+
+        // Limpiar estados de validación
+        document.querySelectorAll('#modal-agregar-personal .form-group-modal input').forEach(inp => {
+            inp.classList.remove('input-error', 'input-ok');
+        });
+        document.querySelectorAll('#modal-agregar-personal .error-msg-modal').forEach(msg => {
+            msg.textContent = '';
+        });
+    };
+
+    if (btnAgregar) btnAgregar.addEventListener('click', abrirModal);
+    if (btnCerrarModal) btnCerrarModal.addEventListener('click', cerrarModal);
+    if (btnCancelarModal) btnCancelarModal.addEventListener('click', cerrarModal);
+
+    if (modalOverlay) {
+        modalOverlay.addEventListener('click', (e) => {
+            if (e.target === modalOverlay) cerrarModal();
+        });
+    }
+
+    // ---- Validación del formulario Personal ----
+    if (formAgregar) {
+        const setError = (inputId, msgId, mensaje) => {
+            const inp = document.getElementById(inputId);
+            const msg = document.getElementById(msgId);
+            if (inp) { inp.classList.add('input-error'); inp.classList.remove('input-ok'); }
+            if (msg) msg.textContent = mensaje;
+        };
+
+        const setOk = (inputId, msgId) => {
+            const inp = document.getElementById(inputId);
+            const msg = document.getElementById(msgId);
+            if (inp) { inp.classList.remove('input-error'); inp.classList.add('input-ok'); }
+            if (msg) msg.textContent = '';
+        };
+
+        formAgregar.addEventListener('submit', (e) => {
+            e.preventDefault();
+            let valido = true;
+
+            const fields = [
+                { id: 'pe-nombre', err: 'err-pe-nombre', msg: 'El nombre es requerido.' },
+                { id: 'pe-ap-paterno', err: 'err-pe-ap-paterno', msg: 'El apellido paterno es requerido.' },
+                { id: 'pe-correo', err: 'err-pe-correo', msg: 'Ingresa un correo válido.', type: 'email' },
+                { id: 'pe-password', err: 'err-pe-password', msg: 'La contraseña debe tener al menos 6 caracteres.', min: 6 }
+            ];
+
+            fields.forEach(f => {
+                const el = document.getElementById(f.id);
+                if (!el || el.value.trim() === '' || (f.min && el.value.length < f.min)) {
+                    setError(f.id, f.err, f.msg);
+                    valido = false;
+                } else if (f.type === 'email') {
+                    const reg = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                    if (!reg.test(el.value.trim())) {
+                        setError(f.id, f.err, f.msg);
+                        valido = false;
+                    } else { setOk(f.id, f.err); }
+                } else { setOk(f.id, f.err); }
+            });
+
+            // Confirmar contraseña
+            const pePass = document.getElementById('pe-password');
+            const pePassConf = document.getElementById('pe-password-confirm');
+            if (pePassConf && pePassConf.value !== (pePass ? pePass.value : '')) {
+                setError('pe-password-confirm', 'err-pe-password-confirm', 'Las contraseñas no coinciden.');
+                valido = false;
+            } else if (pePassConf) { setOk('pe-password-confirm', 'err-pe-password-confirm'); }
+
+            if (valido) {
+                console.log('Formulario Personal válido.');
+                cerrarModal();
+            }
+        });
+    }
+
+});
