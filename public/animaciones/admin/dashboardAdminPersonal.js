@@ -20,28 +20,28 @@ document.addEventListener('DOMContentLoaded', () => {
             const query = buscador ? buscador.value.toLowerCase().trim() : '';
 
             // Obtener el valor de "data-value" del trigger de cada custom select
-            const triggerNivel = document.querySelector('#dropdown-nivel-personal .selected-text');
-            const triggerGrupo = document.querySelector('#dropdown-grupo-personal .selected-text');
+            const triggerRol = document.querySelector('#dropdown-nivel-personal .selected-text');
+            const triggerSede = document.querySelector('#dropdown-sede-personal .selected-text');
             const triggerStatus = document.querySelector('#dropdown-status-personal .selected-text');
 
-            const nivel = triggerNivel ? triggerNivel.getAttribute('data-value') : '';
-            const grupo = triggerGrupo ? triggerGrupo.getAttribute('data-value') : '';
+            const rol = triggerRol ? triggerRol.getAttribute('data-value') : '';
+            const sede = triggerSede ? triggerSede.getAttribute('data-value') : '';
             const status = triggerStatus ? triggerStatus.getAttribute('data-value') : '';
 
             let visibles = 0;
 
             filas.forEach(fila => {
                 const textoGeneral = fila.textContent.toLowerCase();
-                const tdNivel = fila.cells[3] ? fila.cells[3].textContent.toLowerCase() : '';
-                const tdGrupo = fila.cells[4] ? fila.cells[4].textContent.toLowerCase() : '';
-                const tdStatus = fila.cells[5] ? fila.cells[5].textContent.toLowerCase() : '';
+                const tdRol = fila.cells[2] ? fila.cells[2].textContent.toLowerCase() : '';
+                const tdSede = fila.cells[3] ? fila.cells[3].textContent.toLowerCase() : '';
+                const tdStatus = fila.cells[4] ? fila.cells[4].textContent.toLowerCase() : '';
 
                 const coincideTexto = textoGeneral.includes(query);
-                const coincideNivel = nivel === '' || tdNivel.includes(nivel);
-                const coincideGrupo = grupo === '' || tdGrupo.includes(grupo);
+                const coincideRol = rol === '' || tdRol.includes(rol);
+                const coincideSede = sede === '' || tdSede.includes(sede);
                 const coincideStatus = status === '' || tdStatus.includes(status);
 
-                if (coincideTexto && coincideNivel && coincideGrupo && coincideStatus) {
+                if (coincideTexto && coincideRol && coincideSede && coincideStatus) {
                     fila.style.display = '';
                     visibles++;
                 } else {
@@ -150,7 +150,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
                     if (val !== "") {
                         dropdown.classList.remove('input-error');
-                        const errorMsg = document.querySelector(`#err-pe-${hiddenInput.id}`); // Ajustado para personal
+                        // El errorMsg tiene un ID basado en el hiddenInput.id
+                        const errorMsg = document.getElementById(`err-${hiddenInput.id}`);
                         if (errorMsg) errorMsg.textContent = '';
                     }
                 });
@@ -187,12 +188,12 @@ document.addEventListener('DOMContentLoaded', () => {
             dropdown.classList.remove('input-error', 'input-ok');
             options.forEach(opt => opt.classList.remove('selected'));
             if (options.length > 0) {
-                options[0].classList.add('selected');
+                // No seleccionamos el primero por defecto si es "Selecciona..."
                 if (selectedText) {
-                    selectedText.textContent = options[0].textContent;
-                    selectedText.setAttribute('data-value', options[0].getAttribute('data-value'));
+                    selectedText.textContent = "Selecciona una opción";
+                    selectedText.setAttribute('data-value', "");
                 }
-                if (hiddenInput) hiddenInput.value = options[0].getAttribute('data-value');
+                if (hiddenInput) hiddenInput.value = "";
             }
         });
 
@@ -220,14 +221,30 @@ document.addEventListener('DOMContentLoaded', () => {
         const setError = (inputId, msgId, mensaje) => {
             const inp = document.getElementById(inputId);
             const msg = document.getElementById(msgId);
-            if (inp) { inp.classList.add('input-error'); inp.classList.remove('input-ok'); }
+            const dropdown = inp ? inp.closest('.form-dropdown') : null;
+
+            if (dropdown) {
+                dropdown.classList.add('input-error');
+                dropdown.classList.remove('input-ok');
+            } else if (inp) {
+                inp.classList.add('input-error');
+                inp.classList.remove('input-ok');
+            }
             if (msg) msg.textContent = mensaje;
         };
 
         const setOk = (inputId, msgId) => {
             const inp = document.getElementById(inputId);
             const msg = document.getElementById(msgId);
-            if (inp) { inp.classList.remove('input-error'); inp.classList.add('input-ok'); }
+            const dropdown = inp ? inp.closest('.form-dropdown') : null;
+
+            if (dropdown) {
+                dropdown.classList.remove('input-error');
+                dropdown.classList.add('input-ok');
+            } else if (inp) {
+                inp.classList.remove('input-error');
+                inp.classList.add('input-ok');
+            }
             if (msg) msg.textContent = '';
         };
 
@@ -238,6 +255,9 @@ document.addEventListener('DOMContentLoaded', () => {
             const fields = [
                 { id: 'pe-nombre', err: 'err-pe-nombre', msg: 'El nombre es requerido.' },
                 { id: 'pe-ap-paterno', err: 'err-pe-ap-paterno', msg: 'El apellido paterno es requerido.' },
+                { id: 'pe-rol', err: 'err-pe-rol', msg: 'Selecciona un rol.' },
+                { id: 'pe-sede', err: 'err-pe-sede', msg: 'Selecciona una sede.' },
+                { id: 'pe-genero', err: 'err-pe-genero', msg: 'Selecciona un género.' },
                 { id: 'pe-correo', err: 'err-pe-correo', msg: 'Ingresa un correo válido.', type: 'email' },
                 { id: 'pe-password', err: 'err-pe-password', msg: 'La contraseña debe tener al menos 6 caracteres.', min: 6 }
             ];

@@ -36,12 +36,6 @@
         <!-- Navegación -->
         <nav class="sidebar-nav">
             <ul>
-                <li class="nav-item" data-section="personal">
-                    <a href="#">
-                        <i class="ri-user-settings-line"></i>
-                        <span>Personal</span>
-                    </a>
-                </li>
                 <li class="nav-item active" data-section="alumnos">
                     <a href="#">
                         <i class="ri-group-line"></i>
@@ -52,6 +46,12 @@
                     <a href="#">
                         <i class="ri-user-star-line"></i>
                         <span>Profesores</span>
+                    </a>
+                </li>
+                <li class="nav-item" data-section="personal">
+                    <a href="#">
+                        <i class="ri-user-settings-line"></i>
+                        <span>Personal</span>
                     </a>
                 </li>
                 <li class="nav-item" data-section="sede">
@@ -160,14 +160,14 @@
 
                     <!-- Filtros -->
                     <div class="filters-row">
-                        <!-- Puesto -->
+                        <!-- Rol -->
                         <div class="select-wrapper custom-dropdown" id="dropdown-nivel-personal">
                             <div class="custom-select-trigger">
-                                <span class="selected-text" data-value="">Todos los puestos</span>
+                                <span class="selected-text" data-value="">Todos los roles</span>
                                 <i class="ri-arrow-down-s-line"></i>
                             </div>
                             <div class="custom-options-container">
-                                <div class="custom-option selected" data-value="">Todos los puestos</div>
+                                <div class="custom-option selected" data-value="">Todos los roles</div>
                                 <div class="custom-option" data-value="administrativo">Administrativo</div>
                                 <div class="custom-option" data-value="mantenimiento">Mantenimiento</div>
                                 <div class="custom-option" data-value="seguridad">Seguridad</div>
@@ -187,6 +187,19 @@
                             </div>
                         </div>
 
+                        <!-- Sede -->
+                        <div class="select-wrapper custom-dropdown" id="dropdown-sede-personal">
+                            <div class="custom-select-trigger">
+                                <span class="selected-text" data-value="">Todas las sedes</span>
+                                <i class="ri-arrow-down-s-line"></i>
+                            </div>
+                            <div class="custom-options-container">
+                                <div class="custom-option selected" data-value="">Todas las sedes</div>
+                                <div class="custom-option" data-value="sede central">Sede Central</div>
+                                <div class="custom-option" data-value="sede norte">Sede Norte</div>
+                            </div>
+                        </div>
+
                         <button id="btn-limpiar-personal" class="btn-clear-filters">
                             Limpiar filtros
                         </button>
@@ -200,7 +213,8 @@
                             <tr>
                                 <th>ID</th>
                                 <th>Nombre</th>
-                                <th>Puesto</th>
+                                <th>Rol</th>
+                                <th>Sede</th>
                                 <th>Status</th>
                                 <th>Acciones</th>
                             </tr>
@@ -210,6 +224,7 @@
                                 <td>1</td>
                                 <td>Roberto Sánchez</td>
                                 <td>Administrativo</td>
+                                <td>Sede Central</td>
                                 <td><span class="badge badge-activo">Activo</span></td>
                                 <td class="acciones">
                                     <button class="btn-icon btn-ver" title="Ver"><i class="ri-eye-line"></i></button>
@@ -446,24 +461,51 @@
                     <form id="form-agregar-personal" novalidate>
 
                         <div class="modal-section-label">
-                            <i class="ri-id-card-line"></i> Datos del Personal
+                            <i class="ri-id-card-line"></i> Información del Personal
                         </div>
 
                         <div class="modal-grid">
                             <div class="form-group-modal">
-                                <label for="pe-nombre">Nombre</label>
+                                <label for="pe-nombre">Nombre <span style="color:var(--naranja)">*</span></label>
                                 <input type="text" id="pe-nombre" name="pe_nombre" placeholder="Nombre(s)" required>
                                 <span class="error-msg-modal" id="err-pe-nombre"></span>
                             </div>
                             <div class="form-group-modal">
-                                <label for="pe-ap-paterno">Apellido Paterno</label>
+                                <label for="pe-ap-paterno">Apellido Paterno <span style="color:var(--naranja)">*</span></label>
                                 <input type="text" id="pe-ap-paterno" name="pe_ap_paterno"
                                     placeholder="Apellido paterno" required>
                                 <span class="error-msg-modal" id="err-pe-ap-paterno"></span>
                             </div>
                             <div class="form-group-modal">
-                                <label for="pe-puesto">Puesto</label>
-                                <div class="form-dropdown" id="dropdown-pe-puesto" tabindex="0">
+                                <label for="pe-ap-materno">Apellido Materno</label>
+                                <input type="text" id="pe-ap-materno" name="pe_ap_materno"
+                                    placeholder="Apellido materno">
+                            </div>
+                            <div class="form-group-modal">
+                                <label for="pe-telefono">Número de Teléfono</label>
+                                <input type="tel" id="pe-telefono" name="pe_telefono" placeholder="10 dígitos"
+                                    maxlength="10">
+                                <span class="error-msg-modal" id="err-pe-telefono"></span>
+                            </div>
+                            <div class="form-group-modal">
+                                <label for="pe-genero">Género</label>
+                                <div class="form-dropdown" id="dropdown-pe-genero" tabindex="0">
+                                    <div class="form-select-trigger">
+                                        <span class="selected-text" data-value="">Selecciona una opción</span>
+                                        <i class="ri-arrow-down-s-line"></i>
+                                    </div>
+                                    <div class="form-options-container">
+                                        <div class="form-option" data-value="F">Femenino (F)</div>
+                                        <div class="form-option" data-value="M">Masculino (M)</div>
+                                        <div class="form-option" data-value="O">Otro (O)</div>
+                                    </div>
+                                    <input type="hidden" id="pe-genero" name="pe_genero" value="">
+                                </div>
+                                <span class="error-msg-modal" id="err-pe-genero"></span>
+                            </div>
+                            <div class="form-group-modal">
+                                <label for="pe-rol">Rol <span style="color:var(--naranja)">*</span></label>
+                                <div class="form-dropdown" id="dropdown-pe-rol" tabindex="0">
                                     <div class="form-select-trigger">
                                         <span class="selected-text" data-value="">Selecciona una opción</span>
                                         <i class="ri-arrow-down-s-line"></i>
@@ -473,17 +515,38 @@
                                         <div class="form-option" data-value="mantenimiento">Mantenimiento</div>
                                         <div class="form-option" data-value="seguridad">Seguridad</div>
                                     </div>
-                                    <input type="hidden" id="pe-puesto" name="pe_puesto" value="">
+                                    <input type="hidden" id="pe-rol" name="pe_rol" value="">
                                 </div>
-                                <span class="error-msg-modal" id="err-pe-puesto"></span>
+                                <span class="error-msg-modal" id="err-pe-rol"></span>
                             </div>
-                            <div class="form-group-modal">
-                                <label for="pe-correo">Correo Electrónico</label>
+                            <div class="form-group-modal modal-col-full">
+                                <label for="pe-sede">Sede <span style="color:var(--naranja)">*</span></label>
+                                <div class="form-dropdown" id="dropdown-pe-sede" tabindex="0">
+                                    <div class="form-select-trigger">
+                                        <span class="selected-text" data-value="">Selecciona una sede</span>
+                                        <i class="ri-arrow-down-s-line"></i>
+                                    </div>
+                                    <div class="form-options-container">
+                                        <div class="form-option" data-value="sede central">Sede Central</div>
+                                        <div class="form-option" data-value="sede norte">Sede Norte</div>
+                                    </div>
+                                    <input type="hidden" id="pe-sede" name="pe_sede" value="">
+                                </div>
+                                <span class="error-msg-modal" id="err-pe-sede"></span>
+                            </div>
+                            <div class="form-group-modal modal-col-full">
+                                <label for="pe-direccion">Dirección</label>
+                                <input type="text" id="pe-direccion" name="pe_direccion"
+                                    placeholder="Calle, número, colonia...">
+                                <span class="error-msg-modal" id="err-pe-direccion"></span>
+                            </div>
+                            <div class="form-group-modal modal-col-full">
+                                <label for="pe-correo">Correo Electrónico <span style="color:var(--naranja)">*</span></label>
                                 <input type="email" id="pe-correo" name="pe_correo" placeholder="correo@ejemplo.com" required>
                                 <span class="error-msg-modal" id="err-pe-correo"></span>
                             </div>
                             <div class="form-group-modal">
-                                <label for="pe-password">Contraseña</label>
+                                <label for="pe-password">Contraseña <span style="color:var(--naranja)">*</span></label>
                                 <div class="input-password-wrapper">
                                     <input type="password" id="pe-password" name="pe_password" placeholder="Mínimo 6 caracteres" required>
                                     <button type="button" class="toggle-password" data-target="pe-password">
@@ -493,7 +556,7 @@
                                 <span class="error-msg-modal" id="err-pe-password"></span>
                             </div>
                             <div class="form-group-modal">
-                                <label for="pe-password-confirm">Confirmar Contraseña</label>
+                                <label for="pe-password-confirm">Confirmar Contraseña <span style="color:var(--naranja)">*</span></label>
                                 <div class="input-password-wrapper">
                                     <input type="password" id="pe-password-confirm" name="pe_password_confirm" placeholder="Repite la contraseña" required>
                                     <button type="button" class="toggle-password" data-target="pe-password-confirm">
