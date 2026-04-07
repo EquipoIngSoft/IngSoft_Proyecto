@@ -20,6 +20,7 @@
     <link rel="stylesheet" href="{{ asset('css/admin/dashboardAdminGrupos.css') }}">
     <link rel="stylesheet" href="{{ asset('css/admin/dashboardAdminExtraescolares.css') }}">
     <link rel="stylesheet" href="{{ asset('css/admin/dashboardAdminNiveles.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/admin/dashboardAdminRoles.css') }}">
 </head>
 
 <body>
@@ -52,6 +53,12 @@
                     <a href="#">
                         <i class="ri-user-settings-line"></i>
                         <span>Personal</span>
+                    </a>
+                </li>
+                <li class="nav-item" data-section="roles">
+                    <a href="#">
+                        <i class="ri-shield-user-line"></i>
+                        <span>Roles</span>
                     </a>
                 </li>
                 <li class="nav-item" data-section="sede">
@@ -239,6 +246,113 @@
                 <!-- Paginación -->
                 <div class="pagination">
                     <div class="pagination-info">Mostrando 1 resultado</div>
+                    <div class="pagination-btns">
+                        <button class="pag-btn" disabled><i class="ri-arrow-left-s-line"></i></button>
+                        <button class="pag-btn active">1</button>
+                        <button class="pag-btn" disabled><i class="ri-arrow-right-s-line"></i></button>
+                    </div>
+                </div>
+
+            </div><!-- /card -->
+        </section>
+
+        <!-- Área de sección activa: ROLES -->
+        <section class="section-content" id="section-roles" style="display: none;">
+
+            <!-- Cabecera de sección -->
+            <div class="section-header">
+                <h1 class="section-title">Gestión de Roles</h1>
+                <button class="btn-primary" id="btn-agregar-rol">
+                    <i class="ri-add-line"></i> Agregar Rol
+                </button>
+            </div>
+
+            <!-- Tarjeta de tabla -->
+            <div class="card">
+
+                <!-- Cabecera de controles: Búsqueda y Filtros -->
+                <div class="controls-container">
+                    <!-- Buscador -->
+                    <div class="search-bar">
+                        <i class="ri-search-line search-icon"></i>
+                        <input type="text" id="buscador-roles" placeholder="Buscar roles por nombre o ID..."
+                            autocomplete="off">
+                    </div>
+
+                    <!-- Filtros -->
+                    <div class="filters-row">
+                        <!-- Status -->
+                        <div class="select-wrapper custom-dropdown" id="dropdown-status-roles">
+                            <div class="custom-select-trigger">
+                                <span class="selected-text" data-value="">Todos los estatus</span>
+                                <i class="ri-arrow-down-s-line"></i>
+                            </div>
+                            <div class="custom-options-container">
+                                <div class="custom-option selected" data-value="">Todos los estatus</div>
+                                <div class="custom-option" data-value="activo">Activo</div>
+                                <div class="custom-option" data-value="inactivo">Inactivo</div>
+                            </div>
+                        </div>
+
+                        <button id="btn-limpiar-roles" class="btn-clear-filters">
+                            Limpiar filtros
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Tabla -->
+                <div class="table-wrapper">
+                    <table class="data-table" id="tabla-roles">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Nombre</th>
+                                <th>Descripción</th>
+                                <th>Estatus</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>Administrador</td>
+                                <td><div class="role-description">Acceso total al sistema, gestión de sedes, personal y configuración avanzada.</div></td>
+                                <td><span class="badge badge-rol-activo">Activo</span></td>
+                                <td class="acciones">
+                                    <button class="btn-icon btn-ver" title="Ver"><i class="ri-eye-line"></i></button>
+                                    <button class="btn-icon btn-editar" title="Editar"><i class="ri-edit-line"></i></button>
+                                    <button class="btn-icon btn-eliminar" title="Eliminar"><i class="ri-delete-bin-line"></i></button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td>Editor Académico</td>
+                                <td><div class="role-description">Gestión de alumnos, grupos, niveles y extraescolares. Sin acceso a finanzas.</div></td>
+                                <td><span class="badge badge-rol-activo">Activo</span></td>
+                                <td class="acciones">
+                                    <button class="btn-icon btn-ver" title="Ver"><i class="ri-eye-line"></i></button>
+                                    <button class="btn-icon btn-editar" title="Editar"><i class="ri-edit-line"></i></button>
+                                    <button class="btn-icon btn-eliminar" title="Eliminar"><i class="ri-delete-bin-line"></i></button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td>Consultor</td>
+                                <td><div class="role-description">Acceso de solo lectura para reportes y visualización de datos generales.</div></td>
+                                <td><span class="badge badge-rol-inactivo">Inactivo</span></td>
+                                <td class="acciones">
+                                    <button class="btn-icon btn-ver" title="Ver"><i class="ri-eye-line"></i></button>
+                                    <button class="btn-icon btn-editar" title="Editar"><i class="ri-edit-line"></i></button>
+                                    <button class="btn-icon btn-eliminar" title="Eliminar"><i class="ri-delete-bin-line"></i></button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Paginación -->
+                <div class="pagination">
+                    <div class="pagination-info">Mostrando 3 resultados</div>
                     <div class="pagination-btns">
                         <button class="pag-btn" disabled><i class="ri-arrow-left-s-line"></i></button>
                         <button class="pag-btn active">1</button>
@@ -2177,6 +2291,117 @@
             </div>
         </div>
 
+        <!-- ======================= MODAL: AGREGAR ROL ======================= -->
+        <div class="modal-overlay" id="modal-agregar-rol">
+            <div class="modal-box modal-box-large">
+                <!-- Cabecera del modal -->
+                <div class="modal-header">
+                    <div class="modal-title-group">
+                        <i class="ri-shield-keyhole-line modal-title-icon"></i>
+                        <h2 class="modal-title">Agregar Nuevo Rol</h2>
+                    </div>
+                    <button class="modal-close-btn" id="modal-close-rol" title="Cerrar">
+                        <i class="ri-close-line"></i>
+                    </button>
+                </div>
+
+                <!-- Cuerpo del modal -->
+                <div class="modal-body">
+                    <form id="form-agregar-rol" novalidate>
+                        
+                        <!-- Sección: Detalles del Rol -->
+                        <div class="modal-section-label">
+                            <i class="ri-information-line"></i> Detalles del Rol
+                        </div>
+                        <div class="modal-grid">
+                            <div class="form-group-modal modal-col-full">
+                                <label for="ro-nombre">Nombre del Rol <span style="color:var(--naranja)">*</span></label>
+                                <input type="text" id="ro-nombre" name="ro_nombre" placeholder="Ej. Editor Académico" required>
+                                <span class="error-msg-modal" id="err-ro-nombre"></span>
+                            </div>
+                            <div class="form-group-modal modal-col-full">
+                                <label for="ro-descripcion">Descripción <span style="color:var(--naranja)">*</span></label>
+                                <textarea id="ro-descripcion" name="ro_descripcion" placeholder="Explica qué funciones tendrá este rol..." rows="2"></textarea>
+                                <span class="error-msg-modal" id="err-ro-descripcion"></span>
+                            </div>
+                            <div class="form-group-modal modal-col-full">
+                                <label for="ro-estatus">Estatus <span style="color:var(--naranja)">*</span></label>
+                                <div class="form-dropdown" id="dropdown-ro-estatus" tabindex="0">
+                                    <div class="form-select-trigger">
+                                        <span class="selected-text" data-value="activo">Activo</span>
+                                        <i class="ri-arrow-down-s-line"></i>
+                                    </div>
+                                    <div class="form-options-container">
+                                        <div class="form-option selected" data-value="activo">Activo</div>
+                                        <div class="form-option" data-value="inactivo">Inactivo</div>
+                                    </div>
+                                    <input type="hidden" id="ro-estatus" name="ro_estatus" value="activo">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Sección: Matriz de Permisos -->
+                        <div class="modal-section-label">
+                            <i class="ri-lock-password-line"></i> Matriz de Permisos
+                        </div>
+
+                        <div class="permissions-matrix-wrapper">
+                            <table class="permissions-table">
+                                <thead>
+                                    <tr>
+                                        <th>Módulo</th>
+                                        <th class="text-center">Ver (Acceso)</th>
+                                        <th class="text-center">Crear/Editar (Escritura)</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @php
+                                        $modulos = [
+                                            ['id' => 'alumnos', 'nombre' => 'Alumnos'],
+                                            ['id' => 'profesores', 'nombre' => 'Profesores'],
+                                            ['id' => 'personal', 'nombre' => 'Personal'],
+                                            ['id' => 'roles', 'nombre' => 'Roles'],
+                                            ['id' => 'sedes', 'nombre' => 'Sedes'],
+                                            ['id' => 'grupos', 'nombre' => 'Grupos'],
+                                            ['id' => 'extraescolares', 'nombre' => 'Extraescolares'],
+                                            ['id' => 'status', 'nombre' => 'Status'],
+                                            ['id' => 'pagos', 'nombre' => 'Pagos'],
+                                            ['id' => 'niveles', 'nombre' => 'Niveles'],
+                                        ];
+                                    @endphp
+                                    @foreach($modulos as $mod)
+                                    <tr>
+                                        <td><strong>{{ $mod['nombre'] }}</strong></td>
+                                        <td class="text-center">
+                                            <label class="custom-checkbox-container">
+                                                <input type="checkbox" name="permiso_{{ $mod['id'] }}_ver" value="1">
+                                                <span class="checkmark"></span>
+                                            </label>
+                                        </td>
+                                        <td class="text-center">
+                                            <label class="custom-checkbox-container">
+                                                <input type="checkbox" name="permiso_{{ $mod['id'] }}_crear" value="1">
+                                                <span class="checkmark"></span>
+                                            </label>
+                                        </td>
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- ===== PIE DEL FORMULARIO ===== -->
+                        <div class="modal-footer">
+                            <button type="button" class="btn-modal-cancel" id="btn-cancelar-modal-rol">Cancelar</button>
+                            <button type="submit" class="btn-modal-submit">
+                                <i class="ri-save-line"></i> Guardar Rol
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
         <!-- Nueva sección Opciones / Configuración -->
         <section class="section-content" id="section-opciones" style="display: none;">
             <div class="section-header">
@@ -2207,6 +2432,8 @@
     <script src="{{ asset('animaciones/admin/dashboardAdminExtraescolares.js') }}"></script>
     <!-- JS Sección Niveles -->
     <script src="{{ asset('animaciones/admin/dashboardAdminNiveles.js') }}"></script>
+    <!-- JS Sección Roles -->
+    <script src="{{ asset('animaciones/admin/dashboardAdminRoles.js') }}"></script>
 
 </body>
 
