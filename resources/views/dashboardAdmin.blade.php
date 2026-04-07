@@ -1321,6 +1321,13 @@
                                     required>
                                 <span class="error-msg-modal" id="err-pr-correo"></span>
                             </div>
+                            <div class="form-group-modal modal-col-full">
+                                <label for="pr-puntos-inicial">Puntuación Inicial <span
+                                        style="color:var(--naranja)">*</span></label>
+                                <input type="number" id="pr-puntos-inicial" name="pr_puntos_inicial"
+                                    placeholder="Ej. 100" min="0" max="2000" value="0" required>
+                                <span class="error-msg-modal" id="err-pr-puntos-inicial"></span>
+                            </div>
                             <div class="form-group-modal">
                                 <label for="pr-password">Contraseña <span style="color:var(--naranja)">*</span></label>
                                 <div class="input-password-wrapper">
