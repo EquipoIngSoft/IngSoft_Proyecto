@@ -21,11 +21,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Obtener el valor de "data-value" del trigger de cada custom select
             const triggerNivel = document.querySelector('#dropdown-nivel .selected-text');
-            const triggerGrupo = document.querySelector('#dropdown-grupo .selected-text');
+            const triggerSede = document.querySelector('#dropdown-sede .selected-text');
             const triggerStatus = document.querySelector('#dropdown-status .selected-text');
 
             const nivel = triggerNivel ? triggerNivel.getAttribute('data-value') : '';
-            const grupo = triggerGrupo ? triggerGrupo.getAttribute('data-value') : '';
+            const sede = triggerSede ? triggerSede.getAttribute('data-value') : '';
             const status = triggerStatus ? triggerStatus.getAttribute('data-value') : '';
 
             let visibles = 0;
@@ -33,15 +33,15 @@ document.addEventListener('DOMContentLoaded', () => {
             filas.forEach(fila => {
                 const textoGeneral = fila.textContent.toLowerCase();
                 const tdNivel = fila.cells[3].textContent.toLowerCase();
-                const tdGrupo = fila.cells[4].textContent.toLowerCase();
+                const tdSede = fila.cells[4].textContent.toLowerCase();
                 const tdStatus = fila.cells[5].textContent.toLowerCase();
 
                 const coincideTexto = textoGeneral.includes(query);
                 const coincideNivel = nivel === '' || tdNivel.includes(nivel);
-                const coincideGrupo = grupo === '' || tdGrupo.includes(grupo);
+                const coincideSede = sede === '' || tdSede.includes(sede);
                 const coincideStatus = status === '' || tdStatus.includes(status);
 
-                if (coincideTexto && coincideNivel && coincideGrupo && coincideStatus) {
+                if (coincideTexto && coincideNivel && coincideSede && coincideStatus) {
                     fila.style.display = '';
                     visibles++;
                 } else {
@@ -319,6 +319,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 valido = false;
             } else { setOk('dropdown-al-genero', 'err-al-genero'); }
 
+            // Sede alumno
+            const alSede = document.getElementById('al-sede');
+            if (!alSede || alSede.value === '') {
+                setError('dropdown-al-sede', 'err-al-sede', 'Selecciona una sede.');
+                valido = false;
+            } else { setOk('dropdown-al-sede', 'err-al-sede'); }
+
             // Dirección: Estado
             const alEstado = document.getElementById('al-estado');
             if (!alEstado || alEstado.value === '') {
@@ -364,10 +371,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Nombre tutor (Opcional)
             const tuNombre = document.getElementById('tu-nombre');
-            setOk('tu-nombre', 'err-tu-nombre');
-
-            // Apellido paterno tutor (Opcional)
             const tuApP = document.getElementById('tu-ap-paterno');
+            const tuParentesco = document.getElementById('tu-parentesco');
+
+            // Si se llena algo del tutor, validar el parentesco (opcional: podrías hacerlo obligatorio solo si hay nombre)
+            if ((tuNombre && tuNombre.value.trim() !== '') || (tuApP && tuApP.value.trim() !== '')) {
+                if (!tuParentesco || tuParentesco.value === '') {
+                    setError('dropdown-tu-parentesco', 'err-tu-parentesco', 'Selecciona el parentesco.');
+                    valido = false;
+                } else {
+                    setOk('dropdown-tu-parentesco', 'err-tu-parentesco');
+                }
+            } else {
+                setOk('dropdown-tu-parentesco', 'err-tu-parentesco');
+            }
+
+            if (tuNombre && tuNombre.value.trim() !== '') setOk('al-nombre', 'err-al-nombre'); // corregido de al-nombre a tu-nombre si fuera necesario, pero tu-nombre no tiene validación estricta aquí
+            setOk('tu-nombre', 'err-tu-nombre');
             setOk('tu-ap-paterno', 'err-tu-ap-paterno');
 
             // Correo tutor (Opcional, pero validar formato si se ingresa)

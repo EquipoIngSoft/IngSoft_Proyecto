@@ -287,17 +287,16 @@
                             </div>
                         </div>
 
-                        <!-- Grupo -->
-                        <div class="select-wrapper custom-dropdown" id="dropdown-grupo">
+                        <!-- Sede -->
+                        <div class="select-wrapper custom-dropdown" id="dropdown-sede">
                             <div class="custom-select-trigger">
-                                <span class="selected-text" data-value="">Todos los grupos</span>
+                                <span class="selected-text" data-value="">Todas las sedes</span>
                                 <i class="ri-arrow-down-s-line"></i>
                             </div>
                             <div class="custom-options-container">
-                                <div class="custom-option selected" data-value="">Todos los grupos</div>
-                                <div class="custom-option" data-value="grupo a">Grupo A</div>
-                                <div class="custom-option" data-value="grupo b">Grupo B</div>
-                                <div class="custom-option" data-value="grupo c">Grupo C</div>
+                                <div class="custom-option selected" data-value="">Todas las sedes</div>
+                                <div class="custom-option" data-value="sede central">Sede Central</div>
+                                <div class="custom-option" data-value="sede norte">Sede Norte</div>
                             </div>
                         </div>
 
@@ -329,7 +328,7 @@
                                 <th>Nombre</th>
                                 <th>Edad</th>
                                 <th>Nivel</th>
-                                <th>Grupo</th>
+                                <th>Sede</th>
                                 <th>Status</th>
                                 <th>Acciones</th>
                             </tr>
@@ -340,7 +339,7 @@
                                 <td>Ana García Martínez</td>
                                 <td>10</td>
                                 <td><span class="badge badge-principiante">Principiante</span></td>
-                                <td>Grupo A</td>
+                                <td>Sede Central</td>
                                 <td><span class="badge badge-activo">Activo</span></td>
                                 <td class="acciones">
                                     <button class="btn-icon btn-ver" title="Ver"><i class="ri-eye-line"></i></button>
@@ -355,7 +354,7 @@
                                 <td>Carlos López Hernández</td>
                                 <td>12</td>
                                 <td><span class="badge badge-intermedio">Intermedio</span></td>
-                                <td>Grupo B</td>
+                                <td>Sede Norte</td>
                                 <td><span class="badge badge-activo">Activo</span></td>
                                 <td class="acciones">
                                     <button class="btn-icon btn-ver" title="Ver"><i class="ri-eye-line"></i></button>
@@ -370,7 +369,7 @@
                                 <td>María Rodríguez Pérez</td>
                                 <td>9</td>
                                 <td><span class="badge badge-principiante">Principiante</span></td>
-                                <td>Grupo A</td>
+                                <td>Sede Central</td>
                                 <td><span class="badge badge-activo">Activo</span></td>
                                 <td class="acciones">
                                     <button class="btn-icon btn-ver" title="Ver"><i class="ri-eye-line"></i></button>
@@ -385,7 +384,7 @@
                                 <td>Juan Sánchez Torres</td>
                                 <td>11</td>
                                 <td><span class="badge badge-avanzado">Avanzado</span></td>
-                                <td>Grupo C</td>
+                                <td>Sede Norte</td>
                                 <td><span class="badge badge-activo">Activo</span></td>
                                 <td class="acciones">
                                     <button class="btn-icon btn-ver" title="Ver"><i class="ri-eye-line"></i></button>
@@ -400,7 +399,7 @@
                                 <td>Laura Fernández Ruiz</td>
                                 <td>10</td>
                                 <td><span class="badge badge-intermedio">Intermedio</span></td>
-                                <td>Grupo B</td>
+                                <td>Sede Norte</td>
                                 <td><span class="badge badge-activo">Activo</span></td>
                                 <td class="acciones">
                                     <button class="btn-icon btn-ver" title="Ver"><i class="ri-eye-line"></i></button>
@@ -415,7 +414,7 @@
                                 <td>Diego Morales Vega</td>
                                 <td>13</td>
                                 <td><span class="badge badge-avanzado">Avanzado</span></td>
-                                <td>Grupo C</td>
+                                <td>Sede Central</td>
                                 <td><span class="badge badge-inactivo">Inactivo</span></td>
                                 <td class="acciones">
                                     <button class="btn-icon btn-ver" title="Ver"><i class="ri-eye-line"></i></button>
@@ -701,6 +700,21 @@
                                 </div>
                                 <span class="error-msg-modal" id="err-al-genero"></span>
                             </div>
+                            <div class="form-group-modal modal-col-full">
+                                <label for="al-sede">Sede <span style="color:var(--naranja)">*</span></label>
+                                <div class="form-dropdown" id="dropdown-al-sede" tabindex="0">
+                                    <div class="form-select-trigger">
+                                        <span class="selected-text" data-value="">Selecciona una sede</span>
+                                        <i class="ri-arrow-down-s-line"></i>
+                                    </div>
+                                    <div class="form-options-container">
+                                        <div class="form-option" data-value="sede central">Sede Central</div>
+                                        <div class="form-option" data-value="sede norte">Sede Norte</div>
+                                    </div>
+                                    <input type="hidden" id="al-sede" name="al_sede" value="">
+                                </div>
+                                <span class="error-msg-modal" id="err-al-sede"></span>
+                            </div>
                             <div class="form-group-modal">
                                 <label for="al-estado">Estado <span style="color:var(--naranja)">*</span></label>
                                 <div class="form-dropdown" id="dropdown-al-estado" tabindex="0">
@@ -830,6 +844,25 @@
                                 <input type="tel" id="tu-telefono" name="tu_telefono" placeholder="10 dígitos"
                                     maxlength="10">
                                 <span class="error-msg-modal" id="err-tu-telefono"></span>
+                            </div>
+                            <div class="form-group-modal modal-col-full">
+                                <label for="tu-parentesco">Parentesco</label>
+                                <div class="form-dropdown" id="dropdown-tu-parentesco" tabindex="0">
+                                    <div class="form-select-trigger">
+                                        <span class="selected-text" data-value="">Selecciona el parentesco</span>
+                                        <i class="ri-arrow-down-s-line"></i>
+                                    </div>
+                                    <div class="form-options-container">
+                                        <div class="form-option" data-value="padre">Padre</div>
+                                        <div class="form-option" data-value="madre">Madre</div>
+                                        <div class="form-option" data-value="abuelo_a">Abuelo/a</div>
+                                        <div class="form-option" data-value="tutor_legal">Tutor Legal</div>
+                                        <div class="form-option" data-value="familiar">Familiar</div>
+                                        <div class="form-option" data-value="otro">Otro</div>
+                                    </div>
+                                    <input type="hidden" id="tu-parentesco" name="tu_parentesco" value="">
+                                </div>
+                                <span class="error-msg-modal" id="err-tu-parentesco"></span>
                             </div>
                             <div class="form-group-modal modal-col-full">
                                 <label for="tu-correo">Correo Electrónico</label>
@@ -2011,15 +2044,16 @@
                         <input type="text" id="buscador-niveles" placeholder="Buscar estudiante por nombre...">
                     </div>
 
-                    <div class="select-wrapper custom-dropdown" id="dropdown-niv-sede">
+                    <div class="select-wrapper custom-dropdown" id="dropdown-niv-grupo">
                         <div class="custom-select-trigger niveles-select">
-                            <span class="selected-text" data-value="">Sede</span>
+                            <span class="selected-text" data-value="">Grupo</span>
                             <i class="ri-arrow-down-s-line"></i>
                         </div>
                         <div class="custom-options-container">
-                            <div class="custom-option selected" data-value="">Sede</div>
-                            <div class="custom-option" data-value="Sede Central">Sede Central</div>
-                            <div class="custom-option" data-value="Sede Norte">Sede Norte</div>
+                            <div class="custom-option selected" data-value="">Grupo</div>
+                            <div class="custom-option" data-value="Grupo A">Grupo A</div>
+                            <div class="custom-option" data-value="Grupo B">Grupo B</div>
+                            <div class="custom-option" data-value="Grupo C">Grupo C</div>
                         </div>
                     </div>
 
@@ -2046,7 +2080,7 @@
                                 <th>Alumno</th>
                                 <th>Puntos</th>
                                 <th>Nivel</th>
-                                <th>Sede</th>
+                                <th>Grupo</th>
                                 <th>Acciones</th>
                             </tr>
                         </thead>
@@ -2055,7 +2089,7 @@
                                 <td>Ana García</td>
                                 <td><span class="puntos-actual">1450</span> <span class="puntos-max">/ 2000</span></td>
                                 <td><div class="badge-nivel badge-nivel-5"><span class="badge-nivel-texto">Nivel</span> <span class="badge-nivel-num">5</span></div></td>
-                                <td>Sede Central</td>
+                                <td>Grupo A</td>
                                 <td class="acciones-puntos">
                                     <button class="btn-modificar-puntos"><i class="ri-edit-line"></i> Modificar</button>
                                 </td>
@@ -2064,7 +2098,7 @@
                                 <td>Carlos López</td>
                                 <td><span class="puntos-actual">875</span> <span class="puntos-max">/ 2000</span></td>
                                 <td><div class="badge-nivel badge-nivel-4"><span class="badge-nivel-texto">Nivel</span> <span class="badge-nivel-num">4</span></div></td>
-                                <td>Sede Norte</td>
+                                <td>Grupo B</td>
                                 <td class="acciones-puntos">
                                     <button class="btn-modificar-puntos"><i class="ri-edit-line"></i> Modificar</button>
                                 </td>
@@ -2073,7 +2107,7 @@
                                 <td>María Rodríguez</td>
                                 <td><span class="puntos-actual">1720</span> <span class="puntos-max">/ 2000</span></td>
                                 <td><div class="badge-nivel badge-nivel-6"><span class="badge-nivel-texto">Nivel</span> <span class="badge-nivel-num">6</span></div></td>
-                                <td>Sede Central</td>
+                                <td>Grupo A</td>
                                 <td class="acciones-puntos">
                                     <button class="btn-modificar-puntos"><i class="ri-edit-line"></i> Modificar</button>
                                 </td>
@@ -2082,7 +2116,7 @@
                                 <td>Juan Sánchez</td>
                                 <td><span class="puntos-actual">650</span> <span class="puntos-max">/ 2000</span></td>
                                 <td><div class="badge-nivel badge-nivel-3"><span class="badge-nivel-texto">Nivel</span> <span class="badge-nivel-num">3</span></div></td>
-                                <td>Sede Norte</td>
+                                <td>Grupo C</td>
                                 <td class="acciones-puntos">
                                     <button class="btn-modificar-puntos"><i class="ri-edit-line"></i> Modificar</button>
                                 </td>
@@ -2091,7 +2125,7 @@
                                 <td>Laura Fernández</td>
                                 <td><span class="puntos-actual">1150</span> <span class="puntos-max">/ 2000</span></td>
                                 <td><div class="badge-nivel badge-nivel-4"><span class="badge-nivel-texto">Nivel</span> <span class="badge-nivel-num">4</span></div></td>
-                                <td>Sede Central</td>
+                                <td>Grupo B</td>
                                 <td class="acciones-puntos">
                                     <button class="btn-modificar-puntos"><i class="ri-edit-line"></i> Modificar</button>
                                 </td>

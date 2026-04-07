@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Dropdowns de filtros
     const filters = [
-        { id: 'dropdown-niv-sede', value: '' },
+        { id: 'dropdown-niv-grupo', value: '' },
         { id: 'dropdown-niv-nivel', value: '' }
     ];
 
@@ -138,7 +138,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Filtrar tabla
     function applyFilters() {
         const searchTerm = (buscador.value || '').toLowerCase().trim();
-        const sedeSearch = filters[0].value;
+        const grupoSearch = filters[0].value;
         const nivelSearch = filters[1].value;
 
         tableRows.forEach(row => {
@@ -147,14 +147,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const name = cols[0].textContent.toLowerCase();
             const nivel = cols[2].textContent.toLowerCase(); 
-            const sede = cols[3].textContent.toLowerCase();
+            const grupo = cols[3].textContent.toLowerCase();
 
             // Match conditions
             const matchName = name.includes(searchTerm);
-            const matchSede = !sedeSearch || sede.includes(sedeSearch);
+            const matchGrupo = !grupoSearch || grupo.includes(grupoSearch);
             const matchNivel = !nivelSearch || nivel.includes(nivelSearch);
 
-            if (matchName && matchSede && matchNivel) {
+            if (matchName && matchGrupo && matchNivel) {
                 row.style.display = '';
             } else {
                 row.style.display = 'none';
