@@ -115,6 +115,54 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // ---- Lógica para Form Dropdowns del modal Profesor ----
+    const formDropdownsProf = document.querySelectorAll('#modal-agregar-profesor .form-dropdown');
+    formDropdownsProf.forEach(dropdown => {
+        const trigger = dropdown.querySelector('.form-select-trigger');
+        const options = dropdown.querySelectorAll('.form-option');
+        const selectedText = dropdown.querySelector('.selected-text');
+        const hiddenInput = dropdown.querySelector('input[type="hidden"]');
+
+        if (!trigger || !selectedText) return;
+
+        trigger.addEventListener('click', (e) => {
+            e.stopPropagation();
+            formDropdownsProf.forEach(d => {
+                if (d !== dropdown) d.classList.remove('open');
+            });
+            dropdown.classList.toggle('open');
+        });
+
+        options.forEach(option => {
+            option.addEventListener('click', (e) => {
+                e.stopPropagation();
+                options.forEach(opt => opt.classList.remove('selected'));
+                option.classList.add('selected');
+
+                const val = option.getAttribute('data-value');
+                const text = option.textContent;
+
+                selectedText.textContent = text;
+                selectedText.setAttribute('data-value', val);
+                if (hiddenInput) hiddenInput.value = val;
+
+                dropdown.classList.remove('open');
+
+                if (val !== "") {
+                    dropdown.classList.remove('input-error');
+                    if (hiddenInput) {
+                        const errorMsg = document.getElementById(`err-${hiddenInput.id}`);
+                        if (errorMsg) errorMsg.textContent = '';
+                    }
+                }
+            });
+        });
+    });
+
+    document.addEventListener('click', () => {
+        formDropdownsProf.forEach(dropdown => dropdown.classList.remove('open'));
+    });
+
     // Cerrar con Escape
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape' && modalProfesor && modalProfesor.classList.contains('open')) {
