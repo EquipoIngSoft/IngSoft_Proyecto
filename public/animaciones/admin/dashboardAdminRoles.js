@@ -75,17 +75,30 @@ document.addEventListener('DOMContentLoaded', () => {
                 inp.classList.remove('input-error', 'input-ok');
             });
 
-            // Reset custom dropdown
+            // Reset custom dropdowns
             const ddStatus = document.getElementById('dropdown-ro-estatus');
+            const ddTipo = document.getElementById('dropdown-ro-tipo');
+
             if (ddStatus) {
                 const selectedText = ddStatus.querySelector('.selected-text');
-                const firstOpt = ddStatus.querySelector('.form-option'); // Cambiado a form-option para este dropdown
+                const firstOpt = ddStatus.querySelector('.form-option');
                 if (selectedText && firstOpt) {
                     selectedText.textContent = firstOpt.textContent;
                     selectedText.setAttribute('data-value', firstOpt.getAttribute('data-value'));
                 }
                 const hiddenInput = ddStatus.querySelector('input[type="hidden"]');
                 if (hiddenInput) hiddenInput.value = 'activo';
+            }
+
+            if (ddTipo) {
+                const selectedText = ddTipo.querySelector('.selected-text');
+                const firstOpt = ddTipo.querySelector('.form-option');
+                if (selectedText && firstOpt) {
+                    selectedText.textContent = firstOpt.textContent;
+                    selectedText.setAttribute('data-value', firstOpt.getAttribute('data-value'));
+                }
+                const hiddenInput = ddTipo.querySelector('input[type="hidden"]');
+                if (hiddenInput) hiddenInput.value = 'estandar';
             }
         }
         document.body.style.overflow = '';
@@ -99,6 +112,26 @@ document.addEventListener('DOMContentLoaded', () => {
         modalRol.addEventListener('click', (e) => {
             if (e.target === modalRol) cerrarModalRol();
         });
+
+        // ---- Lógica: Auto-marcar permisos si es Admin ----
+        const ddTipo = document.getElementById('dropdown-ro-tipo');
+        if (ddTipo) {
+            const options = ddTipo.querySelectorAll('.form-option');
+            const checkboxes = modalRol.querySelectorAll('.permissions-table input[type="checkbox"]');
+
+            options.forEach(opt => {
+                opt.addEventListener('click', () => {
+                    const val = opt.getAttribute('data-value');
+                    if (val === 'admin') {
+                        // Marcar todos
+                        checkboxes.forEach(cb => cb.checked = true);
+                    } else {
+                        // Desmarcar todos (opcional, pero ayuda a la claridad)
+                        checkboxes.forEach(cb => cb.checked = false);
+                    }
+                });
+            });
+        }
     }
 
     // ---- VALIDACIÓN DEL FORMULARIO ----

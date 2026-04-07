@@ -1179,6 +1179,21 @@
                                 <span class="error-msg-modal" id="err-pr-telefono"></span>
                             </div>
                             <div class="form-group-modal">
+                                <label for="pr-sede">Sede <span style="color:var(--naranja)">*</span></label>
+                                <div class="form-dropdown" id="dropdown-pr-sede" tabindex="0">
+                                    <div class="form-select-trigger">
+                                        <span class="selected-text" data-value="">Selecciona una sede</span>
+                                        <i class="ri-arrow-down-s-line"></i>
+                                    </div>
+                                    <div class="form-options-container">
+                                        <div class="form-option" data-value="sede central">Sede Central</div>
+                                        <div class="form-option" data-value="sede norte">Sede Norte</div>
+                                    </div>
+                                    <input type="hidden" id="pr-sede" name="pr_sede" value="">
+                                </div>
+                                <span class="error-msg-modal" id="err-pr-sede"></span>
+                            </div>
+                            <div class="form-group-modal">
                                 <label for="pr-genero">Género</label>
                                 <div class="form-dropdown" id="dropdown-pr-genero" tabindex="0">
                                     <div class="form-select-trigger" id="trigger-pr-genero">
@@ -2324,7 +2339,21 @@
                                 <textarea id="ro-descripcion" name="ro_descripcion" placeholder="Explica qué funciones tendrá este rol..." rows="2"></textarea>
                                 <span class="error-msg-modal" id="err-ro-descripcion"></span>
                             </div>
-                            <div class="form-group-modal modal-col-full">
+                            <div class="form-group-modal">
+                                <label for="ro-tipo">Tipo de Acceso <span style="color:var(--naranja)">*</span></label>
+                                <div class="form-dropdown" id="dropdown-ro-tipo" tabindex="0">
+                                    <div class="form-select-trigger">
+                                        <span class="selected-text" data-value="estandar">Estándar</span>
+                                        <i class="ri-arrow-down-s-line"></i>
+                                    </div>
+                                    <div class="form-options-container">
+                                        <div class="form-option selected" data-value="estandar">Estándar</div>
+                                        <div class="form-option" data-value="admin">Administrador</div>
+                                    </div>
+                                    <input type="hidden" id="ro-tipo" name="ro_tipo" value="estandar">
+                                </div>
+                            </div>
+                            <div class="form-group-modal">
                                 <label for="ro-estatus">Estatus <span style="color:var(--naranja)">*</span></label>
                                 <div class="form-dropdown" id="dropdown-ro-estatus" tabindex="0">
                                     <div class="form-select-trigger">
@@ -2379,10 +2408,14 @@
                                             </label>
                                         </td>
                                         <td class="text-center">
+                                            @if($mod['id'] !== 'status')
                                             <label class="custom-checkbox-container">
                                                 <input type="checkbox" name="permiso_{{ $mod['id'] }}_crear" value="1">
                                                 <span class="checkmark"></span>
                                             </label>
+                                            @else
+                                            <span style="color: var(--texto-suave); font-size: 0.8rem;">N/A</span>
+                                            @endif
                                         </td>
                                     </tr>
                                     @endforeach

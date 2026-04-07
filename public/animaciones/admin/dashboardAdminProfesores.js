@@ -251,6 +251,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 valido = false;
             } else { setOk('pr-cp', 'err-pr-cp'); }
 
+            // Sede
+            const prSede = document.getElementById('pr-sede');
+            if (!prSede || prSede.value === '') {
+                setError('dropdown-pr-sede', 'err-pr-sede', 'Selecciona una sede.');
+                valido = false;
+            } else { setOk('dropdown-pr-sede', 'err-pr-sede'); }
+
             // Teléfono
             const prTelefono = document.getElementById('pr-telefono');
             if (prTelefono && prTelefono.value.trim() !== '') {
