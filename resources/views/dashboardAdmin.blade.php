@@ -882,6 +882,7 @@
                         </div>
                     </div>
                     <div class="profesor-card-footer">
+                        <button class="btn-profesor-ver" title="Ver"><i class="ri-eye-line"></i> Ver</button>
                         <button class="btn-profesor-editar"><i class="ri-edit-line"></i> Editar</button>
                         <button class="btn-profesor-eliminar"><i class="ri-delete-bin-line"></i></button>
                     </div>
@@ -896,6 +897,7 @@
                         </div>
                     </div>
                     <div class="profesor-card-footer">
+                        <button class="btn-profesor-ver" title="Ver"><i class="ri-eye-line"></i> Ver</button>
                         <button class="btn-profesor-editar"><i class="ri-edit-line"></i> Editar</button>
                         <button class="btn-profesor-eliminar"><i class="ri-delete-bin-line"></i></button>
                     </div>
@@ -910,6 +912,7 @@
                         </div>
                     </div>
                     <div class="profesor-card-footer">
+                        <button class="btn-profesor-ver" title="Ver"><i class="ri-eye-line"></i> Ver</button>
                         <button class="btn-profesor-editar"><i class="ri-edit-line"></i> Editar</button>
                         <button class="btn-profesor-eliminar"><i class="ri-delete-bin-line"></i></button>
                     </div>
@@ -1310,6 +1313,7 @@
                         </div>
                     </div>
                     <div class="grupo-card-footer">
+                        <button class="btn-grupo-ver" title="Ver"><i class="ri-eye-line"></i> Ver</button>
                         <button class="btn-grupo-editar"><i class="ri-edit-line"></i> Editar</button>
                         <button class="btn-grupo-eliminar"><i class="ri-delete-bin-line"></i></button>
                     </div>
@@ -1338,6 +1342,7 @@
                         </div>
                     </div>
                     <div class="grupo-card-footer">
+                        <button class="btn-grupo-ver" title="Ver"><i class="ri-eye-line"></i> Ver</button>
                         <button class="btn-grupo-editar"><i class="ri-edit-line"></i> Editar</button>
                         <button class="btn-grupo-eliminar"><i class="ri-delete-bin-line"></i></button>
                     </div>
@@ -1837,6 +1842,7 @@
                         </div>
                     </div>
                     <div class="extraescolar-card-footer">
+                        <button class="btn-extraescolar-ver" title="Ver"><i class="ri-eye-line"></i> Ver</button>
                         <button class="btn-extraescolar-editar"><i class="ri-edit-line"></i> Editar</button>
                         <button class="btn-extraescolar-eliminar"><i class="ri-delete-bin-line"></i></button>
                     </div>
