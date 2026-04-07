@@ -9,7 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Inter:wght@400;500;600&display=swap"
         rel="stylesheet">
     <!-- Hoja de estilos externa -->
-    <link rel="stylesheet" href="{{ asset('css/logIn.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/login/logIn.css') }}">
 </head>
 
 <body>
@@ -52,6 +52,9 @@
                 <div class="form-group">
                     <label for="password">Contraseña</label>
                     <input type="password" id="password" name="password" placeholder="Ingresa tu contraseña" required minlength="6">
+                    <div class="forgot-wrapper">
+                        <a href="#" class="forgot-link">¿Olvidaste tu contraseña?</a>
+                    </div>
                     <span class="error-msg" id="error-password"></span>
                 </div>
 
@@ -62,7 +65,7 @@
     </div>
 
     <!-- JS de animaciones -->
-    <script src="{{ asset('animaciones/logIn.js') }}"></script>
+    <script src="{{ asset('animaciones/login/logIn.js') }}"></script>
 
 </body>
 

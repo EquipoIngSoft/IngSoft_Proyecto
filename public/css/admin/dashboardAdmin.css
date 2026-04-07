@@ -1,5 +1,6 @@
 /* =============================================
-   dashboard.css — Estilos del Dashboard Admin
+   dashboardAdmin.css — Estilos Generales del Dashboard
+   Sidebar, Topbar, Perfil, Layout y Card
    EGAU Chess | AMAAC
    ============================================= */
 
@@ -49,7 +50,17 @@ body {
     top: 0;
     left: 0;
     z-index: 100;
-    transition: transform 0.3s ease;
+    transition: transform 0.3s ease, width 0.3s ease;
+    overflow: hidden;
+}
+
+/* Sidebar colapsado (escritorio) */
+.sidebar.collapsed {
+    transform: translateX(-100%);
+}
+
+.main-content.sidebar-hidden {
+    margin-left: 0;
 }
 
 /* Logo del sidebar */
@@ -157,6 +168,7 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+    transition: margin-left 0.3s ease;
 }
 
 /* ---- Topbar ---- */
@@ -166,7 +178,7 @@ body {
     padding: 14px 28px;
     display: flex;
     align-items: center;
-    justify-content: flex-end;
+    justify-content: space-between;
     position: sticky;
     top: 0;
     z-index: 50;
@@ -178,14 +190,16 @@ body {
     cursor: pointer;
     font-size: 22px;
     color: var(--texto-suave);
-    padding: 4px;
+    padding: 6px 8px;
     display: flex;
     align-items: center;
-    transition: color 0.2s;
+    border-radius: 8px;
+    transition: color 0.2s, background-color 0.2s;
 }
 
 .menu-toggle:hover {
     color: var(--naranja);
+    background-color: var(--naranja-light);
 }
 
 .topbar-right {
@@ -306,7 +320,8 @@ body {
 
 .profile-options li.text-danger:hover {
     background-color: var(--rojo-light);
-    color: #d93025; /* rojo intenso */
+    color: #d93025;
+    /* rojo intenso */
 }
 
 /* ---- Sección de contenido ---- */
@@ -360,6 +375,36 @@ body {
     transform: scale(0.98);
 }
 
+/* Botón secundario anaranjado */
+.btn-secondary {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 19px; /* un pixel menos por el borde paramantener tamaño */
+    background-color: transparent;
+    color: var(--naranja);
+    border: 1px solid var(--naranja);
+    border-radius: 10px;
+    font-size: 14px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s, box-shadow 0.2s, color 0.2s, transform 0.1s;
+}
+
+.btn-secondary i {
+    font-size: 16px;
+}
+
+.btn-secondary:hover {
+    background-color: var(--naranja-light);
+    box-shadow: 0 4px 14px rgba(224, 92, 42, 0.15);
+}
+
+.btn-secondary:active {
+    transform: scale(0.98);
+}
+
 /* =============================================
    TARJETA / CARD
    ============================================= */
@@ -370,388 +415,8 @@ body {
     box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
 }
 
-/* ---- Controles: Búsqueda y Filtros ---- */
-.controls-container {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    margin-bottom: 24px;
-}
-
-.search-bar {
-    position: relative;
-}
-
-.search-icon {
-    position: absolute;
-    left: 14px;
-    top: 50%;
-    transform: translateY(-50%);
-    color: var(--naranja);
-    font-size: 17px;
-    pointer-events: none;
-}
-
-.search-bar input {
-    width: 100%;
-    padding: 11px 16px 11px 40px;
-    border: 2px solid var(--naranja-light);
-    border-radius: 10px;
-    font-size: 14px;
-    font-family: 'Inter', sans-serif;
-    background-color: var(--naranja-light);
-    outline: none;
-    color: var(--texto);
-    transition: border-color 0.2s, background-color 0.2s;
-}
-
-.search-bar input:focus {
-    border-color: var(--naranja);
-    background-color: var(--blanco);
-}
-
-.search-bar input::placeholder {
-    color: var(--naranja);
-    opacity: 0.7;
-}
-
-/* ---- Filtros Desplegables Modernos ---- */
-.filters-row {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    flex-wrap: wrap;
-    z-index: 20;
-    position: relative;
-}
-
-.custom-dropdown {
-    position: relative;
-    user-select: none;
-    min-width: 180px;
-}
-
-.custom-select-trigger {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background-color: var(--naranja-light);
-    border: 2px solid var(--naranja-light);
-    color: var(--texto);
-    padding: 10px 16px;
-    border-radius: 10px;
-    font-size: 13px;
-    font-family: 'Inter', sans-serif;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.25s ease;
-}
-
-.custom-select-trigger:hover,
-.custom-dropdown.open .custom-select-trigger {
-    border-color: var(--naranja);
-    background-color: var(--blanco);
-    box-shadow: 0 4px 12px rgba(224, 92, 42, 0.1);
-}
-
-.custom-select-trigger i {
-    font-size: 18px;
-    color: var(--naranja);
-    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
-.custom-dropdown.open .custom-select-trigger i {
-    transform: rotate(180deg);
-}
-
-.custom-options-container {
-    position: absolute;
-    top: calc(100% + 10px);
-    left: 0;
-    width: 100%;
-    background-color: var(--blanco);
-    border-radius: 12px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-    border: 1px solid var(--borde);
-    opacity: 0;
-    visibility: hidden;
-    transform: translateY(-10px) scale(0.98);
-    transform-origin: top center;
-    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-    z-index: 100;
-    padding: 8px;
-    max-height: 240px;
-    overflow-y: auto;
-}
-
-.custom-dropdown.open .custom-options-container {
-    opacity: 1;
-    visibility: visible;
-    transform: translateY(0) scale(1);
-}
-
-.custom-option {
-    padding: 10px 14px;
-    font-size: 13px;
-    font-weight: 500;
-    color: var(--texto);
-    border-radius: 8px;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    margin-bottom: 2px;
-    display: flex;
-    align-items: center;
-}
-
-.custom-option::before {
-    content: '';
-    display: inline-block;
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    margin-right: 10px;
-    background-color: transparent;
-    transition: background-color 0.2s;
-}
-
-.custom-option:last-child {
-    margin-bottom: 0;
-}
-
-.custom-option:hover {
-    background-color: var(--naranja-light);
-    color: var(--naranja);
-    transform: translateX(4px);
-}
-
-.custom-option.selected {
-    background-color: var(--naranja);
-    color: var(--blanco);
-}
-.custom-option.selected::before {
-    background-color: var(--blanco);
-}
-
-/* Custom Scrollbar para el menu */
-.custom-options-container::-webkit-scrollbar {
-    width: 6px;
-}
-.custom-options-container::-webkit-scrollbar-thumb {
-    background-color: var(--borde);
-    border-radius: 6px;
-}
-
-.btn-clear-filters {
-    background-color: var(--fondo);
-    color: var(--texto);
-    border: none;
-    padding: 11px 18px;
-    border-radius: 8px;
-    font-size: 13px;
-    font-family: 'Inter', sans-serif;
-    font-weight: 500;
-    cursor: pointer;
-    transition: background-color 0.2s, color 0.2s;
-}
-
-.btn-clear-filters:hover {
-    background-color: #e4e7ed;
-}
-
 /* =============================================
-   TABLA
-   ============================================= */
-.table-wrapper {
-    overflow-x: auto;
-    overflow-y: auto;
-    max-height: 480px;
-    /* Scroll lateral / scroll vertical */
-    border-radius: 8px;
-}
-
-/* Fix background on scroll for table lines */
-.data-table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 14px;
-}
-
-/* Cabecera pegajosa (Sticky header) */
-.data-table thead th {
-    position: sticky;
-    top: 0;
-    background-color: var(--blanco);
-    z-index: 10;
-    text-align: left;
-    padding: 12px 14px;
-    color: var(--naranja);
-    font-weight: 600;
-    font-size: 13px;
-    border-bottom: 2px solid var(--borde);
-    white-space: nowrap;
-}
-
-.data-table tbody tr {
-    border-bottom: 1px solid var(--borde);
-    transition: background-color 0.15s;
-}
-
-.data-table tbody tr:last-child {
-    border-bottom: none;
-}
-
-.data-table tbody tr:hover {
-    background-color: #fafafa;
-}
-
-.data-table tbody td {
-    padding: 14px 14px;
-    color: var(--texto);
-    vertical-align: middle;
-}
-
-/* ---- Badges de Nivel ---- */
-.badge {
-    display: inline-block;
-    padding: 4px 12px;
-    border-radius: 50px;
-    font-size: 12px;
-    font-weight: 600;
-    white-space: nowrap;
-}
-
-.badge-principiante {
-    background-color: #fce8e6;
-    color: #c0392b;
-}
-
-.badge-intermedio {
-    background-color: #fde8d8;
-    color: #e05c2a;
-}
-
-.badge-avanzado {
-    background-color: #fff3e0;
-    color: #e65100;
-}
-
-/* ---- Badges de Status ---- */
-.badge-activo {
-    background-color: var(--verde-light);
-    color: var(--verde);
-}
-
-.badge-inactivo {
-    background-color: var(--gris-light);
-    color: #666;
-}
-
-/* ---- Botones de acción ---- */
-.acciones {
-    display: flex;
-    gap: 8px;
-    align-items: center;
-}
-
-.btn-icon {
-    background: none;
-    border: none;
-    cursor: pointer;
-    font-size: 17px;
-    padding: 5px;
-    border-radius: 6px;
-    transition: background-color 0.15s, color 0.15s;
-    display: flex;
-    align-items: center;
-}
-
-.btn-ver {
-    color: var(--naranja);
-}
-
-.btn-ver:hover {
-    background-color: var(--naranja-light);
-}
-
-.btn-editar {
-    color: var(--naranja);
-}
-
-.btn-editar:hover {
-    background-color: var(--naranja-light);
-}
-
-.btn-eliminar {
-    color: #aaa;
-}
-
-.btn-eliminar:hover {
-    background-color: var(--rojo-light);
-    color: #c0392b;
-}
-
-/* =============================================
-   PAGINACIÓN
-   ============================================= */
-.pagination {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-top: 20px;
-    padding-top: 16px;
-    border-top: 1px solid var(--borde);
-    flex-wrap: wrap;
-    gap: 10px;
-}
-
-.pagination-info {
-    font-size: 13px;
-    color: var(--texto-suave);
-}
-
-.pagination-btns {
-    display: flex;
-    gap: 6px;
-    align-items: center;
-}
-
-.pag-btn {
-    min-width: 34px;
-    height: 34px;
-    padding: 0 8px;
-    border: 1px solid var(--borde);
-    border-radius: 8px;
-    background-color: var(--blanco);
-    font-size: 13px;
-    font-family: 'Inter', sans-serif;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: background-color 0.15s, color 0.15s, border-color 0.15s;
-    color: var(--texto-suave);
-}
-
-.pag-btn:hover:not(:disabled):not(.active) {
-    background-color: var(--naranja-light);
-    color: var(--naranja);
-    border-color: var(--naranja);
-}
-
-.pag-btn.active {
-    background-color: var(--naranja);
-    color: var(--blanco);
-    border-color: var(--naranja);
-    font-weight: 700;
-}
-
-.pag-btn:disabled {
-    opacity: 0.4;
-    cursor: not-allowed;
-}
-
-/* =============================================
-   RESPONSIVE
+   RESPONSIVE (general)
    ============================================= */
 @media (max-width: 768px) {
     .sidebar {
