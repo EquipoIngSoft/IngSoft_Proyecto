@@ -4,26 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EGAU Chess - Escuela de Ajedrez</title>
-    <link rel="stylesheet" href="{{ asset('css/landing.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/website/landing.css') }}">
 </head>
 <body>
 
     {{-- SCRUM-7: Header --}}
-    <header class="header">
-        <div class="header-contenedor">
-            <div class="header-logo">
-                <img src="{{ asset('Logos/LogoEgau.png') }}" alt="EGAU Chess">
-                <span class="header-nombre">EGAU CHESS</span>
-            </div>
-            <nav class="header-nav">
-                <a href="#cursos">Cursos</a>
-                <a href="#sedes">Sedes</a>
-                <a href="#testimonios">Testimonios</a>
-                <a href="#blog">Blog</a>
-                <a href="/login" class="header-btn">Iniciar sesión</a>
-            </nav>
-        </div>
-    </header>
+    @include('website.header')
 
     {{-- SCRUM-9: Banner principal --}}
     <section class="banner">
