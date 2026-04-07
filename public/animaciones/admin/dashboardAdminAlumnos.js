@@ -326,6 +326,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 valido = false;
             } else { setOk('dropdown-al-sede', 'err-al-sede'); }
 
+            // Puntaje Inicial
+            const alPuntos = document.getElementById('al-puntos-inicial');
+            if (!alPuntos || alPuntos.value.trim() === '' || isNaN(alPuntos.value)) {
+                setError('al-puntos-inicial', 'err-al-puntos-inicial', 'Ingresa la puntuación inicial.');
+                valido = false;
+            } else if (parseInt(alPuntos.value) < 0 || parseInt(alPuntos.value) > 2000) {
+                setError('al-puntos-inicial', 'err-al-puntos-inicial', 'El puntaje debe estar entre 0 y 2000.');
+                valido = false;
+            } else { setOk('al-puntos-inicial', 'err-al-puntos-inicial'); }
+
             // Dirección: Estado
             const alEstado = document.getElementById('al-estado');
             if (!alEstado || alEstado.value === '') {

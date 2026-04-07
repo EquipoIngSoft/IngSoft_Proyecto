@@ -715,6 +715,12 @@
                                 </div>
                                 <span class="error-msg-modal" id="err-al-sede"></span>
                             </div>
+                            <div class="form-group-modal modal-col-full">
+                                <label for="al-puntos-inicial">Puntaje Inicial <span style="color:var(--naranja)">*</span></label>
+                                <input type="number" id="al-puntos-inicial" name="al_puntos_inicial" 
+                                    placeholder="Ej. 500" min="0" max="2000" value="0" required>
+                                <span class="error-msg-modal" id="err-al-puntos-inicial"></span>
+                            </div>
                             <div class="form-group-modal">
                                 <label for="al-estado">Estado <span style="color:var(--naranja)">*</span></label>
                                 <div class="form-dropdown" id="dropdown-al-estado" tabindex="0">
