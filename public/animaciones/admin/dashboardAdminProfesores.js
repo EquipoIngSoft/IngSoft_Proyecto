@@ -222,6 +222,35 @@ document.addEventListener('DOMContentLoaded', () => {
                 valido = false;
             } else if (prPassConf.value !== '') { setOk('pr-password-confirm', 'err-pr-password-confirm'); }
 
+            // Dirección: Estado
+            const prEstado = document.getElementById('pr-estado');
+            if (!prEstado || prEstado.value === '') {
+                setError('dropdown-pr-estado', 'err-pr-estado', 'Selecciona un estado.');
+                valido = false;
+            } else { setOk('dropdown-pr-estado', 'err-pr-estado'); }
+
+            // Dirección: Ciudad
+            const prCiudad = document.getElementById('pr-ciudad');
+            if (!prCiudad || prCiudad.value.trim() === '') {
+                setError('pr-ciudad', 'err-pr-ciudad', 'La ciudad es requerida.');
+                valido = false;
+            } else { setOk('pr-ciudad', 'err-pr-ciudad'); }
+
+            // Dirección: Calle
+            const prCalle = document.getElementById('pr-calle');
+            if (!prCalle || prCalle.value.trim() === '') {
+                setError('pr-calle', 'err-pr-calle', 'La calle es requerida.');
+                valido = false;
+            } else { setOk('pr-calle', 'err-pr-calle'); }
+
+            // Dirección: CP
+            const prCP = document.getElementById('pr-cp');
+            const cpReg = /^\d{5}$/;
+            if (!prCP || !cpReg.test(prCP.value.trim())) {
+                setError('pr-cp', 'err-pr-cp', 'Ingresa un CP válido (5 dígitos).');
+                valido = false;
+            } else { setOk('pr-cp', 'err-pr-cp'); }
+
             // Teléfono
             const prTelefono = document.getElementById('pr-telefono');
             if (prTelefono && prTelefono.value.trim() !== '') {

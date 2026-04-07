@@ -23,6 +23,24 @@ document.addEventListener('DOMContentLoaded', () => {
         document.body.style.overflow = '';
         if (formAgregar) formAgregar.reset();
         
+        // Limpiar form-dropdowns
+        document.querySelectorAll('#modal-agregar-sede .form-dropdown').forEach(dropdown => {
+            const options = dropdown.querySelectorAll('.form-option');
+            const selectedText = dropdown.querySelector('.selected-text');
+            const hiddenInput = dropdown.querySelector('input[type="hidden"]');
+            
+            dropdown.classList.remove('input-error', 'input-ok');
+            options.forEach(opt => opt.classList.remove('selected'));
+            
+            if (options.length > 0) {
+                if (selectedText) {
+                    selectedText.textContent = 'Selecciona un estado';
+                    selectedText.setAttribute('data-value', '');
+                }
+                if (hiddenInput) hiddenInput.value = '';
+            }
+        });
+
         // Limpiar estados de validación
         document.querySelectorAll('#modal-agregar-sede .form-group-modal input').forEach(inp => {
             inp.classList.remove('input-error', 'input-ok');
@@ -62,16 +80,63 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // ---- Validación del formulario Sede ----
     if (formAgregar) {
+        const setError = (inputId, msgId, mensaje) => {
+            const inp = document.getElementById(inputId);
+            const msg = document.getElementById(msgId);
+            if (inp) { inp.classList.add('input-error'); inp.classList.remove('input-ok'); }
+            if (msg) msg.textContent = mensaje;
+        };
+
+        const setOk = (inputId, msgId) => {
+            const inp = document.getElementById(inputId);
+            const msg = document.getElementById(msgId);
+            if (inp) { inp.classList.remove('input-error'); inp.classList.add('input-ok'); }
+            if (msg) msg.textContent = '';
+        };
+
         formAgregar.addEventListener('submit', (e) => {
             e.preventDefault();
-            // Lógica de validación simplificada
-            const nombre = document.getElementById('se-nombre');
-            if (!nombre || nombre.value.trim() === '') {
-                nombre.classList.add('input-error');
-                const err = document.getElementById('err-se-nombre');
-                if (err) err.textContent = 'El nombre de la sede es requerido.';
-            } else {
-                console.log('Formulario Sede válido.');
+            let valido = true;
+
+            const fields = [
+                { id: 'se-nombre', err: 'err-se-nombre', msg: 'El nombre es obligatorio.' },
+                { id: 'se-estado', target: 'dropdown-se-estado', err: 'err-se-estado', msg: 'Selecciona un estado.' },
+                { id: 'se-ciudad', err: 'err-se-ciudad', msg: 'La ciudad es obligatoria.' },
+                { id: 'se-cp', err: 'err-se-cp', msg: 'CP inválido (5 dígitos).', type: 'cp' },
+                { id: 'se-calle', err: 'err-se-calle', msg: 'La dirección es obligatoria.' },
+                { id: 'se-telefono', err: 'err-se-telefono', msg: 'Teléfono inválido (10 dígitos).', type: 'tel' },
+                { id: 'se-correo', err: 'err-se-correo', msg: 'Email inválido.', type: 'email' }
+            ];
+
+            fields.forEach(f => {
+                const el = document.getElementById(f.id);
+                const targetId = f.target || f.id;
+
+                if (!el || el.value.trim() === '') {
+                    setError(targetId, f.err, f.msg);
+                    valido = false;
+                } else if (f.type === 'cp') {
+                    if (!/^\d{5}$/.test(el.value.trim())) {
+                        setError(targetId, f.err, f.msg);
+                        valido = false;
+                    } else { setOk(targetId, f.err); }
+                } else if (f.type === 'tel') {
+                    if (!/^\d{10}$/.test(el.value.trim())) {
+                        setError(targetId, f.err, f.msg);
+                        valido = false;
+                    } else { setOk(targetId, f.err); }
+                } else if (f.type === 'email') {
+                    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(el.value.trim())) {
+                        setError(targetId, f.err, f.msg);
+                        valido = false;
+                    } else { setOk(targetId, f.err); }
+                } else {
+                    setOk(targetId, f.err);
+                }
+            });
+
+            if (valido) {
+                console.log('Formulario Sede válido. Enviando...');
                 cerrarModal();
             }
         });

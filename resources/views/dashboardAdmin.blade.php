@@ -534,11 +534,70 @@
                                 </div>
                                 <span class="error-msg-modal" id="err-pe-sede"></span>
                             </div>
+                            <div class="form-group-modal">
+                                <label for="pe-estado">Estado <span style="color:var(--naranja)">*</span></label>
+                                <div class="form-dropdown" id="dropdown-pe-estado" tabindex="0">
+                                    <div class="form-select-trigger">
+                                        <span class="selected-text" data-value="">Selecciona un estado</span>
+                                        <i class="ri-arrow-down-s-line"></i>
+                                    </div>
+                                    <div class="form-options-container" style="max-height: 200px; overflow-y: auto;">
+                                        <div class="form-option" data-value="Aguascalientes">Aguascalientes</div>
+                                        <div class="form-option" data-value="Baja California">Baja California</div>
+                                        <div class="form-option" data-value="Baja California Sur">Baja California Sur</div>
+                                        <div class="form-option" data-value="Campeche">Campeche</div>
+                                        <div class="form-option" data-value="Chiapas">Chiapas</div>
+                                        <div class="form-option" data-value="Chihuahua">Chihuahua</div>
+                                        <div class="form-option" data-value="Ciudad de México">Ciudad de México</div>
+                                        <div class="form-option" data-value="Coahuila">Coahuila</div>
+                                        <div class="form-option" data-value="Colima">Colima</div>
+                                        <div class="form-option" data-value="Durango">Durango</div>
+                                        <div class="form-option" data-value="Estado de México">Estado de México</div>
+                                        <div class="form-option" data-value="Guanajuato">Guanajuato</div>
+                                        <div class="form-option" data-value="Guerrero">Guerrero</div>
+                                        <div class="form-option" data-value="Hidalgo">Hidalgo</div>
+                                        <div class="form-option" data-value="Jalisco">Jalisco</div>
+                                        <div class="form-option" data-value="Michoacán">Michoacán</div>
+                                        <div class="form-option" data-value="Morelos">Morelos</div>
+                                        <div class="form-option" data-value="Nayarit">Nayarit</div>
+                                        <div class="form-option" data-value="Nuevo León">Nuevo León</div>
+                                        <div class="form-option" data-value="Oaxaca">Oaxaca</div>
+                                        <div class="form-option" data-value="Puebla">Puebla</div>
+                                        <div class="form-option" data-value="Querétaro">Querétaro</div>
+                                        <div class="form-option" data-value="Quintana Roo">Quintana Roo</div>
+                                        <div class="form-option" data-value="San Luis Potosí">San Luis Potosí</div>
+                                        <div class="form-option" data-value="Sinaloa">Sinaloa</div>
+                                        <div class="form-option" data-value="Sonora">Sonora</div>
+                                        <div class="form-option" data-value="Tabasco">Tabasco</div>
+                                        <div class="form-option" data-value="Tamaulipas">Tamaulipas</div>
+                                        <div class="form-option" data-value="Tlaxcala">Tlaxcala</div>
+                                        <div class="form-option" data-value="Veracruz">Veracruz</div>
+                                        <div class="form-option" data-value="Yucatán">Yucatán</div>
+                                        <div class="form-option" data-value="Zacatecas">Zacatecas</div>
+                                    </div>
+                                    <input type="hidden" id="pe-estado" name="pe_estado" value="">
+                                </div>
+                                <span class="error-msg-modal" id="err-pe-estado"></span>
+                            </div>
+                            <div class="form-group-modal">
+                                <div style="display: flex; gap: 1rem;">
+                                    <div style="flex: 2;">
+                                        <label for="pe-ciudad">Ciudad <span style="color:var(--naranja)">*</span></label>
+                                        <input type="text" id="pe-ciudad" name="pe_ciudad" placeholder="Ciudad" required>
+                                        <span class="error-msg-modal" id="err-pe-ciudad"></span>
+                                    </div>
+                                    <div style="flex: 1;">
+                                        <label for="pe-cp">CP <span style="color:var(--naranja)">*</span></label>
+                                        <input type="text" id="pe-cp" name="pe_cp" placeholder="CP" maxlength="5" required>
+                                        <span class="error-msg-modal" id="err-pe-cp"></span>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="form-group-modal modal-col-full">
-                                <label for="pe-direccion">Dirección</label>
-                                <input type="text" id="pe-direccion" name="pe_direccion"
-                                    placeholder="Calle, número, colonia...">
-                                <span class="error-msg-modal" id="err-pe-direccion"></span>
+                                <label for="pe-calle">Calle y Número <span style="color:var(--naranja)">*</span></label>
+                                <input type="text" id="pe-calle" name="pe_calle"
+                                    placeholder="Calle, número, colonia..." required>
+                                <span class="error-msg-modal" id="err-pe-calle"></span>
                             </div>
                             <div class="form-group-modal modal-col-full">
                                 <label for="pe-correo">Correo Electrónico <span style="color:var(--naranja)">*</span></label>
@@ -642,11 +701,70 @@
                                 </div>
                                 <span class="error-msg-modal" id="err-al-genero"></span>
                             </div>
+                            <div class="form-group-modal">
+                                <label for="al-estado">Estado <span style="color:var(--naranja)">*</span></label>
+                                <div class="form-dropdown" id="dropdown-al-estado" tabindex="0">
+                                    <div class="form-select-trigger">
+                                        <span class="selected-text" data-value="">Selecciona un estado</span>
+                                        <i class="ri-arrow-down-s-line"></i>
+                                    </div>
+                                    <div class="form-options-container" style="max-height: 200px; overflow-y: auto;">
+                                        <div class="form-option" data-value="Aguascalientes">Aguascalientes</div>
+                                        <div class="form-option" data-value="Baja California">Baja California</div>
+                                        <div class="form-option" data-value="Baja California Sur">Baja California Sur</div>
+                                        <div class="form-option" data-value="Campeche">Campeche</div>
+                                        <div class="form-option" data-value="Chiapas">Chiapas</div>
+                                        <div class="form-option" data-value="Chihuahua">Chihuahua</div>
+                                        <div class="form-option" data-value="Ciudad de México">Ciudad de México</div>
+                                        <div class="form-option" data-value="Coahuila">Coahuila</div>
+                                        <div class="form-option" data-value="Colima">Colima</div>
+                                        <div class="form-option" data-value="Durango">Durango</div>
+                                        <div class="form-option" data-value="Estado de México">Estado de México</div>
+                                        <div class="form-option" data-value="Guanajuato">Guanajuato</div>
+                                        <div class="form-option" data-value="Guerrero">Guerrero</div>
+                                        <div class="form-option" data-value="Hidalgo">Hidalgo</div>
+                                        <div class="form-option" data-value="Jalisco">Jalisco</div>
+                                        <div class="form-option" data-value="Michoacán">Michoacán</div>
+                                        <div class="form-option" data-value="Morelos">Morelos</div>
+                                        <div class="form-option" data-value="Nayarit">Nayarit</div>
+                                        <div class="form-option" data-value="Nuevo León">Nuevo León</div>
+                                        <div class="form-option" data-value="Oaxaca">Oaxaca</div>
+                                        <div class="form-option" data-value="Puebla">Puebla</div>
+                                        <div class="form-option" data-value="Querétaro">Querétaro</div>
+                                        <div class="form-option" data-value="Quintana Roo">Quintana Roo</div>
+                                        <div class="form-option" data-value="San Luis Potosí">San Luis Potosí</div>
+                                        <div class="form-option" data-value="Sinaloa">Sinaloa</div>
+                                        <div class="form-option" data-value="Sonora">Sonora</div>
+                                        <div class="form-option" data-value="Tabasco">Tabasco</div>
+                                        <div class="form-option" data-value="Tamaulipas">Tamaulipas</div>
+                                        <div class="form-option" data-value="Tlaxcala">Tlaxcala</div>
+                                        <div class="form-option" data-value="Veracruz">Veracruz</div>
+                                        <div class="form-option" data-value="Yucatán">Yucatán</div>
+                                        <div class="form-option" data-value="Zacatecas">Zacatecas</div>
+                                    </div>
+                                    <input type="hidden" id="al-estado" name="al_estado" value="">
+                                </div>
+                                <span class="error-msg-modal" id="err-al-estado"></span>
+                            </div>
+                            <div class="form-group-modal">
+                                <div style="display: flex; gap: 1rem;">
+                                    <div style="flex: 2;">
+                                        <label for="al-ciudad">Ciudad <span style="color:var(--naranja)">*</span></label>
+                                        <input type="text" id="al-ciudad" name="al_ciudad" placeholder="Ciudad" required>
+                                        <span class="error-msg-modal" id="err-al-ciudad"></span>
+                                    </div>
+                                    <div style="flex: 1;">
+                                        <label for="al-cp">CP <span style="color:var(--naranja)">*</span></label>
+                                        <input type="text" id="al-cp" name="al_cp" placeholder="CP" maxlength="5" required>
+                                        <span class="error-msg-modal" id="err-al-cp"></span>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="form-group-modal modal-col-full">
-                                <label for="al-direccion">Dirección</label>
-                                <input type="text" id="al-direccion" name="al_direccion"
-                                    placeholder="Calle, número, colonia...">
-                                <span class="error-msg-modal" id="err-al-direccion"></span>
+                                <label for="al-calle">Calle y Número <span style="color:var(--naranja)">*</span></label>
+                                <input type="text" id="al-calle" name="al_calle"
+                                    placeholder="Calle, número, colonia..." required>
+                                <span class="error-msg-modal" id="err-al-calle"></span>
                             </div>
                             <div class="form-group-modal modal-col-full">
                                 <label for="al-correo">Correo Electrónico</label>
@@ -920,11 +1038,70 @@
                                 </div>
                                 <span class="error-msg-modal" id="err-pr-genero"></span>
                             </div>
+                            <div class="form-group-modal">
+                                <label for="pr-estado">Estado <span style="color:var(--naranja)">*</span></label>
+                                <div class="form-dropdown" id="dropdown-pr-estado" tabindex="0">
+                                    <div class="form-select-trigger">
+                                        <span class="selected-text" data-value="">Selecciona un estado</span>
+                                        <i class="ri-arrow-down-s-line"></i>
+                                    </div>
+                                    <div class="form-options-container" style="max-height: 200px; overflow-y: auto;">
+                                        <div class="form-option" data-value="Aguascalientes">Aguascalientes</div>
+                                        <div class="form-option" data-value="Baja California">Baja California</div>
+                                        <div class="form-option" data-value="Baja California Sur">Baja California Sur</div>
+                                        <div class="form-option" data-value="Campeche">Campeche</div>
+                                        <div class="form-option" data-value="Chiapas">Chiapas</div>
+                                        <div class="form-option" data-value="Chihuahua">Chihuahua</div>
+                                        <div class="form-option" data-value="Ciudad de México">Ciudad de México</div>
+                                        <div class="form-option" data-value="Coahuila">Coahuila</div>
+                                        <div class="form-option" data-value="Colima">Colima</div>
+                                        <div class="form-option" data-value="Durango">Durango</div>
+                                        <div class="form-option" data-value="Estado de México">Estado de México</div>
+                                        <div class="form-option" data-value="Guanajuato">Guanajuato</div>
+                                        <div class="form-option" data-value="Guerrero">Guerrero</div>
+                                        <div class="form-option" data-value="Hidalgo">Hidalgo</div>
+                                        <div class="form-option" data-value="Jalisco">Jalisco</div>
+                                        <div class="form-option" data-value="Michoacán">Michoacán</div>
+                                        <div class="form-option" data-value="Morelos">Morelos</div>
+                                        <div class="form-option" data-value="Nayarit">Nayarit</div>
+                                        <div class="form-option" data-value="Nuevo León">Nuevo León</div>
+                                        <div class="form-option" data-value="Oaxaca">Oaxaca</div>
+                                        <div class="form-option" data-value="Puebla">Puebla</div>
+                                        <div class="form-option" data-value="Querétaro">Querétaro</div>
+                                        <div class="form-option" data-value="Quintana Roo">Quintana Roo</div>
+                                        <div class="form-option" data-value="San Luis Potosí">San Luis Potosí</div>
+                                        <div class="form-option" data-value="Sinaloa">Sinaloa</div>
+                                        <div class="form-option" data-value="Sonora">Sonora</div>
+                                        <div class="form-option" data-value="Tabasco">Tabasco</div>
+                                        <div class="form-option" data-value="Tamaulipas">Tamaulipas</div>
+                                        <div class="form-option" data-value="Tlaxcala">Tlaxcala</div>
+                                        <div class="form-option" data-value="Veracruz">Veracruz</div>
+                                        <div class="form-option" data-value="Yucatán">Yucatán</div>
+                                        <div class="form-option" data-value="Zacatecas">Zacatecas</div>
+                                    </div>
+                                    <input type="hidden" id="pr-estado" name="pr_estado" value="">
+                                </div>
+                                <span class="error-msg-modal" id="err-pr-estado"></span>
+                            </div>
+                            <div class="form-group-modal">
+                                <div style="display: flex; gap: 1rem;">
+                                    <div style="flex: 2;">
+                                        <label for="pr-ciudad">Ciudad <span style="color:var(--naranja)">*</span></label>
+                                        <input type="text" id="pr-ciudad" name="pr_ciudad" placeholder="Ciudad" required>
+                                        <span class="error-msg-modal" id="err-pr-ciudad"></span>
+                                    </div>
+                                    <div style="flex: 1;">
+                                        <label for="pr-cp">CP <span style="color:var(--naranja)">*</span></label>
+                                        <input type="text" id="pr-cp" name="pr_cp" placeholder="CP" maxlength="5" required>
+                                        <span class="error-msg-modal" id="err-pr-cp"></span>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="form-group-modal modal-col-full">
-                                <label for="pr-direccion">Dirección</label>
-                                <input type="text" id="pr-direccion" name="pr_direccion"
-                                    placeholder="Calle, número, colonia...">
-                                <span class="error-msg-modal" id="err-pr-direccion"></span>
+                                <label for="pr-calle">Calle y Número <span style="color:var(--naranja)">*</span></label>
+                                <input type="text" id="pr-calle" name="pr_calle"
+                                    placeholder="Calle, número, colonia..." required>
+                                <span class="error-msg-modal" id="err-pr-calle"></span>
                             </div>
                             <div class="form-group-modal modal-col-full">
                                 <label for="pr-correo">Correo Electrónico <span
@@ -988,18 +1165,91 @@
                 </div>
                 <div class="modal-body">
                     <form id="form-agregar-sede" novalidate>
-                        <div class="form-group-modal modal-col-full">
-                            <label for="se-nombre">Nombre de la Sede</label>
-                            <input type="text" id="se-nombre" name="se_nombre" placeholder="Ej. Sede Norte" required>
-                            <span class="error-msg-modal" id="err-se-nombre"></span>
-                        </div>
-                        <div class="form-group-modal modal-col-full">
-                            <label for="se-direccion">Dirección</label>
-                            <input type="text" id="se-direccion" name="se_direccion" placeholder="Calle, número, colonia...">
-                        </div>
-                        <div class="form-group-modal modal-col-full">
-                            <label for="se-telefono">Teléfono</label>
-                            <input type="tel" id="se-telefono" name="se_telefono" placeholder="10 dígitos">
+                        <div class="modal-grid">
+                            <div class="form-group-modal modal-col-full">
+                                <label for="se-nombre">Nombre de la Sede <span style="color:var(--naranja)">*</span></label>
+                                <input type="text" id="se-nombre" name="se_nombre" placeholder="Ej. Sede Central" required>
+                                <span class="error-msg-modal" id="err-se-nombre"></span>
+                            </div>
+
+                            <div class="form-group-modal">
+                                <label for="se-estado">Estado <span style="color:var(--naranja)">*</span></label>
+                                <div class="form-dropdown" id="dropdown-se-estado" tabindex="0">
+                                    <div class="form-select-trigger">
+                                        <span class="selected-text" data-value="">Selecciona un estado</span>
+                                        <i class="ri-arrow-down-s-line"></i>
+                                    </div>
+                                    <div class="form-options-container" style="max-height: 200px; overflow-y: auto;">
+                                        <div class="form-option" data-value="Aguascalientes">Aguascalientes</div>
+                                        <div class="form-option" data-value="Baja California">Baja California</div>
+                                        <div class="form-option" data-value="Baja California Sur">Baja California Sur</div>
+                                        <div class="form-option" data-value="Campeche">Campeche</div>
+                                        <div class="form-option" data-value="Chiapas">Chiapas</div>
+                                        <div class="form-option" data-value="Chihuahua">Chihuahua</div>
+                                        <div class="form-option" data-value="Ciudad de México">Ciudad de México</div>
+                                        <div class="form-option" data-value="Coahuila">Coahuila</div>
+                                        <div class="form-option" data-value="Colima">Colima</div>
+                                        <div class="form-option" data-value="Durango">Durango</div>
+                                        <div class="form-option" data-value="Estado de México">Estado de México</div>
+                                        <div class="form-option" data-value="Guanajuato">Guanajuato</div>
+                                        <div class="form-option" data-value="Guerrero">Guerrero</div>
+                                        <div class="form-option" data-value="Hidalgo">Hidalgo</div>
+                                        <div class="form-option" data-value="Jalisco">Jalisco</div>
+                                        <div class="form-option" data-value="Michoacán">Michoacán</div>
+                                        <div class="form-option" data-value="Morelos">Morelos</div>
+                                        <div class="form-option" data-value="Nayarit">Nayarit</div>
+                                        <div class="form-option" data-value="Nuevo León">Nuevo León</div>
+                                        <div class="form-option" data-value="Oaxaca">Oaxaca</div>
+                                        <div class="form-option" data-value="Puebla">Puebla</div>
+                                        <div class="form-option" data-value="Querétaro">Querétaro</div>
+                                        <div class="form-option" data-value="Quintana Roo">Quintana Roo</div>
+                                        <div class="form-option" data-value="San Luis Potosí">San Luis Potosí</div>
+                                        <div class="form-option" data-value="Sinaloa">Sinaloa</div>
+                                        <div class="form-option" data-value="Sonora">Sonora</div>
+                                        <div class="form-option" data-value="Tabasco">Tabasco</div>
+                                        <div class="form-option" data-value="Tamaulipas">Tamaulipas</div>
+                                        <div class="form-option" data-value="Tlaxcala">Tlaxcala</div>
+                                        <div class="form-option" data-value="Veracruz">Veracruz</div>
+                                        <div class="form-option" data-value="Yucatán">Yucatán</div>
+                                        <div class="form-option" data-value="Zacatecas">Zacatecas</div>
+                                    </div>
+                                    <input type="hidden" id="se-estado" name="se_estado" value="">
+                                </div>
+                                <span class="error-msg-modal" id="err-se-estado"></span>
+                            </div>
+
+                            <div class="form-group-modal">
+                                <div style="display: flex; gap: 1rem;">
+                                    <div style="flex: 2;">
+                                        <label for="se-ciudad">Ciudad <span style="color:var(--naranja)">*</span></label>
+                                        <input type="text" id="se-ciudad" name="se_ciudad" placeholder="Ciudad" required>
+                                        <span class="error-msg-modal" id="err-se-ciudad"></span>
+                                    </div>
+                                    <div style="flex: 1;">
+                                        <label for="se-cp">CP <span style="color:var(--naranja)">*</span></label>
+                                        <input type="text" id="se-cp" name="se_cp" placeholder="CP" maxlength="5" required>
+                                        <span class="error-msg-modal" id="err-se-cp"></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group-modal modal-col-full">
+                                <label for="se-calle">Dirección (Calle y Número) <span style="color:var(--naranja)">*</span></label>
+                                <input type="text" id="se-calle" name="se_calle" placeholder="Calle, número, colonia..." required>
+                                <span class="error-msg-modal" id="err-se-calle"></span>
+                            </div>
+
+                            <div class="form-group-modal">
+                                <label for="se-telefono">Teléfono <span style="color:var(--naranja)">*</span></label>
+                                <input type="tel" id="se-telefono" name="se_telefono" placeholder="10 dígitos" maxlength="10" required>
+                                <span class="error-msg-modal" id="err-se-telefono"></span>
+                            </div>
+
+                            <div class="form-group-modal">
+                                <label for="se-correo">Email de Contacto <span style="color:var(--naranja)">*</span></label>
+                                <input type="email" id="se-correo" name="se_correo" placeholder="correo@egau.com" required>
+                                <span class="error-msg-modal" id="err-se-correo"></span>
+                            </div>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn-modal-cancel" id="btn-cancelar-modal-sede">Cancelar</button>

@@ -255,25 +255,36 @@ document.addEventListener('DOMContentLoaded', () => {
             const fields = [
                 { id: 'pe-nombre', err: 'err-pe-nombre', msg: 'El nombre es requerido.' },
                 { id: 'pe-ap-paterno', err: 'err-pe-ap-paterno', msg: 'El apellido paterno es requerido.' },
-                { id: 'pe-rol', err: 'err-pe-rol', msg: 'Selecciona un rol.' },
-                { id: 'pe-sede', err: 'err-pe-sede', msg: 'Selecciona una sede.' },
-                { id: 'pe-genero', err: 'err-pe-genero', msg: 'Selecciona un género.' },
+                { id: 'pe-rol', target: 'dropdown-pe-rol', err: 'err-pe-rol', msg: 'Selecciona un rol.' },
+                { id: 'pe-sede', target: 'dropdown-pe-sede', err: 'err-pe-sede', msg: 'Selecciona una sede.' },
+                { id: 'pe-genero', target: 'dropdown-pe-genero', err: 'err-pe-genero', msg: 'Selecciona un género.' },
+                { id: 'pe-estado', target: 'dropdown-pe-estado', err: 'err-pe-estado', msg: 'Selecciona un estado.' },
+                { id: 'pe-ciudad', err: 'err-pe-ciudad', msg: 'La ciudad es requerida.' },
+                { id: 'pe-calle', err: 'err-pe-calle', msg: 'La calle es requerida.' },
+                { id: 'pe-cp', err: 'err-pe-cp', msg: 'Ingresa un CP válido (5 dígitos).', type: 'cp' },
                 { id: 'pe-correo', err: 'err-pe-correo', msg: 'Ingresa un correo válido.', type: 'email' },
                 { id: 'pe-password', err: 'err-pe-password', msg: 'La contraseña debe tener al menos 6 caracteres.', min: 6 }
             ];
 
             fields.forEach(f => {
                 const el = document.getElementById(f.id);
+                const targetId = f.target || f.id;
                 if (!el || el.value.trim() === '' || (f.min && el.value.length < f.min)) {
-                    setError(f.id, f.err, f.msg);
+                    setError(targetId, f.err, f.msg);
                     valido = false;
                 } else if (f.type === 'email') {
                     const reg = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
                     if (!reg.test(el.value.trim())) {
-                        setError(f.id, f.err, f.msg);
+                        setError(targetId, f.err, f.msg);
                         valido = false;
-                    } else { setOk(f.id, f.err); }
-                } else { setOk(f.id, f.err); }
+                    } else { setOk(targetId, f.err); }
+                } else if (f.type === 'cp') {
+                    const reg = /^\d{5}$/;
+                    if (!reg.test(el.value.trim())) {
+                        setError(targetId, f.err, f.msg);
+                        valido = false;
+                    } else { setOk(targetId, f.err); }
+                } else { setOk(targetId, f.err); }
             });
 
             // Confirmar contraseña
