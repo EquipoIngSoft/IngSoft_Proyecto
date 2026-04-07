@@ -72,7 +72,7 @@
     background-color: transparent;
 }
 
-.btn-extraescolar-editar {
+.btn-extraescolar-ver, .btn-extraescolar-editar {
     flex-grow: 1;
     display: flex;
     align-items: center;
@@ -90,7 +90,7 @@
     transition: all 0.2s ease;
 }
 
-.btn-extraescolar-editar:hover {
+.btn-extraescolar-ver:hover, .btn-extraescolar-editar:hover {
     background-color: var(--naranja-light);
     border-color: var(--naranja);
     color: var(--naranja);

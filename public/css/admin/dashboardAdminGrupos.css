@@ -83,7 +83,7 @@
     background-color: transparent;
 }
 
-.btn-grupo-editar {
+.btn-grupo-ver, .btn-grupo-editar {
     flex-grow: 1;
     display: flex;
     align-items: center;
@@ -101,7 +101,7 @@
     transition: all 0.2s ease;
 }
 
-.btn-grupo-editar:hover {
+.btn-grupo-ver:hover, .btn-grupo-editar:hover {
     background-color: var(--naranja-light);
     border-color: var(--naranja);
     color: var(--naranja);

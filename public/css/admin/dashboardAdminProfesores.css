@@ -68,7 +68,7 @@
     background-color: transparent;
 }
 
-.btn-profesor-editar {
+.btn-profesor-ver, .btn-profesor-editar {
     flex-grow: 1;
     display: flex;
     align-items: center;
@@ -86,7 +86,7 @@
     transition: all 0.2s ease;
 }
 
-.btn-profesor-editar:hover {
+.btn-profesor-ver:hover, .btn-profesor-editar:hover {
     background-color: var(--naranja-light);
     border-color: var(--naranja);
     color: var(--naranja);

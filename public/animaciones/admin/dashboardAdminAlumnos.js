@@ -193,7 +193,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // ---- Modal: Agregar Alumno ----
     const modalOverlay = document.getElementById('modal-agregar-alumno');
     const btnAgregar = document.getElementById('btn-agregar');
-    const btnCerrarModal = document.getElementById('modal-close');
+    const btnCerrarModal = document.getElementById('modal-close-alumno');
     const btnCancelarModal = document.getElementById('btn-cancelar-modal');
     const formAgregar = document.getElementById('form-agregar-alumno');
 
@@ -319,12 +319,34 @@ document.addEventListener('DOMContentLoaded', () => {
                 valido = false;
             } else { setOk('dropdown-al-genero', 'err-al-genero'); }
 
-            // Dirección alumno
-            const alDireccion = document.getElementById('al-direccion');
-            if (!alDireccion || alDireccion.value.trim() === '') {
-                setError('al-direccion', 'err-al-direccion', 'La dirección es requerida.');
+            // Dirección: Estado
+            const alEstado = document.getElementById('al-estado');
+            if (!alEstado || alEstado.value === '') {
+                setError('dropdown-al-estado', 'err-al-estado', 'Selecciona un estado.');
                 valido = false;
-            } else { setOk('al-direccion', 'err-al-direccion'); }
+            } else { setOk('dropdown-al-estado', 'err-al-estado'); }
+
+            // Dirección: Ciudad
+            const alCiudad = document.getElementById('al-ciudad');
+            if (!alCiudad || alCiudad.value.trim() === '') {
+                setError('al-ciudad', 'err-al-ciudad', 'La ciudad es requerida.');
+                valido = false;
+            } else { setOk('al-ciudad', 'err-al-ciudad'); }
+
+            // Dirección: Calle
+            const alCalle = document.getElementById('al-calle');
+            if (!alCalle || alCalle.value.trim() === '') {
+                setError('al-calle', 'err-al-calle', 'La calle es requerida.');
+                valido = false;
+            } else { setOk('al-calle', 'err-al-calle'); }
+
+            // Dirección: CP
+            const alCP = document.getElementById('al-cp');
+            const cpReg = /^\d{5}$/;
+            if (!alCP || !cpReg.test(alCP.value.trim())) {
+                setError('al-cp', 'err-al-cp', 'Ingresa un CP válido (5 dígitos).');
+                valido = false;
+            } else { setOk('al-cp', 'err-al-cp'); }
 
             // Contraseña alumno
             const alPass = document.getElementById('al-password');
