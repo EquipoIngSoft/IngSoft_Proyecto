@@ -193,7 +193,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // ---- Modal: Agregar Alumno ----
     const modalOverlay = document.getElementById('modal-agregar-alumno');
     const btnAgregar = document.getElementById('btn-agregar');
-    const btnCerrarModal = document.getElementById('modal-close');
+    const btnCerrarModal = document.getElementById('modal-close-alumno');
     const btnCancelarModal = document.getElementById('btn-cancelar-modal');
     const formAgregar = document.getElementById('form-agregar-alumno');
 

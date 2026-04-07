@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // ---- Modal: Agregar Sede ----
     const modalOverlay = document.getElementById('modal-agregar-sede');
     const btnAgregar = document.getElementById('btn-agregar-sede');
-    const btnCerrarModal = document.querySelector('#modal-agregar-sede #modal-close');
+    const btnCerrarModal = document.getElementById('modal-close-sede');
     const btnCancelarModal = document.getElementById('btn-cancelar-modal-sede');
     const formAgregar = document.getElementById('form-agregar-sede');
 

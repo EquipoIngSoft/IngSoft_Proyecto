@@ -166,7 +166,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // ---- Modal: Agregar Personal ----
     const modalOverlay = document.getElementById('modal-agregar-personal');
     const btnAgregar = document.getElementById('btn-agregar-personal');
-    const btnCerrarModal = document.querySelector('#modal-agregar-personal #modal-close');
+    const btnCerrarModal = document.getElementById('modal-close-personal');
     const btnCancelarModal = document.getElementById('btn-cancelar-modal-personal');
     const formAgregar = document.getElementById('form-agregar-personal');
 

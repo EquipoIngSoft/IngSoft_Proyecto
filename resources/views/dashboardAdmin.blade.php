@@ -451,7 +451,7 @@
                         <i class="ri-user-add-line modal-title-icon"></i>
                         <h2 class="modal-title">Agregar Personal</h2>
                     </div>
-                    <button class="modal-close-btn" id="modal-close" title="Cerrar">
+                    <button class="modal-close-btn" id="modal-close-personal" title="Cerrar">
                         <i class="ri-close-line"></i>
                     </button>
                 </div>
@@ -648,7 +648,7 @@
                         <i class="ri-user-add-line modal-title-icon"></i>
                         <h2 class="modal-title">Agregar Alumno</h2>
                     </div>
-                    <button class="modal-close-btn" id="modal-close" title="Cerrar">
+                    <button class="modal-close-btn" id="modal-close-alumno" title="Cerrar">
                         <i class="ri-close-line"></i>
                     </button>
                 </div>
@@ -1162,7 +1162,7 @@
                         <span class="modal-title-icon"><i class="ri-map-pin-line"></i></span>
                         <h2 class="modal-title">Agregar Sede</h2>
                     </div>
-                    <button type="button" class="modal-close-btn" id="modal-close" title="Cerrar">
+                    <button type="button" class="modal-close-btn" id="modal-close-sede" title="Cerrar">
                         <i class="ri-close-line"></i>
                     </button>
                 </div>
