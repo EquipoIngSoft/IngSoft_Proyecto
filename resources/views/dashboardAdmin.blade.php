@@ -1875,11 +1875,7 @@
                                 </div>
                             </div>
 
-                            <div class="form-group-modal modal-col-full">
-                                <label for="gr-aula">Aula / Ubicación por defecto</label>
-                                <input type="text" id="gr-aula" name="aula" placeholder="Ej. Salón 3 - Planta Alta"
-                                    maxlength="20">
-                            </div>
+
 
                         </div>
 
