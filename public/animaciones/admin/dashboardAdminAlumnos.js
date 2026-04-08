@@ -57,8 +57,8 @@ document.addEventListener('DOMContentLoaded', () => {
         // Escuchar input en buscar
         if (buscador) buscador.addEventListener('input', aplicarFiltros);
 
-        // Lógica de los Custom Dropdowns
-        const customDropdowns = document.querySelectorAll('.custom-dropdown');
+        // Lógica de los Custom Dropdowns (scoped al section-alumnos)
+        const customDropdowns = document.querySelectorAll('#section-alumnos .custom-dropdown');
 
         customDropdowns.forEach(dropdown => {
             const trigger = dropdown.querySelector('.custom-select-trigger');
@@ -130,8 +130,8 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
 
-        // ---- Lógica para Form Dropdowns (Independiente de Filtros) ----
-        const formDropdowns = document.querySelectorAll('.form-dropdown');
+        // ---- Lógica para Form Dropdowns (scoped al modal-agregar-alumno) ----
+        const formDropdowns = document.querySelectorAll('#modal-agregar-alumno .form-dropdown');
         formDropdowns.forEach(dropdown => {
             const trigger = dropdown.querySelector('.form-select-trigger');
             const options = dropdown.querySelectorAll('.form-option');
@@ -207,7 +207,7 @@ document.addEventListener('DOMContentLoaded', () => {
         document.body.style.overflow = '';
         if (formAgregar) formAgregar.reset();
         // Limpiar form-dropdowns
-        document.querySelectorAll('.form-dropdown').forEach(dropdown => {
+        document.querySelectorAll('#modal-agregar-alumno .form-dropdown').forEach(dropdown => {
             const options = dropdown.querySelectorAll('.form-option');
             const selectedText = dropdown.querySelector('.selected-text');
             const hiddenInput = dropdown.querySelector('input[type="hidden"]');
@@ -227,10 +227,10 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         // Limpiar estados de validación
-        document.querySelectorAll('.form-group-modal input').forEach(inp => {
+        document.querySelectorAll('#modal-agregar-alumno .form-group-modal input').forEach(inp => {
             inp.classList.remove('input-error', 'input-ok');
         });
-        document.querySelectorAll('.error-msg-modal').forEach(msg => {
+        document.querySelectorAll('#modal-agregar-alumno .error-msg-modal').forEach(msg => {
             msg.textContent = '';
         });
     };
@@ -254,7 +254,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // ---- Toggle mostrar/ocultar contraseña ----
-    document.querySelectorAll('.toggle-password').forEach(btn => {
+    document.querySelectorAll('#modal-agregar-alumno .toggle-password').forEach(btn => {
         btn.addEventListener('click', () => {
             const targetId = btn.getAttribute('data-target');
             const input = document.getElementById(targetId);

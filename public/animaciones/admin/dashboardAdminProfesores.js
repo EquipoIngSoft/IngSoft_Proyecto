@@ -7,7 +7,7 @@
 document.addEventListener('DOMContentLoaded', () => {
 
     const sectionProfesores = document.getElementById('section-profesores');
-    
+
     // Solo ejecutamos si hay al menos un elemento de profesores en pantalla
     if (!sectionProfesores) return;
 
@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Asumiendo que las tarjetas no se cargan por AJAX de inmediato, si se cargaran,
         // deberías hacer la query document.querySelectorAll dentro del input. 
         // Por ahora lo hacemos dinámicamente:
-        
+
         buscadorProf.addEventListener('input', () => {
             const query = buscadorProf.value.toLowerCase().trim();
             const tarjetas = gridProfesores.querySelectorAll('.profesor-card');
@@ -71,10 +71,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 const options = dropdown.querySelectorAll('.form-option');
                 const selectedText = dropdown.querySelector('.selected-text');
                 const hiddenInput = dropdown.querySelector('input[type="hidden"]');
-                
+
                 dropdown.classList.remove('input-error', 'input-ok');
                 options.forEach(opt => opt.classList.remove('selected'));
-                
+
                 if (options.length > 0) {
                     options[0].classList.add('selected'); // "Selecciona una opción"
                     if (selectedText) {
@@ -92,10 +92,10 @@ document.addEventListener('DOMContentLoaded', () => {
             modalProfesor.querySelectorAll('.error-msg-modal').forEach(msg => {
                 msg.textContent = '';
             });
-            
+
             // Revertir tipo de inputs de password
             modalProfesor.querySelectorAll('input[type="text"]').forEach(inp => {
-                if(inp.id.includes('password')) {
+                if (inp.id.includes('password')) {
                     inp.type = 'password';
                     const icon = inp.nextElementSibling.querySelector('i');
                     if (icon) icon.classList.replace('ri-eye-off-line', 'ri-eye-line');
@@ -115,6 +115,54 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // ---- Lógica para Form Dropdowns del modal Profesor ----
+    const formDropdownsProf = document.querySelectorAll('#modal-agregar-profesor .form-dropdown');
+    formDropdownsProf.forEach(dropdown => {
+        const trigger = dropdown.querySelector('.form-select-trigger');
+        const options = dropdown.querySelectorAll('.form-option');
+        const selectedText = dropdown.querySelector('.selected-text');
+        const hiddenInput = dropdown.querySelector('input[type="hidden"]');
+
+        if (!trigger || !selectedText) return;
+
+        trigger.addEventListener('click', (e) => {
+            e.stopPropagation();
+            formDropdownsProf.forEach(d => {
+                if (d !== dropdown) d.classList.remove('open');
+            });
+            dropdown.classList.toggle('open');
+        });
+
+        options.forEach(option => {
+            option.addEventListener('click', (e) => {
+                e.stopPropagation();
+                options.forEach(opt => opt.classList.remove('selected'));
+                option.classList.add('selected');
+
+                const val = option.getAttribute('data-value');
+                const text = option.textContent;
+
+                selectedText.textContent = text;
+                selectedText.setAttribute('data-value', val);
+                if (hiddenInput) hiddenInput.value = val;
+
+                dropdown.classList.remove('open');
+
+                if (val !== "") {
+                    dropdown.classList.remove('input-error');
+                    if (hiddenInput) {
+                        const errorMsg = document.getElementById(`err-${hiddenInput.id}`);
+                        if (errorMsg) errorMsg.textContent = '';
+                    }
+                }
+            });
+        });
+    });
+
+    document.addEventListener('click', () => {
+        formDropdownsProf.forEach(dropdown => dropdown.classList.remove('open'));
+    });
+
     // Cerrar con Escape
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape' && modalProfesor && modalProfesor.classList.contains('open')) {
@@ -128,13 +176,13 @@ document.addEventListener('DOMContentLoaded', () => {
             // Evitar duplicados si hay scripts globales
             const newBtn = btn.cloneNode(true);
             btn.parentNode.replaceChild(newBtn, btn);
-            
+
             newBtn.addEventListener('click', () => {
                 const targetId = newBtn.getAttribute('data-target');
                 const input = document.getElementById(targetId);
                 const icon = newBtn.querySelector('i');
                 if (!input) return;
-                
+
                 if (input.type === 'password') {
                     input.type = 'text';
                     icon.classList.replace('ri-eye-line', 'ri-eye-off-line');
@@ -188,6 +236,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 valido = false;
             } else { setOk('pr-correo', 'err-pr-correo'); }
 
+            // Puntuación
+            const prPuntos = document.getElementById('pr-puntos-inicial');
+            if (!prPuntos || prPuntos.value.trim() === '' || prPuntos.value < 0) {
+                setError('pr-puntos-inicial', 'err-pr-puntos-inicial', 'Debe ser 0 o mayor.');
+                valido = false;
+            } else { setOk('pr-puntos-inicial', 'err-pr-puntos-inicial'); }
+
             // Género
             const prGeneroDropdown = document.getElementById('dropdown-pr-genero');
             const prGeneroInput = document.getElementById('pr-genero');
@@ -199,7 +254,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const msg = document.getElementById('err-pr-genero');
                 if (msg) msg.textContent = 'Selecciona un género.';
                 valido = false;
-            } else { 
+            } else {
                 if (prGeneroDropdown) {
                     prGeneroDropdown.classList.remove('input-error');
                     prGeneroDropdown.classList.add('input-ok');
@@ -262,8 +317,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const prTelefono = document.getElementById('pr-telefono');
             if (prTelefono && prTelefono.value.trim() !== '') {
                 if (prTelefono.value.length !== 10) {
-                     setError('pr-telefono', 'err-pr-telefono', 'Ingrese un teléfono o celular de 10 dígitos.');
-                     valido = false;
+                    setError('pr-telefono', 'err-pr-telefono', 'Ingrese un teléfono o celular de 10 dígitos.');
+                    valido = false;
                 } else { setOk('pr-telefono', 'err-pr-telefono'); }
             } else { setOk('pr-telefono', 'err-pr-telefono'); } // Limpiar error si está vacío
 
@@ -271,14 +326,14 @@ document.addEventListener('DOMContentLoaded', () => {
             if (valido) {
                 // TODO: Mandar fecth(POST) a backend Laravel o procesar
                 console.log('Formulario de profesor válido. Listo para enviar.');
-                
+
                 // Efecto visual de enviar
                 const btnSubmit = formAgregarProf.querySelector('.btn-modal-submit');
                 if (btnSubmit) {
                     const originalHTML = btnSubmit.innerHTML;
                     btnSubmit.innerHTML = '<i class="ri-loader-4-line ri-spin"></i> Guardando...';
                     btnSubmit.disabled = true;
-                    
+
                     setTimeout(() => {
                         btnSubmit.innerHTML = originalHTML;
                         btnSubmit.disabled = false;

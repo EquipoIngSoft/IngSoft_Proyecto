@@ -70,8 +70,8 @@ document.addEventListener('DOMContentLoaded', () => {
             if (formRol) formRol.reset();
             
             // Limpiar errores
-            document.querySelectorAll('.error-msg-modal').forEach(msg => msg.textContent = '');
-            document.querySelectorAll('.form-group-modal input, .form-group-modal textarea').forEach(inp => {
+            modalRol.querySelectorAll('.error-msg-modal').forEach(msg => msg.textContent = '');
+            modalRol.querySelectorAll('.form-group-modal input, .form-group-modal textarea').forEach(inp => {
                 inp.classList.remove('input-error', 'input-ok');
             });
 
@@ -133,6 +133,35 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
     }
+
+    // ---- Lógica para Form Dropdowns del modal Rol ----
+    const formDropdownsRol = document.querySelectorAll('#modal-agregar-rol .form-dropdown');
+    formDropdownsRol.forEach(dropdown => {
+        const trigger = dropdown.querySelector('.form-select-trigger');
+        const options = dropdown.querySelectorAll('.form-option');
+        const selectedText = dropdown.querySelector('.selected-text');
+        const hiddenInput = dropdown.querySelector('input[type="hidden"]');
+        if (!trigger || !selectedText) return;
+        trigger.addEventListener('click', (e) => {
+            e.stopPropagation();
+            formDropdownsRol.forEach(d => { if (d !== dropdown) d.classList.remove('open'); });
+            dropdown.classList.toggle('open');
+        });
+        options.forEach(option => {
+            option.addEventListener('click', (e) => {
+                e.stopPropagation();
+                options.forEach(opt => opt.classList.remove('selected'));
+                option.classList.add('selected');
+                selectedText.textContent = option.textContent;
+                selectedText.setAttribute('data-value', option.getAttribute('data-value'));
+                if (hiddenInput) hiddenInput.value = option.getAttribute('data-value');
+                dropdown.classList.remove('open');
+            });
+        });
+    });
+    document.addEventListener('click', () => {
+        formDropdownsRol.forEach(d => d.classList.remove('open'));
+    });
 
     // ---- VALIDACIÓN DEL FORMULARIO ----
     if (formRol) {

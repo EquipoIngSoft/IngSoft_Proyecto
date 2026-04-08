@@ -62,6 +62,36 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // ---- Lógica para Form Dropdowns del modal Sede ----
+    const formDropdownsSede = document.querySelectorAll('#modal-agregar-sede .form-dropdown');
+    formDropdownsSede.forEach(dropdown => {
+        const trigger = dropdown.querySelector('.form-select-trigger');
+        const options = dropdown.querySelectorAll('.form-option');
+        const selectedText = dropdown.querySelector('.selected-text');
+        const hiddenInput = dropdown.querySelector('input[type="hidden"]');
+        if (!trigger || !selectedText) return;
+        trigger.addEventListener('click', (e) => {
+            e.stopPropagation();
+            formDropdownsSede.forEach(d => { if (d !== dropdown) d.classList.remove('open'); });
+            dropdown.classList.toggle('open');
+        });
+        options.forEach(option => {
+            option.addEventListener('click', (e) => {
+                e.stopPropagation();
+                options.forEach(opt => opt.classList.remove('selected'));
+                option.classList.add('selected');
+                selectedText.textContent = option.textContent;
+                selectedText.setAttribute('data-value', option.getAttribute('data-value'));
+                if (hiddenInput) hiddenInput.value = option.getAttribute('data-value');
+                dropdown.classList.remove('open');
+                dropdown.classList.remove('input-error');
+            });
+        });
+    });
+    document.addEventListener('click', () => {
+        formDropdownsSede.forEach(d => d.classList.remove('open'));
+    });
+
     // ---- Búsqueda de Sedes ----
     const buscador = document.getElementById('buscador-sedes');
     const tabla = document.getElementById('tabla-sedes');

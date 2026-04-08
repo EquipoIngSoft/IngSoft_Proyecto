@@ -235,8 +235,10 @@
                                 <td><span class="badge badge-activo">Activo</span></td>
                                 <td class="acciones">
                                     <button class="btn-icon btn-ver" title="Ver"><i class="ri-eye-line"></i></button>
-                                    <button class="btn-icon btn-editar" title="Editar"><i class="ri-edit-line"></i></button>
-                                    <button class="btn-icon btn-eliminar" title="Eliminar"><i class="ri-delete-bin-line"></i></button>
+                                    <button class="btn-icon btn-editar" title="Editar"><i
+                                            class="ri-edit-line"></i></button>
+                                    <button class="btn-icon btn-eliminar" title="Eliminar"><i
+                                            class="ri-delete-bin-line"></i></button>
                                 </td>
                             </tr>
                         </tbody>
@@ -316,34 +318,49 @@
                             <tr>
                                 <td>1</td>
                                 <td>Administrador</td>
-                                <td><div class="role-description">Acceso total al sistema, gestión de sedes, personal y configuración avanzada.</div></td>
+                                <td>
+                                    <div class="role-description">Acceso total al sistema, gestión de sedes, personal y
+                                        configuración avanzada.</div>
+                                </td>
                                 <td><span class="badge badge-rol-activo">Activo</span></td>
                                 <td class="acciones">
                                     <button class="btn-icon btn-ver" title="Ver"><i class="ri-eye-line"></i></button>
-                                    <button class="btn-icon btn-editar" title="Editar"><i class="ri-edit-line"></i></button>
-                                    <button class="btn-icon btn-eliminar" title="Eliminar"><i class="ri-delete-bin-line"></i></button>
+                                    <button class="btn-icon btn-editar" title="Editar"><i
+                                            class="ri-edit-line"></i></button>
+                                    <button class="btn-icon btn-eliminar" title="Eliminar"><i
+                                            class="ri-delete-bin-line"></i></button>
                                 </td>
                             </tr>
                             <tr>
                                 <td>2</td>
                                 <td>Editor Académico</td>
-                                <td><div class="role-description">Gestión de alumnos, grupos, niveles y extraescolares. Sin acceso a finanzas.</div></td>
+                                <td>
+                                    <div class="role-description">Gestión de alumnos, grupos, niveles y extraescolares.
+                                        Sin acceso a finanzas.</div>
+                                </td>
                                 <td><span class="badge badge-rol-activo">Activo</span></td>
                                 <td class="acciones">
                                     <button class="btn-icon btn-ver" title="Ver"><i class="ri-eye-line"></i></button>
-                                    <button class="btn-icon btn-editar" title="Editar"><i class="ri-edit-line"></i></button>
-                                    <button class="btn-icon btn-eliminar" title="Eliminar"><i class="ri-delete-bin-line"></i></button>
+                                    <button class="btn-icon btn-editar" title="Editar"><i
+                                            class="ri-edit-line"></i></button>
+                                    <button class="btn-icon btn-eliminar" title="Eliminar"><i
+                                            class="ri-delete-bin-line"></i></button>
                                 </td>
                             </tr>
                             <tr>
                                 <td>3</td>
                                 <td>Consultor</td>
-                                <td><div class="role-description">Acceso de solo lectura para reportes y visualización de datos generales.</div></td>
+                                <td>
+                                    <div class="role-description">Acceso de solo lectura para reportes y visualización
+                                        de datos generales.</div>
+                                </td>
                                 <td><span class="badge badge-rol-inactivo">Inactivo</span></td>
                                 <td class="acciones">
                                     <button class="btn-icon btn-ver" title="Ver"><i class="ri-eye-line"></i></button>
-                                    <button class="btn-icon btn-editar" title="Editar"><i class="ri-edit-line"></i></button>
-                                    <button class="btn-icon btn-eliminar" title="Eliminar"><i class="ri-delete-bin-line"></i></button>
+                                    <button class="btn-icon btn-editar" title="Editar"><i
+                                            class="ri-edit-line"></i></button>
+                                    <button class="btn-icon btn-eliminar" title="Eliminar"><i
+                                            class="ri-delete-bin-line"></i></button>
                                 </td>
                             </tr>
                         </tbody>
@@ -584,7 +601,8 @@
                                 <span class="error-msg-modal" id="err-pe-nombre"></span>
                             </div>
                             <div class="form-group-modal">
-                                <label for="pe-ap-paterno">Apellido Paterno <span style="color:var(--naranja)">*</span></label>
+                                <label for="pe-ap-paterno">Apellido Paterno <span
+                                        style="color:var(--naranja)">*</span></label>
                                 <input type="text" id="pe-ap-paterno" name="pe_ap_paterno"
                                     placeholder="Apellido paterno" required>
                                 <span class="error-msg-modal" id="err-pe-ap-paterno"></span>
@@ -657,7 +675,8 @@
                                     <div class="form-options-container" style="max-height: 200px; overflow-y: auto;">
                                         <div class="form-option" data-value="Aguascalientes">Aguascalientes</div>
                                         <div class="form-option" data-value="Baja California">Baja California</div>
-                                        <div class="form-option" data-value="Baja California Sur">Baja California Sur</div>
+                                        <div class="form-option" data-value="Baja California Sur">Baja California Sur
+                                        </div>
                                         <div class="form-option" data-value="Campeche">Campeche</div>
                                         <div class="form-option" data-value="Chiapas">Chiapas</div>
                                         <div class="form-option" data-value="Chihuahua">Chihuahua</div>
@@ -695,32 +714,38 @@
                             <div class="form-group-modal">
                                 <div style="display: flex; gap: 1rem;">
                                     <div style="flex: 2;">
-                                        <label for="pe-ciudad">Ciudad <span style="color:var(--naranja)">*</span></label>
-                                        <input type="text" id="pe-ciudad" name="pe_ciudad" placeholder="Ciudad" required>
+                                        <label for="pe-ciudad">Ciudad <span
+                                                style="color:var(--naranja)">*</span></label>
+                                        <input type="text" id="pe-ciudad" name="pe_ciudad" placeholder="Ciudad"
+                                            required>
                                         <span class="error-msg-modal" id="err-pe-ciudad"></span>
                                     </div>
                                     <div style="flex: 1;">
                                         <label for="pe-cp">CP <span style="color:var(--naranja)">*</span></label>
-                                        <input type="text" id="pe-cp" name="pe_cp" placeholder="CP" maxlength="5" required>
+                                        <input type="text" id="pe-cp" name="pe_cp" placeholder="CP" maxlength="5"
+                                            required>
                                         <span class="error-msg-modal" id="err-pe-cp"></span>
                                     </div>
                                 </div>
                             </div>
                             <div class="form-group-modal modal-col-full">
                                 <label for="pe-calle">Calle y Número <span style="color:var(--naranja)">*</span></label>
-                                <input type="text" id="pe-calle" name="pe_calle"
-                                    placeholder="Calle, número, colonia..." required>
+                                <input type="text" id="pe-calle" name="pe_calle" placeholder="Calle, número, colonia..."
+                                    required>
                                 <span class="error-msg-modal" id="err-pe-calle"></span>
                             </div>
                             <div class="form-group-modal modal-col-full">
-                                <label for="pe-correo">Correo Electrónico <span style="color:var(--naranja)">*</span></label>
-                                <input type="email" id="pe-correo" name="pe_correo" placeholder="correo@ejemplo.com" required>
+                                <label for="pe-correo">Correo Electrónico <span
+                                        style="color:var(--naranja)">*</span></label>
+                                <input type="email" id="pe-correo" name="pe_correo" placeholder="correo@ejemplo.com"
+                                    required>
                                 <span class="error-msg-modal" id="err-pe-correo"></span>
                             </div>
                             <div class="form-group-modal">
                                 <label for="pe-password">Contraseña <span style="color:var(--naranja)">*</span></label>
                                 <div class="input-password-wrapper">
-                                    <input type="password" id="pe-password" name="pe_password" placeholder="Mínimo 6 caracteres" required>
+                                    <input type="password" id="pe-password" name="pe_password"
+                                        placeholder="Mínimo 6 caracteres" required>
                                     <button type="button" class="toggle-password" data-target="pe-password">
                                         <i class="ri-eye-line"></i>
                                     </button>
@@ -728,9 +753,11 @@
                                 <span class="error-msg-modal" id="err-pe-password"></span>
                             </div>
                             <div class="form-group-modal">
-                                <label for="pe-password-confirm">Confirmar Contraseña <span style="color:var(--naranja)">*</span></label>
+                                <label for="pe-password-confirm">Confirmar Contraseña <span
+                                        style="color:var(--naranja)">*</span></label>
                                 <div class="input-password-wrapper">
-                                    <input type="password" id="pe-password-confirm" name="pe_password_confirm" placeholder="Repite la contraseña" required>
+                                    <input type="password" id="pe-password-confirm" name="pe_password_confirm"
+                                        placeholder="Repite la contraseña" required>
                                     <button type="button" class="toggle-password" data-target="pe-password-confirm">
                                         <i class="ri-eye-line"></i>
                                     </button>
@@ -740,7 +767,8 @@
                         </div>
 
                         <div class="modal-footer">
-                            <button type="button" class="btn-modal-cancel" id="btn-cancelar-modal-personal">Cancelar</button>
+                            <button type="button" class="btn-modal-cancel"
+                                id="btn-cancelar-modal-personal">Cancelar</button>
                             <button type="submit" class="btn-modal-submit">
                                 <i class="ri-save-line"></i> Guardar Personal
                             </button>
@@ -830,8 +858,9 @@
                                 <span class="error-msg-modal" id="err-al-sede"></span>
                             </div>
                             <div class="form-group-modal modal-col-full">
-                                <label for="al-puntos-inicial">Puntaje Inicial <span style="color:var(--naranja)">*</span></label>
-                                <input type="number" id="al-puntos-inicial" name="al_puntos_inicial" 
+                                <label for="al-puntos-inicial">Puntaje Inicial <span
+                                        style="color:var(--naranja)">*</span></label>
+                                <input type="number" id="al-puntos-inicial" name="al_puntos_inicial"
                                     placeholder="Ej. 500" min="0" max="2000" value="0" required>
                                 <span class="error-msg-modal" id="err-al-puntos-inicial"></span>
                             </div>
@@ -845,7 +874,8 @@
                                     <div class="form-options-container" style="max-height: 200px; overflow-y: auto;">
                                         <div class="form-option" data-value="Aguascalientes">Aguascalientes</div>
                                         <div class="form-option" data-value="Baja California">Baja California</div>
-                                        <div class="form-option" data-value="Baja California Sur">Baja California Sur</div>
+                                        <div class="form-option" data-value="Baja California Sur">Baja California Sur
+                                        </div>
                                         <div class="form-option" data-value="Campeche">Campeche</div>
                                         <div class="form-option" data-value="Chiapas">Chiapas</div>
                                         <div class="form-option" data-value="Chihuahua">Chihuahua</div>
@@ -883,21 +913,24 @@
                             <div class="form-group-modal">
                                 <div style="display: flex; gap: 1rem;">
                                     <div style="flex: 2;">
-                                        <label for="al-ciudad">Ciudad <span style="color:var(--naranja)">*</span></label>
-                                        <input type="text" id="al-ciudad" name="al_ciudad" placeholder="Ciudad" required>
+                                        <label for="al-ciudad">Ciudad <span
+                                                style="color:var(--naranja)">*</span></label>
+                                        <input type="text" id="al-ciudad" name="al_ciudad" placeholder="Ciudad"
+                                            required>
                                         <span class="error-msg-modal" id="err-al-ciudad"></span>
                                     </div>
                                     <div style="flex: 1;">
                                         <label for="al-cp">CP <span style="color:var(--naranja)">*</span></label>
-                                        <input type="text" id="al-cp" name="al_cp" placeholder="CP" maxlength="5" required>
+                                        <input type="text" id="al-cp" name="al_cp" placeholder="CP" maxlength="5"
+                                            required>
                                         <span class="error-msg-modal" id="err-al-cp"></span>
                                     </div>
                                 </div>
                             </div>
                             <div class="form-group-modal modal-col-full">
                                 <label for="al-calle">Calle y Número <span style="color:var(--naranja)">*</span></label>
-                                <input type="text" id="al-calle" name="al_calle"
-                                    placeholder="Calle, número, colonia..." required>
+                                <input type="text" id="al-calle" name="al_calle" placeholder="Calle, número, colonia..."
+                                    required>
                                 <span class="error-msg-modal" id="err-al-calle"></span>
                             </div>
                             <div class="form-group-modal modal-col-full">
@@ -1093,7 +1126,8 @@
                 <div class="controls-container" style="padding: 24px;">
                     <div class="search-bar search-sede">
                         <i class="ri-search-line search-icon"></i>
-                        <input type="text" id="buscador-sedes" placeholder="Buscar sede por nombre o dirección..." autocomplete="off">
+                        <input type="text" id="buscador-sedes" placeholder="Buscar sede por nombre o dirección..."
+                            autocomplete="off">
                     </div>
                 </div>
 
@@ -1118,8 +1152,10 @@
                                 <td><span class="sede-status-badge status-principal">Principal</span></td>
                                 <td class="acciones">
                                     <button class="btn-icon btn-ver" title="Ver"><i class="ri-eye-line"></i></button>
-                                    <button class="btn-icon btn-editar" title="Editar"><i class="ri-edit-line"></i></button>
-                                    <button class="btn-icon btn-eliminar" title="Eliminar"><i class="ri-delete-bin-line"></i></button>
+                                    <button class="btn-icon btn-editar" title="Editar"><i
+                                            class="ri-edit-line"></i></button>
+                                    <button class="btn-icon btn-eliminar" title="Eliminar"><i
+                                            class="ri-delete-bin-line"></i></button>
                                 </td>
                             </tr>
                         </tbody>
@@ -1219,7 +1255,8 @@
                                     <div class="form-options-container" style="max-height: 200px; overflow-y: auto;">
                                         <div class="form-option" data-value="Aguascalientes">Aguascalientes</div>
                                         <div class="form-option" data-value="Baja California">Baja California</div>
-                                        <div class="form-option" data-value="Baja California Sur">Baja California Sur</div>
+                                        <div class="form-option" data-value="Baja California Sur">Baja California Sur
+                                        </div>
                                         <div class="form-option" data-value="Campeche">Campeche</div>
                                         <div class="form-option" data-value="Chiapas">Chiapas</div>
                                         <div class="form-option" data-value="Chihuahua">Chihuahua</div>
@@ -1257,21 +1294,24 @@
                             <div class="form-group-modal">
                                 <div style="display: flex; gap: 1rem;">
                                     <div style="flex: 2;">
-                                        <label for="pr-ciudad">Ciudad <span style="color:var(--naranja)">*</span></label>
-                                        <input type="text" id="pr-ciudad" name="pr_ciudad" placeholder="Ciudad" required>
+                                        <label for="pr-ciudad">Ciudad <span
+                                                style="color:var(--naranja)">*</span></label>
+                                        <input type="text" id="pr-ciudad" name="pr_ciudad" placeholder="Ciudad"
+                                            required>
                                         <span class="error-msg-modal" id="err-pr-ciudad"></span>
                                     </div>
                                     <div style="flex: 1;">
                                         <label for="pr-cp">CP <span style="color:var(--naranja)">*</span></label>
-                                        <input type="text" id="pr-cp" name="pr_cp" placeholder="CP" maxlength="5" required>
+                                        <input type="text" id="pr-cp" name="pr_cp" placeholder="CP" maxlength="5"
+                                            required>
                                         <span class="error-msg-modal" id="err-pr-cp"></span>
                                     </div>
                                 </div>
                             </div>
                             <div class="form-group-modal modal-col-full">
                                 <label for="pr-calle">Calle y Número <span style="color:var(--naranja)">*</span></label>
-                                <input type="text" id="pr-calle" name="pr_calle"
-                                    placeholder="Calle, número, colonia..." required>
+                                <input type="text" id="pr-calle" name="pr_calle" placeholder="Calle, número, colonia..."
+                                    required>
                                 <span class="error-msg-modal" id="err-pr-calle"></span>
                             </div>
                             <div class="form-group-modal modal-col-full">
@@ -1280,6 +1320,13 @@
                                 <input type="email" id="pr-correo" name="pr_correo" placeholder="correo@ejemplo.com"
                                     required>
                                 <span class="error-msg-modal" id="err-pr-correo"></span>
+                            </div>
+                            <div class="form-group-modal modal-col-full">
+                                <label for="pr-puntos-inicial">Puntuación Inicial <span
+                                        style="color:var(--naranja)">*</span></label>
+                                <input type="number" id="pr-puntos-inicial" name="pr_puntos_inicial"
+                                    placeholder="Ej. 100" min="0" max="2000" value="0" required>
+                                <span class="error-msg-modal" id="err-pr-puntos-inicial"></span>
                             </div>
                             <div class="form-group-modal">
                                 <label for="pr-password">Contraseña <span style="color:var(--naranja)">*</span></label>
@@ -1338,8 +1385,10 @@
                     <form id="form-agregar-sede" novalidate>
                         <div class="modal-grid">
                             <div class="form-group-modal modal-col-full">
-                                <label for="se-nombre">Nombre de la Sede <span style="color:var(--naranja)">*</span></label>
-                                <input type="text" id="se-nombre" name="se_nombre" placeholder="Ej. Sede Central" required>
+                                <label for="se-nombre">Nombre de la Sede <span
+                                        style="color:var(--naranja)">*</span></label>
+                                <input type="text" id="se-nombre" name="se_nombre" placeholder="Ej. Sede Central"
+                                    required>
                                 <span class="error-msg-modal" id="err-se-nombre"></span>
                             </div>
 
@@ -1353,7 +1402,8 @@
                                     <div class="form-options-container" style="max-height: 200px; overflow-y: auto;">
                                         <div class="form-option" data-value="Aguascalientes">Aguascalientes</div>
                                         <div class="form-option" data-value="Baja California">Baja California</div>
-                                        <div class="form-option" data-value="Baja California Sur">Baja California Sur</div>
+                                        <div class="form-option" data-value="Baja California Sur">Baja California Sur
+                                        </div>
                                         <div class="form-option" data-value="Campeche">Campeche</div>
                                         <div class="form-option" data-value="Chiapas">Chiapas</div>
                                         <div class="form-option" data-value="Chihuahua">Chihuahua</div>
@@ -1392,38 +1442,47 @@
                             <div class="form-group-modal">
                                 <div style="display: flex; gap: 1rem;">
                                     <div style="flex: 2;">
-                                        <label for="se-ciudad">Ciudad <span style="color:var(--naranja)">*</span></label>
-                                        <input type="text" id="se-ciudad" name="se_ciudad" placeholder="Ciudad" required>
+                                        <label for="se-ciudad">Ciudad <span
+                                                style="color:var(--naranja)">*</span></label>
+                                        <input type="text" id="se-ciudad" name="se_ciudad" placeholder="Ciudad"
+                                            required>
                                         <span class="error-msg-modal" id="err-se-ciudad"></span>
                                     </div>
                                     <div style="flex: 1;">
                                         <label for="se-cp">CP <span style="color:var(--naranja)">*</span></label>
-                                        <input type="text" id="se-cp" name="se_cp" placeholder="CP" maxlength="5" required>
+                                        <input type="text" id="se-cp" name="se_cp" placeholder="CP" maxlength="5"
+                                            required>
                                         <span class="error-msg-modal" id="err-se-cp"></span>
                                     </div>
                                 </div>
                             </div>
 
                             <div class="form-group-modal modal-col-full">
-                                <label for="se-calle">Dirección (Calle y Número) <span style="color:var(--naranja)">*</span></label>
-                                <input type="text" id="se-calle" name="se_calle" placeholder="Calle, número, colonia..." required>
+                                <label for="se-calle">Dirección (Calle y Número) <span
+                                        style="color:var(--naranja)">*</span></label>
+                                <input type="text" id="se-calle" name="se_calle" placeholder="Calle, número, colonia..."
+                                    required>
                                 <span class="error-msg-modal" id="err-se-calle"></span>
                             </div>
 
                             <div class="form-group-modal">
                                 <label for="se-telefono">Teléfono <span style="color:var(--naranja)">*</span></label>
-                                <input type="tel" id="se-telefono" name="se_telefono" placeholder="10 dígitos" maxlength="10" required>
+                                <input type="tel" id="se-telefono" name="se_telefono" placeholder="10 dígitos"
+                                    maxlength="10" required>
                                 <span class="error-msg-modal" id="err-se-telefono"></span>
                             </div>
 
                             <div class="form-group-modal">
-                                <label for="se-correo">Email de Contacto <span style="color:var(--naranja)">*</span></label>
-                                <input type="email" id="se-correo" name="se_correo" placeholder="correo@egau.com" required>
+                                <label for="se-correo">Email de Contacto <span
+                                        style="color:var(--naranja)">*</span></label>
+                                <input type="email" id="se-correo" name="se_correo" placeholder="correo@egau.com"
+                                    required>
                                 <span class="error-msg-modal" id="err-se-correo"></span>
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn-modal-cancel" id="btn-cancelar-modal-sede">Cancelar</button>
+                            <button type="button" class="btn-modal-cancel"
+                                id="btn-cancelar-modal-sede">Cancelar</button>
                             <button type="submit" class="btn-modal-submit">Guardar Sede</button>
                         </div>
                     </form>
@@ -1539,6 +1598,7 @@
                         </div>
                     </div>
                     <div class="grupo-card-footer">
+                        <button class="btn-grupo-ver" title="Ver"><i class="ri-eye-line"></i> Ver</button>
                         <button class="btn-grupo-editar"><i class="ri-edit-line"></i> Editar</button>
                         <button class="btn-grupo-eliminar"><i class="ri-delete-bin-line"></i></button>
                     </div>
@@ -1981,7 +2041,8 @@
 
             <div class="search-bar" style="margin-bottom: 24px;">
                 <i class="ri-search-line search-icon"></i>
-                <input type="text" id="buscador-extraescolares" placeholder="Buscar actividad por nombre..." autocomplete="off">
+                <input type="text" id="buscador-extraescolares" placeholder="Buscar actividad por nombre..."
+                    autocomplete="off">
             </div>
 
             <div class="extraescolares-grid" id="grid-extraescolares">
@@ -2016,7 +2077,8 @@
                     </div>
                 </div>
             </div>
-            <p class="extraescolares-empty" id="extraescolares-empty" style="display:none;">No se encontraron actividades.</p>
+            <p class="extraescolares-empty" id="extraescolares-empty" style="display:none;">No se encontraron
+                actividades.</p>
 
         </section>
 
@@ -2044,39 +2106,46 @@
                             <!-- Nombre -->
                             <div class="form-group-modal modal-col-full">
                                 <label for="ex-nombre">Nombre <span style="color:var(--naranja)">*</span></label>
-                                <input type="text" id="ex-nombre" name="nombre" placeholder="Ej. Taller de Ajedrez Computarizado" required maxlength="100">
+                                <input type="text" id="ex-nombre" name="nombre"
+                                    placeholder="Ej. Taller de Ajedrez Computarizado" required maxlength="100">
                                 <span class="error-msg-modal" id="err-ex-nombre"></span>
                             </div>
 
                             <!-- Cupo máximo -->
                             <div class="form-group-modal">
-                                <label for="ex-cupo-maximo">Cupo Máximo <span style="color:var(--naranja)">*</span></label>
-                                <input type="number" id="ex-cupo-maximo" name="cupo_maximo" placeholder="Ej. 30" required min="1">
+                                <label for="ex-cupo-maximo">Cupo Máximo <span
+                                        style="color:var(--naranja)">*</span></label>
+                                <input type="number" id="ex-cupo-maximo" name="cupo_maximo" placeholder="Ej. 30"
+                                    required min="1">
                                 <span class="error-msg-modal" id="err-ex-cupo-maximo"></span>
                             </div>
 
                             <!-- Duración (Semanas) -->
                             <div class="form-group-modal">
                                 <label for="ex-semanas">Duración (Semanas)</label>
-                                <input type="number" id="ex-semanas" name="semanas_duracion" placeholder="Ej. 6" min="1">
+                                <input type="number" id="ex-semanas" name="semanas_duracion" placeholder="Ej. 6"
+                                    min="1">
                             </div>
 
                             <!-- Costo -->
                             <div class="form-group-modal">
                                 <label for="ex-costo">Costo ($)</label>
-                                <input type="number" id="ex-costo" name="costo" placeholder="Ej. 500.00" min="0" step="0.01">
+                                <input type="number" id="ex-costo" name="costo" placeholder="Ej. 500.00" min="0"
+                                    step="0.01">
                             </div>
 
                             <!-- Fecha Inicio -->
                             <div class="form-group-modal">
-                                <label for="ex-fecha-inicio">Fecha de Inicio <span style="color:var(--naranja)">*</span></label>
+                                <label for="ex-fecha-inicio">Fecha de Inicio <span
+                                        style="color:var(--naranja)">*</span></label>
                                 <input type="date" id="ex-fecha-inicio" name="fecha_inicio" required>
                                 <span class="error-msg-modal" id="err-ex-fecha-inicio"></span>
                             </div>
 
                             <!-- Fecha Fin -->
                             <div class="form-group-modal">
-                                <label for="ex-fecha-fin">Fecha de Fin <span style="color:var(--naranja)">*</span></label>
+                                <label for="ex-fecha-fin">Fecha de Fin <span
+                                        style="color:var(--naranja)">*</span></label>
                                 <input type="date" id="ex-fecha-fin" name="fecha_fin" required>
                                 <span class="error-msg-modal" id="err-ex-fecha-fin"></span>
                             </div>
@@ -2100,26 +2169,32 @@
                             <!-- Ubicación -->
                             <div class="form-group-modal modal-col-full">
                                 <label for="ex-ubicacion">Ubicación</label>
-                                <input type="text" id="ex-ubicacion" name="ubicacion" placeholder="Ej. Aula 4, Cancha Principal..." maxlength="100">
+                                <input type="text" id="ex-ubicacion" name="ubicacion"
+                                    placeholder="Ej. Aula 4, Cancha Principal..." maxlength="100">
                             </div>
 
                             <!-- Descripción -->
                             <div class="form-group-modal modal-col-full">
                                 <label for="ex-descripcion">Descripción</label>
-                                <textarea id="ex-descripcion" name="descripcion" placeholder="Breve descripción de la actividad..." rows="3" style="width:100%; padding:10px; border:1px solid var(--borde); border-radius:8px; font-family:'Inter', sans-serif; resize:vertical;"></textarea>
+                                <textarea id="ex-descripcion" name="descripcion"
+                                    placeholder="Breve descripción de la actividad..." rows="3"
+                                    style="width:100%; padding:10px; border:1px solid var(--borde); border-radius:8px; font-family:'Inter', sans-serif; resize:vertical;"></textarea>
                             </div>
 
                             <!-- Requisitos -->
                             <div class="form-group-modal modal-col-full">
                                 <label for="ex-requisitos">Requisitos</label>
-                                <textarea id="ex-requisitos" name="requisitos" placeholder="Requisitos previos..." rows="2" style="width:100%; padding:10px; border:1px solid var(--borde); border-radius:8px; font-family:'Inter', sans-serif; resize:vertical;"></textarea>
+                                <textarea id="ex-requisitos" name="requisitos" placeholder="Requisitos previos..."
+                                    rows="2"
+                                    style="width:100%; padding:10px; border:1px solid var(--borde); border-radius:8px; font-family:'Inter', sans-serif; resize:vertical;"></textarea>
                             </div>
 
                         </div>
 
                         <!-- ===== PIE DEL FORMULARIO ===== -->
                         <div class="modal-footer">
-                            <button type="button" class="btn-modal-cancel" id="btn-cancelar-modal-extraescolar">Cancelar</button>
+                            <button type="button" class="btn-modal-cancel"
+                                id="btn-cancelar-modal-extraescolar">Cancelar</button>
                             <button type="submit" class="btn-modal-submit">
                                 <i class="ri-save-line"></i> Guardar Actividad
                             </button>
@@ -2223,7 +2298,11 @@
                             <tr>
                                 <td>Ana García</td>
                                 <td><span class="puntos-actual">1450</span> <span class="puntos-max">/ 2000</span></td>
-                                <td><div class="badge-nivel badge-nivel-5"><span class="badge-nivel-texto">Nivel</span> <span class="badge-nivel-num">5</span></div></td>
+                                <td>
+                                    <div class="badge-nivel badge-nivel-5"><span class="badge-nivel-texto">Nivel</span>
+                                        <span class="badge-nivel-num">5</span>
+                                    </div>
+                                </td>
                                 <td>Grupo A</td>
                                 <td class="acciones-puntos">
                                     <button class="btn-modificar-puntos"><i class="ri-edit-line"></i> Modificar</button>
@@ -2232,7 +2311,11 @@
                             <tr>
                                 <td>Carlos López</td>
                                 <td><span class="puntos-actual">875</span> <span class="puntos-max">/ 2000</span></td>
-                                <td><div class="badge-nivel badge-nivel-4"><span class="badge-nivel-texto">Nivel</span> <span class="badge-nivel-num">4</span></div></td>
+                                <td>
+                                    <div class="badge-nivel badge-nivel-4"><span class="badge-nivel-texto">Nivel</span>
+                                        <span class="badge-nivel-num">4</span>
+                                    </div>
+                                </td>
                                 <td>Grupo B</td>
                                 <td class="acciones-puntos">
                                     <button class="btn-modificar-puntos"><i class="ri-edit-line"></i> Modificar</button>
@@ -2241,7 +2324,11 @@
                             <tr>
                                 <td>María Rodríguez</td>
                                 <td><span class="puntos-actual">1720</span> <span class="puntos-max">/ 2000</span></td>
-                                <td><div class="badge-nivel badge-nivel-6"><span class="badge-nivel-texto">Nivel</span> <span class="badge-nivel-num">6</span></div></td>
+                                <td>
+                                    <div class="badge-nivel badge-nivel-6"><span class="badge-nivel-texto">Nivel</span>
+                                        <span class="badge-nivel-num">6</span>
+                                    </div>
+                                </td>
                                 <td>Grupo A</td>
                                 <td class="acciones-puntos">
                                     <button class="btn-modificar-puntos"><i class="ri-edit-line"></i> Modificar</button>
@@ -2250,7 +2337,11 @@
                             <tr>
                                 <td>Juan Sánchez</td>
                                 <td><span class="puntos-actual">650</span> <span class="puntos-max">/ 2000</span></td>
-                                <td><div class="badge-nivel badge-nivel-3"><span class="badge-nivel-texto">Nivel</span> <span class="badge-nivel-num">3</span></div></td>
+                                <td>
+                                    <div class="badge-nivel badge-nivel-3"><span class="badge-nivel-texto">Nivel</span>
+                                        <span class="badge-nivel-num">3</span>
+                                    </div>
+                                </td>
                                 <td>Grupo C</td>
                                 <td class="acciones-puntos">
                                     <button class="btn-modificar-puntos"><i class="ri-edit-line"></i> Modificar</button>
@@ -2259,7 +2350,11 @@
                             <tr>
                                 <td>Laura Fernández</td>
                                 <td><span class="puntos-actual">1150</span> <span class="puntos-max">/ 2000</span></td>
-                                <td><div class="badge-nivel badge-nivel-4"><span class="badge-nivel-texto">Nivel</span> <span class="badge-nivel-num">4</span></div></td>
+                                <td>
+                                    <div class="badge-nivel badge-nivel-4"><span class="badge-nivel-texto">Nivel</span>
+                                        <span class="badge-nivel-num">4</span>
+                                    </div>
+                                </td>
                                 <td>Grupo B</td>
                                 <td class="acciones-puntos">
                                     <button class="btn-modificar-puntos"><i class="ri-edit-line"></i> Modificar</button>
@@ -2286,7 +2381,9 @@
                 <div class="modal-body">
                     <div class="modal-puntos-info">
                         <h3 id="puntos-modal-nombre">Nombre Alumno</h3>
-                        <p style="color: var(--texto-suave); font-size: 14px; margin: 0;">Puntos actuales: <strong id="puntos-modal-actuales" style="color: var(--naranja); font-size: 18px;">0</strong> / 2000</p>
+                        <p style="color: var(--texto-suave); font-size: 14px; margin: 0;">Puntos actuales: <strong
+                                id="puntos-modal-actuales" style="color: var(--naranja); font-size: 18px;">0</strong> /
+                            2000</p>
                     </div>
 
                     <div class="form-group-modal">
@@ -2323,20 +2420,24 @@
                 <!-- Cuerpo del modal -->
                 <div class="modal-body">
                     <form id="form-agregar-rol" novalidate>
-                        
+
                         <!-- Sección: Detalles del Rol -->
                         <div class="modal-section-label">
                             <i class="ri-information-line"></i> Detalles del Rol
                         </div>
                         <div class="modal-grid">
                             <div class="form-group-modal modal-col-full">
-                                <label for="ro-nombre">Nombre del Rol <span style="color:var(--naranja)">*</span></label>
-                                <input type="text" id="ro-nombre" name="ro_nombre" placeholder="Ej. Editor Académico" required>
+                                <label for="ro-nombre">Nombre del Rol <span
+                                        style="color:var(--naranja)">*</span></label>
+                                <input type="text" id="ro-nombre" name="ro_nombre" placeholder="Ej. Editor Académico"
+                                    required>
                                 <span class="error-msg-modal" id="err-ro-nombre"></span>
                             </div>
                             <div class="form-group-modal modal-col-full">
-                                <label for="ro-descripcion">Descripción <span style="color:var(--naranja)">*</span></label>
-                                <textarea id="ro-descripcion" name="ro_descripcion" placeholder="Explica qué funciones tendrá este rol..." rows="2"></textarea>
+                                <label for="ro-descripcion">Descripción <span
+                                        style="color:var(--naranja)">*</span></label>
+                                <textarea id="ro-descripcion" name="ro_descripcion"
+                                    placeholder="Explica qué funciones tendrá este rol..." rows="2"></textarea>
                                 <span class="error-msg-modal" id="err-ro-descripcion"></span>
                             </div>
                             <div class="form-group-modal">
@@ -2399,25 +2500,25 @@
                                         ];
                                     @endphp
                                     @foreach($modulos as $mod)
-                                    <tr>
-                                        <td><strong>{{ $mod['nombre'] }}</strong></td>
-                                        <td class="text-center">
-                                            <label class="custom-checkbox-container">
-                                                <input type="checkbox" name="permiso_{{ $mod['id'] }}_ver" value="1">
-                                                <span class="checkmark"></span>
-                                            </label>
-                                        </td>
-                                        <td class="text-center">
-                                            @if($mod['id'] !== 'status')
-                                            <label class="custom-checkbox-container">
-                                                <input type="checkbox" name="permiso_{{ $mod['id'] }}_crear" value="1">
-                                                <span class="checkmark"></span>
-                                            </label>
-                                            @else
-                                            <span style="color: var(--texto-suave); font-size: 0.8rem;">N/A</span>
-                                            @endif
-                                        </td>
-                                    </tr>
+                                        <tr>
+                                            <td><strong>{{ $mod['nombre'] }}</strong></td>
+                                            <td class="text-center">
+                                                <label class="custom-checkbox-container">
+                                                    <input type="checkbox" name="permiso_{{ $mod['id'] }}_ver" value="1">
+                                                    <span class="checkmark"></span>
+                                                </label>
+                                            </td>
+                                            <td class="text-center">
+                                                @if($mod['id'] !== 'status')
+                                                    <label class="custom-checkbox-container">
+                                                        <input type="checkbox" name="permiso_{{ $mod['id'] }}_crear" value="1">
+                                                        <span class="checkmark"></span>
+                                                    </label>
+                                                @else
+                                                    <span style="color: var(--texto-suave); font-size: 0.8rem;">N/A</span>
+                                                @endif
+                                            </td>
+                                        </tr>
                                     @endforeach
                                 </tbody>
                             </table>

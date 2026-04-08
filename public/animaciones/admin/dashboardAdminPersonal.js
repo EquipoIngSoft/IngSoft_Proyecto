@@ -115,53 +115,56 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
 
-        // ---- Lógica para Form Dropdowns (Dentro del modal de Personal) ----
-        const formDropdowns = document.querySelectorAll('#modal-agregar-personal .form-dropdown');
-        formDropdowns.forEach(dropdown => {
-            const trigger = dropdown.querySelector('.form-select-trigger');
-            const options = dropdown.querySelectorAll('.form-option');
-            const selectedText = dropdown.querySelector('.selected-text');
-            const hiddenInput = dropdown.querySelector('input[type="hidden"]');
+    }
 
-            if (!trigger || !selectedText) return;
+    // ---- Lógica para Form Dropdowns (Modal de Personal) ----
+    // IMPORTANTE: debe estar FUERA del bloque if(tabla) para funcionar siempre
+    const formDropdownsPersonal = document.querySelectorAll('#modal-agregar-personal .form-dropdown');
+    formDropdownsPersonal.forEach(dropdown => {
+        const trigger = dropdown.querySelector('.form-select-trigger');
+        const options = dropdown.querySelectorAll('.form-option');
+        const selectedText = dropdown.querySelector('.selected-text');
+        const hiddenInput = dropdown.querySelector('input[type="hidden"]');
 
-            trigger.addEventListener('click', (e) => {
-                e.stopPropagation();
-                formDropdowns.forEach(d => {
-                    if (d !== dropdown) d.classList.remove('open');
-                });
-                dropdown.classList.toggle('open');
+        if (!trigger || !selectedText) return;
+
+        trigger.addEventListener('click', (e) => {
+            e.stopPropagation();
+            formDropdownsPersonal.forEach(d => {
+                if (d !== dropdown) d.classList.remove('open');
             });
+            dropdown.classList.toggle('open');
+        });
 
-            options.forEach(option => {
-                option.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    options.forEach(opt => opt.classList.remove('selected'));
-                    option.classList.add('selected');
+        options.forEach(option => {
+            option.addEventListener('click', (e) => {
+                e.stopPropagation();
+                options.forEach(opt => opt.classList.remove('selected'));
+                option.classList.add('selected');
 
-                    const val = option.getAttribute('data-value');
-                    const text = option.textContent;
+                const val = option.getAttribute('data-value');
+                const text = option.textContent;
 
-                    selectedText.textContent = text;
-                    selectedText.setAttribute('data-value', val);
-                    if (hiddenInput) hiddenInput.value = val;
+                selectedText.textContent = text;
+                selectedText.setAttribute('data-value', val);
+                if (hiddenInput) hiddenInput.value = val;
 
-                    dropdown.classList.remove('open');
+                dropdown.classList.remove('open');
 
-                    if (val !== "") {
-                        dropdown.classList.remove('input-error');
-                        // El errorMsg tiene un ID basado en el hiddenInput.id
+                if (val !== "") {
+                    dropdown.classList.remove('input-error');
+                    if (hiddenInput) {
                         const errorMsg = document.getElementById(`err-${hiddenInput.id}`);
                         if (errorMsg) errorMsg.textContent = '';
                     }
-                });
+                }
             });
         });
+    });
 
-        document.addEventListener('click', () => {
-            formDropdowns.forEach(dropdown => dropdown.classList.remove('open'));
-        });
-    }
+    document.addEventListener('click', () => {
+        formDropdownsPersonal.forEach(dropdown => dropdown.classList.remove('open'));
+    });
 
     // ---- Modal: Agregar Personal ----
     const modalOverlay = document.getElementById('modal-agregar-personal');
