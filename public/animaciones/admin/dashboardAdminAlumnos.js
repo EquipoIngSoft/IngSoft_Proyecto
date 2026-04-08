@@ -304,6 +304,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 valido = false;
             } else { setOk('al-ap-paterno', 'err-al-ap-paterno'); }
 
+            // Fecha de nacimiento alumno
+            const alFechaNacimiento = document.getElementById('al-fecha-nacimiento');
+            if (!alFechaNacimiento || alFechaNacimiento.value.trim() === '') {
+                setError('al-fecha-nacimiento', 'err-al-fecha-nacimiento', 'La fecha de nacimiento es requerida.');
+                valido = false;
+            } else { setOk('al-fecha-nacimiento', 'err-al-fecha-nacimiento'); }
+
             // Correo alumno
             const alCorreo = document.getElementById('al-correo');
             const emailReg = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;

@@ -258,6 +258,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const fields = [
                 { id: 'pe-nombre', err: 'err-pe-nombre', msg: 'El nombre es requerido.' },
                 { id: 'pe-ap-paterno', err: 'err-pe-ap-paterno', msg: 'El apellido paterno es requerido.' },
+                { id: 'pe-fecha-nacimiento', err: 'err-pe-fecha-nacimiento', msg: 'La fecha de nacimiento es requerida.' },
                 { id: 'pe-rol', target: 'dropdown-pe-rol', err: 'err-pe-rol', msg: 'Selecciona un rol.' },
                 { id: 'pe-sede', target: 'dropdown-pe-sede', err: 'err-pe-sede', msg: 'Selecciona una sede.' },
                 { id: 'pe-genero', target: 'dropdown-pe-genero', err: 'err-pe-genero', msg: 'Selecciona un género.' },

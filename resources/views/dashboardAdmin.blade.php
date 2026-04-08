@@ -613,6 +613,11 @@
                                     placeholder="Apellido materno">
                             </div>
                             <div class="form-group-modal">
+                                <label for="pe-fecha-nacimiento">Fecha de Nacimiento <span style="color:var(--naranja)">*</span></label>
+                                <input type="date" id="pe-fecha-nacimiento" name="pe_fecha_nacimiento" required>
+                                <span class="error-msg-modal" id="err-pe-fecha-nacimiento"></span>
+                            </div>
+                            <div class="form-group-modal">
                                 <label for="pe-telefono">Número de Teléfono</label>
                                 <input type="tel" id="pe-telefono" name="pe_telefono" placeholder="10 dígitos"
                                     maxlength="10">
@@ -819,6 +824,11 @@
                                 <label for="al-ap-materno">Apellido Materno</label>
                                 <input type="text" id="al-ap-materno" name="al_ap_materno"
                                     placeholder="Apellido materno">
+                            </div>
+                            <div class="form-group-modal">
+                                <label for="al-fecha-nacimiento">Fecha de Nacimiento <span style="color:var(--naranja)">*</span></label>
+                                <input type="date" id="al-fecha-nacimiento" name="al_fecha_nacimiento" required>
+                                <span class="error-msg-modal" id="err-al-fecha-nacimiento"></span>
                             </div>
                             <div class="form-group-modal">
                                 <label for="al-telefono">Número de Teléfono</label>
@@ -1207,6 +1217,11 @@
                                 <label for="pr-ap-materno">Apellido Materno</label>
                                 <input type="text" id="pr-ap-materno" name="pr_ap_materno"
                                     placeholder="Apellido materno">
+                            </div>
+                            <div class="form-group-modal">
+                                <label for="pr-fecha-nacimiento">Fecha de Nacimiento <span style="color:var(--naranja)">*</span></label>
+                                <input type="date" id="pr-fecha-nacimiento" name="pr_fecha_nacimiento" required>
+                                <span class="error-msg-modal" id="err-pr-fecha-nacimiento"></span>
                             </div>
                             <div class="form-group-modal">
                                 <label for="pr-telefono">Número de Teléfono</label>
