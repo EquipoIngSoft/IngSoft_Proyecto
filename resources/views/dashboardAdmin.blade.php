@@ -639,22 +639,6 @@
                                 </div>
                                 <span class="error-msg-modal" id="err-pe-genero"></span>
                             </div>
-                            <div class="form-group-modal">
-                                <label for="pe-rol">Rol <span style="color:var(--naranja)">*</span></label>
-                                <div class="form-dropdown" id="dropdown-pe-rol" tabindex="0">
-                                    <div class="form-select-trigger">
-                                        <span class="selected-text" data-value="">Selecciona una opción</span>
-                                        <i class="ri-arrow-down-s-line"></i>
-                                    </div>
-                                    <div class="form-options-container">
-                                        <div class="form-option" data-value="administrativo">Administrativo</div>
-                                        <div class="form-option" data-value="mantenimiento">Mantenimiento</div>
-                                        <div class="form-option" data-value="seguridad">Seguridad</div>
-                                    </div>
-                                    <input type="hidden" id="pe-rol" name="pe_rol" value="">
-                                </div>
-                                <span class="error-msg-modal" id="err-pe-rol"></span>
-                            </div>
                             <div class="form-group-modal modal-col-full">
                                 <label for="pe-sede">Sede <span style="color:var(--naranja)">*</span></label>
                                 <div class="form-dropdown" id="dropdown-pe-sede" tabindex="0">
@@ -669,6 +653,22 @@
                                     <input type="hidden" id="pe-sede" name="pe_sede" value="">
                                 </div>
                                 <span class="error-msg-modal" id="err-pe-sede"></span>
+                            </div>
+                            <div class="form-group-modal modal-col-full">
+                                <label for="pe-rol">Rol <span style="color:var(--naranja)">*</span></label>
+                                <div class="form-dropdown" id="dropdown-pe-rol" tabindex="0">
+                                    <div class="form-select-trigger">
+                                        <span class="selected-text" data-value="">Selecciona una opción</span>
+                                        <i class="ri-arrow-down-s-line"></i>
+                                    </div>
+                                    <div class="form-options-container">
+                                        <div class="form-option" data-value="administrativo">Administrativo</div>
+                                        <div class="form-option" data-value="mantenimiento">Mantenimiento</div>
+                                        <div class="form-option" data-value="seguridad">Seguridad</div>
+                                    </div>
+                                    <input type="hidden" id="pe-rol" name="pe_rol" value="">
+                                </div>
+                                <span class="error-msg-modal" id="err-pe-rol"></span>
                             </div>
                             <div class="form-group-modal">
                                 <label for="pe-estado">Estado <span style="color:var(--naranja)">*</span></label>
@@ -1230,21 +1230,6 @@
                                 <span class="error-msg-modal" id="err-pr-telefono"></span>
                             </div>
                             <div class="form-group-modal">
-                                <label for="pr-sede">Sede <span style="color:var(--naranja)">*</span></label>
-                                <div class="form-dropdown" id="dropdown-pr-sede" tabindex="0">
-                                    <div class="form-select-trigger">
-                                        <span class="selected-text" data-value="">Selecciona una sede</span>
-                                        <i class="ri-arrow-down-s-line"></i>
-                                    </div>
-                                    <div class="form-options-container">
-                                        <div class="form-option" data-value="sede central">Sede Central</div>
-                                        <div class="form-option" data-value="sede norte">Sede Norte</div>
-                                    </div>
-                                    <input type="hidden" id="pr-sede" name="pr_sede" value="">
-                                </div>
-                                <span class="error-msg-modal" id="err-pr-sede"></span>
-                            </div>
-                            <div class="form-group-modal">
                                 <label for="pr-genero">Género</label>
                                 <div class="form-dropdown" id="dropdown-pr-genero" tabindex="0">
                                     <div class="form-select-trigger" id="trigger-pr-genero">
@@ -1259,6 +1244,28 @@
                                     <input type="hidden" id="pr-genero" name="pr_genero" value="">
                                 </div>
                                 <span class="error-msg-modal" id="err-pr-genero"></span>
+                            </div>
+                            <div class="form-group-modal modal-col-full">
+                                <label for="pr-sede">Sede <span style="color:var(--naranja)">*</span></label>
+                                <div class="form-dropdown" id="dropdown-pr-sede" tabindex="0">
+                                    <div class="form-select-trigger">
+                                        <span class="selected-text" data-value="">Selecciona una sede</span>
+                                        <i class="ri-arrow-down-s-line"></i>
+                                    </div>
+                                    <div class="form-options-container">
+                                        <div class="form-option" data-value="sede central">Sede Central</div>
+                                        <div class="form-option" data-value="sede norte">Sede Norte</div>
+                                    </div>
+                                    <input type="hidden" id="pr-sede" name="pr_sede" value="">
+                                </div>
+                                <span class="error-msg-modal" id="err-pr-sede"></span>
+                            </div>
+                            <div class="form-group-modal modal-col-full">
+                                <label for="pr-puntos-inicial">Puntuación Inicial <span
+                                        style="color:var(--naranja)">*</span></label>
+                                <input type="number" id="pr-puntos-inicial" name="pr_puntos_inicial"
+                                    placeholder="Ej. 100" min="0" max="2000" value="0" required>
+                                <span class="error-msg-modal" id="err-pr-puntos-inicial"></span>
                             </div>
                             <div class="form-group-modal">
                                 <label for="pr-estado">Estado <span style="color:var(--naranja)">*</span></label>
@@ -1335,13 +1342,6 @@
                                 <input type="email" id="pr-correo" name="pr_correo" placeholder="correo@ejemplo.com"
                                     required>
                                 <span class="error-msg-modal" id="err-pr-correo"></span>
-                            </div>
-                            <div class="form-group-modal modal-col-full">
-                                <label for="pr-puntos-inicial">Puntuación Inicial <span
-                                        style="color:var(--naranja)">*</span></label>
-                                <input type="number" id="pr-puntos-inicial" name="pr_puntos_inicial"
-                                    placeholder="Ej. 100" min="0" max="2000" value="0" required>
-                                <span class="error-msg-modal" id="err-pr-puntos-inicial"></span>
                             </div>
                             <div class="form-group-modal">
                                 <label for="pr-password">Contraseña <span style="color:var(--naranja)">*</span></label>
