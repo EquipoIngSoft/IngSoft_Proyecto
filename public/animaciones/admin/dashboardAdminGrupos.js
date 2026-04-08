@@ -242,6 +242,66 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // ---- Lógica para Form Dropdowns del modal Grupo ----
+    const formDropdownsGrupo = document.querySelectorAll('#modal-agregar-grupo .form-dropdown');
+    formDropdownsGrupo.forEach(dropdown => {
+        const trigger = dropdown.querySelector('.form-select-trigger');
+        const options = dropdown.querySelectorAll('.form-option');
+        const selectedText = dropdown.querySelector('.selected-text');
+        const hiddenInput = dropdown.querySelector('input[type="hidden"]');
+        if (!trigger || !selectedText) return;
+        trigger.addEventListener('click', (e) => {
+            e.stopPropagation();
+            formDropdownsGrupo.forEach(d => { if (d !== dropdown) d.classList.remove('open'); });
+            dropdown.classList.toggle('open');
+        });
+        options.forEach(option => {
+            option.addEventListener('click', (e) => {
+                e.stopPropagation();
+                options.forEach(opt => opt.classList.remove('selected'));
+                option.classList.add('selected');
+                selectedText.textContent = option.textContent;
+                selectedText.setAttribute('data-value', option.getAttribute('data-value'));
+                if (hiddenInput) hiddenInput.value = option.getAttribute('data-value');
+                dropdown.classList.remove('open');
+                dropdown.classList.remove('input-error');
+            });
+        });
+    });
+    document.addEventListener('click', () => {
+        formDropdownsGrupo.forEach(d => d.classList.remove('open'));
+    });
+
+    // ---- Lógica para Form Dropdowns del modal Curso ----
+    const formDropdownsCurso = document.querySelectorAll('#modal-agregar-curso .form-dropdown');
+    formDropdownsCurso.forEach(dropdown => {
+        const trigger = dropdown.querySelector('.form-select-trigger');
+        const options = dropdown.querySelectorAll('.form-option');
+        const selectedText = dropdown.querySelector('.selected-text');
+        const hiddenInput = dropdown.querySelector('input[type="hidden"]');
+        if (!trigger || !selectedText) return;
+        trigger.addEventListener('click', (e) => {
+            e.stopPropagation();
+            formDropdownsCurso.forEach(d => { if (d !== dropdown) d.classList.remove('open'); });
+            dropdown.classList.toggle('open');
+        });
+        options.forEach(option => {
+            option.addEventListener('click', (e) => {
+                e.stopPropagation();
+                options.forEach(opt => opt.classList.remove('selected'));
+                option.classList.add('selected');
+                selectedText.textContent = option.textContent;
+                selectedText.setAttribute('data-value', option.getAttribute('data-value'));
+                if (hiddenInput) hiddenInput.value = option.getAttribute('data-value');
+                dropdown.classList.remove('open');
+                dropdown.classList.remove('input-error');
+            });
+        });
+    });
+    document.addEventListener('click', () => {
+        formDropdownsCurso.forEach(d => d.classList.remove('open'));
+    });
+
 
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') {
