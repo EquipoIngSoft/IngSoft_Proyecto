@@ -182,7 +182,7 @@
 
 .horario-row {
     display: grid;
-    grid-template-columns: 2fr 1fr 1fr auto;
+    grid-template-columns: 2fr 2fr 1fr 1fr auto;
     gap: 10px;
     align-items: center;
     background-color: #fafafa;
@@ -197,7 +197,7 @@
     to { opacity: 1; transform: translateY(0); }
 }
 
-.horario-row select, .horario-row input[type="time"] {
+.horario-row select, .horario-row input[type="time"], .horario-row input[type="text"] {
     background-color: var(--blanco);
     border: 1px solid var(--borde);
     padding: 8px;
@@ -210,7 +210,7 @@
     transition: border-color 0.2s;
 }
 
-.horario-row select:focus, .horario-row input[type="time"]:focus {
+.horario-row select:focus, .horario-row input[type="time"]:focus, .horario-row input[type="text"]:focus {
     border-color: var(--naranja);
 }
 

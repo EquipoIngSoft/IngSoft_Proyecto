@@ -72,6 +72,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <option value="6">Sábado</option>
                 <option value="0">Domingo</option>
             </select>
+            <input type="text" class="hora-aula" name="aulas[]" placeholder="Aula (ej. Salón 3)" maxlength="20">
             <input type="time" class="hora-inicio" name="horas_inicio[]" required title="Hora de inicio">
             <input type="time" class="hora-fin" name="horas_fin[]" required title="Hora de fin">
             <button type="button" class="btn-remove-horario" title="Eliminar este horario">
