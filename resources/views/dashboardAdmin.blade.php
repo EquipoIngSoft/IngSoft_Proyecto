@@ -613,7 +613,8 @@
                                     placeholder="Apellido materno">
                             </div>
                             <div class="form-group-modal">
-                                <label for="pe-fecha-nacimiento">Fecha de Nacimiento <span style="color:var(--naranja)">*</span></label>
+                                <label for="pe-fecha-nacimiento">Fecha de Nacimiento <span
+                                        style="color:var(--naranja)">*</span></label>
                                 <input type="date" id="pe-fecha-nacimiento" name="pe_fecha_nacimiento" required>
                                 <span class="error-msg-modal" id="err-pe-fecha-nacimiento"></span>
                             </div>
@@ -826,7 +827,8 @@
                                     placeholder="Apellido materno">
                             </div>
                             <div class="form-group-modal">
-                                <label for="al-fecha-nacimiento">Fecha de Nacimiento <span style="color:var(--naranja)">*</span></label>
+                                <label for="al-fecha-nacimiento">Fecha de Nacimiento <span
+                                        style="color:var(--naranja)">*</span></label>
                                 <input type="date" id="al-fecha-nacimiento" name="al_fecha_nacimiento" required>
                                 <span class="error-msg-modal" id="err-al-fecha-nacimiento"></span>
                             </div>
@@ -1219,7 +1221,8 @@
                                     placeholder="Apellido materno">
                             </div>
                             <div class="form-group-modal">
-                                <label for="pr-fecha-nacimiento">Fecha de Nacimiento <span style="color:var(--naranja)">*</span></label>
+                                <label for="pr-fecha-nacimiento">Fecha de Nacimiento <span
+                                        style="color:var(--naranja)">*</span></label>
                                 <input type="date" id="pr-fecha-nacimiento" name="pr_fecha_nacimiento" required>
                                 <span class="error-msg-modal" id="err-pr-fecha-nacimiento"></span>
                             </div>
@@ -1261,11 +1264,10 @@
                                 <span class="error-msg-modal" id="err-pr-sede"></span>
                             </div>
                             <div class="form-group-modal modal-col-full">
-                                <label for="pr-puntos-inicial">Puntuación Inicial <span
-                                        style="color:var(--naranja)">*</span></label>
-                                <input type="number" id="pr-puntos-inicial" name="pr_puntos_inicial"
-                                    placeholder="Ej. 100" min="0" max="2000" value="0" required>
-                                <span class="error-msg-modal" id="err-pr-puntos-inicial"></span>
+                                <label for="pr-puntos">Puntos<span style="color:var(--naranja)">*</span></label>
+                                <input type="number" id="pr-puntos" name="pr_puntos" placeholder="Ej. 100" min="0"
+                                    max="2000" value="0" required>
+                                <span class="error-msg-modal" id="err-pr-puntos"></span>
                             </div>
                             <div class="form-group-modal">
                                 <label for="pr-estado">Estado <span style="color:var(--naranja)">*</span></label>
