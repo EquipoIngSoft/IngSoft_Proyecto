@@ -12,7 +12,10 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
-        //
+        // Registrar el alias del middleware para usarlo en rutas
+        $middleware->alias([
+            'verificar.token' => \App\Http\Middleware\VerificarToken::class,
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //
