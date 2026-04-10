@@ -22,10 +22,10 @@ document.addEventListener('DOMContentLoaded', () => {
             const descripcion = fila.cells[2].textContent.toLowerCase();
             const estatus = fila.cells[3].textContent.toLowerCase();
 
-            const coincideTexto = id.includes(textoBusqueda) || 
-                                 nombre.includes(textoBusqueda) || 
-                                 descripcion.includes(textoBusqueda);
-            
+            const coincideTexto = id.includes(textoBusqueda) ||
+                nombre.includes(textoBusqueda) ||
+                descripcion.includes(textoBusqueda);
+
             const coincideEstatus = !activeStatus || estatus.includes(activeStatus.toLowerCase());
 
             if (coincideTexto && coincideEstatus) {
@@ -68,7 +68,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (modalRol) {
             modalRol.classList.remove('open');
             if (formRol) formRol.reset();
-            
+
             // Limpiar errores
             modalRol.querySelectorAll('.error-msg-modal').forEach(msg => msg.textContent = '');
             modalRol.querySelectorAll('.form-group-modal input, .form-group-modal textarea').forEach(inp => {
@@ -213,7 +213,7 @@ document.addEventListener('DOMContentLoaded', () => {
         btnLimpiar.addEventListener('click', () => {
             if (buscadorRoles) buscadorRoles.value = '';
             activeStatus = '';
-            
+
             // Reset Dropdown UI
             if (statusFilter) {
                 const selectedText = statusFilter.querySelector('.selected-text');
@@ -223,7 +223,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     selectedText.setAttribute('data-value', '');
                 }
             }
-            
+
             aplicarFiltros();
         });
     }

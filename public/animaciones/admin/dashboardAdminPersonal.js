@@ -182,7 +182,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (modalOverlay) modalOverlay.classList.remove('open');
         document.body.style.overflow = '';
         if (formAgregar) formAgregar.reset();
-        
+
         // Limpiar form-dropdowns
         document.querySelectorAll('#modal-agregar-personal .form-dropdown').forEach(dropdown => {
             const options = dropdown.querySelectorAll('.form-option');

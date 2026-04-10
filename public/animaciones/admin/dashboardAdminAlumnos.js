@@ -211,10 +211,10 @@ document.addEventListener('DOMContentLoaded', () => {
             const options = dropdown.querySelectorAll('.form-option');
             const selectedText = dropdown.querySelector('.selected-text');
             const hiddenInput = dropdown.querySelector('input[type="hidden"]');
-            
+
             dropdown.classList.remove('input-error', 'input-ok');
             options.forEach(opt => opt.classList.remove('selected'));
-            
+
             if (options.length > 0) {
                 // Selecciona una opción...
                 options[0].classList.add('selected');
