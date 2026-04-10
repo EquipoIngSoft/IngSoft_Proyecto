@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Iniciar Sesión - EGAU Chess</title>
     <!-- Fuentes de Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Inter:wght@400;500;600&display=swap"
@@ -35,8 +36,10 @@
             <div class="tabs">
                 <!-- Pill animado -->
                 <div id="tab-pill"></div>
-                <button class="tab-btn active" id="tab-alumno" type="button" onclick="switchTab('alumno')">Alumno</button>
-                <button class="tab-btn" id="tab-personal" type="button" onclick="switchTab('personal')">Personal</button>
+                <button class="tab-btn active" id="tab-alumno" type="button"
+                    onclick="switchTab('alumno')">Alumno</button>
+                <button class="tab-btn" id="tab-personal" type="button"
+                    onclick="switchTab('personal')">Personal</button>
             </div>
 
             <!-- Mensaje de error del servidor (si aplica) -->
@@ -53,9 +56,8 @@
 
                 <div class="form-group">
                     <label for="username">Correo / Usuario</label>
-                    <input type="email" id="username" name="username"
-                           placeholder="Ingresa tu correo" required
-                           value="{{ old('username') }}">
+                    <input type="email" id="username" name="username" placeholder="Ingresa tu correo" required
+                        value="{{ old('username') }}">
                     <span class="error-msg" id="error-username">
                         {{ $errors->first('username') }}
                     </span>
@@ -63,8 +65,8 @@
 
                 <div class="form-group">
                     <label for="password">Contraseña</label>
-                    <input type="password" id="password" name="password"
-                           placeholder="Ingresa tu contraseña" required minlength="6">
+                    <input type="password" id="password" name="password" placeholder="Ingresa tu contraseña" required
+                        minlength="6">
                     <div class="forgot-wrapper">
                         <a href="#" class="forgot-link">¿Olvidaste tu contraseña?</a>
                     </div>

@@ -93,10 +93,37 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         // Botón Cerrar Sesión -> Regresar a logIn.html
+        // Botón Cerrar Sesión
         const btnLogout = document.getElementById('btn-logout');
         if (btnLogout) {
-            btnLogout.addEventListener('click', () => {
-                window.location.href = '/';
+            btnLogout.addEventListener('click', async () => {
+                try {
+                    const csrf = document.querySelector('meta[name="csrf-token"]')?.content;
+                    const token = session('token'); // viene de localStorage
+
+                    await fetch('/api/logout', {
+                        method: 'POST',
+                        headers: {
+                            'Authorization': 'Bearer ' + localStorage.getItem('token') ?? '',
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': csrf ?? '',
+                        }
+                    });
+                } catch (err) {
+                    console.error('Error al cerrar sesión:', err);
+                } finally {
+                    // Limpiar sesión en servidor
+                    await fetch('/guardar-token', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.content ?? '',
+                        },
+                        body: JSON.stringify({ token: null })
+                    });
+                    localStorage.clear();
+                    window.location.href = '/login';
+                }
             });
         }
     }
