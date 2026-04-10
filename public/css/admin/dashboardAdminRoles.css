@@ -140,12 +140,12 @@
     transition: all 0.2s ease;
 }
 
-.custom-checkbox-container:hover input ~ .checkmark {
+.custom-checkbox-container:hover input~.checkmark {
     border-color: var(--naranja);
     background-color: rgba(255, 122, 0, 0.1);
 }
 
-.custom-checkbox-container input:checked ~ .checkmark {
+.custom-checkbox-container input:checked~.checkmark {
     background-color: var(--naranja);
     border-color: var(--naranja);
 }
@@ -156,7 +156,7 @@
     display: none;
 }
 
-.custom-checkbox-container input:checked ~ .checkmark:after {
+.custom-checkbox-container input:checked~.checkmark:after {
     display: block;
 }
 

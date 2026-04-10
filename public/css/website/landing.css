@@ -142,7 +142,7 @@ body {
 }
 
 .btn-secundario:hover {
-    background: rgba(255,255,255,0.1);
+    background: rgba(255, 255, 255, 0.1);
 }
 
 .btn-completo {
@@ -203,7 +203,7 @@ body {
     display: flex;
     flex-direction: column;
     gap: 12px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
 .tarjeta h3 {
@@ -226,9 +226,20 @@ body {
     width: fit-content;
 }
 
-.principiante { background: #fde8e0; color: #c93e16; }
-.intermedio   { background: #fef3e0; color: #b06e00; }
-.avanzado     { background: #e0f0e8; color: #1a7a40; }
+.principiante {
+    background: #fde8e0;
+    color: #c93e16;
+}
+
+.intermedio {
+    background: #fef3e0;
+    color: #b06e00;
+}
+
+.avanzado {
+    background: #e0f0e8;
+    color: #1a7a40;
+}
 
 .tarjeta-info {
     display: flex;
@@ -240,3 +251,4 @@ body {
 /* ── SEDES ── */
 .sede-tarjeta {
     background: #fff;
+}

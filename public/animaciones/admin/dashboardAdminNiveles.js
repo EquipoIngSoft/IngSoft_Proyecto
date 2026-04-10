@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const tableRows = document.querySelectorAll('#tabla-niveles tbody tr');
     const buscador = document.getElementById('buscador-niveles');
-    
+
     // Dropdowns de filtros
     const filters = [
         { id: 'dropdown-niv-grupo', value: '' },
@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Lógica para dropdowns
     filters.forEach(filter => {
         const dd = document.getElementById(filter.id);
-        if(!dd) return;
+        if (!dd) return;
         const trigger = dd.querySelector('.custom-select-trigger');
         const options = dd.querySelectorAll('.custom-option');
         const selectedText = trigger.querySelector('.selected-text');
@@ -32,16 +32,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 const val = opt.getAttribute('data-value');
                 options.forEach(o => o.classList.remove('selected'));
                 opt.classList.add('selected');
-                
+
                 if (val === '') {
                     selectedText.textContent = opt.textContent; // Texto por defecto "Periodo", "Sede", "Nivel"
                 } else {
                     selectedText.textContent = opt.textContent; // Mostrar el texto de la opción seleccionada
                 }
-                
+
                 selectedText.setAttribute('data-value', val);
                 filter.value = val.toLowerCase();
-                
+
                 dd.classList.remove('open');
                 applyFilters();
             });
@@ -66,7 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const modalPuntos = document.getElementById('modal-modificar-puntos');
     const btnModificarList = document.querySelectorAll('.btn-modificar-puntos');
     const btnClosePuntos = document.getElementById('modal-close-puntos');
-    
+
     const puntosModalNombre = document.getElementById('puntos-modal-nombre');
     const puntosModalActuales = document.getElementById('puntos-modal-actuales');
     const puntosModalCantidad = document.getElementById('puntos-modal-cantidad');
@@ -77,7 +77,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Abrir modal
     btnModificarList.forEach(btn => {
-        btn.addEventListener('click', function() {
+        btn.addEventListener('click', function () {
             const row = this.closest('tr');
             const name = row.cells[0].textContent;
             const ptsElem = row.querySelector('.puntos-actual');
@@ -86,7 +86,7 @@ document.addEventListener('DOMContentLoaded', () => {
             puntosModalNombre.textContent = name;
             puntosModalActuales.textContent = ptsActual;
             puntosModalCantidad.value = '';
-            
+
             currentRowPtsElem = ptsElem;
             modalPuntos.classList.add('open');
         });
@@ -98,7 +98,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     if (btnClosePuntos) btnClosePuntos.addEventListener('click', cerrarModalPuntos);
-    
+
     window.addEventListener('click', (e) => {
         if (e.target === modalPuntos) cerrarModalPuntos();
     });
@@ -111,9 +111,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
             let currentPts = parseInt(currentRowPtsElem.textContent);
             let newPts = currentPts + val;
-            
+
             if (newPts > 2000) newPts = 2000;
-            
+
             currentRowPtsElem.textContent = newPts;
             cerrarModalPuntos();
         });
@@ -127,9 +127,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
             let currentPts = parseInt(currentRowPtsElem.textContent);
             let newPts = currentPts - val;
-            
+
             if (newPts < 0) newPts = 0;
-            
+
             currentRowPtsElem.textContent = newPts;
             cerrarModalPuntos();
         });
@@ -143,10 +143,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
         tableRows.forEach(row => {
             const cols = row.querySelectorAll('td');
-            if(cols.length < 4) return;
+            if (cols.length < 4) return;
 
             const name = cols[0].textContent.toLowerCase();
-            const nivel = cols[2].textContent.toLowerCase(); 
+            const nivel = cols[2].textContent.toLowerCase();
             const grupo = cols[3].textContent.toLowerCase();
 
             // Match conditions
