@@ -92,35 +92,37 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
 
-        // Botón Cerrar Sesión -> Regresar a logIn.html
+
         // Botón Cerrar Sesión
         const btnLogout = document.getElementById('btn-logout');
         if (btnLogout) {
             btnLogout.addEventListener('click', async () => {
                 try {
                     const csrf = document.querySelector('meta[name="csrf-token"]')?.content;
-                    const token = session('token'); // viene de localStorage
+                    const token = document.querySelector('meta[name="user-token"]')?.content;
 
+                    // Borrar token de Sanctum en la BD
                     await fetch('/api/logout', {
                         method: 'POST',
                         headers: {
-                            'Authorization': 'Bearer ' + localStorage.getItem('token') ?? '',
+                            'Authorization': 'Bearer ' + token,
                             'Content-Type': 'application/json',
-                            'X-CSRF-TOKEN': csrf ?? '',
                         }
                     });
-                } catch (err) {
-                    console.error('Error al cerrar sesión:', err);
-                } finally {
+
                     // Limpiar sesión en servidor
                     await fetch('/guardar-token', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
-                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.content ?? '',
+                            'X-CSRF-TOKEN': csrf ?? '',
                         },
                         body: JSON.stringify({ token: null })
                     });
+
+                } catch (err) {
+                    console.error('Error al cerrar sesión:', err);
+                } finally {
                     localStorage.clear();
                     window.location.href = '/login';
                 }
