@@ -1,10 +1,10 @@
 // ==============================================
-//  logIn.js — Animación de tabs + Validación
+//  logIn.js — Animación de tabs + Validación (cliente)
 //  EGAU Chess | AMAAC
 // ==============================================
 
 /**
- * Mueve el pill naranja al botón activo y actualiza el estado del formulario.
+ * Mueve el pill naranja al botón activo y actualiza el campo oculto 'tipo'.
  * @param {string} tipo - 'alumno' o 'personal'
  */
 function switchTab(tipo) {
@@ -20,17 +20,14 @@ function switchTab(tipo) {
     pill.style.width  = activeBtn.offsetWidth  + 'px';
     pill.style.left   = activeBtn.offsetLeft   + 'px';
 
-    // Actualizar campo oculto
+    // Actualizar campo oculto que el backend leerá
     document.getElementById('tipo-usuario').value = tipo;
 }
 
-// ---- Validación de campos ----
+// ---- Funciones de validación visual ----
 
 /**
  * Muestra u oculta el mensaje de error y aplica clase al input.
- * @param {HTMLInputElement} input
- * @param {HTMLElement} errorSpan
- * @param {string} msg - mensaje de error (vacío = campo correcto)
  */
 function setFieldState(input, errorSpan, msg) {
     if (msg) {
@@ -44,7 +41,7 @@ function setFieldState(input, errorSpan, msg) {
     }
 }
 
-/** Valida el campo de correo. Retorna mensaje de error o cadena vacía. */
+/** Valida correo — retorna mensaje de error o cadena vacía. */
 function validateEmail(value) {
     if (!value.trim()) return 'El correo es obligatorio.';
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -52,17 +49,17 @@ function validateEmail(value) {
     return '';
 }
 
-/** Valida el campo de contraseña. Retorna mensaje de error o cadena vacía. */
+/** Valida contraseña — retorna mensaje de error o cadena vacía. */
 function validatePassword(value) {
     if (!value) return 'La contraseña es obligatoria.';
     if (value.length < 6) return 'La contraseña debe tener al menos 6 caracteres.';
     return '';
 }
 
-// Inicializar al cargar la página
+// ---- Inicialización ----
 window.addEventListener('DOMContentLoaded', () => {
 
-    // ---- Pill inicial ----
+    // Pill inicial
     const initialBtn = document.querySelector('.tab-btn.active');
     const pill       = document.getElementById('tab-pill');
     if (initialBtn && pill) {
@@ -70,16 +67,29 @@ window.addEventListener('DOMContentLoaded', () => {
         pill.style.left  = initialBtn.offsetLeft  + 'px';
     }
 
-    // ---- Referencias del formulario ----
-    const form          = document.getElementById('login-form');
+    // Si el servidor devolvió un campo 'tipo' (old input), restaurar el tab activo
+    const tipoInput = document.getElementById('tipo-usuario');
+    if (tipoInput && tipoInput.value) {
+        switchTab(tipoInput.value);
+    }
+
+    // Marcar campo de correo con error si el servidor ya envió uno
     const emailInput    = document.getElementById('username');
     const passwordInput = document.getElementById('password');
     const errorEmail    = document.getElementById('error-username');
     const errorPassword = document.getElementById('error-password');
 
+    if (errorEmail && errorEmail.textContent.trim()) {
+        emailInput.classList.add('input-error');
+    }
+    if (errorPassword && errorPassword.textContent.trim()) {
+        passwordInput.classList.add('input-error');
+    }
+
+    const form = document.getElementById('login-form');
     if (!form) return;
 
-    // Validar en tiempo real al salir del campo (blur)
+    // Validar en tiempo real al salir del campo
     emailInput.addEventListener('blur', () => {
         setFieldState(emailInput, errorEmail, validateEmail(emailInput.value));
     });
@@ -88,7 +98,7 @@ window.addEventListener('DOMContentLoaded', () => {
         setFieldState(passwordInput, errorPassword, validatePassword(passwordInput.value));
     });
 
-    // Limpiar error mientras el usuario escribe si ya hay un error marcado
+    // Limpiar error mientras el usuario escribe (sólo si ya hay error)
     emailInput.addEventListener('input', () => {
         if (emailInput.classList.contains('input-error')) {
             setFieldState(emailInput, errorEmail, validateEmail(emailInput.value));
@@ -101,29 +111,20 @@ window.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Validar todo al intentar enviar
+    // Validación del cliente antes de enviar al servidor
     form.addEventListener('submit', (e) => {
-        e.preventDefault();
-
         const emailMsg    = validateEmail(emailInput.value);
         const passwordMsg = validatePassword(passwordInput.value);
 
         setFieldState(emailInput,    errorEmail,    emailMsg);
         setFieldState(passwordInput, errorPassword, passwordMsg);
 
-        if (!emailMsg && !passwordMsg) {
-            // Sin errores: verificar qué tab está seleccionada
-            const tipoUsuario = document.getElementById('tipo-usuario').value;
-            
-            if (tipoUsuario === 'personal') {
-                window.location.href = '/dashboardAdmin';
-            } else {
-                window.location.href = '/dashboardAlumno'; // Página en blanco provisional
-            }
-        } else {
-            // Hacer foco en el primer campo con error
+        if (emailMsg || passwordMsg) {
+            // Hay errores de cliente: detener el envío
+            e.preventDefault();
             if (emailMsg) emailInput.focus();
-            else           passwordInput.focus();
+            else          passwordInput.focus();
         }
+        // Si todo está bien, el formulario se envía al backend normalmente
     });
 });
