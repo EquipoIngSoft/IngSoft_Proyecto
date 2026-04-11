@@ -17,3 +17,12 @@ Route::get('/dashboardAdmin', function () {
 Route::get('/dashboardAlumno', function () {
     return view('dashboardAlumno');
 });
+
+
+Route::get('/cursos', function () {
+    return view('catalogoCursos');
+});
+
+Route::get('/curso', function () {
+    return view('curso');
+});
