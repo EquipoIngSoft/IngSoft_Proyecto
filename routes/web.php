@@ -26,3 +26,7 @@ Route::get('/cursos', function () {
 Route::get('/curso', function () {
     return view('curso');
 });
+
+Route::get('/registro', function () {
+    return view('registro');
+});
