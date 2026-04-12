@@ -1,0 +1,208 @@
+/* =============================================
+   extraescolares.css — Vista: Extraescolares
+   EGAU Chess | Portal del Estudiante
+   ============================================= */
+
+/* ---- Mis Inscripciones ---- */
+.mis-inscripciones {
+    border-left: 4px solid var(--naranja);
+    background-color: var(--blanco);
+    border-top: 1px solid var(--borde);
+    border-right: 1px solid var(--borde);
+    border-bottom: 1px solid var(--borde);
+    border-radius: 0 14px 14px 0;
+    padding: 20px 24px;
+    margin-bottom: 24px;
+}
+
+.mis-inscripciones-titulo {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--texto);
+    margin-bottom: 14px;
+}
+
+.inscripcion-activa {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 16px;
+    background-color: var(--naranja-light);
+    border-radius: 10px;
+    border: 1px solid #f5cbb3;
+}
+
+.inscripcion-activa-nombre {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--texto);
+}
+
+.inscripcion-activa-horario {
+    font-size: 14px;
+    color: var(--texto-suave);
+    margin-top: 2px;
+}
+
+.inscripcion-activa-check {
+    font-size: 20px;
+    color: var(--naranja);
+}
+
+/* ---- Buscador y filtros ---- */
+.search-filtros-card {
+    background-color: var(--blanco);
+    border: 1px solid var(--borde);
+    border-radius: 14px;
+    padding: 16px 20px;
+    margin-bottom: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+
+.search-bar-extra {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background-color: var(--naranja-light);
+    border: 1px solid #f5cbb3;
+    border-radius: 10px;
+    padding: 10px 16px;
+}
+
+.search-bar-extra i { color: var(--naranja); font-size: 18px; flex-shrink: 0; }
+
+.search-bar-extra input {
+    border: none;
+    background: transparent;
+    outline: none;
+    font-size: 14px;
+    color: var(--texto);
+    width: 100%;
+    font-family: 'Inter', sans-serif;
+}
+
+.search-bar-extra input::placeholder { color: var(--texto-suave); }
+
+/* ---- Botones de filtro de categoría ---- */
+.filtros-categorias {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.btn-filtro {
+    padding: 8px 22px;
+    border-radius: 20px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    border: 1px solid var(--borde);
+    background-color: var(--blanco);
+    color: var(--texto-suave);
+    transition: all 0.2s;
+}
+
+.btn-filtro:hover {
+    border-color: var(--naranja);
+    color: var(--naranja);
+}
+
+.btn-filtro.activo {
+    background-color: var(--naranja);
+    color: var(--blanco);
+    border-color: var(--naranja);
+}
+
+/* ---- Grid de tarjetas de actividades ---- */
+.actividades-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.actividad-card {
+    background-color: var(--blanco);
+    border: 1px solid var(--borde);
+    border-radius: 14px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    position: relative;
+}
+
+.actividad-card-check {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    font-size: 20px;
+    color: var(--naranja);
+}
+
+.actividad-nombre {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--texto);
+    padding-right: 24px;
+}
+
+.actividad-info-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 15px;
+    color: var(--texto-suave);
+}
+
+.actividad-info-row i { font-size: 16px; color: var(--naranja); }
+
+.cupo-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+    color: var(--texto-suave);
+    margin-bottom: 4px;
+}
+
+/* ---- Botones de acción ---- */
+.btn-inscribirse {
+    width: 100%;
+    padding: 12px;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+    font-family: 'Inter', sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: opacity 0.2s;
+}
+
+.btn-inscribirse:hover { opacity: 0.88; }
+
+.btn-inscribirse.inscribir {
+    background-color: var(--naranja);
+    color: var(--blanco);
+}
+
+.btn-inscribirse.cancelar {
+    background-color: #1a1a1a;
+    color: var(--blanco);
+}
+
+/* Mensaje sin resultados */
+.actividades-empty {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 48px;
+    color: var(--texto-suave);
+    font-size: 15px;
+    display: none;
+}
