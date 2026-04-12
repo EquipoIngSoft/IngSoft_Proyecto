@@ -62,7 +62,7 @@
 
     {{-- Pie del sidebar --}}
     <div class="sidebar-footer">
-        <a href="{{ route('login') }}" class="nav-footer-item">
+        <a href="{{ route('landing') }}" class="nav-footer-item">
             <i class="ri-logout-box-r-line"></i>
             <span>Cerrar Sesión</span>
         </a>
