@@ -92,11 +92,40 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
 
-        // Botón Cerrar Sesión -> Regresar a logIn.html
+
+        // Botón Cerrar Sesión
         const btnLogout = document.getElementById('btn-logout');
         if (btnLogout) {
-            btnLogout.addEventListener('click', () => {
-                window.location.href = '/';
+            btnLogout.addEventListener('click', async () => {
+                try {
+                    const csrf = document.querySelector('meta[name="csrf-token"]')?.content;
+                    const token = document.querySelector('meta[name="user-token"]')?.content;
+
+                    // Borrar token de Sanctum en la BD
+                    await fetch('/api/logout', {
+                        method: 'POST',
+                        headers: {
+                            'Authorization': 'Bearer ' + token,
+                            'Content-Type': 'application/json',
+                        }
+                    });
+
+                    // Limpiar sesión en servidor
+                    await fetch('/guardar-token', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': csrf ?? '',
+                        },
+                        body: JSON.stringify({ token: null })
+                    });
+
+                } catch (err) {
+                    console.error('Error al cerrar sesión:', err);
+                } finally {
+                    localStorage.clear();
+                    window.location.href = '/login';
+                }
             });
         }
     }

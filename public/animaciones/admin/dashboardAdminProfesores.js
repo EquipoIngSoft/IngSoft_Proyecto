@@ -236,6 +236,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 valido = false;
             } else { setOk('pr-correo', 'err-pr-correo'); }
 
+            // Fecha de nacimiento
+            const prFechaNacimiento = document.getElementById('pr-fecha-nacimiento');
+            if (!prFechaNacimiento || prFechaNacimiento.value.trim() === '') {
+                setError('pr-fecha-nacimiento', 'err-pr-fecha-nacimiento', 'La fecha de nacimiento es requerida.');
+                valido = false;
+            } else { setOk('pr-fecha-nacimiento', 'err-pr-fecha-nacimiento'); }
+
             // Puntuación
             const prPuntos = document.getElementById('pr-puntos-inicial');
             if (!prPuntos || prPuntos.value.trim() === '' || prPuntos.value < 0) {

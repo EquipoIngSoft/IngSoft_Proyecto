@@ -380,7 +380,8 @@ body {
     display: flex;
     align-items: center;
     gap: 6px;
-    padding: 10px 19px; /* un pixel menos por el borde paramantener tamaño */
+    padding: 10px 19px;
+    /* un pixel menos por el borde paramantener tamaño */
     background-color: transparent;
     color: var(--naranja);
     border: 1px solid var(--naranja);

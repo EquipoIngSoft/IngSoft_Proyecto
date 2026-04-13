@@ -22,16 +22,16 @@ document.addEventListener('DOMContentLoaded', () => {
         if (modalOverlay) modalOverlay.classList.remove('open');
         document.body.style.overflow = '';
         if (formAgregar) formAgregar.reset();
-        
+
         // Limpiar form-dropdowns
         document.querySelectorAll('#modal-agregar-sede .form-dropdown').forEach(dropdown => {
             const options = dropdown.querySelectorAll('.form-option');
             const selectedText = dropdown.querySelector('.selected-text');
             const hiddenInput = dropdown.querySelector('input[type="hidden"]');
-            
+
             dropdown.classList.remove('input-error', 'input-ok');
             options.forEach(opt => opt.classList.remove('selected'));
-            
+
             if (options.length > 0) {
                 if (selectedText) {
                     selectedText.textContent = 'Selecciona un estado';

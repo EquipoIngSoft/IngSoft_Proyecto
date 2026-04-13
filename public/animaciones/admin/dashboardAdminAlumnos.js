@@ -211,10 +211,10 @@ document.addEventListener('DOMContentLoaded', () => {
             const options = dropdown.querySelectorAll('.form-option');
             const selectedText = dropdown.querySelector('.selected-text');
             const hiddenInput = dropdown.querySelector('input[type="hidden"]');
-            
+
             dropdown.classList.remove('input-error', 'input-ok');
             options.forEach(opt => opt.classList.remove('selected'));
-            
+
             if (options.length > 0) {
                 // Selecciona una opción...
                 options[0].classList.add('selected');
@@ -303,6 +303,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 setError('al-ap-paterno', 'err-al-ap-paterno', 'El apellido paterno es requerido.');
                 valido = false;
             } else { setOk('al-ap-paterno', 'err-al-ap-paterno'); }
+
+            // Fecha de nacimiento alumno
+            const alFechaNacimiento = document.getElementById('al-fecha-nacimiento');
+            if (!alFechaNacimiento || alFechaNacimiento.value.trim() === '') {
+                setError('al-fecha-nacimiento', 'err-al-fecha-nacimiento', 'La fecha de nacimiento es requerida.');
+                valido = false;
+            } else { setOk('al-fecha-nacimiento', 'err-al-fecha-nacimiento'); }
 
             // Correo alumno
             const alCorreo = document.getElementById('al-correo');

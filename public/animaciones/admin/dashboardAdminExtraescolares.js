@@ -6,7 +6,7 @@
 document.addEventListener('DOMContentLoaded', () => {
 
     const sectionExtraescolares = document.getElementById('section-extraescolares');
-    
+
     if (!sectionExtraescolares) return;
 
     // ---- Búsqueda de Extraescolares ----
@@ -56,7 +56,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const cerrarModalExtraescolar = () => {
         if (modalExtraescolar) modalExtraescolar.classList.remove('open');
         document.body.style.overflow = '';
-        
+
         if (formAgregarExtraescolar) {
             formAgregarExtraescolar.reset();
         }
@@ -66,10 +66,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 const options = dropdown.querySelectorAll('.form-option');
                 const selectedText = dropdown.querySelector('.selected-text');
                 const hiddenInput = dropdown.querySelector('input[type="hidden"]');
-                
+
                 dropdown.classList.remove('input-error', 'input-ok');
                 options.forEach(opt => opt.classList.remove('selected'));
-                
+
                 if (options.length > 0) {
                     options[0].classList.add('selected');
                     if (selectedText) {
@@ -198,13 +198,13 @@ document.addEventListener('DOMContentLoaded', () => {
                     const originalHTML = btnSubmit.innerHTML;
                     btnSubmit.innerHTML = '<i class="ri-loader-4-line ri-spin"></i> Guardando Actividad...';
                     btnSubmit.disabled = true;
-                    
+
                     setTimeout(() => {
                         btnSubmit.innerHTML = originalHTML;
                         btnSubmit.disabled = false;
                         cerrarModalExtraescolar();
                         const cardEmpty = document.getElementById('extraescolares-empty');
-                        if(cardEmpty) cardEmpty.style.display = 'none';
+                        if (cardEmpty) cardEmpty.style.display = 'none';
 
                         alert("¡Actividad Extraescolar guardada con éxito!");
                     }, 1200);

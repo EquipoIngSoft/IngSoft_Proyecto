@@ -20,7 +20,8 @@
 
 /* ---- Card Sedes ---- */
 .card-sedes {
-    padding: 0; /* Para que la tabla llegue a los bordes si es necesario */
+    padding: 0;
+    /* Para que la tabla llegue a los bordes si es necesario */
     overflow: hidden;
 }
 
@@ -64,7 +65,7 @@
 
 .sede-card:hover {
     transform: translateY(-4px);
-    box-shadow: 0 8px 16px rgba(0,0,0,0.08);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08);
 }
 
 .sede-card-header {

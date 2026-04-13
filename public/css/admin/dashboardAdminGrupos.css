@@ -24,7 +24,8 @@
 
 .grupo-card:hover {
     transform: translateY(-4px);
-    box-shadow: 0 12px 24px rgba(224, 92, 42, 0.08); /* Sombra anaranjada suave */
+    box-shadow: 0 12px 24px rgba(224, 92, 42, 0.08);
+    /* Sombra anaranjada suave */
     border-color: var(--naranja);
 }
 
@@ -50,9 +51,20 @@
     font-weight: 600;
 }
 
-.badge-principiantes { background-color: #e6f4ea; color: #1e8e3e; }
-.badge-intermedios { background-color: #e8f0fe; color: #1967d2; }
-.badge-avanzados { background-color: #f3e8fd; color: #8430ce; }
+.badge-principiantes {
+    background-color: #e6f4ea;
+    color: #1e8e3e;
+}
+
+.badge-intermedios {
+    background-color: #e8f0fe;
+    color: #1967d2;
+}
+
+.badge-avanzados {
+    background-color: #f3e8fd;
+    color: #8430ce;
+}
 
 .grupo-card-body {
     padding: 0 24px 24px 24px;
@@ -83,7 +95,8 @@
     background-color: transparent;
 }
 
-.btn-grupo-ver, .btn-grupo-editar {
+.btn-grupo-ver,
+.btn-grupo-editar {
     flex-grow: 1;
     display: flex;
     align-items: center;
@@ -101,7 +114,8 @@
     transition: all 0.2s ease;
 }
 
-.btn-grupo-ver:hover, .btn-grupo-editar:hover {
+.btn-grupo-ver:hover,
+.btn-grupo-editar:hover {
     background-color: var(--naranja-light);
     border-color: var(--naranja);
     color: var(--naranja);
@@ -123,7 +137,8 @@
 }
 
 .btn-grupo-eliminar:hover {
-    background-color: rgba(217, 48, 37, 0.08); /* Fondo rojo claro */
+    background-color: rgba(217, 48, 37, 0.08);
+    /* Fondo rojo claro */
     border-color: #d93025;
 }
 
@@ -169,7 +184,8 @@
 
 @media (min-width: 768px) {
     .modal-box.modal-box-large {
-        width: 640px; /* Un poco más ancho para albergar los tres selects del horario en línea */
+        width: 640px;
+        /* Un poco más ancho para albergar los tres selects del horario en línea */
     }
 }
 
@@ -182,7 +198,7 @@
 
 .horario-row {
     display: grid;
-    grid-template-columns: 2fr 1fr 1fr auto;
+    grid-template-columns: 2fr 2fr 1fr 1fr auto;
     gap: 10px;
     align-items: center;
     background-color: #fafafa;
@@ -193,11 +209,20 @@
 }
 
 @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(-5px); }
-    to { opacity: 1; transform: translateY(0); }
+    from {
+        opacity: 0;
+        transform: translateY(-5px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
-.horario-row select, .horario-row input[type="time"] {
+.horario-row select,
+.horario-row input[type="time"],
+.horario-row input[type="text"] {
     background-color: var(--blanco);
     border: 1px solid var(--borde);
     padding: 8px;
@@ -210,7 +235,9 @@
     transition: border-color 0.2s;
 }
 
-.horario-row select:focus, .horario-row input[type="time"]:focus {
+.horario-row select:focus,
+.horario-row input[type="time"]:focus,
+.horario-row input[type="text"]:focus {
     border-color: var(--naranja);
 }
 
