@@ -6,7 +6,7 @@
 document.addEventListener('DOMContentLoaded', () => {
 
     const sectionExtraescolares = document.getElementById('section-extraescolares');
-    
+
     if (!sectionExtraescolares) return;
 
     // ---- Búsqueda de Extraescolares ----
@@ -56,7 +56,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const cerrarModalExtraescolar = () => {
         if (modalExtraescolar) modalExtraescolar.classList.remove('open');
         document.body.style.overflow = '';
-        
+
         if (formAgregarExtraescolar) {
             formAgregarExtraescolar.reset();
         }
@@ -66,10 +66,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 const options = dropdown.querySelectorAll('.form-option');
                 const selectedText = dropdown.querySelector('.selected-text');
                 const hiddenInput = dropdown.querySelector('input[type="hidden"]');
-                
+
                 dropdown.classList.remove('input-error', 'input-ok');
                 options.forEach(opt => opt.classList.remove('selected'));
-                
+
                 if (options.length > 0) {
                     options[0].classList.add('selected');
                     if (selectedText) {
@@ -98,6 +98,36 @@ document.addEventListener('DOMContentLoaded', () => {
             if (e.target === modalExtraescolar) cerrarModalExtraescolar();
         });
     }
+
+    // ---- Lógica para Form Dropdowns del modal Extraescolar ----
+    const formDropdownsExt = document.querySelectorAll('#modal-agregar-extraescolar .form-dropdown');
+    formDropdownsExt.forEach(dropdown => {
+        const trigger = dropdown.querySelector('.form-select-trigger');
+        const options = dropdown.querySelectorAll('.form-option');
+        const selectedText = dropdown.querySelector('.selected-text');
+        const hiddenInput = dropdown.querySelector('input[type="hidden"]');
+        if (!trigger || !selectedText) return;
+        trigger.addEventListener('click', (e) => {
+            e.stopPropagation();
+            formDropdownsExt.forEach(d => { if (d !== dropdown) d.classList.remove('open'); });
+            dropdown.classList.toggle('open');
+        });
+        options.forEach(option => {
+            option.addEventListener('click', (e) => {
+                e.stopPropagation();
+                options.forEach(opt => opt.classList.remove('selected'));
+                option.classList.add('selected');
+                selectedText.textContent = option.textContent;
+                selectedText.setAttribute('data-value', option.getAttribute('data-value'));
+                if (hiddenInput) hiddenInput.value = option.getAttribute('data-value');
+                dropdown.classList.remove('open');
+                dropdown.classList.remove('input-error');
+            });
+        });
+    });
+    document.addEventListener('click', () => {
+        formDropdownsExt.forEach(d => d.classList.remove('open'));
+    });
 
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') {
@@ -168,13 +198,13 @@ document.addEventListener('DOMContentLoaded', () => {
                     const originalHTML = btnSubmit.innerHTML;
                     btnSubmit.innerHTML = '<i class="ri-loader-4-line ri-spin"></i> Guardando Actividad...';
                     btnSubmit.disabled = true;
-                    
+
                     setTimeout(() => {
                         btnSubmit.innerHTML = originalHTML;
                         btnSubmit.disabled = false;
                         cerrarModalExtraescolar();
                         const cardEmpty = document.getElementById('extraescolares-empty');
-                        if(cardEmpty) cardEmpty.style.display = 'none';
+                        if (cardEmpty) cardEmpty.style.display = 'none';
 
                         alert("¡Actividad Extraescolar guardada con éxito!");
                     }, 1200);

@@ -1,17 +1,17 @@
 /* =============================================
-   dashboardAdminProfesores.css — Sección Profesores
-   Tarjetas, Grid, Búsqueda
+   dashboardAdminExtraescolares.css — Sección Extraescolares
+   Tarjetas y Modal
    EGAU Chess | AMAAC
    ============================================= */
 
-.profesores-grid {
+.extraescolares-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 20px;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 24px;
     margin-bottom: 24px;
 }
 
-.profesor-card {
+.extraescolar-card {
     background-color: var(--blanco);
     border: 1px solid rgba(224, 92, 42, 0.25);
     border-radius: 12px;
@@ -22,32 +22,36 @@
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
 }
 
-.profesor-card:hover {
+.extraescolar-card:hover {
     transform: translateY(-4px);
-    box-shadow: 0 12px 24px rgba(224, 92, 42, 0.08); /* Sombra anaranjada suave */
+    box-shadow: 0 12px 24px rgba(224, 92, 42, 0.08);
     border-color: var(--naranja);
 }
 
-.profesor-card-body {
-    padding: 24px;
-    flex-grow: 1;
+.extraescolar-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 24px 24px 16px 24px;
 }
 
-.profesor-nombre {
+.extraescolar-nombre {
     font-family: 'Inter', sans-serif;
     font-size: 18px;
     font-weight: 600;
     color: var(--texto);
-    margin: 0 0 16px 0;
+    margin: 0;
 }
 
-.profesor-info {
+.extraescolar-card-body {
+    padding: 0 24px 24px 24px;
+    flex-grow: 1;
     display: flex;
     flex-direction: column;
     gap: 12px;
 }
 
-.profesor-info span {
+.extraescolar-info-line {
     display: flex;
     align-items: center;
     gap: 10px;
@@ -55,12 +59,12 @@
     color: var(--texto);
 }
 
-.profesor-info i {
+.extraescolar-info-line i {
     color: var(--naranja);
     font-size: 18px;
 }
 
-.profesor-card-footer {
+.extraescolar-card-footer {
     padding: 16px 24px;
     border-top: 1px solid rgba(224, 92, 42, 0.1);
     display: flex;
@@ -68,7 +72,8 @@
     background-color: transparent;
 }
 
-.btn-profesor-editar {
+.btn-extraescolar-ver,
+.btn-extraescolar-editar {
     flex-grow: 1;
     display: flex;
     align-items: center;
@@ -79,20 +84,21 @@
     border: 1px solid rgba(224, 92, 42, 0.3);
     border-radius: 8px;
     font-family: 'Inter', sans-serif;
-    font-size: 13px;
+    font-size: 14px;
     font-weight: 500;
     color: var(--texto);
     cursor: pointer;
     transition: all 0.2s ease;
 }
 
-.btn-profesor-editar:hover {
+.btn-extraescolar-ver:hover,
+.btn-extraescolar-editar:hover {
     background-color: var(--naranja-light);
     border-color: var(--naranja);
     color: var(--naranja);
 }
 
-.btn-profesor-eliminar {
+.btn-extraescolar-eliminar {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -107,12 +113,19 @@
     transition: all 0.2s ease;
 }
 
-.btn-profesor-eliminar:hover {
-    background-color: rgba(217, 48, 37, 0.08); /* Fondo rojo muy claro */
+.btn-extraescolar-eliminar:hover {
+    background-color: rgba(217, 48, 37, 0.08);
     border-color: #d93025;
 }
 
-.profesores-empty {
+.extraescolar-inscritos-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin: 2px 0;
+}
+
+.extraescolares-empty {
     text-align: center;
     padding: 40px;
     color: var(--texto-suave);

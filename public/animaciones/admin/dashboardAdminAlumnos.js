@@ -21,11 +21,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Obtener el valor de "data-value" del trigger de cada custom select
             const triggerNivel = document.querySelector('#dropdown-nivel .selected-text');
-            const triggerGrupo = document.querySelector('#dropdown-grupo .selected-text');
+            const triggerSede = document.querySelector('#dropdown-sede .selected-text');
             const triggerStatus = document.querySelector('#dropdown-status .selected-text');
 
             const nivel = triggerNivel ? triggerNivel.getAttribute('data-value') : '';
-            const grupo = triggerGrupo ? triggerGrupo.getAttribute('data-value') : '';
+            const sede = triggerSede ? triggerSede.getAttribute('data-value') : '';
             const status = triggerStatus ? triggerStatus.getAttribute('data-value') : '';
 
             let visibles = 0;
@@ -33,15 +33,15 @@ document.addEventListener('DOMContentLoaded', () => {
             filas.forEach(fila => {
                 const textoGeneral = fila.textContent.toLowerCase();
                 const tdNivel = fila.cells[3].textContent.toLowerCase();
-                const tdGrupo = fila.cells[4].textContent.toLowerCase();
+                const tdSede = fila.cells[4].textContent.toLowerCase();
                 const tdStatus = fila.cells[5].textContent.toLowerCase();
 
                 const coincideTexto = textoGeneral.includes(query);
                 const coincideNivel = nivel === '' || tdNivel.includes(nivel);
-                const coincideGrupo = grupo === '' || tdGrupo.includes(grupo);
+                const coincideSede = sede === '' || tdSede.includes(sede);
                 const coincideStatus = status === '' || tdStatus.includes(status);
 
-                if (coincideTexto && coincideNivel && coincideGrupo && coincideStatus) {
+                if (coincideTexto && coincideNivel && coincideSede && coincideStatus) {
                     fila.style.display = '';
                     visibles++;
                 } else {
@@ -57,8 +57,8 @@ document.addEventListener('DOMContentLoaded', () => {
         // Escuchar input en buscar
         if (buscador) buscador.addEventListener('input', aplicarFiltros);
 
-        // Lógica de los Custom Dropdowns
-        const customDropdowns = document.querySelectorAll('.custom-dropdown');
+        // Lógica de los Custom Dropdowns (scoped al section-alumnos)
+        const customDropdowns = document.querySelectorAll('#section-alumnos .custom-dropdown');
 
         customDropdowns.forEach(dropdown => {
             const trigger = dropdown.querySelector('.custom-select-trigger');
@@ -130,8 +130,8 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
 
-        // ---- Lógica para Form Dropdowns (Independiente de Filtros) ----
-        const formDropdowns = document.querySelectorAll('.form-dropdown');
+        // ---- Lógica para Form Dropdowns (scoped al modal-agregar-alumno) ----
+        const formDropdowns = document.querySelectorAll('#modal-agregar-alumno .form-dropdown');
         formDropdowns.forEach(dropdown => {
             const trigger = dropdown.querySelector('.form-select-trigger');
             const options = dropdown.querySelectorAll('.form-option');
@@ -193,7 +193,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // ---- Modal: Agregar Alumno ----
     const modalOverlay = document.getElementById('modal-agregar-alumno');
     const btnAgregar = document.getElementById('btn-agregar');
-    const btnCerrarModal = document.getElementById('modal-close');
+    const btnCerrarModal = document.getElementById('modal-close-alumno');
     const btnCancelarModal = document.getElementById('btn-cancelar-modal');
     const formAgregar = document.getElementById('form-agregar-alumno');
 
@@ -207,14 +207,14 @@ document.addEventListener('DOMContentLoaded', () => {
         document.body.style.overflow = '';
         if (formAgregar) formAgregar.reset();
         // Limpiar form-dropdowns
-        document.querySelectorAll('.form-dropdown').forEach(dropdown => {
+        document.querySelectorAll('#modal-agregar-alumno .form-dropdown').forEach(dropdown => {
             const options = dropdown.querySelectorAll('.form-option');
             const selectedText = dropdown.querySelector('.selected-text');
             const hiddenInput = dropdown.querySelector('input[type="hidden"]');
-            
+
             dropdown.classList.remove('input-error', 'input-ok');
             options.forEach(opt => opt.classList.remove('selected'));
-            
+
             if (options.length > 0) {
                 // Selecciona una opción...
                 options[0].classList.add('selected');
@@ -227,10 +227,10 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         // Limpiar estados de validación
-        document.querySelectorAll('.form-group-modal input').forEach(inp => {
+        document.querySelectorAll('#modal-agregar-alumno .form-group-modal input').forEach(inp => {
             inp.classList.remove('input-error', 'input-ok');
         });
-        document.querySelectorAll('.error-msg-modal').forEach(msg => {
+        document.querySelectorAll('#modal-agregar-alumno .error-msg-modal').forEach(msg => {
             msg.textContent = '';
         });
     };
@@ -254,7 +254,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // ---- Toggle mostrar/ocultar contraseña ----
-    document.querySelectorAll('.toggle-password').forEach(btn => {
+    document.querySelectorAll('#modal-agregar-alumno .toggle-password').forEach(btn => {
         btn.addEventListener('click', () => {
             const targetId = btn.getAttribute('data-target');
             const input = document.getElementById(targetId);
@@ -304,6 +304,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 valido = false;
             } else { setOk('al-ap-paterno', 'err-al-ap-paterno'); }
 
+            // Fecha de nacimiento alumno
+            const alFechaNacimiento = document.getElementById('al-fecha-nacimiento');
+            if (!alFechaNacimiento || alFechaNacimiento.value.trim() === '') {
+                setError('al-fecha-nacimiento', 'err-al-fecha-nacimiento', 'La fecha de nacimiento es requerida.');
+                valido = false;
+            } else { setOk('al-fecha-nacimiento', 'err-al-fecha-nacimiento'); }
+
             // Correo alumno
             const alCorreo = document.getElementById('al-correo');
             const emailReg = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -319,12 +326,51 @@ document.addEventListener('DOMContentLoaded', () => {
                 valido = false;
             } else { setOk('dropdown-al-genero', 'err-al-genero'); }
 
-            // Dirección alumno
-            const alDireccion = document.getElementById('al-direccion');
-            if (!alDireccion || alDireccion.value.trim() === '') {
-                setError('al-direccion', 'err-al-direccion', 'La dirección es requerida.');
+            // Sede alumno
+            const alSede = document.getElementById('al-sede');
+            if (!alSede || alSede.value === '') {
+                setError('dropdown-al-sede', 'err-al-sede', 'Selecciona una sede.');
                 valido = false;
-            } else { setOk('al-direccion', 'err-al-direccion'); }
+            } else { setOk('dropdown-al-sede', 'err-al-sede'); }
+
+            // Puntaje Inicial
+            const alPuntos = document.getElementById('al-puntos-inicial');
+            if (!alPuntos || alPuntos.value.trim() === '' || isNaN(alPuntos.value)) {
+                setError('al-puntos-inicial', 'err-al-puntos-inicial', 'Ingresa la puntuación inicial.');
+                valido = false;
+            } else if (parseInt(alPuntos.value) < 0 || parseInt(alPuntos.value) > 2000) {
+                setError('al-puntos-inicial', 'err-al-puntos-inicial', 'El puntaje debe estar entre 0 y 2000.');
+                valido = false;
+            } else { setOk('al-puntos-inicial', 'err-al-puntos-inicial'); }
+
+            // Dirección: Estado
+            const alEstado = document.getElementById('al-estado');
+            if (!alEstado || alEstado.value === '') {
+                setError('dropdown-al-estado', 'err-al-estado', 'Selecciona un estado.');
+                valido = false;
+            } else { setOk('dropdown-al-estado', 'err-al-estado'); }
+
+            // Dirección: Ciudad
+            const alCiudad = document.getElementById('al-ciudad');
+            if (!alCiudad || alCiudad.value.trim() === '') {
+                setError('al-ciudad', 'err-al-ciudad', 'La ciudad es requerida.');
+                valido = false;
+            } else { setOk('al-ciudad', 'err-al-ciudad'); }
+
+            // Dirección: Calle
+            const alCalle = document.getElementById('al-calle');
+            if (!alCalle || alCalle.value.trim() === '') {
+                setError('al-calle', 'err-al-calle', 'La calle es requerida.');
+                valido = false;
+            } else { setOk('al-calle', 'err-al-calle'); }
+
+            // Dirección: CP
+            const alCP = document.getElementById('al-cp');
+            const cpReg = /^\d{5}$/;
+            if (!alCP || !cpReg.test(alCP.value.trim())) {
+                setError('al-cp', 'err-al-cp', 'Ingresa un CP válido (5 dígitos).');
+                valido = false;
+            } else { setOk('al-cp', 'err-al-cp'); }
 
             // Contraseña alumno
             const alPass = document.getElementById('al-password');
@@ -342,10 +388,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Nombre tutor (Opcional)
             const tuNombre = document.getElementById('tu-nombre');
-            setOk('tu-nombre', 'err-tu-nombre');
-
-            // Apellido paterno tutor (Opcional)
             const tuApP = document.getElementById('tu-ap-paterno');
+            const tuParentesco = document.getElementById('tu-parentesco');
+
+            // Si se llena algo del tutor, validar el parentesco (opcional: podrías hacerlo obligatorio solo si hay nombre)
+            if ((tuNombre && tuNombre.value.trim() !== '') || (tuApP && tuApP.value.trim() !== '')) {
+                if (!tuParentesco || tuParentesco.value === '') {
+                    setError('dropdown-tu-parentesco', 'err-tu-parentesco', 'Selecciona el parentesco.');
+                    valido = false;
+                } else {
+                    setOk('dropdown-tu-parentesco', 'err-tu-parentesco');
+                }
+            } else {
+                setOk('dropdown-tu-parentesco', 'err-tu-parentesco');
+            }
+
+            if (tuNombre && tuNombre.value.trim() !== '') setOk('al-nombre', 'err-al-nombre'); // corregido de al-nombre a tu-nombre si fuera necesario, pero tu-nombre no tiene validación estricta aquí
+            setOk('tu-nombre', 'err-tu-nombre');
             setOk('tu-ap-paterno', 'err-tu-ap-paterno');
 
             // Correo tutor (Opcional, pero validar formato si se ingresa)
