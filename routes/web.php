@@ -6,12 +6,31 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('website.landing');
-});
+})->name('landing');
+
+Route::get('/cursos', function () {
+    return view('website.cursos');
+})->name('cursos');
+
+Route::get('/sedes', function () {
+    return view('website.sedes');
+})->name('sedes');
+
+Route::get('/testimonios', function () {
+    return view('website.testimonios');
+})->name('testimonios');
+
+Route::get('/blog', function () {
+    return view('website.blog');
+})->name('blog');
+
+Route::get('/contacto', function () {
+    return view('website.contacto');
+})->name('contacto');
 
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
 Route::post('/login', [AuthController::class, 'login'])->name('login.post');
 
-// Guarda el token en sesión de Laravel
 Route::post('/guardar-token', function (Request $request) {
     session(['token' => $request->input('token')]);
     return response()->json(['ok' => true]);
