@@ -1,6 +1,6 @@
 // ==============================================
 //  dashboardAlumno.js — Interactividad General
-//  Sidebar, Navegación entre Secciones
+//  Sidebar, Navegación entre Secciones y Menú de Perfil
 //  EGAU Chess | Portal del Estudiante
 // ==============================================
 
@@ -56,5 +56,72 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     });
+
+    // ---- Menú de Perfil (Cuenta del Alumno) ----
+    const profileMenu = document.getElementById('profile-menu');
+
+    if (profileMenu) {
+        const profileTrigger = profileMenu.querySelector('.profile-trigger');
+
+        // Abrir / Cerrar al hacer clic en el nombre u avatar
+        profileTrigger.addEventListener('click', (e) => {
+            e.stopPropagation(); // Prevenir que el listener global lo cierre de inmediato
+            profileMenu.classList.toggle('open');
+        });
+
+        // Cerrar si se da un clic fuera
+        document.addEventListener('click', () => {
+            profileMenu.classList.remove('open');
+        });
+
+        // Botón Configuración en el menú perfil => Lleva a la sección Opciones
+        const btnConfigPerfil = document.getElementById('btn-config-perfil');
+        if (btnConfigPerfil) {
+            btnConfigPerfil.addEventListener('click', () => {
+                // Simulamos un click en el enlace Opciones nativo de la barra lateral
+                const navOpciones = document.querySelector('.nav-footer-item[data-section="opciones"]');
+                if (navOpciones) {
+                    navOpciones.click();
+                }
+                profileMenu.classList.remove('open');
+            });
+        }
+
+        // Botón Cerrar Sesión
+        const btnLogout = document.getElementById('btn-logout');
+        if (btnLogout) {
+            btnLogout.addEventListener('click', async () => {
+                try {
+                    const csrf  = document.querySelector('meta[name="csrf-token"]')?.content;
+                    const token = document.querySelector('meta[name="user-token"]')?.content;
+
+                    // Borrar token de Sanctum en la BD
+                    await fetch('/api/logout', {
+                        method: 'POST',
+                        headers: {
+                            'Authorization': 'Bearer ' + token,
+                            'Content-Type': 'application/json',
+                        }
+                    });
+
+                    // Limpiar sesión en servidor
+                    await fetch('/guardar-token', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': csrf ?? '',
+                        },
+                        body: JSON.stringify({ token: null })
+                    });
+
+                } catch (err) {
+                    console.error('Error al cerrar sesión:', err);
+                } finally {
+                    localStorage.clear();
+                    window.location.href = '/login';
+                }
+            });
+        }
+    }
 
 });

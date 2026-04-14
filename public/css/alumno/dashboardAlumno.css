@@ -141,7 +141,7 @@ body {
 }
 
 .nav-footer-item i { font-size: 18px; }
-.nav-footer-item:hover { color: #d93025; }
+.nav-footer-item:hover { color: var(--naranja); }
 
 /* =============================================
    CONTENIDO PRINCIPAL
@@ -199,23 +199,119 @@ body {
     gap: 12px;
 }
 
-.avatar-topbar {
-    width: 34px;
-    height: 34px;
-    border-radius: 50%;
-    background-color: var(--naranja);
-    color: var(--blanco);
-    font-size: 14px;
-    font-weight: 700;
+/* ---- Menú Flotante Perfil ---- */
+.profile-menu-wrapper {
+    position: relative;
+    user-select: none;
+}
+
+.profile-trigger {
     display: flex;
     align-items: center;
-    justify-content: center;
+    gap: 12px;
+    cursor: pointer;
+    padding: 6px 10px;
+    border-radius: 8px;
+    transition: background-color 0.2s;
+}
+
+.profile-trigger:hover {
+    background-color: var(--naranja-light);
 }
 
 .alumno-name-topbar {
     font-size: 14px;
     font-weight: 500;
+    color: var(--texto-suave);
+    pointer-events: none;
+}
+
+.avatar-topbar {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background-color: var(--naranja);
+    color: var(--blanco);
+    font-size: 16px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+}
+
+/* Dropdown de la cuenta */
+.profile-dropdown {
+    position: absolute;
+    top: calc(100% + 14px);
+    right: 0;
+    width: 240px;
+    background-color: var(--blanco);
+    border-radius: 14px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+    border: 1px solid var(--borde);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-8px);
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: 100;
+}
+
+.profile-menu-wrapper.open .profile-dropdown {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.profile-header {
+    padding: 18px;
+    border-bottom: 1px solid var(--borde);
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.profile-name {
+    font-weight: 700;
+    font-size: 15px;
     color: var(--texto);
+}
+
+.profile-email {
+    font-size: 13px;
+    color: var(--texto-suave);
+}
+
+.profile-options {
+    list-style: none;
+    padding: 10px;
+}
+
+.profile-options li {
+    padding: 12px 14px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--texto);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.profile-options li i {
+    font-size: 18px;
+}
+
+.profile-options li:hover {
+    background-color: var(--naranja-light);
+    color: var(--naranja);
+}
+
+.profile-options li.text-danger:hover {
+    background-color: var(--rojo-light);
+    color: #d93025;
 }
 
 /* Área de contenido */

@@ -6,6 +6,7 @@
     <title>Testimonios - EGAU Chess</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('css/website/landing.css') }}">
     <link rel="stylesheet" href="{{ asset('css/website/testimonios.css') }}">
 </head>
@@ -26,11 +27,13 @@
                     <div class="testimonio-comilla">"</div>
                     <p class="testimonio-texto">Gracias a EGAU mi hijo mejoró muchísimo su concentración en la escuela. Los maestros son pacientes y muy profesionales. En solo 4 meses ya participó en su primer torneo.</p>
                     <div class="testimonio-footer">
-                        <div class="testimonio-avatar">👩</div>
+                        <div class="testimonio-avatar"><i class="ri-user-smile-line"></i></div>
                         <div class="testimonio-info">
                             <h4>María G.</h4>
                             <p>Madre de alumno · Sede Centro</p>
-                            <div class="testimonio-estrellas">★★★★★</div>
+                            <div class="testimonio-estrellas">
+                                <i class="ri-star-fill"></i><i class="ri-star-fill"></i><i class="ri-star-fill"></i><i class="ri-star-fill"></i><i class="ri-star-fill"></i>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -39,11 +42,13 @@
                     <div class="testimonio-comilla">"</div>
                     <p class="testimonio-texto">Empecé sin saber absolutamente nada de ajedrez y en 6 meses ya participé en mi primer torneo. Los métodos de enseñanza son muy buenos. Lo recomiendo al 100%.</p>
                     <div class="testimonio-footer">
-                        <div class="testimonio-avatar">👨</div>
+                        <div class="testimonio-avatar"><i class="ri-user-smile-line"></i></div>
                         <div class="testimonio-info">
                             <h4>Carlos R.</h4>
                             <p>Alumno nivel intermedio · Sede Norte</p>
-                            <div class="testimonio-estrellas">★★★★★</div>
+                            <div class="testimonio-estrellas">
+                                <i class="ri-star-fill"></i><i class="ri-star-fill"></i><i class="ri-star-fill"></i><i class="ri-star-fill"></i><i class="ri-star-fill"></i>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -52,11 +57,13 @@
                     <div class="testimonio-comilla">"</div>
                     <p class="testimonio-texto">El ambiente es muy bueno y los instructores se adaptan al ritmo de cada estudiante. Excelente escuela. Ya llevo dos años aquí y sigo aprendiendo cosas nuevas.</p>
                     <div class="testimonio-footer">
-                        <div class="testimonio-avatar">👩</div>
+                        <div class="testimonio-avatar"><i class="ri-user-smile-line"></i></div>
                         <div class="testimonio-info">
                             <h4>Laura M.</h4>
                             <p>Alumna nivel avanzado · Sede Centro</p>
-                            <div class="testimonio-estrellas">★★★★★</div>
+                            <div class="testimonio-estrellas">
+                                <i class="ri-star-fill"></i><i class="ri-star-fill"></i><i class="ri-star-fill"></i><i class="ri-star-fill"></i><i class="ri-star-fill"></i>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -65,11 +72,13 @@
                     <div class="testimonio-comilla">"</div>
                     <p class="testimonio-texto">Me inscribí pensando que no iba a poder con el nivel, pero los profesores me guiaron muy bien. Ahora el ajedrez es mi pasatiempo favorito y participo en torneos regionales.</p>
                     <div class="testimonio-footer">
-                        <div class="testimonio-avatar">👦</div>
+                        <div class="testimonio-avatar"><i class="ri-user-smile-line"></i></div>
                         <div class="testimonio-info">
                             <h4>Andrés P.</h4>
                             <p>Alumno competencia · Sede Centro</p>
-                            <div class="testimonio-estrellas">★★★★★</div>
+                            <div class="testimonio-estrellas">
+                                <i class="ri-star-fill"></i><i class="ri-star-fill"></i><i class="ri-star-fill"></i><i class="ri-star-fill"></i><i class="ri-star-fill"></i>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -78,11 +87,13 @@
                     <div class="testimonio-comilla">"</div>
                     <p class="testimonio-texto">Mis dos hijos estudian aquí desde hace un año. Además de ajedrez, han desarrollado mucha paciencia y habilidad para resolver problemas. Una inversión que vale la pena.</p>
                     <div class="testimonio-footer">
-                        <div class="testimonio-avatar">👨</div>
+                        <div class="testimonio-avatar"><i class="ri-user-smile-line"></i></div>
                         <div class="testimonio-info">
                             <h4>Roberto F.</h4>
                             <p>Padre de familia · Sede Norte</p>
-                            <div class="testimonio-estrellas">★★★★☆</div>
+                            <div class="testimonio-estrellas">
+                                <i class="ri-star-fill"></i><i class="ri-star-fill"></i><i class="ri-star-fill"></i><i class="ri-star-fill"></i><i class="ri-star-line"></i>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -91,11 +102,13 @@
                     <div class="testimonio-comilla">"</div>
                     <p class="testimonio-texto">Las clases en línea son igual de buenas que las presenciales. La plataforma funciona muy bien y el profesor siempre está disponible para resolver dudas fuera de horario.</p>
                     <div class="testimonio-footer">
-                        <div class="testimonio-avatar">👩</div>
+                        <div class="testimonio-avatar"><i class="ri-user-smile-line"></i></div>
                         <div class="testimonio-info">
                             <h4>Daniela S.</h4>
                             <p>Alumna en línea · Principiante</p>
-                            <div class="testimonio-estrellas">★★★★★</div>
+                            <div class="testimonio-estrellas">
+                                <i class="ri-star-fill"></i><i class="ri-star-fill"></i><i class="ri-star-fill"></i><i class="ri-star-fill"></i><i class="ri-star-fill"></i>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -131,11 +144,11 @@
                 <div class="form-grupo">
                     <label>Calificación *</label>
                     <div class="estrellas-selector" id="estrellas">
-                        <span data-val="1">★</span>
-                        <span data-val="2">★</span>
-                        <span data-val="3">★</span>
-                        <span data-val="4">★</span>
-                        <span data-val="5">★</span>
+                        <span data-val="1"><i class="ri-star-fill"></i></span>
+                        <span data-val="2"><i class="ri-star-fill"></i></span>
+                        <span data-val="3"><i class="ri-star-fill"></i></span>
+                        <span data-val="4"><i class="ri-star-fill"></i></span>
+                        <span data-val="5"><i class="ri-star-fill"></i></span>
                     </div>
                 </div>
                 <div class="form-grupo">

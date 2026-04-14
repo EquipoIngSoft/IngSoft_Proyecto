@@ -19,7 +19,9 @@
 
         <!-- ===== CAJA IZQUIERDA: Logo AMAAC ===== -->
         <div class="box-logo">
-            <img src="{{ asset('Logos/LogoAmaac.png') }}" alt="Logo AMAAC">
+            <a href="{{ route('landing') }}">
+                <img src="{{ asset('Logos/LogoAmaac.png') }}" alt="Logo AMAAC">
+            </a>
             <span class="amaac-label">Asociación AMAAC</span>
         </div>
 
@@ -27,7 +29,9 @@
         <div class="box-form">
 
             <!-- Logo EGAU (el que no dice ALT) -->
-            <img src="{{ asset('Logos/LogoEgau.png') }}" alt="Logo EGAU Chess" class="egau-logo">
+            <a href="{{ route('landing') }}">
+                <img src="{{ asset('Logos/LogoEgau.png') }}" alt="Logo EGAU Chess" class="egau-logo">
+            </a>
 
             <!-- Nombre con fuente elegante -->
             <h1 class="egau-name">EGAU Chess</h1>
