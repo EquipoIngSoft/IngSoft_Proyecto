@@ -30,6 +30,8 @@
     <link rel="stylesheet" href="{{ asset('css/dashboardAlumno/inicio.css') }}">
     <link rel="stylesheet" href="{{ asset('css/dashboardAlumno/profesores.css') }}">
     <link rel="stylesheet" href="{{ asset('css/dashboardAlumno/extraescolares.css') }}">
+    {{-- CSS secciones fusionadas Mariana --}}
+    <link rel="stylesheet" href="{{ asset('css/dashboardAlumno/mi_info.css') }}">
 </head>
 
 <body>
@@ -729,13 +731,144 @@
         <div id="section-miNivel" class="section-content" style="display:none;">
             <div class="page-content">
                 <div class="page-header">
-                    <h1 class="page-title">Mi Nivel</h1>
-                    <p class="page-subtitle">Esta sección estará disponible próximamente</p>
+                    <h1 class="page-title">Mi Nivel y Progreso</h1>
+                    <p class="page-subtitle">Puntuaciones, progreso académico y tabla de clasificación general.</p>
                 </div>
-                <div class="card" style="min-height:400px; display:flex; align-items:center; justify-content:center; flex-direction:column; gap:16px; color:var(--texto-suave);">
-                    <i class="ri-bar-chart-line" style="font-size:48px; color:var(--borde);"></i>
-                    <p style="font-size:15px;">Sección en construcción</p>
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; margin-bottom: 40px;">
+
+                    <div class="card" style="display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 32px 24px; border-top: 4px solid var(--naranja); align-self: start;">
+                        <div style="width: 80px; height: 80px; background-color: var(--naranja-light); border-radius: 50%; display: flex; justify-content: center; align-items: center; margin-bottom: 16px;">
+                            <i class="ri-medal-fill" style="font-size: 40px; color: var(--naranja);"></i>
+                        </div>
+                        <h2 style="font-size: 28px; font-weight: 700; color: var(--texto); margin: 0 0 8px 0; font-family: 'Cinzel', serif;">Nivel 5</h2>
+                        <p style="font-size: 15px; color: var(--texto-suave); margin: 0 0 24px 0;">Estratega Intermedio</p>
+
+                        <div style="width: 100%; display: flex; flex-direction: column; gap: 8px;">
+                            <div style="display: flex; justify-content: space-between; font-size: 14px; font-weight: 600;">
+                                <span style="color: var(--naranja);">1200 XP</span>
+                                <span style="color: var(--texto-suave);">1500 XP (Nivel 6)</span>
+                            </div>
+                            <div class="progress-wrap" style="height: 12px; border-radius: 10px;">
+                                <div class="progress-fill" style="width: 80%; border-radius: 10px;"></div>
+                            </div>
+                            <span style="font-size: 13px; color: var(--texto-suave); margin-top: 4px;">Faltan 300 puntos para subir de nivel</span>
+                        </div>
+                    </div>
+
+                    <div style="display: flex; flex-direction: column; gap: 16px;">
+                        <h3 style="font-size: 18px; font-weight: 600; color: var(--texto); margin: 0;">Resumen del Mes</h3>
+
+                        <div style="display: grid; grid-template-columns: 1fr; gap: 16px;">
+
+                            {{-- Progreso en Puntos --}}
+                            <div class="card" style="display: flex; align-items: center; gap: 16px; padding: 16px 20px;">
+                                <div style="width: 48px; height: 48px; background-color: rgba(46, 125, 50, 0.1); border-radius: 12px; display: flex; justify-content: center; align-items: center;">
+                                    <i class="ri-arrow-up-circle-fill" style="font-size: 24px; color: var(--verde);"></i>
+                                </div>
+                                <div>
+                                    <p style="font-size: 13px; color: var(--texto-suave); margin: 0 0 4px 0;">Puntos Obtenidos</p>
+                                    <h4 style="font-size: 20px; font-weight: 700; color: var(--texto); margin: 0;">+150 XP</h4>
+                                </div>
+                            </div>
+
+                            {{-- Posición en Ranking --}}
+                            <div class="card" style="display: flex; align-items: center; gap: 16px; padding: 16px 20px;">
+                                <div style="width: 48px; height: 48px; background-color: rgba(26, 115, 232, 0.1); border-radius: 12px; display: flex; justify-content: center; align-items: center;">
+                                    <i class="ri-trophy-fill" style="font-size: 24px; color: var(--azul);"></i>
+                                </div>
+                                <div>
+                                    <p style="font-size: 13px; color: var(--texto-suave); margin: 0 0 4px 0;">Tu Posición Actual</p>
+                                    <h4 style="font-size: 20px; font-weight: 700; color: var(--texto); margin: 0;">#4 General</h4>
+                                </div>
+                            </div>
+
+                            {{-- Logros (colapsable) --}}
+                            <div class="card" id="card-logros" style="display: flex; align-items: center; gap: 16px; padding: 16px 20px; cursor: pointer; transition: background-color 0.2s;">
+                                <div style="width: 48px; height: 48px; background-color: var(--naranja-light); border-radius: 12px; display: flex; justify-content: center; align-items: center;">
+                                    <i class="ri-star-smile-fill" style="font-size: 24px; color: var(--naranja);"></i>
+                                </div>
+                                <div style="flex-grow: 1;">
+                                    <p style="font-size: 13px; color: var(--texto-suave); margin: 0 0 4px 0;">Logros Desbloqueados</p>
+                                    <h4 style="font-size: 20px; font-weight: 700; color: var(--texto); margin: 0;">3 Nuevos</h4>
+                                </div>
+                                <i class="ri-arrow-down-s-line" id="icon-logros" style="font-size: 24px; color: var(--texto-suave); transition: transform 0.3s ease;"></i>
+                            </div>
+
+                            {{-- Logros Desplegables (ocultos por defecto) --}}
+                            <div id="logros-desplegables" style="display: none; flex-direction: column; gap: 12px;">
+                                <div style="background: var(--blanco); padding: 12px; border-radius: 8px; border: 1px solid var(--borde); border-left: 4px solid var(--naranja); display: flex; align-items: center; gap: 12px;">
+                                    <i class="ri-fire-fill" style="color: var(--naranja); font-size: 20px;"></i>
+                                    <div>
+                                        <h5 style="margin: 0; font-size: 14px; color: var(--texto);">Racha de 7 días</h5>
+                                        <p style="margin: 0; font-size: 12px; color: var(--texto-suave);">¡No has faltado en una semana!</p>
+                                    </div>
+                                </div>
+                                <div style="background: var(--blanco); padding: 12px; border-radius: 8px; border: 1px solid var(--borde); border-left: 4px solid var(--azul); display: flex; align-items: center; gap: 12px;">
+                                    <i class="ri-sword-fill" style="color: var(--azul); font-size: 20px;"></i>
+                                    <div>
+                                        <h5 style="margin: 0; font-size: 14px; color: var(--texto);">Maestro Táctico</h5>
+                                        <p style="margin: 0; font-size: 12px; color: var(--texto-suave);">Resolviste 50 problemas de ajedrez.</p>
+                                    </div>
+                                </div>
+                                <div style="background: var(--blanco); padding: 12px; border-radius: 8px; border: 1px solid var(--borde); border-left: 4px solid var(--verde); display: flex; align-items: center; gap: 12px;">
+                                    <i class="ri-book-open-fill" style="color: var(--verde); font-size: 20px;"></i>
+                                    <div>
+                                        <h5 style="margin: 0; font-size: 14px; color: var(--texto);">Apertura Italiana</h5>
+                                        <p style="margin: 0; font-size: 12px; color: var(--texto-suave);">Completaste el módulo teórico.</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
                 </div>
+
+                <div>
+                    <h2 style="font-size: 20px; font-weight: 600; color: var(--texto); margin-bottom: 20px; display: flex; align-items: center; gap: 8px;">
+                        <i class="ri-bar-chart-grouped-fill" style="color: var(--naranja);"></i> Tabla de Clasificación Global
+                    </h2>
+
+                    <div class="card" style="padding: 0; overflow-x: auto;">
+                        <table style="width: 100%; border-collapse: collapse; text-align: left; min-width: 600px;">
+                            <thead>
+                                <tr style="background-color: #f8f9fa; border-bottom: 2px solid var(--borde);">
+                                    <th style="padding: 16px; font-size: 13px; font-weight: 600; color: var(--texto-suave); text-transform: uppercase;">Pos</th>
+                                    <th style="padding: 16px; font-size: 13px; font-weight: 600; color: var(--texto-suave); text-transform: uppercase;">Alumno</th>
+                                    <th style="padding: 16px; font-size: 13px; font-weight: 600; color: var(--texto-suave); text-transform: uppercase;">Nivel</th>
+                                    <th style="padding: 16px; font-size: 13px; font-weight: 600; color: var(--texto-suave); text-transform: uppercase; text-align: right;">Puntos Totales</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr style="border-bottom: 1px solid var(--borde);">
+                                    <td style="padding: 16px; font-weight: 700; color: #d4af37;"><i class="ri-medal-fill"></i> 1</td>
+                                    <td style="padding: 16px; font-weight: 500; color: var(--texto);">Daniela Paz Alfaro</td>
+                                    <td style="padding: 16px;"><span class="badge badge-naranja">Nivel 6</span></td>
+                                    <td style="padding: 16px; text-align: right; font-weight: 600; color: var(--texto);">1650 XP</td>
+                                </tr>
+                                <tr style="border-bottom: 1px solid var(--borde);">
+                                    <td style="padding: 16px; font-weight: 700; color: #c0c0c0;"><i class="ri-medal-fill"></i> 2</td>
+                                    <td style="padding: 16px; font-weight: 500; color: var(--texto);">Jose Alejandro Aguilar Martinez</td>
+                                    <td style="padding: 16px;"><span class="badge badge-naranja">Nivel 6</span></td>
+                                    <td style="padding: 16px; text-align: right; font-weight: 600; color: var(--texto);">1520 XP</td>
+                                </tr>
+                                <tr style="border-bottom: 1px solid var(--borde);">
+                                    <td style="padding: 16px; font-weight: 700; color: #cd7f32;"><i class="ri-medal-fill"></i> 3</td>
+                                    <td style="padding: 16px; font-weight: 500; color: var(--texto);">Carlos Mendoza</td>
+                                    <td style="padding: 16px;"><span class="badge badge-naranja">Nivel 5</span></td>
+                                    <td style="padding: 16px; text-align: right; font-weight: 600; color: var(--texto);">1300 XP</td>
+                                </tr>
+                                <tr style="background-color: var(--naranja-light); border-left: 4px solid var(--naranja); border-bottom: 1px solid var(--borde);">
+                                    <td style="padding: 16px; font-weight: 700; color: var(--naranja);">4</td>
+                                    <td style="padding: 16px; font-weight: 700; color: var(--naranja);">Ana García (Tú)</td>
+                                    <td style="padding: 16px;"><span class="badge badge-naranja">Nivel 5</span></td>
+                                    <td style="padding: 16px; text-align: right; font-weight: 700; color: var(--naranja);">1200 XP</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
             </div>
         </div>
         <!-- /SECCIÓN MI NIVEL -->
@@ -749,12 +882,186 @@
             <div class="page-content">
                 <div class="page-header">
                     <h1 class="page-title">Mis Grupos</h1>
-                    <p class="page-subtitle">Esta sección estará disponible próximamente</p>
+                    <p class="page-subtitle">Gestiona tus inscripciones y explora nuevas opciones para tu nivel.</p>
                 </div>
-                <div class="card" style="min-height:400px; display:flex; align-items:center; justify-content:center; flex-direction:column; gap:16px; color:var(--texto-suave);">
-                    <i class="ri-group-line" style="font-size:48px; color:var(--borde);"></i>
-                    <p style="font-size:15px;">Sección en construcción</p>
+
+                <div style="background-color: var(--azul-light); color: var(--azul); padding: 16px; border-radius: 12px; margin-bottom: 32px; display: flex; align-items: flex-start; gap: 12px; border: 1px solid rgba(26, 115, 232, 0.2);">
+                    <i class="ri-information-line" style="font-size: 20px;"></i>
+                    <div>
+                        <h4 style="margin: 0 0 4px 0; font-size: 15px;">Periodo de inscripción abierto</h4>
+                        <p style="margin: 0; font-size: 14px; opacity: 0.9;">Tienes hasta el viernes para realizar cambios en tus grupos actuales o inscribirte a nuevos módulos de Nivel 5.</p>
+                    </div>
                 </div>
+
+                <div style="margin-bottom: 40px;">
+                    <h2 style="font-size: 20px; font-weight: 600; color: var(--texto); margin-bottom: 20px; display: flex; align-items: center; gap: 8px;">
+                        <i class="ri-bookmark-3-line" style="color: var(--naranja);"></i> Grupos Inscritos
+                    </h2>
+
+                    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 24px;">
+
+                        {{-- Grupo Inscrito 1 --}}
+                        <div class="card" style="display: flex; flex-direction: column; gap: 16px; border-top: 4px solid var(--verde);">
+                            <div style="display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 1px solid var(--borde); padding-bottom: 12px;">
+                                <h3 style="font-size: 18px; font-weight: 600; color: var(--texto); margin: 0;">Estrategia Intermedia</h3>
+                                <span class="badge badge-verde" style="display: flex; gap: 4px; align-items: center;"><i class="ri-check-line"></i> Inscrito</span>
+                            </div>
+                            <div style="display: flex; flex-direction: column; gap: 10px; font-size: 14px; color: var(--texto-suave);">
+                                <div style="display: flex; align-items: center; gap: 10px;">
+                                    <i class="ri-user-line" style="font-size: 16px; color: var(--naranja);"></i> <span>Mtra. Elena Rojas</span>
+                                </div>
+                                <div style="display: flex; align-items: center; gap: 10px;">
+                                    <i class="ri-time-line" style="font-size: 16px; color: var(--naranja);"></i> <span>Mar y Jue, 16:00 - 17:30</span>
+                                </div>
+                                <div style="display: flex; align-items: center; gap: 10px;">
+                                    <i class="ri-map-pin-line" style="font-size: 16px; color: var(--naranja);"></i> <span>Aula 204</span>
+                                </div>
+                            </div>
+                            <div style="margin-top: auto; padding-top: 12px;">
+                                <button class="btn-inscribirse" style="background-color: var(--naranja-light); color: var(--naranja); border: 1px solid rgba(224, 92, 42, 0.2);">
+                                    Ir al curso <i class="ri-arrow-right-line"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        {{-- Grupo Inscrito 2 --}}
+                        <div class="card" style="display: flex; flex-direction: column; gap: 16px; border-top: 4px solid var(--verde);">
+                            <div style="display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 1px solid var(--borde); padding-bottom: 12px;">
+                                <h3 style="font-size: 18px; font-weight: 600; color: var(--texto); margin: 0;">Finales Básicos</h3>
+                                <span class="badge badge-verde" style="display: flex; gap: 4px; align-items: center;"><i class="ri-check-line"></i> Inscrito</span>
+                            </div>
+                            <div style="display: flex; flex-direction: column; gap: 10px; font-size: 14px; color: var(--texto-suave);">
+                                <div style="display: flex; align-items: center; gap: 10px;">
+                                    <i class="ri-user-line" style="font-size: 16px; color: var(--naranja);"></i> <span>Mtro. Roberto M.</span>
+                                </div>
+                                <div style="display: flex; align-items: center; gap: 10px;">
+                                    <i class="ri-time-line" style="font-size: 16px; color: var(--naranja);"></i> <span>Sábados, 09:00 - 11:00</span>
+                                </div>
+                                <div style="display: flex; align-items: center; gap: 10px;">
+                                    <i class="ri-map-pin-line" style="font-size: 16px; color: var(--naranja);"></i> <span>Online (Zoom)</span>
+                                </div>
+                            </div>
+                            <div style="margin-top: auto; padding-top: 12px;">
+                                <button class="btn-inscribirse" style="background-color: var(--naranja-light); color: var(--naranja); border: 1px solid rgba(224, 92, 42, 0.2);">
+                                    Ir al curso <i class="ri-arrow-right-line"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <hr style="border: none; border-top: 1px dashed var(--borde); margin: 30px 0;">
+
+                <div>
+                    <h2 style="font-size: 20px; font-weight: 600; color: var(--texto); margin-bottom: 20px; display: flex; align-items: center; gap: 8px;">
+                        <i class="ri-search-eye-line" style="color: var(--azul);"></i> Grupos Disponibles para Nivel 5
+                    </h2>
+
+                    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 24px;">
+
+                        {{-- Disponible --}}
+                        <div class="card" style="display: flex; flex-direction: column; gap: 16px;">
+                            <div style="display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 1px solid var(--borde); padding-bottom: 12px;">
+                                <h3 style="font-size: 18px; font-weight: 600; color: var(--texto); margin: 0;">Grupo A - Táctica</h3>
+                                <span class="badge badge-naranja">Nivel 5</span>
+                            </div>
+                            <div style="display: flex; flex-direction: column; gap: 10px; font-size: 14px; color: var(--texto-suave);">
+                                <div style="display: flex; align-items: center; gap: 10px;">
+                                    <i class="ri-user-line" style="font-size: 16px; color: var(--naranja);"></i> <span>Mtro. Carlos Olivares</span>
+                                </div>
+                                <div style="display: flex; align-items: center; gap: 10px;">
+                                    <i class="ri-time-line" style="font-size: 16px; color: var(--naranja);"></i> <span>Lun y Mié, 14:00 - 15:30</span>
+                                </div>
+                                <div style="display: flex; align-items: center; gap: 10px;">
+                                    <i class="ri-map-pin-line" style="font-size: 16px; color: var(--naranja);"></i> <span>Aula 101</span>
+                                </div>
+                            </div>
+                            <div style="margin-top: 4px; display: flex; flex-direction: column; gap: 8px;">
+                                <div style="display: flex; justify-content: space-between; font-size: 13px; color: var(--texto-suave);">
+                                    <span>Lugares ocupados</span>
+                                    <strong style="color: var(--texto);">12 / 20</strong>
+                                </div>
+                                <div class="progress-wrap">
+                                    <div class="progress-fill" style="width: 60%;"></div>
+                                </div>
+                            </div>
+                            <div style="margin-top: auto; padding-top: 12px;">
+                                <button class="btn-inscribirse inscribir">
+                                    <i class="ri-add-circle-line"></i> Inscribirme
+                                </button>
+                            </div>
+                        </div>
+
+                        {{-- Disponible - Poco cupo --}}
+                        <div class="card" style="display: flex; flex-direction: column; gap: 16px;">
+                            <div style="display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 1px solid var(--borde); padding-bottom: 12px;">
+                                <h3 style="font-size: 18px; font-weight: 600; color: var(--texto); margin: 0;">Análisis de Partidas Clásicas</h3>
+                                <span class="badge badge-naranja">Nivel 5</span>
+                            </div>
+                            <div style="display: flex; flex-direction: column; gap: 10px; font-size: 14px; color: var(--texto-suave);">
+                                <div style="display: flex; align-items: center; gap: 10px;">
+                                    <i class="ri-user-line" style="font-size: 16px; color: var(--naranja);"></i> <span>Mtra. Sofia G.</span>
+                                </div>
+                                <div style="display: flex; align-items: center; gap: 10px;">
+                                    <i class="ri-time-line" style="font-size: 16px; color: var(--naranja);"></i> <span>Viernes, 16:00 - 18:00</span>
+                                </div>
+                                <div style="display: flex; align-items: center; gap: 10px;">
+                                    <i class="ri-map-pin-line" style="font-size: 16px; color: var(--naranja);"></i> <span>Aula 105</span>
+                                </div>
+                            </div>
+                            <div style="margin-top: 4px; display: flex; flex-direction: column; gap: 8px;">
+                                <div style="display: flex; justify-content: space-between; font-size: 13px; color: var(--texto-suave);">
+                                    <span>Lugares ocupados</span>
+                                    <strong style="color: #d93025;">19 / 20 (¡Casi lleno!)</strong>
+                                </div>
+                                <div class="progress-wrap">
+                                    <div class="progress-fill" style="width: 95%; background-color: #d93025;"></div>
+                                </div>
+                            </div>
+                            <div style="margin-top: auto; padding-top: 12px;">
+                                <button class="btn-inscribirse inscribir">
+                                    <i class="ri-add-circle-line"></i> Inscribirme
+                                </button>
+                            </div>
+                        </div>
+
+                        {{-- Lleno --}}
+                        <div class="card" style="display: flex; flex-direction: column; gap: 16px; opacity: 0.85;">
+                            <div style="display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 1px solid var(--borde); padding-bottom: 12px;">
+                                <h3 style="font-size: 18px; font-weight: 600; color: var(--texto); margin: 0;">Aperturas Modernas</h3>
+                                <span class="badge badge-naranja">Nivel 5</span>
+                            </div>
+                            <div style="display: flex; flex-direction: column; gap: 10px; font-size: 14px; color: var(--texto-suave);">
+                                <div style="display: flex; align-items: center; gap: 10px;">
+                                    <i class="ri-user-line" style="font-size: 16px; color: var(--naranja);"></i> <span>Mtro. David L.</span>
+                                </div>
+                                <div style="display: flex; align-items: center; gap: 10px;">
+                                    <i class="ri-time-line" style="font-size: 16px; color: var(--naranja);"></i> <span>Miércoles, 10:00 - 12:00</span>
+                                </div>
+                                <div style="display: flex; align-items: center; gap: 10px;">
+                                    <i class="ri-map-pin-line" style="font-size: 16px; color: var(--naranja);"></i> <span>Laboratorio 1</span>
+                                </div>
+                            </div>
+                            <div style="margin-top: 4px; display: flex; flex-direction: column; gap: 8px;">
+                                <div style="display: flex; justify-content: space-between; font-size: 13px; color: var(--texto-suave);">
+                                    <span>Lugares ocupados</span>
+                                    <strong style="color: var(--texto);">20 / 20</strong>
+                                </div>
+                                <div class="progress-wrap">
+                                    <div class="progress-fill lleno" style="width: 100%;"></div>
+                                </div>
+                            </div>
+                            <div style="margin-top: auto; padding-top: 12px;">
+                                <button disabled class="btn-inscribirse" style="background-color: var(--gris-light); color: var(--texto-suave); cursor: not-allowed;">
+                                    Grupo Lleno
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
             </div>
         </div>
         <!-- /SECCIÓN MIS GRUPOS -->
@@ -786,13 +1093,122 @@
         <div id="section-miPerfil" class="section-content" style="display:none;">
             <div class="page-content">
                 <div class="page-header">
-                    <h1 class="page-title">Mi Perfil</h1>
-                    <p class="page-subtitle">Esta sección estará disponible próximamente</p>
+                    <h1 class="page-title">Configuración de Perfil</h1>
+                    <p class="page-subtitle">Gestiona tu información personal, académica y de seguridad.</p>
                 </div>
-                <div class="card" style="min-height:400px; display:flex; align-items:center; justify-content:center; flex-direction:column; gap:16px; color:var(--texto-suave);">
-                    <i class="ri-user-line" style="font-size:48px; color:var(--borde);"></i>
-                    <p style="font-size:15px;">Sección en construcción</p>
+
+                <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 32px; align-items: start;">
+
+                    <div style="display: flex; flex-direction: column; gap: 24px;">
+                        <div class="card" style="text-align: center; padding: 40px 24px;">
+                            <div style="position: relative; width: 120px; height: 120px; margin: 0 auto 20px;">
+                                <div style="width: 100%; height: 100%; border-radius: 50%; background-color: var(--naranja); color: white; display: flex; align-items: center; justify-content: center; font-size: 48px; font-weight: 700;">A</div>
+                                <button style="position: absolute; bottom: 0; right: 0; background: var(--blanco); border: 1px solid var(--borde); width: 36px; height: 36px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; color: var(--texto);">
+                                    <i class="ri-camera-line"></i>
+                                </button>
+                            </div>
+                            <h2 style="margin: 0; font-size: 20px; color: var(--texto);">Ana García</h2>
+                            <p style="color: var(--texto-suave); font-size: 14px; margin: 4px 0 20px;">Estudiante de Nivel 5</p>
+                            <button class="btn-inscribirse" style="background-color: var(--naranja-light); color: var(--naranja); border: 1px solid rgba(224,92,42,0.2); padding: 8px 16px; border-radius: 8px;">Editar Foto</button>
+                        </div>
+
+                        <div class="card" style="padding: 24px;">
+                            <h3 style="font-size: 16px; margin-bottom: 20px; border-bottom: 1px solid var(--borde); padding-bottom: 10px;">Información Académica</h3>
+                            <div style="display: flex; flex-direction: column; gap: 16px;">
+                                <div style="display: flex; justify-content: space-between;">
+                                    <span style="color: var(--texto-suave); font-size: 14px;">Nivel Actual:</span>
+                                    <span class="badge badge-naranja">Nivel 5</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between;">
+                                    <span style="color: var(--texto-suave); font-size: 14px;">Puntos Totales:</span>
+                                    <span style="font-weight: 600; color: var(--texto);">1,200 XP</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between;">
+                                    <span style="color: var(--texto-suave); font-size: 14px;">Profesor:</span>
+                                    <span style="font-weight: 600; color: var(--texto);">Carlos Olivares</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="display: flex; flex-direction: column; gap: 24px;">
+
+                        <div class="card" style="padding: 32px;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+                                <h3 style="font-size: 18px; margin: 0;"><i class="ri-user-settings-line" style="color: var(--naranja);"></i> Datos Personales</h3>
+                                <button id="btnEditProfile" style="color: var(--naranja); background: none; border: none; font-weight: 600; cursor: pointer; text-decoration: underline;">Editar Perfil</button>
+                            </div>
+                            <form id="form-personal" style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                                <div style="display: flex; flex-direction: column; gap: 8px;">
+                                    <label style="font-size: 13px; font-weight: 600; color: var(--texto-suave);">Nombre Completo</label>
+                                    <input type="text" value="Ana García" disabled style="padding: 10px; border: 1px solid var(--borde); border-radius: 8px; background: #f9f9f9;">
+                                </div>
+                                <div style="display: flex; flex-direction: column; gap: 8px;">
+                                    <label style="font-size: 13px; font-weight: 600; color: var(--texto-suave);">Correo Electrónico</label>
+                                    <input type="email" value="ana.garcia@mail.com" disabled class="perfil-editable" style="padding: 10px; border: 1px solid var(--borde); border-radius: 8px;">
+                                </div>
+                                <div style="display: flex; flex-direction: column; gap: 8px;">
+                                    <label style="font-size: 13px; font-weight: 600; color: var(--texto-suave);">Teléfono</label>
+                                    <input type="text" value="55 1234 5678" disabled class="perfil-editable" style="padding: 10px; border: 1px solid var(--borde); border-radius: 8px;">
+                                </div>
+                                <div style="display: flex; flex-direction: column; gap: 8px;">
+                                    <label style="font-size: 13px; font-weight: 600; color: var(--texto-suave);">Fecha de Nacimiento</label>
+                                    <input type="date" value="2005-06-15" disabled class="perfil-editable" style="padding: 10px; border: 1px solid var(--borde); border-radius: 8px;">
+                                </div>
+                                <div style="display: flex; flex-direction: column; gap: 8px;">
+                                    <label style="font-size: 13px; font-weight: 600; color: var(--texto-suave);">Fecha de Ingreso</label>
+                                    <input type="text" value="12 Octubre 2024" disabled style="padding: 10px; border: 1px solid var(--borde); border-radius: 8px; background: #f9f9f9;">
+                                </div>
+                                <div style="display: flex; flex-direction: column; gap: 8px; justify-content: flex-end;">
+                                    <button type="button" id="btnGuardarPerfil" class="btn-inscribirse inscribir" style="display: none;">Guardar Cambios</button>
+                                </div>
+                            </form>
+                        </div>
+
+                        <div class="card" style="padding: 32px; background-color: #fafafa; border: 1px dashed var(--borde);">
+                            <h3 style="font-size: 18px; margin-bottom: 24px;"><i class="ri-parent-line" style="color: var(--azul);"></i> Información del Tutor</h3>
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
+                                <div>
+                                    <p style="font-size: 13px; color: var(--texto-suave); margin-bottom: 4px;">Nombre</p>
+                                    <p style="font-weight: 600; color: var(--texto);">Roberto García</p>
+                                </div>
+                                <div>
+                                    <p style="font-size: 13px; color: var(--texto-suave); margin-bottom: 4px;">Relación</p>
+                                    <p style="font-weight: 600; color: var(--texto);">Padre</p>
+                                </div>
+                                <div>
+                                    <p style="font-size: 13px; color: var(--texto-suave); margin-bottom: 4px;">Correo</p>
+                                    <p style="font-weight: 600; color: var(--texto);">r.garcia@mail.com</p>
+                                </div>
+                                <div>
+                                    <p style="font-size: 13px; color: var(--texto-suave); margin-bottom: 4px;">Teléfono Urgencias</p>
+                                    <p style="font-weight: 600; color: var(--texto);">55 9876 5432</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card" style="padding: 32px;">
+                            <h3 style="font-size: 18px; margin-bottom: 24px;"><i class="ri-lock-password-line" style="color: var(--naranja);"></i> Seguridad</h3>
+                            <form id="formPassword" style="display: flex; flex-direction: column; gap: 16px; max-width: 400px;">
+                                <div style="display: flex; flex-direction: column; gap: 8px;">
+                                    <label style="font-size: 13px; font-weight: 600; color: var(--texto-suave);">Contraseña Actual</label>
+                                    <input type="password" placeholder="••••••••" style="padding: 10px; border: 1px solid var(--borde); border-radius: 8px;">
+                                </div>
+                                <div style="display: flex; flex-direction: column; gap: 8px;">
+                                    <label style="font-size: 13px; font-weight: 600; color: var(--texto-suave);">Nueva Contraseña</label>
+                                    <input type="password" id="new_pass" placeholder="Mínimo 8 caracteres" style="padding: 10px; border: 1px solid var(--borde); border-radius: 8px;">
+                                </div>
+                                <div style="display: flex; flex-direction: column; gap: 8px;">
+                                    <label style="font-size: 13px; font-weight: 600; color: var(--texto-suave);">Confirmar Nueva Contraseña</label>
+                                    <input type="password" id="confirm_pass" placeholder="Repite la contraseña" style="padding: 10px; border: 1px solid var(--borde); border-radius: 8px;">
+                                </div>
+                                <button type="button" onclick="validarPassword()" class="btn-inscribirse cancelar" style="margin-top: 8px;">Actualizar Contraseña</button>
+                            </form>
+                        </div>
+
+                    </div>
                 </div>
+
             </div>
         </div>
         <!-- /SECCIÓN MI PERFIL -->
@@ -832,6 +1248,8 @@
     <script src="{{ asset('animaciones/alumno/dashboardAlumnoMiPerfil.js') }}"></script>
     {{-- JS vistas fusionadas --}}
     <script src="{{ asset('animaciones/alumno/extraescolares.js') }}"></script>
+    {{-- JS secciones fusionadas Mariana --}}
+    <script src="{{ asset('animaciones/alumno/mi_info.js') }}"></script>
 
 </body>
 </html>
