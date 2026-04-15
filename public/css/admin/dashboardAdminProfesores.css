@@ -24,7 +24,8 @@
 
 .profesor-card:hover {
     transform: translateY(-4px);
-    box-shadow: 0 12px 24px rgba(224, 92, 42, 0.08); /* Sombra anaranjada suave */
+    box-shadow: 0 12px 24px rgba(224, 92, 42, 0.08);
+    /* Sombra anaranjada suave */
     border-color: var(--naranja);
 }
 
@@ -68,7 +69,8 @@
     background-color: transparent;
 }
 
-.btn-profesor-ver, .btn-profesor-editar {
+.btn-profesor-ver,
+.btn-profesor-editar {
     flex-grow: 1;
     display: flex;
     align-items: center;
@@ -86,7 +88,8 @@
     transition: all 0.2s ease;
 }
 
-.btn-profesor-ver:hover, .btn-profesor-editar:hover {
+.btn-profesor-ver:hover,
+.btn-profesor-editar:hover {
     background-color: var(--naranja-light);
     border-color: var(--naranja);
     color: var(--naranja);
@@ -108,7 +111,8 @@
 }
 
 .btn-profesor-eliminar:hover {
-    background-color: rgba(217, 48, 37, 0.08); /* Fondo rojo muy claro */
+    background-color: rgba(217, 48, 37, 0.08);
+    /* Fondo rojo muy claro */
     border-color: #d93025;
 }
 

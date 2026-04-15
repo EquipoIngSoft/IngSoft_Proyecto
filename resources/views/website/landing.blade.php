@@ -6,6 +6,7 @@
     <title>EGAU Chess - Escuela de Ajedrez</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('css/website/landing.css') }}">
 </head>
 <body>
@@ -36,8 +37,8 @@
                     <h3>Ajedrez básico</h3>
                     <p>Aprende las reglas, movimientos y estrategias fundamentales del ajedrez desde cero.</p>
                     <div class="tarjeta-info">
-                        <span>⏱ 3 meses</span>
-                        <span>📍 Todas las sedes</span>
+                        <span><i class="ri-timer-line"></i> 3 meses</span>
+                        <span><i class="ri-map-pin-2-line"></i> Todas las sedes</span>
                     </div>
                     <a href="{{ route('cursos') }}" class="btn-primario">Pre-inscribirse</a>
                 </div>
@@ -47,8 +48,8 @@
                     <h3>Táctica y estrategia</h3>
                     <p>Perfecciona tu juego con tácticas avanzadas, aperturas y finales de partida.</p>
                     <div class="tarjeta-info">
-                        <span>⏱ 4 meses</span>
-                        <span>📍 Sede principal</span>
+                        <span><i class="ri-timer-line"></i> 4 meses</span>
+                        <span><i class="ri-map-pin-2-line"></i> Sede principal</span>
                     </div>
                     <a href="{{ route('cursos') }}" class="btn-primario">Pre-inscribirse</a>
                 </div>
@@ -58,8 +59,8 @@
                     <h3>Competencia</h3>
                     <p>Preparación intensiva para torneos locales, estatales y nacionales.</p>
                     <div class="tarjeta-info">
-                        <span>⏱ 6 meses</span>
-                        <span>📍 Sede principal</span>
+                        <span><i class="ri-timer-line"></i> 6 meses</span>
+                        <span><i class="ri-map-pin-2-line"></i> Sede principal</span>
                     </div>
                     <a href="{{ route('cursos') }}" class="btn-primario">Pre-inscribirse</a>
                 </div>
@@ -80,16 +81,16 @@
 
                 <div class="sede-tarjeta">
                     <h3>Sede Centro</h3>
-                    <p>📍 Av. Principal #123, Centro</p>
-                    <p>📞 (443) 123-4567</p>
-                    <p>🕐 Lun - Vie: 9:00 - 19:00</p>
+                    <p><i class="ri-map-pin-2-line"></i> Av. Principal #123, Centro</p>
+                    <p><i class="ri-phone-line"></i> (443) 123-4567</p>
+                    <p><i class="ri-time-line"></i> Lun - Vie: 9:00 - 19:00</p>
                 </div>
 
                 <div class="sede-tarjeta">
                     <h3>Sede Norte</h3>
-                    <p>📍 Calle Norte #456, Col. Las Palmas</p>
-                    <p>📞 (443) 765-4321</p>
-                    <p>🕐 Lun - Sáb: 10:00 - 18:00</p>
+                    <p><i class="ri-map-pin-2-line"></i> Calle Norte #456, Col. Las Palmas</p>
+                    <p><i class="ri-phone-line"></i> (443) 765-4321</p>
+                    <p><i class="ri-time-line"></i> Lun - Sáb: 10:00 - 18:00</p>
                 </div>
 
             </div>
@@ -167,25 +168,24 @@
             <h2 class="seccion-titulo">Contáctanos</h2>
             <p class="seccion-subtitulo">Resolvemos todas tus dudas</p>
             <div class="form-contacto">
+                <fieldset style="border:none; padding:0; margin:0 0 18px; display:grid; grid-template-columns:1fr 1fr; gap:14px;">
+                    <legend style="display:none;">Datos personales</legend>
+                    <div class="form-grupo" style="margin:0;">
+                        <label for="l-nombre">Nombre *</label>
+                        <input type="text" id="l-nombre" name="nombre" placeholder="Tu nombre" required>
+                    </div>
+                    <div class="form-grupo" style="margin:0;">
+                        <label for="l-correo">Correo *</label>
+                        <input type="email" id="l-correo" name="correo" placeholder="tucorreo@ejemplo.com" required>
+                    </div>
+                </fieldset>
                 <div class="form-grupo">
-                    <label for="nombre">Nombre completo *</label>
-                    <input type="text" id="nombre" name="nombre" placeholder="Tu nombre" required>
+                    <label for="l-asunto">Asunto *</label>
+                    <input type="text" id="l-asunto" name="asunto" placeholder="¿En qué te podemos ayudar?" required>
                 </div>
                 <div class="form-grupo">
-                    <label for="correo">Correo electrónico *</label>
-                    <input type="email" id="correo" name="correo" placeholder="tucorreo@ejemplo.com" required>
-                </div>
-                <div class="form-grupo">
-                    <label for="telefono">Teléfono (opcional)</label>
-                    <input type="tel" id="telefono" name="telefono" placeholder="(443) 000-0000">
-                </div>
-                <div class="form-grupo">
-                    <label for="asunto">Asunto *</label>
-                    <input type="text" id="asunto" name="asunto" placeholder="¿En qué te podemos ayudar?" required>
-                </div>
-                <div class="form-grupo">
-                    <label for="mensaje">Mensaje *</label>
-                    <textarea id="mensaje" name="mensaje" placeholder="Escribe tu mensaje aquí..." required></textarea>
+                    <label for="l-mensaje">Mensaje *</label>
+                    <textarea id="l-mensaje" name="mensaje" placeholder="Escribe tu mensaje aquí..." required></textarea>
                 </div>
                 <button type="submit" class="btn-primario btn-completo">Enviar mensaje</button>
             </div>

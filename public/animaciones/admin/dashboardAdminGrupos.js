@@ -7,7 +7,7 @@
 document.addEventListener('DOMContentLoaded', () => {
 
     const sectionGrupos = document.getElementById('section-grupos');
-    
+
     // Solo se ejecuta si estamos en una vista que contiene la sección de grupos
     if (!sectionGrupos) return;
 
@@ -51,7 +51,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const btnCerrarModalGrupo = document.getElementById('modal-close-grupo');
     const btnCancelarModalGrupo = document.getElementById('btn-cancelar-modal-grupo');
     const formAgregarGrupo = document.getElementById('form-agregar-grupo');
-    
+
     // Elementos de horarios
     const btnAddHorario = document.getElementById('btn-add-horario');
     const horariosList = document.getElementById('horarios-list');
@@ -60,7 +60,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const createHorarioRow = () => {
         const row = document.createElement('div');
         row.classList.add('horario-row');
-        
+
         row.innerHTML = `
             <select class="hora-dia" name="dias[]" required>
                 <option value="" disabled selected>Día de la semana</option>
@@ -72,6 +72,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <option value="6">Sábado</option>
                 <option value="0">Domingo</option>
             </select>
+            <input type="text" class="hora-aula" name="aulas[]" placeholder="Aula (ej. Salón 3)" maxlength="20">
             <input type="time" class="hora-inicio" name="horas_inicio[]" required title="Hora de inicio">
             <input type="time" class="hora-fin" name="horas_fin[]" required title="Hora de fin">
             <button type="button" class="btn-remove-horario" title="Eliminar este horario">
@@ -84,7 +85,7 @@ document.addEventListener('DOMContentLoaded', () => {
             row.remove();
             // Limpiamos posible mensaje de error general al hacer cambios
             const errHorarios = document.getElementById('err-gr-horarios');
-            if(errHorarios) errHorarios.textContent = '';
+            if (errHorarios) errHorarios.textContent = '';
         });
 
         // Limpiar errores visuales al cambiar algo en la fila
@@ -92,7 +93,7 @@ document.addEventListener('DOMContentLoaded', () => {
             el.addEventListener('change', () => {
                 row.classList.remove('input-error');
                 const errHorarios = document.getElementById('err-gr-horarios');
-                if(errHorarios) errHorarios.textContent = '';
+                if (errHorarios) errHorarios.textContent = '';
             });
         });
 
@@ -112,7 +113,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const cerrarModalGrupo = () => {
         if (modalGrupo) modalGrupo.classList.remove('open');
         document.body.style.overflow = '';
-        
+
         // Reset form
         if (formAgregarGrupo) {
             formAgregarGrupo.reset();
@@ -124,10 +125,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 const options = dropdown.querySelectorAll('.form-option');
                 const selectedText = dropdown.querySelector('.selected-text');
                 const hiddenInput = dropdown.querySelector('input[type="hidden"]');
-                
+
                 dropdown.classList.remove('input-error', 'input-ok');
                 options.forEach(opt => opt.classList.remove('selected'));
-                
+
                 if (options.length > 0) {
                     options[0].classList.add('selected'); // Selección por defecto
                     if (selectedText) {
@@ -176,7 +177,7 @@ document.addEventListener('DOMContentLoaded', () => {
             filas.forEach(fila => {
                 // Obtenemos el texto visible de la fila
                 const textoFila = fila.textContent.toLowerCase();
-                
+
                 if (textoFila.includes(query)) {
                     fila.style.display = '';
                 } else {
@@ -208,10 +209,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 const options = dropdown.querySelectorAll('.form-option');
                 const selectedText = dropdown.querySelector('.selected-text');
                 const hiddenInput = dropdown.querySelector('input[type="hidden"]');
-                
+
                 dropdown.classList.remove('input-error', 'input-ok');
                 options.forEach(opt => opt.classList.remove('selected'));
-                
+
                 if (options.length > 0) {
                     options[0].classList.add('selected'); // Selección por defecto
                     if (selectedText) {
@@ -407,18 +408,18 @@ document.addEventListener('DOMContentLoaded', () => {
             // 3. Validar Horarios Dinámicos
             const filasHorarios = document.querySelectorAll('.horario-row');
             const msgHorarios = document.getElementById('err-gr-horarios');
-            
+
             if (filasHorarios.length === 0) {
-                if(msgHorarios) msgHorarios.textContent = 'Debes añadir al menos un día de clase para este grupo.';
+                if (msgHorarios) msgHorarios.textContent = 'Debes añadir al menos un día de clase para este grupo.';
                 valido = false;
             } else {
                 let errorEnHorario = false;
-                
+
                 filasHorarios.forEach(fila => {
                     const dia = fila.querySelector('.hora-dia').value;
                     const hInicio = fila.querySelector('.hora-inicio').value;
                     const hFin = fila.querySelector('.hora-fin').value;
-                    
+
                     if (dia === '' || hInicio === '' || hFin === '') {
                         errorEnHorario = true;
                         fila.classList.add('input-error');
@@ -435,9 +436,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 if (errorEnHorario) {
                     valido = false;
-                    if(msgHorarios) msgHorarios.textContent = 'Completa todos los horarios de forma válida (Hora inicio antes que hora de fin).';
+                    if (msgHorarios) msgHorarios.textContent = 'Completa todos los horarios de forma válida (Hora inicio antes que hora de fin).';
                 } else {
-                    if(msgHorarios) msgHorarios.textContent = '';
+                    if (msgHorarios) msgHorarios.textContent = '';
                 }
             }
 
@@ -452,14 +453,14 @@ document.addEventListener('DOMContentLoaded', () => {
                     const originalHTML = btnSubmit.innerHTML;
                     btnSubmit.innerHTML = '<i class="ri-loader-4-line ri-spin"></i> Guardando Grupo...';
                     btnSubmit.disabled = true;
-                    
+
                     setTimeout(() => {
                         btnSubmit.innerHTML = originalHTML;
                         btnSubmit.disabled = false;
                         cerrarModalGrupo();
                         // Simulación updateUI
                         const cardGruposEmpty = document.getElementById('grupos-empty');
-                        if(cardGruposEmpty) cardGruposEmpty.style.display = 'none';
+                        if (cardGruposEmpty) cardGruposEmpty.style.display = 'none';
 
                         alert("Simulación: Grupo Guardado. El grupo fue persistido, y los horarios vinculados mediante su Id.");
                     }, 1200);
@@ -513,7 +514,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     const originalHTML = btnSubmit.innerHTML;
                     btnSubmit.innerHTML = '<i class="ri-loader-4-line ri-spin"></i> Guardando Curso...';
                     btnSubmit.disabled = true;
-                    
+
                     setTimeout(() => {
                         btnSubmit.innerHTML = originalHTML;
                         btnSubmit.disabled = false;

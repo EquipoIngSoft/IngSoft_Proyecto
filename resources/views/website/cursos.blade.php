@@ -6,6 +6,7 @@
     <title>Cursos - EGAU Chess</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('css/website/landing.css') }}">
     <link rel="stylesheet" href="{{ asset('css/website/cursos.css') }}">
 </head>
@@ -20,7 +21,7 @@
 
     <div class="filtros-bar">
         <div class="filtros-contenedor">
-            <input type="text" class="filtro-busqueda" id="busqueda" placeholder="🔍  Buscar curso...">
+            <input type="text" class="filtro-busqueda" id="busqueda" placeholder="Buscar curso...">
             <select class="filtro-select" id="filtroNivel">
                 <option value="">Todos los niveles</option>
                 <option value="principiante">Principiante</option>
@@ -52,10 +53,10 @@
                     </div>
                     <p>Aprende las reglas, movimientos de cada pieza y estrategias fundamentales del ajedrez. Ideal para quienes no tienen ninguna experiencia previa.</p>
                     <div class="curso-detalles">
-                        <span>⏱ Duración: 3 meses</span>
-                        <span>📍 Todas las sedes</span>
-                        <span>🕐 Lun / Mié / Vie</span>
-                        <span>💻 Presencial</span>
+                        <span><i class="ri-timer-line"></i> Duración: 3 meses</span>
+                        <span><i class="ri-map-pin-2-line"></i> Todas las sedes</span>
+                        <span><i class="ri-time-line"></i> Lun / Mié / Vie</span>
+                        <span><i class="ri-computer-line"></i> Presencial</span>
                     </div>
                     <p class="curso-requisito">Requisito: Ninguno. Apto para todas las edades.</p>
                     <a href="{{ route('contacto') }}" class="btn-primario btn-completo">Pre-inscribirse</a>
@@ -69,10 +70,10 @@
                     </div>
                     <p>Versión en línea del curso básico, adaptada para niños de 6 a 12 años con dinámicas interactivas y plataforma digital.</p>
                     <div class="curso-detalles">
-                        <span>⏱ Duración: 3 meses</span>
-                        <span>📍 En línea</span>
-                        <span>🕐 Mar / Jue</span>
-                        <span>💻 En línea</span>
+                        <span><i class="ri-timer-line"></i> Duración: 3 meses</span>
+                        <span><i class="ri-computer-line"></i> En línea</span>
+                        <span><i class="ri-time-line"></i> Mar / Jue</span>
+                        <span><i class="ri-wifi-line"></i> En línea</span>
                     </div>
                     <p class="curso-requisito">Requisito: Ninguno. Niños 6-12 años.</p>
                     <a href="{{ route('contacto') }}" class="btn-primario btn-completo">Pre-inscribirse</a>
@@ -86,10 +87,10 @@
                     </div>
                     <p>Perfecciona tu juego con tácticas avanzadas, estudio de aperturas reconocidas y técnicas de final de partida.</p>
                     <div class="curso-detalles">
-                        <span>⏱ Duración: 4 meses</span>
-                        <span>📍 Sede Centro</span>
-                        <span>🕐 Lun / Mié / Vie</span>
-                        <span>💻 Presencial</span>
+                        <span><i class="ri-timer-line"></i> Duración: 4 meses</span>
+                        <span><i class="ri-map-pin-2-line"></i> Sede Centro</span>
+                        <span><i class="ri-time-line"></i> Lun / Mié / Vie</span>
+                        <span><i class="ri-computer-line"></i> Presencial</span>
                     </div>
                     <p class="curso-requisito">Requisito: Curso básico o conocimiento previo.</p>
                     <a href="{{ route('contacto') }}" class="btn-primario btn-completo">Pre-inscribirse</a>
@@ -103,10 +104,10 @@
                     </div>
                     <p>Domina los finales más importantes: rey y peón, torres, alfiles y caballos. Fundamento esencial para subir de nivel.</p>
                     <div class="curso-detalles">
-                        <span>⏱ Duración: 2 meses</span>
-                        <span>📍 Sede Norte</span>
-                        <span>🕐 Mar / Jue / Sáb</span>
-                        <span>💻 Presencial</span>
+                        <span><i class="ri-timer-line"></i> Duración: 2 meses</span>
+                        <span><i class="ri-map-pin-2-line"></i> Sede Norte</span>
+                        <span><i class="ri-time-line"></i> Mar / Jue / Sáb</span>
+                        <span><i class="ri-computer-line"></i> Presencial</span>
                     </div>
                     <p class="curso-requisito">Requisito: Nivel básico aprobado.</p>
                     <a href="{{ route('contacto') }}" class="btn-primario btn-completo">Pre-inscribirse</a>
@@ -120,10 +121,10 @@
                     </div>
                     <p>Entrenamiento intensivo para competencias locales, estatales y nacionales. Análisis de partidas, apertura profunda y psicología competitiva.</p>
                     <div class="curso-detalles">
-                        <span>⏱ Duración: 6 meses</span>
-                        <span>📍 Sede Centro</span>
-                        <span>🕐 Lun a Vie</span>
-                        <span>💻 Presencial</span>
+                        <span><i class="ri-timer-line"></i> Duración: 6 meses</span>
+                        <span><i class="ri-map-pin-2-line"></i> Sede Centro</span>
+                        <span><i class="ri-time-line"></i> Lun a Vie</span>
+                        <span><i class="ri-computer-line"></i> Presencial</span>
                     </div>
                     <p class="curso-requisito">Requisito: Nivel intermedio + evaluación.</p>
                     <a href="{{ route('contacto') }}" class="btn-primario btn-completo">Pre-inscribirse</a>
@@ -137,10 +138,10 @@
                     </div>
                     <p>Aprende a usar motores de análisis (Stockfish) para revisar tus partidas, identificar errores y diseñar tu repertorio de aperturas.</p>
                     <div class="curso-detalles">
-                        <span>⏱ Duración: 2 meses</span>
-                        <span>📍 En línea</span>
-                        <span>🕐 Sáb</span>
-                        <span>💻 En línea</span>
+                        <span><i class="ri-timer-line"></i> Duración: 2 meses</span>
+                        <span><i class="ri-wifi-line"></i> En línea</span>
+                        <span><i class="ri-time-line"></i> Sáb</span>
+                        <span><i class="ri-computer-line"></i> En línea</span>
                     </div>
                     <p class="curso-requisito">Requisito: Nivel intermedio o superior.</p>
                     <a href="{{ route('contacto') }}" class="btn-primario btn-completo">Pre-inscribirse</a>
