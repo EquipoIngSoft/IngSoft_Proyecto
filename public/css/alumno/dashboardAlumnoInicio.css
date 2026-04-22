@@ -1,30 +1,34 @@
-/* =============================================
-   dashboardAlumnoInicio.css — Vista: Inicio
-   Responsable: Angel | S-23
-   EGAU Chess | Portal del Estudiante
-   ============================================= */
+/* =============================================================
+   dashboardAlumnoInicio.css — Sección Inicio
+   EGAU Chess | Portal del Estudiante | SCRUM-49
+   ============================================================= */
 
 .kpi-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 20px;
-    margin-bottom: 24px;
+    margin-bottom: 28px;
 }
 
 .kpi-card {
-    background-color: var(--blanco);
+    background: var(--blanco);
     border: 1px solid var(--borde);
     border-radius: 14px;
-    padding: 22px 24px;
+    padding: 20px;
     display: flex;
     align-items: center;
-    gap: 18px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    gap: 16px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+    transition: box-shadow 0.2s;
+}
+
+.kpi-card:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
 .kpi-icon-wrap {
-    width: 46px;
-    height: 46px;
+    width: 48px;
+    height: 48px;
     border-radius: 12px;
     display: flex;
     align-items: center;
@@ -33,95 +37,154 @@
     flex-shrink: 0;
 }
 
-.kpi-icon-naranja { background-color: var(--naranja-light); color: var(--naranja); }
-.kpi-icon-morado  { background-color: var(--morado-light);  color: var(--morado); }
-.kpi-icon-azul    { background-color: var(--azul-light);    color: var(--azul); }
+.kpi-icon-naranja { background: var(--naranja-light); color: var(--naranja); }
+.kpi-icon-morado  { background: rgba(124, 77, 255, 0.1); color: #7c4dff; }
+.kpi-icon-azul    { background: var(--azul-light); color: var(--azul); }
 
-.kpi-info { display: flex; flex-direction: column; gap: 4px; }
+.kpi-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
 
 .kpi-label {
     font-size: 12px;
+    font-weight: 600;
     color: var(--texto-suave);
-    font-weight: 500;
     text-transform: uppercase;
-    letter-spacing: 0.5px;
+    letter-spacing: 0.04em;
 }
-
-.kpi-value { font-size: 22px; font-weight: 700; color: var(--texto); line-height: 1; }
-.kpi-value small { font-size: 14px; font-weight: 500; color: var(--texto-suave); }
-.kpi-sub   { font-size: 12px; color: var(--texto-suave); }
 
 .kpi-badge {
-    display: inline-block;
-    padding: 3px 10px;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--naranja);
+    background: var(--naranja-light);
+    padding: 2px 10px;
     border-radius: 20px;
-    font-size: 12px;
-    font-weight: 600;
-    background-color: var(--morado-light);
-    color: var(--morado);
+    display: inline-block;
 }
 
-/* Grid inferior */
+.kpi-value {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--texto);
+    line-height: 1.1;
+}
+
+.kpi-sub {
+    font-size: 12px;
+    color: var(--texto-suave);
+}
+
 .bottom-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 20px;
 }
 
-/* Horario */
-.horario-list { list-style: none; display: flex; flex-direction: column; }
+@media (max-width: 768px) {
+    .bottom-grid { grid-template-columns: 1fr; }
+}
+
+.section-card-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--texto);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+.section-card-title i {
+    color: var(--naranja);
+    font-size: 18px;
+}
+
+.horario-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
 
 .horario-item {
     display: flex;
-    align-items: center;
-    gap: 16px;
-    padding: 14px 0;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 10px 0;
     border-bottom: 1px solid var(--borde);
 }
 
 .horario-item:last-child { border-bottom: none; }
 
 .horario-dia {
-    font-size: 12px;
-    font-weight: 700;
+    font-size: 13px;
+    font-weight: 600;
     color: var(--naranja);
-    width: 34px;
-    text-align: center;
-    flex-shrink: 0;
+    min-width: 90px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
 }
 
-.horario-detalle { display: flex; flex-direction: column; gap: 2px; }
-.horario-hora  { font-size: 14px; font-weight: 600; color: var(--texto); }
-.horario-aula  { font-size: 12px; color: var(--texto-suave); }
+.horario-dia span {
+    font-weight: 400;
+    color: var(--texto-suave);
+    font-size: 12px;
+}
 
-/* Actividad reciente */
-.actividad-list { list-style: none; display: flex; flex-direction: column; }
+.horario-materia {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--texto);
+}
+
+.horario-aula {
+    font-size: 12px;
+    color: var(--texto-suave);
+    margin-top: 2px;
+}
+
+.actividad-list {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
 
 .actividad-item {
     display: flex;
-    align-items: center;
-    gap: 14px;
-    padding: 12px 0;
-    border-bottom: 1px solid var(--borde);
+    align-items: flex-start;
+    gap: 12px;
 }
 
-.actividad-item:last-child { border-bottom: none; }
-
-.actividad-icon {
-    width: 36px;
-    height: 36px;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 16px;
+.actividad-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin-top: 5px;
     flex-shrink: 0;
 }
 
-.actividad-logro { background-color: var(--naranja-light); color: var(--naranja); }
-.actividad-pago  { background-color: var(--verde-light);   color: var(--verde); }
-.actividad-clase { background-color: var(--azul-light);    color: var(--azul); }
+.dot-verde  { background: var(--verde, #2e7d32); }
+.dot-azul   { background: var(--azul, #1a73e8); }
+.dot-morado { background: #7c4dff; }
 
-.actividad-info  { display: flex; flex-direction: column; gap: 2px; }
-.actividad-texto { font-size: 13px; font-weight: 500; color: var(--texto); }
-.actividad-fecha { font-size: 12px; color: var(--texto-suave); }
+.actividad-texto {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--texto);
+}
+
+.actividad-sub {
+    font-size: 12px;
+    color: var(--texto-suave);
+    margin-top: 2px;
+}
+
+.inicio-sin-datos {
+    font-size: 13px;
+    color: var(--texto-suave);
+    padding: 8px 0;
+    margin: 0;
+}
