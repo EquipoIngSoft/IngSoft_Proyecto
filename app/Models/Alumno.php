@@ -18,9 +18,16 @@ class Alumno extends Authenticatable
         'nombre',
         'apellido_p',
         'apellido_m',
+        'estado_residencia',
+        'ciudad',
+        'calle',
+        'codigo_postal',
+        'genero',
+        'fecha_nacimiento',
+        'telefono',
         'email',
         'contraseña',
-        'telefono',
+        'puntaje',
         'estatus',
     ];
 
