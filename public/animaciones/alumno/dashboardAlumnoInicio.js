@@ -30,6 +30,9 @@ async function cargarInicio() {
 
     } catch (err) {
         console.error('[Inicio] Error al cargar datos:', err);
+    } finally {
+        const loading = document.getElementById('loading-screen');
+        if (loading) loading.style.display = 'none';
     }
 }
 
