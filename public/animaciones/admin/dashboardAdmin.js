@@ -129,5 +129,29 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
     }
+    // ---- Datos reales del personal en sesión ----
+    fetch('/personal/perfil', {
+        credentials: 'same-origin',
+        headers: { 'Accept': 'application/json' }
+    })
+        .then(r => r.json())
+        .then(d => {
+            if (d.error) return;
 
+            const iniciales = ((d.nombre?.[0] || '') + (d.apellido_p?.[0] || '')).toUpperCase();
+
+            const navNombre = document.querySelector('.profile-trigger .admin-name');
+            const navAvatar = document.querySelector('.profile-trigger .avatar');
+            if (navNombre) navNombre.textContent = d.nombre || 'Personal';
+            if (navAvatar) navAvatar.textContent = iniciales;
+
+            const ddNombre = document.querySelector('.profile-dropdown .profile-name');
+            const ddEmail = document.querySelector('.profile-dropdown .profile-email');
+            if (ddNombre) ddNombre.textContent = [d.nombre, d.apellido_p, d.apellido_m]
+                .filter(Boolean).join(' ');
+            if (ddEmail) ddEmail.textContent = d.email || '—';
+
+            window._perfilPersonal = d;
+        })
+        .catch(err => console.error('Error cargando perfil:', err));
 });

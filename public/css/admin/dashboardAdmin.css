@@ -446,3 +446,13 @@ body {
         font-size: 20px;
     }
 }
+
+.perfil-val {
+    padding: 11px 14px;
+    border: 1.5px solid var(--borde);
+    border-radius: 10px;
+    font-size: 14px;
+    color: var(--texto);
+    background: var(--fondo);
+    min-height: 42px;
+}
