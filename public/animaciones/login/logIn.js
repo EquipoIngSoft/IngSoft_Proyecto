@@ -111,6 +111,11 @@ window.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    // Enter en cualquier campo dispara el submit
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') form.dispatchEvent(new Event('submit'));
+    });
+
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
 
