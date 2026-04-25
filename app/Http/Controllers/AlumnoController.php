@@ -70,12 +70,17 @@ class AlumnoController extends Controller
                 return $h;
             });
 
-        $grupoCurso = DB::table('inscripcion')
+        $grupos = DB::table('inscripcion')
             ->join('grupo', 'inscripcion.id_grupo', '=', 'grupo.id_grupo')
             ->join('curso', 'grupo.id_curso', '=', 'curso.id_curso')
             ->where('inscripcion.id_alumno', $alumno->id_alumno)
             ->where('inscripcion.estatus', true)
-            ->value('curso.nombre');
+            ->select(
+                'curso.nombre as curso',
+                'grupo.codigo_grupo',
+                'grupo.periodo'
+            )
+            ->get();
 
         $gruposActivos = DB::table('inscripcion')
             ->where('id_alumno', $alumno->id_alumno)
@@ -131,8 +136,8 @@ class AlumnoController extends Controller
             ],
             'nivel'                   => $nivel,
             'puntaje_siguiente_nivel' => $puntajeSiguiente,
-            'grupos_activos'          => $gruposActivos,
-            'grupo_nombre'            => $grupoCurso ?? 'Sin grupo',
+            'grupos_activos' => $gruposActivos,
+            'grupos'         => $grupos,
             'horarios'                => $horarios,
             'actividad_reciente'      => $actividad,
         ]);

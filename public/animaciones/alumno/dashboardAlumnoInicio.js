@@ -22,7 +22,8 @@ async function cargarInicio() {
         const data = await res.json();
 
         pintarEncabezado(data.alumno);
-        pintarKPIs(data.alumno, data.nivel, data.puntaje_siguiente_nivel, data.grupos_activos, data.grupo_nombre);
+        pintarKPIs(data.alumno, data.nivel, data.puntaje_siguiente_nivel, data.grupos_activos);
+        pintarGrupos(data.grupos);
         pintarHorario(data.horarios);
         pintarActividad(data.actividad_reciente);
 
@@ -44,7 +45,7 @@ function pintarEncabezado(alumno) {
     if (titulo) titulo.textContent = 'Bienvenido, ' + alumno.nombre;
 }
 
-function pintarKPIs(alumno, nivel, puntajeSiguiente, gruposActivos, grupoNombre) {
+function pintarKPIs(alumno, nivel, puntajeSiguiente, gruposActivos) {
     const nivelBadge = document.querySelector('#section-inicio .kpi-badge');
     if (nivelBadge) nivelBadge.textContent = nivel.emoji + ' Nivel ' + nivel.numero + ' · ' + nivel.nombre;
 
@@ -64,8 +65,30 @@ function pintarKPIs(alumno, nivel, puntajeSiguiente, gruposActivos, grupoNombre)
 
     if (kpiCards[2]) {
         const val = kpiCards[2].querySelector('.kpi-value');
-        if (val) val.textContent = grupoNombre;
+        if (val) val.textContent = gruposActivos + ' grupo' + (gruposActivos !== 1 ? 's' : '');
     }
+}
+
+function pintarGrupos(grupos) {
+    const lista = document.querySelector('#section-inicio .grupos-list');
+    if (!lista) return;
+
+    if (!grupos || grupos.length === 0) {
+        lista.innerHTML = '<p class="inicio-sin-datos">No estás inscrito en ningún grupo.</p>';
+        return;
+    }
+
+    lista.innerHTML = grupos.map(g => `
+        <div class="horario-item">
+            <div class="horario-dia">
+                ${g.codigo_grupo}
+                <span>Periodo ${g.periodo}</span>
+            </div>
+            <div>
+                <div class="horario-materia">${g.curso}</div>
+            </div>
+        </div>
+    `).join('');
 }
 
 function pintarHorario(horarios) {

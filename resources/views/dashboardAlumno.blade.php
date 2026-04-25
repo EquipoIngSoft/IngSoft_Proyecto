@@ -214,6 +214,17 @@
                         </div>
                     </div>
 
+                {{-- Mis Grupos --}}
+                    <div class="card">
+                        <div class="section-card-title">
+                            <i class="ri-group-line"></i>
+                            Mis Grupos
+                        </div>
+                        <div class="grupos-list">
+                            <!-- cargado por dashboardAlumnoInicio.js -->
+                        </div>
+                    </div>
+
                 </div>{{-- /bottom-grid --}}
 
             </div>{{-- /page-content --}}
