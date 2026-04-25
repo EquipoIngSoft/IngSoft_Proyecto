@@ -42,10 +42,6 @@ function pintarProfesores(profesores) {
     }
 
     grid.innerHTML = profesores.map(p => {
-        const especialidades = p.especialidades.length > 0
-            ? p.especialidades.map(e => `<span class="cert-badge">${e}</span>`).join('')
-            : '<span class="cert-badge">Sin cursos asignados</span>';
-
         const puntaje = p.puntaje ?? 0;
 
         return `
@@ -54,15 +50,16 @@ function pintarProfesores(profesores) {
                     <div class="profesor-avatar">${p.inicial}</div>
                     <div>
                         <div class="profesor-nombre">${p.nombre_completo}</div>
-                        <span class="badge badge-naranja">Puntaje: ${puntaje}</span>
                     </div>
                 </div>
 
                 <hr class="profesor-divider">
 
-                <div>
-                    <div class="profesor-certs-label">Especialidad</div>
-                    <div class="profesor-certs">${especialidades}</div>
+                <div class="profesor-detalles">
+                    <div class="profesor-detalle-row">
+                        <i class="ri-star-line"></i>
+                        <span><strong>Puntaje:</strong> ${puntaje}</span>
+                    </div>
                 </div>
 
                 <hr class="profesor-divider">
