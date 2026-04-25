@@ -11,40 +11,59 @@ document.addEventListener('DOMContentLoaded', () => {
     // Solo ejecutamos si hay al menos un elemento de profesores en pantalla
     if (!sectionProfesores) return;
 
-    // ---- Búsqueda de Profesores ----
+    // ---- Búsqueda de Profesores — Backend ----
     const buscadorProf = document.getElementById('buscador-profesores');
+    const btnLimpiarProf = document.getElementById('btn-limpiar-profesores');
     const gridProfesores = document.getElementById('grid-profesores');
     const msgEmpty = document.getElementById('profesores-empty');
 
-    if (buscadorProf && gridProfesores) {
-        // Asumiendo que las tarjetas no se cargan por AJAX de inmediato, si se cargaran,
-        // deberías hacer la query document.querySelectorAll dentro del input. 
-        // Por ahora lo hacemos dinámicamente:
+    const renderTarjeta = (r) => {
+        const sedeTxt = (window.SEDES_MAP && window.SEDES_MAP[r.id_sede]) ? window.SEDES_MAP[r.id_sede] : (r.id_sede ? `Sede ${r.id_sede}` : 'Sin sede');
+        const estatusCls = r.estatus ? 'badge-activo' : 'badge-inactivo';
+        const estatusTxt = r.estatus ? 'Activo' : 'Inactivo';
+        return `
+    <div class="profesor-card" data-nombre="${r.nombre}" data-email="${r.email}">
+        <div class="profesor-avatar"><i class="ri-user-3-line"></i></div>
+        <div class="profesor-info">
+            <h3 class="profesor-nombre">${r.nombre}</h3>
+            <p class="profesor-email"><i class="ri-mail-line"></i> ${r.email}</p>
+            <p class="profesor-sede"><i class="ri-map-pin-line"></i> ${sedeTxt}</p>
+        </div>
+        <div class="profesor-meta">
+            <span class="badge ${estatusCls}">${estatusTxt}</span>
+            <div class="profesor-acciones">
+                <button class="btn-icon btn-profesor-ver" title="Ver" data-id="${r.id}"><i class="ri-eye-line"></i></button>
+                <button class="btn-icon btn-profesor-editar" title="Editar" data-id="${r.id}"><i class="ri-edit-line"></i></button>
+                <button class="btn-icon btn-profesor-eliminar" title="Eliminar" data-id="${r.id}"><i class="ri-delete-bin-line"></i></button>
+            </div>
+        </div>
+    </div>`;
+    };
 
-        buscadorProf.addEventListener('input', () => {
-            const query = buscadorProf.value.toLowerCase().trim();
-            const tarjetas = gridProfesores.querySelectorAll('.profesor-card');
-            let visibles = 0;
+    const buscarProfesoresBackend = () => {
+        const q = buscadorProf ? buscadorProf.value.trim().toLowerCase() : '';
+        const status = document.querySelector('#section-profesores .custom-dropdown .selected-text')?.getAttribute('data-value') || '';
+        const params = new URLSearchParams({ q, estatus: status });
 
-            tarjetas.forEach(tarjeta => {
-                const nombre = (tarjeta.getAttribute('data-nombre') || '').toLowerCase();
-                const email = (tarjeta.getAttribute('data-email') || '').toLowerCase();
+        fetch(`/admin/buscar/profesor?${params}`, {
+            credentials: 'same-origin',
+            headers: { 'Accept': 'application/json' }
+        })
+            .then(r => r.json())
+            .then(res => {
+                if (!gridProfesores) return;
+                if (res.error) { console.error(res.error); return; }
+                gridProfesores.innerHTML = res.data.map(renderTarjeta).join('');
+                if (msgEmpty) msgEmpty.style.display = res.total === 0 ? 'block' : 'none';
+            })
+            .catch(err => console.error('Error al buscar profesores:', err));
+    };
 
-                if (nombre.includes(query) || email.includes(query)) {
-                    tarjeta.style.display = 'flex';
-                    visibles++;
-                } else {
-                    tarjeta.style.display = 'none';
-                }
-            });
-
-            if (msgEmpty) {
-                if (visibles === 0 && tarjetas.length > 0) {
-                    msgEmpty.style.display = 'block';
-                } else {
-                    msgEmpty.style.display = 'none';
-                }
-            }
+    if (buscadorProf) buscadorProf.addEventListener('input', buscarProfesoresBackend);
+    if (btnLimpiarProf) {
+        btnLimpiarProf.addEventListener('click', () => {
+            if (buscadorProf) buscadorProf.value = '';
+            buscarProfesoresBackend();
         });
     }
 
@@ -244,11 +263,11 @@ document.addEventListener('DOMContentLoaded', () => {
             } else { setOk('pr-fecha-nacimiento', 'err-pr-fecha-nacimiento'); }
 
             // Puntuación
-            const prPuntos = document.getElementById('pr-puntos-inicial');
+            const prPuntos = document.getElementById('pr-puntos');
             if (!prPuntos || prPuntos.value.trim() === '' || prPuntos.value < 0) {
-                setError('pr-puntos-inicial', 'err-pr-puntos-inicial', 'Debe ser 0 o mayor.');
+                setError('pr-puntos', 'err-pr-puntos', 'Debe ser 0 o mayor.');
                 valido = false;
-            } else { setOk('pr-puntos-inicial', 'err-pr-puntos-inicial'); }
+            } else { setOk('pr-puntos', 'err-pr-puntos'); }
 
             // Género
             const prGeneroDropdown = document.getElementById('dropdown-pr-genero');
@@ -270,19 +289,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (msg) msg.textContent = '';
             }
 
-            // Contraseña
-            const prPass = document.getElementById('pr-password');
-            if (!prPass || prPass.value.length < 6) {
-                setError('pr-password', 'err-pr-password', 'La contraseña debe tener al menos 6 caracteres.');
-                valido = false;
-            } else { setOk('pr-password', 'err-pr-password'); }
-
-            // Confirmar contraseña
-            const prPassConf = document.getElementById('pr-password-confirm');
-            if (!prPassConf || prPassConf.value !== (prPass ? prPass.value : '')) {
-                setError('pr-password-confirm', 'err-pr-password-confirm', 'Las contraseñas no coinciden.');
-                valido = false;
-            } else if (prPassConf.value !== '') { setOk('pr-password-confirm', 'err-pr-password-confirm'); }
 
             // Dirección: Estado
             const prEstado = document.getElementById('pr-estado');
@@ -304,6 +310,18 @@ document.addEventListener('DOMContentLoaded', () => {
                 setError('pr-calle', 'err-pr-calle', 'La calle es requerida.');
                 valido = false;
             } else { setOk('pr-calle', 'err-pr-calle'); }
+
+            const prColonia = document.getElementById('pr-colonia');
+            if (!prColonia || prColonia.value.trim() === '') {
+                setError('pr-colonia', 'err-pr-colonia', 'La colonia es requerida.');
+                valido = false;
+            } else { setOk('pr-colonia', 'err-pr-colonia'); }
+
+            const prNumero = document.getElementById('pr-numero');
+            if (!prNumero || prNumero.value.trim() === '') {
+                setError('pr-numero', 'err-pr-numero', 'El número es requerido.');
+                valido = false;
+            } else { setOk('pr-numero', 'err-pr-numero'); }
 
             // Dirección: CP
             const prCP = document.getElementById('pr-cp');
@@ -330,26 +348,309 @@ document.addEventListener('DOMContentLoaded', () => {
             } else { setOk('pr-telefono', 'err-pr-telefono'); } // Limpiar error si está vacío
 
 
-            if (valido) {
-                // TODO: Mandar fecth(POST) a backend Laravel o procesar
-                console.log('Formulario de profesor válido. Listo para enviar.');
+            // Contraseña (obligatoria al crear, opcional al editar)
+            const esModoEdicion = !!formAgregarProf.getAttribute('data-edit-id');
+            const prPass = document.getElementById('pr-password');
+            const prPassConf = document.getElementById('pr-password-confirm');
 
-                // Efecto visual de enviar
-                const btnSubmit = formAgregarProf.querySelector('.btn-modal-submit');
-                if (btnSubmit) {
-                    const originalHTML = btnSubmit.innerHTML;
-                    btnSubmit.innerHTML = '<i class="ri-loader-4-line ri-spin"></i> Guardando...';
-                    btnSubmit.disabled = true;
+            if (!esModoEdicion) {
+                // Crear: contraseña requerida
+                if (!prPass || prPass.value.length < 6) {
+                    setError('pr-password', 'err-pr-password', 'La contraseña debe tener al menos 6 caracteres.');
+                    valido = false;
+                } else { setOk('pr-password', 'err-pr-password'); }
 
-                    setTimeout(() => {
-                        btnSubmit.innerHTML = originalHTML;
-                        btnSubmit.disabled = false;
-                        cerrarModalProfesor();
-                        alert("Simulación: Profesor guardado exitosamente");
-                    }, 1500);
+                if (!prPassConf || prPassConf.value !== (prPass ? prPass.value : '')) {
+                    setError('pr-password-confirm', 'err-pr-password-confirm', 'Las contraseñas no coinciden.');
+                    valido = false;
+                } else { setOk('pr-password-confirm', 'err-pr-password-confirm'); }
+            } else {
+                // Editar: solo validar si el usuario escribió algo
+                if (prPass && prPass.value.length > 0) {
+                    if (prPass.value.length < 6) {
+                        setError('pr-password', 'err-pr-password', 'La contraseña debe tener al menos 6 caracteres.');
+                        valido = false;
+                    } else if (!prPassConf || prPassConf.value !== prPass.value) {
+                        setError('pr-password-confirm', 'err-pr-password-confirm', 'Las contraseñas no coinciden.');
+                        valido = false;
+                    } else {
+                        setOk('pr-password', 'err-pr-password');
+                        setOk('pr-password-confirm', 'err-pr-password-confirm');
+                    }
+                } else {
+                    setOk('pr-password', 'err-pr-password');
+                    setOk('pr-password-confirm', 'err-pr-password-confirm');
                 }
+            }
+
+            if (valido) {
+                const btnSubmit = formAgregarProf.querySelector('.btn-modal-submit');
+                const textoOriginal = btnSubmit.innerHTML;
+                btnSubmit.innerHTML = '<i class="ri-loader-4-line ri-spin"></i> Guardando...';
+                btnSubmit.disabled = true;
+
+                const editId = formAgregarProf.getAttribute('data-edit-id');
+                const isEditMode = !!editId;
+
+                // id_sede: usar el value del dropdown directamente (ya es el id_sede de la DB)
+                const prSedeVal = document.getElementById('pr-sede');
+                const idSede = prSedeVal ? parseInt(prSedeVal.value) || null : null;
+
+                const prNombre = document.getElementById('pr-nombre');
+                const prApP = document.getElementById('pr-ap-paterno');
+                const prCorreo = document.getElementById('pr-correo');
+                const prFechaNacimiento = document.getElementById('pr-fecha-nacimiento');
+                const prGeneroInput = document.getElementById('pr-genero');
+                const prEstado = document.getElementById('pr-estado');
+                const prCiudad = document.getElementById('pr-ciudad');
+                const prCalle = document.getElementById('pr-calle');
+                const prColonia = document.getElementById('pr-colonia');
+                const prNumero = document.getElementById('pr-numero');
+                const prCP = document.getElementById('pr-cp');
+                const prTelefono = document.getElementById('pr-telefono');
+                // prPass y prPassConf ya están declaradas en el scope del submit
+
+                const calleCompleta = (prCalle ? prCalle.value.trim() : '') + ' | ' +
+                    (prColonia ? prColonia.value.trim() : '') + ' | ' +
+                    (prNumero ? prNumero.value.trim() : '');
+
+                const payload = {
+                    tipo_usuario: 'profesor',
+                    nombre: prNombre ? prNombre.value.trim() : '',
+                    apellido_p: prApP ? prApP.value.trim() : '',
+                    apellido_m: document.getElementById('pr-ap-materno') ? document.getElementById('pr-ap-materno').value.trim() : '',
+                    email: prCorreo ? prCorreo.value.trim() : '',
+                    fecha_nacimiento: prFechaNacimiento ? prFechaNacimiento.value : '',
+                    genero: prGeneroInput ? prGeneroInput.value : '',
+                    id_sede: idSede,
+                    puntaje: prPuntos ? parseInt(prPuntos.value) || 0 : 0,
+                    estado_residencia: prEstado ? prEstado.value : '',
+                    ciudad: prCiudad ? prCiudad.value.trim() : '',
+                    calle: calleCompleta,
+                    codigo_postal: prCP ? prCP.value.trim() : '',
+                    telefono: prTelefono ? prTelefono.value.trim() : ''
+                };
+
+                if (prPass && prPass.value) {
+                    payload['contraseña'] = prPass.value;
+                }
+
+                const tokenMeta = document.querySelector('meta[name="csrf-token"]');
+                const token = tokenMeta ? tokenMeta.getAttribute('content') : '';
+
+                const url = isEditMode ? `/admin/editar/profesor/${editId}` : '/admin/registrar';
+                const method = isEditMode ? 'PUT' : 'POST';
+
+                fetch(url, {
+                    method,
+                    credentials: 'same-origin',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                        'X-CSRF-TOKEN': token
+                    },
+                    body: JSON.stringify(payload)
+                })
+                    .then(async res => {
+                        const data = await res.json().catch(() => ({}));
+                        if (!res.ok) {
+                            const errMsg = data.errors
+                                ? Object.values(data.errors).flat().join('\n')
+                                : (data.error || data.message || 'Error desconocido');
+                            throw new Error(errMsg);
+                        }
+                        return data;
+                    })
+                    .then(data => {
+                        alert(data.message || 'Profesor guardado correctamente');
+                        cerrarModalProfesor();
+                        location.reload();
+                    })
+                    .catch(err => {
+                        console.error('Error al guardar profesor:', err);
+                        alert('No se pudo guardar el profesor:\n' + (err.message || JSON.stringify(err)));
+                        btnSubmit.innerHTML = textoOriginal;
+                        btnSubmit.disabled = false;
+                    });
             }
         });
     }
+
+    // ---- Eventos Editar / Eliminar en tarjetas de profsor ----
+    document.addEventListener('click', (e) => {
+
+        // --- VER ---
+        const btnVer = e.target.closest('.btn-profesor-ver');
+        if (btnVer) {
+            e.stopPropagation();
+            const id = btnVer.getAttribute('data-id');
+
+            const modalVerProf = document.getElementById('modal-ver-profesor');
+            const verLoader = document.getElementById('ver-profesor-loader');
+            const verContent = document.getElementById('ver-profesor-content');
+
+            if (verLoader) verLoader.style.display = 'block';
+            if (verContent) verContent.style.display = 'none';
+            if (modalVerProf) modalVerProf.classList.add('open');
+
+            fetch(`/admin/obtener/profesor/${id}`, {
+                credentials: 'same-origin',
+                headers: { 'Accept': 'application/json' }
+            })
+                .then(r => r.json())
+                .then(info => {
+                    if (info.error) { modalVerProf.classList.remove('open'); alert('Error: ' + info.error); return; }
+
+                    const setV = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val || '—'; };
+                    const generoLabel = { f: 'Femenino', m: 'Masculino', o: 'Otro' };
+                    const calcEdad = (f) => {
+                        if (!f) return '—';
+                        const nac = new Date(f), hoy = new Date();
+                        let edad = hoy.getFullYear() - nac.getFullYear();
+                        const m = hoy.getMonth() - nac.getMonth();
+                        if (m < 0 || (m === 0 && hoy.getDate() < nac.getDate())) edad--;
+                        return `${edad} años`;
+                    };
+
+                    setV('vpr-nombre', `${info.nombre || ''} ${info.apellido_p || ''} ${info.apellido_m || ''}`.trim());
+                    setV('vpr-fecha-nac', info.fecha_nacimiento || '—');
+                    setV('vpr-edad', calcEdad(info.fecha_nacimiento));
+                    setV('vpr-genero', generoLabel[info.genero?.toLowerCase()] || info.genero || '—');
+                    setV('vpr-telefono', info.telefono || '—');
+                    setV('vpr-correo', info.email || '—');
+                    setV('vpr-estatus', info.estatus ? 'Activo' : 'Inactivo');
+
+                    const sedeNombre = (window.SEDES_MAP && window.SEDES_MAP[info.id_sede])
+                        ? window.SEDES_MAP[info.id_sede]
+                        : (info.nombre_sede || `Sede ${info.id_sede}`);
+                    setV('vpr-sede', sedeNombre);
+                    setV('vpr-puntos', info.puntaje ?? 0);
+
+                    setV('vpr-estado', info.estado_residencia || '—');
+                    setV('vpr-ciudad', info.ciudad || '—');
+                    setV('vpr-cp', info.codigo_postal || '—');
+
+                    if (info.calle) {
+                        const partes = info.calle.split(' | ');
+                        setV('vpr-calle', partes[0] || info.calle);
+                        setV('vpr-colonia', partes[1] || '—');
+                        setV('vpr-numero', partes[2] || '—');
+                    } else {
+                        setV('vpr-calle', '—'); setV('vpr-colonia', '—'); setV('vpr-numero', '—');
+                    }
+
+                    if (verLoader) verLoader.style.display = 'none';
+                    if (verContent) verContent.style.display = 'block';
+                })
+                .catch(err => {
+                    if (modalVerProf) modalVerProf.classList.remove('open');
+                    alert('Error al cargar datos: ' + err);
+                });
+        }
+
+        // Editar — datos frescos del backend
+        const btnEditar = e.target.closest('.btn-profesor-editar');
+        if (btnEditar) {
+            const id = btnEditar.getAttribute('data-id');
+
+            fetch(`/admin/obtener/profesor/${id}`, {
+                credentials: 'same-origin',
+                headers: { 'Accept': 'application/json' }
+            })
+                .then(r => r.json())
+                .then(info => {
+                    if (info.error) { alert('Error: ' + info.error); return; }
+
+                    if (formAgregarProf) {
+                        formAgregarProf.setAttribute('data-edit-id', id);
+                        const title = document.querySelector('#modal-agregar-profesor .modal-title');
+                        if (title) title.textContent = 'Editar Profesor';
+
+                        if (document.getElementById('pr-nombre')) document.getElementById('pr-nombre').value = info.nombre || '';
+                        if (document.getElementById('pr-ap-paterno')) document.getElementById('pr-ap-paterno').value = info.apellido_p || '';
+                        if (document.getElementById('pr-ap-materno')) document.getElementById('pr-ap-materno').value = info.apellido_m || '';
+                        if (document.getElementById('pr-correo')) document.getElementById('pr-correo').value = info.email || '';
+                        if (document.getElementById('pr-telefono')) document.getElementById('pr-telefono').value = info.telefono || '';
+                        if (document.getElementById('pr-fecha-nacimiento')) document.getElementById('pr-fecha-nacimiento').value = info.fecha_nacimiento || '';
+                        if (document.getElementById('pr-ciudad')) document.getElementById('pr-ciudad').value = info.ciudad || '';
+                        if (document.getElementById('pr-cp')) document.getElementById('pr-cp').value = info.codigo_postal || '';
+                        if (document.getElementById('pr-puntos')) document.getElementById('pr-puntos').value = info.puntaje ?? 0;
+
+                        // Separar calle guardada
+                        if (info.calle) {
+                            const partes = info.calle.split(' | ');
+                            if (document.getElementById('pr-calle')) document.getElementById('pr-calle').value = partes[0] || info.calle;
+                            if (document.getElementById('pr-colonia')) document.getElementById('pr-colonia').value = partes[1] || '';
+                            if (document.getElementById('pr-numero')) document.getElementById('pr-numero').value = partes[2] || '';
+                        }
+
+                        if (info.genero) {
+                            const opt = document.querySelector(`#dropdown-pr-genero .form-option[data-value="${info.genero.toUpperCase()}"]`)
+                                || document.querySelector(`#dropdown-pr-genero .form-option[data-value="${info.genero.toLowerCase()}"]`);
+                            if (opt) opt.click();
+                        }
+                        if (info.estado_residencia) {
+                            const opt = [...document.querySelectorAll('#dropdown-pr-estado .form-option')]
+                                .find(o => o.getAttribute('data-value').toLowerCase() === info.estado_residencia.toLowerCase());
+                            if (opt) opt.click();
+                        }
+                        if (info.id_sede) {
+                            const opt = document.querySelector(`#dropdown-pr-sede .form-option[data-value="${info.id_sede}"]`);
+                            if (opt) opt.click();
+                        }
+
+                        const passEl = document.getElementById('pr-password');
+                        if (passEl) passEl.removeAttribute('required');
+
+                        abrirModalProfesor();
+                    }
+                })
+                .catch(err => alert('Error al cargar datos: ' + err));
+        }
+
+        // Eliminar
+        const btnEliminar = e.target.closest('.btn-profesor-eliminar');
+        if (btnEliminar) {
+            const id = btnEliminar.getAttribute('data-id');
+            if (confirm('¿Seguro que deseas eliminar este profesor de forma permanente?')) {
+                const tokenMeta = document.querySelector('meta[name="csrf-token"]');
+                fetch(`/admin/eliminar/profesor/${id}`, {
+                    method: 'DELETE',
+                    credentials: 'same-origin',
+                    headers: {
+                        'Accept': 'application/json',
+                        'X-CSRF-TOKEN': tokenMeta ? tokenMeta.getAttribute('content') : ''
+                    }
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.error) alert(data.error);
+                        else { alert(data.message); location.reload(); }
+                    })
+                    .catch(err => alert('Error: ' + err));
+            }
+        }
+    });
+
+    // Reset al cerrar modal
+    if (btnCancelarModalProf) {
+        btnCancelarModalProf.addEventListener('click', () => {
+            if (formAgregarProf) formAgregarProf.removeAttribute('data-edit-id');
+            const title = document.querySelector('#modal-agregar-profesor .modal-title');
+            if (title) title.textContent = 'Agregar Profesor';
+            const passEl = document.getElementById('pr-password');
+            if (passEl) passEl.setAttribute('required', 'true');
+        });
+    }
+
+    // ---- Cerrar modal Ver Profesor ----
+    const modalVerProf = document.getElementById('modal-ver-profesor');
+    const btnCerrarVerProf = document.getElementById('btn-cerrar-ver-profesor');
+    const btnCloseVerProf = document.getElementById('modal-close-ver-profesor');
+
+    if (btnCerrarVerProf) btnCerrarVerProf.addEventListener('click', () => modalVerProf.classList.remove('open'));
+    if (btnCloseVerProf) btnCloseVerProf.addEventListener('click', () => modalVerProf.classList.remove('open'));
+    if (modalVerProf) modalVerProf.addEventListener('click', (e) => { if (e.target === modalVerProf) modalVerProf.classList.remove('open'); });
+
 
 });
