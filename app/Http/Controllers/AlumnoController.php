@@ -131,10 +131,52 @@ class AlumnoController extends Controller
             ],
             'nivel'                   => $nivel,
             'puntaje_siguiente_nivel' => $puntajeSiguiente,
-            'grupos_activos' => $gruposActivos,
-            'grupo_nombre'   => $grupoCurso ?? 'Sin grupo',
+            'grupos_activos'          => $gruposActivos,
+            'grupo_nombre'            => $grupoCurso ?? 'Sin grupo',
             'horarios'                => $horarios,
             'actividad_reciente'      => $actividad,
+        ]);
+    }
+
+    public function profesores(Request $request)
+    {
+        $alumno = $request->user();
+
+        if (!$alumno instanceof Alumno) {
+            return response()->json(['message' => 'No autorizado'], 403);
+        }
+
+        $profesores = DB::table('profesor')
+            ->where('profesor.id_sede', $alumno->id_sede)
+            ->where('profesor.estatus', true)
+            ->select(
+                'profesor.id_profesor',
+                'profesor.nombre',
+                'profesor.apellido_p',
+                'profesor.apellido_m',
+                'profesor.email',
+                'profesor.telefono',
+                'profesor.puntaje'
+            )
+            ->get()
+            ->map(function ($p) {
+                $p->nombre_completo = trim($p->nombre . ' ' . $p->apellido_p . ' ' . ($p->apellido_m ?? ''));
+                $p->inicial = strtoupper(mb_substr($p->nombre, 0, 1));
+
+                $especialidades = DB::table('grupo')
+                    ->join('curso', 'grupo.id_curso', '=', 'curso.id_curso')
+                    ->where('grupo.id_profesor', $p->id_profesor)
+                    ->where('grupo.estatus', true)
+                    ->pluck('curso.nombre')
+                    ->unique()
+                    ->values();
+
+                $p->especialidades = $especialidades;
+                return $p;
+            });
+
+        return response()->json([
+            'profesores' => $profesores,
         ]);
     }
 }
