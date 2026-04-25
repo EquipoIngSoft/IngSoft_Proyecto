@@ -547,17 +547,12 @@
                     <p class="page-subtitle">Inscríbete en actividades extraescolares y desarrolla tus habilidades</p>
                 </div>
 
-                {{-- Mis Inscripciones --}}
+{{-- Mis Inscripciones --}}
                 <div class="mis-inscripciones">
-                    <div class="mis-inscripciones-titulo">Mis Inscripciones</div>
-                    <div id="sin-inscripciones" style="display:none; font-size:14px; color:var(--texto-suave); padding:8px 0;">Sin inscripciones activas.</div>
-                    <div id="lista-mis-inscripciones"><div class="inscripcion-activa">
-                        <div>
-                            <div class="inscripcion-activa-nombre">Táctica y Estrategia</div>
-                            <div class="inscripcion-activa-horario">Lunes y Miércoles · 14:00 - 15:30</div>
-                        </div>
-                        <i class="ri-checkbox-circle-line inscripcion-activa-check"></i>
-                    </div></div>
+                    <div class="mis-inscripciones-titulo">MIS INSCRIPCIONES</div>
+                    <div id="lista-mis-inscripciones">
+                        <!-- cargado por dashboardAlumnoExtraescolares.js -->
+                    </div>
                 </div>
 
                 {{-- Buscador + Filtros --}}
@@ -566,106 +561,12 @@
                         <i class="ri-search-line"></i>
                         <input type="text" id="buscador-extra" placeholder="Buscar actividad...">
                     </div>
-                    <div class="filtros-categorias">
-                        <button class="btn-filtro activo" data-categoria="todas">Todas</button>
-                        <button class="btn-filtro" data-categoria="ajedrez">Ajedrez</button>
-                        <button class="btn-filtro" data-categoria="teoria">Teoría</button>
-                    </div>
                 </div>
 
                 {{-- Catálogo de actividades --}}
                 <div class="actividades-grid" id="actividades-grid">
-
-                    {{-- Tarjeta 1: Ajedrez Avanzado --}}
-                    <div class="actividad-card" data-nombre="ajedrez avanzado" data-categoria="ajedrez" data-id="1" data-horario="Martes y Jueves · 16:00 - 18:00">
-                        <div class="actividad-nombre">Ajedrez Avanzado</div>
-                        <span class="badge badge-naranja" style="align-self:flex-start;">Ajedrez</span>
-                        <p style="font-size:13px; color:var(--texto-suave); margin:0;">Entrenamiento intensivo para torneos</p>
-                        <div class="actividad-info-row"><i class="ri-user-star-line"></i> Maestro González</div>
-                        <div class="actividad-info-row"><i class="ri-calendar-line"></i> Martes y Jueves</div>
-                        <div class="actividad-info-row"><i class="ri-time-line"></i> 16:00 - 18:00</div>
-                        <div>
-                            <div class="cupo-label">
-                                <span>Cupo disponible</span>
-                                <span>12 / 15</span>
-                            </div>
-                            <div class="progress-wrap">
-                                <div class="progress-fill" style="width:80%;"></div>
-                            </div>
-                        </div>
-                        <button class="btn-inscribirse inscribir">
-                            <i class="ri-checkbox-circle-line"></i> Inscribirse
-                        </button>
-                    </div>
-
-                    {{-- Tarjeta 2: Táctica y Estrategia (inscrito) --}}
-                    <div class="actividad-card" data-nombre="tactica y estrategia" data-categoria="ajedrez" data-id="2" data-horario="Lunes y Miércoles · 14:00 - 15:30">
-                        <i class="ri-checkbox-circle-line actividad-card-check"></i>
-                        <div class="actividad-nombre">Táctica y Estrategia</div>
-                        <span class="badge badge-naranja" style="align-self:flex-start;">Ajedrez</span>
-                        <p style="font-size:13px; color:var(--texto-suave); margin:0;">Desarrollo de habilidades tácticas</p>
-                        <div class="actividad-info-row"><i class="ri-user-star-line"></i> Maestra Ramírez</div>
-                        <div class="actividad-info-row"><i class="ri-calendar-line"></i> Lunes y Miércoles</div>
-                        <div class="actividad-info-row"><i class="ri-time-line"></i> 14:00 - 15:30</div>
-                        <div>
-                            <div class="cupo-label">
-                                <span>Cupo disponible</span>
-                                <span>18 / 20</span>
-                            </div>
-                            <div class="progress-wrap">
-                                <div class="progress-fill" style="width:90%;"></div>
-                            </div>
-                        </div>
-                        <button class="btn-inscribirse cancelar">
-                            <i class="ri-close-circle-line"></i> Cancelar Inscripción
-                        </button>
-                    </div>
-
-                    {{-- Tarjeta 3: Finales de Partida --}}
-                    <div class="actividad-card" data-nombre="finales de partida" data-categoria="ajedrez" data-id="3" data-horario="Viernes · 17:00 - 18:30">
-                        <div class="actividad-nombre">Finales de Partida</div>
-                        <span class="badge badge-naranja" style="align-self:flex-start;">Ajedrez</span>
-                        <p style="font-size:13px; color:var(--texto-suave); margin:0;">Especialización en finales</p>
-                        <div class="actividad-info-row"><i class="ri-user-star-line"></i> Maestro López</div>
-                        <div class="actividad-info-row"><i class="ri-calendar-line"></i> Viernes</div>
-                        <div class="actividad-info-row"><i class="ri-time-line"></i> 17:00 - 18:30</div>
-                        <div>
-                            <div class="cupo-label">
-                                <span>Cupo disponible</span>
-                                <span>8 / 12</span>
-                            </div>
-                            <div class="progress-wrap">
-                                <div class="progress-fill" style="width:67%;"></div>
-                            </div>
-                        </div>
-                        <button class="btn-inscribirse inscribir">
-                            <i class="ri-checkbox-circle-line"></i> Inscribirse
-                        </button>
-                    </div>
-
-                    {{-- Tarjeta 4: Análisis de Partidas Magistrales --}}
-                    <div class="actividad-card" data-nombre="analisis de partidas magistrales" data-categoria="teoria" data-id="4" data-horario="Sábado · 15:00 - 16:30">
-                        <div class="actividad-nombre">Análisis de Partidas Magistrales</div>
-                        <span class="badge badge-azul" style="align-self:flex-start;">Teoría</span>
-                        <p style="font-size:13px; color:var(--texto-suave); margin:0;">Estudio de partidas históricas</p>
-                        <div class="actividad-info-row"><i class="ri-user-star-line"></i> Maestro Hernández</div>
-                        <div class="actividad-info-row"><i class="ri-calendar-line"></i> Sábado</div>
-                        <div class="actividad-info-row"><i class="ri-time-line"></i> 15:00 - 16:30</div>
-                        <div>
-                            <div class="cupo-label">
-                                <span>Cupo disponible</span>
-                                <span>14 / 15</span>
-                            </div>
-                            <div class="progress-wrap">
-                                <div class="progress-fill lleno" style="width:93%;"></div>
-                            </div>
-                        </div>
-                        <button class="btn-inscribirse inscribir">
-                            <i class="ri-checkbox-circle-line"></i> Inscribirse
-                        </button>
-                    </div>
-
-                </div>{{-- /actividades-grid --}}
+                    <!-- cargado por dashboardAlumnoExtraescolares.js -->
+                </div>
 
                 <p class="actividades-empty" id="extra-empty">No se encontraron actividades.</p>
 

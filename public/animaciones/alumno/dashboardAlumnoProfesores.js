@@ -3,9 +3,7 @@
 //  EGAU Chess | Portal del Estudiante | SCRUM-50
 // =============================================================
 
-document.addEventListener('DOMContentLoaded', () => {
-    cargarProfesores();
-});
+// NO llamar cargarProfesores() desde aquí — lo maneja dashboardAlumno.js en paralelo
 
 async function cargarProfesores() {
     const token = document.querySelector('meta[name="user-token"]')?.content;
