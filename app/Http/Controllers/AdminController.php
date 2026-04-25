@@ -261,13 +261,16 @@ class AdminController extends Controller
         $idRol   = $request->query('id_rol', '');  // solo personal
 
         $query = match($tipo) {
-            'alumno'   => Alumno::leftJoin('sede', 'alumno.id_sede', '=', 'sede.id_sede')
-                              ->select('alumno.*', 'sede.nombre as nombre_sede'),
-            'profesor' => Profesor::leftJoin('sede', 'profesor.id_sede', '=', 'sede.id_sede')
-                              ->select('profesor.*', 'sede.nombre as nombre_sede'),
-            'personal' => Personal::leftJoin('rol', 'personal.id_rol', '=', 'rol.id_rol')
-                              ->select('personal.*', 'rol.nombre as nombre_rol'),
-        };
+    'alumno'   => Alumno::leftJoin('sede', 'alumno.id_sede', '=', 'sede.id_sede')
+                      ->select('alumno.*', 'sede.nombre as nombre_sede')
+                      ->orderBy('alumno.id_alumno', 'asc'),
+    'profesor' => Profesor::leftJoin('sede', 'profesor.id_sede', '=', 'sede.id_sede')
+                      ->select('profesor.*', 'sede.nombre as nombre_sede')
+                      ->orderBy('profesor.id_profesor', 'asc'),
+    'personal' => Personal::leftJoin('rol', 'personal.id_rol', '=', 'rol.id_rol')
+                      ->select('personal.*', 'rol.nombre as nombre_rol')
+                      ->orderBy('personal.id_personal', 'asc'),
+                            };
 
         // Búsqueda de texto: nombre, apellidos, email
         if ($q !== '') {

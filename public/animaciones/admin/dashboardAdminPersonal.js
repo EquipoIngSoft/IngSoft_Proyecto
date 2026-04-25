@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     // Función principal: fetch al backend con filtros
-    const buscarBackend = () => {
+    const buscarBackend = window.buscarPersonalBackend = () => {
         const q = buscador ? buscador.value.trim().toLowerCase() : '';
         const idRol = document.querySelector('#dropdown-nivel-personal .selected-text')?.getAttribute('data-value') || '';
         const idSede = document.querySelector('#dropdown-sede-personal .selected-text')?.getAttribute('data-value') || '';

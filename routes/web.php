@@ -1,6 +1,7 @@
 <?php
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\PersonalProfileController;
 use App\Http\Middleware\VerificarToken;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -45,14 +46,17 @@ Route::post('/guardar-token', function (Request $request) {
 Route::middleware(VerificarToken::class)->group(function () {
     Route::get('/dashboardAdmin', function () {
         $alumnos = Alumno::leftJoin('sede', 'alumno.id_sede', '=', 'sede.id_sede')
-            ->select('alumno.*', 'sede.nombre as nombre_sede')
-            ->get();
-        $profesores = Profesor::leftJoin('sede', 'profesor.id_sede', '=', 'sede.id_sede')
-            ->select('profesor.*', 'sede.nombre as nombre_sede')
-            ->get();
-        $personal = Personal::leftJoin('rol', 'personal.id_rol', '=', 'rol.id_rol')
-            ->select('personal.*', 'rol.nombre as nombre_rol')
-            ->get();
+    ->select('alumno.*', 'sede.nombre as nombre_sede')
+    ->orderBy('alumno.id_alumno', 'asc')
+    ->get();
+$profesores = Profesor::leftJoin('sede', 'profesor.id_sede', '=', 'sede.id_sede')
+    ->select('profesor.*', 'sede.nombre as nombre_sede')
+    ->orderBy('profesor.id_profesor', 'asc')
+    ->get();
+$personal = Personal::leftJoin('rol', 'personal.id_rol', '=', 'rol.id_rol')
+    ->select('personal.*', 'rol.nombre as nombre_rol')
+    ->orderBy('personal.id_personal', 'asc')
+    ->get();
         $sedes = DB::table('sede')->where('estatus', true)->get(['id_sede', 'nombre']);
         $roles = DB::table('rol')->get(['id_rol', 'nombre']);
         return view('dashboardAdmin', compact('alumnos', 'profesores', 'personal', 'sedes', 'roles'));
@@ -71,4 +75,8 @@ Route::middleware(VerificarToken::class)->group(function () {
     Route::post('/admin/registrar', [AdminController::class, 'registrarUsuario']);
     Route::put('/admin/editar/{tipo}/{id}', [AdminController::class, 'editarUsuario']);
     Route::delete('/admin/eliminar/{tipo}/{id}', [AdminController::class, 'eliminarUsuario']);
+    Route::get('/personal/perfil', [PersonalProfileController::class, 'show']);
+    Route::put('/personal/perfil', [PersonalProfileController::class, 'update']);
+    Route::put('/personal/perfil/password', [PersonalProfileController::class, 'updatePassword']);
+    
 });
