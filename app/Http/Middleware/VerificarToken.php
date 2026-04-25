@@ -12,6 +12,9 @@ class VerificarToken
         $token = session('token');
 
         if (!$token) {
+            if ($request->expectsJson()) {
+                return response()->json(['error' => 'No autenticado'], 401);
+            }
             return redirect()->route('login');
         }
 
@@ -20,6 +23,9 @@ class VerificarToken
 
         if (!$tokenValido || ($tokenValido->expires_at && $tokenValido->expires_at < now())) {
             session()->forget('token');
+            if ($request->expectsJson()) {
+                return response()->json(['error' => 'Sesión expirada'], 401);
+            }
             return redirect()->route('login');
         }
 

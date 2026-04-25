@@ -3,9 +3,7 @@
 //  EGAU Chess | Portal del Estudiante | SCRUM-49
 // =============================================================
 
-document.addEventListener('DOMContentLoaded', () => {
-    cargarInicio();
-});
+// NO llamar cargarInicio() desde aquí — lo maneja dashboardAlumno.js en paralelo
 
 async function cargarInicio() {
     const token = document.querySelector('meta[name="user-token"]')?.content;
@@ -47,19 +45,16 @@ function pintarEncabezado(alumno) {
 }
 
 function pintarKPIs(alumno, nivel, puntajeSiguiente, gruposActivos, grupoNombre) {
-    // KPI Nivel — emoji + nombre
     const nivelBadge = document.querySelector('#section-inicio .kpi-badge');
     if (nivelBadge) nivelBadge.textContent = nivel.emoji + ' Nivel ' + nivel.numero + ' · ' + nivel.nombre;
 
     const kpiCards = document.querySelectorAll('#section-inicio .kpi-card');
 
-    // Emoji en el ícono del KPI de nivel
     if (kpiCards[0]) {
         const iconWrap = kpiCards[0].querySelector('.kpi-icon-wrap');
         if (iconWrap) iconWrap.innerHTML = `<span style="font-size:24px;">${nivel.emoji}</span>`;
     }
 
-    // KPI Puntos
     if (kpiCards[1]) {
         const val = kpiCards[1].querySelector('.kpi-value');
         const sub = kpiCards[1].querySelector('.kpi-sub');
@@ -67,7 +62,6 @@ function pintarKPIs(alumno, nivel, puntajeSiguiente, gruposActivos, grupoNombre)
         if (sub) sub.textContent = 'de ' + puntajeSiguiente;
     }
 
-    // KPI Grupo — nombre del curso
     if (kpiCards[2]) {
         const val = kpiCards[2].querySelector('.kpi-value');
         if (val) val.textContent = grupoNombre;

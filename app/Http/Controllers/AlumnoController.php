@@ -131,10 +131,185 @@ class AlumnoController extends Controller
             ],
             'nivel'                   => $nivel,
             'puntaje_siguiente_nivel' => $puntajeSiguiente,
-            'grupos_activos' => $gruposActivos,
-            'grupo_nombre'   => $grupoCurso ?? 'Sin grupo',
+            'grupos_activos'          => $gruposActivos,
+            'grupo_nombre'            => $grupoCurso ?? 'Sin grupo',
             'horarios'                => $horarios,
             'actividad_reciente'      => $actividad,
         ]);
+    }
+
+    public function profesores(Request $request)
+    {
+        $alumno = $request->user();
+
+        if (!$alumno instanceof Alumno) {
+            return response()->json(['message' => 'No autorizado'], 403);
+        }
+
+        $profesores = DB::table('profesor')
+            ->where('profesor.id_sede', $alumno->id_sede)
+            ->where('profesor.estatus', true)
+            ->select(
+                'profesor.id_profesor',
+                'profesor.nombre',
+                'profesor.apellido_p',
+                'profesor.apellido_m',
+                'profesor.email',
+                'profesor.telefono',
+                'profesor.puntaje'
+            )
+            ->get()
+            ->map(function ($p) {
+                $p->nombre_completo = trim($p->nombre . ' ' . $p->apellido_p . ' ' . ($p->apellido_m ?? ''));
+                $p->inicial = strtoupper(mb_substr($p->nombre, 0, 1));
+
+                $especialidades = DB::table('grupo')
+                    ->join('curso', 'grupo.id_curso', '=', 'curso.id_curso')
+                    ->where('grupo.id_profesor', $p->id_profesor)
+                    ->where('grupo.estatus', true)
+                    ->pluck('curso.nombre')
+                    ->unique()
+                    ->values();
+
+                $p->especialidades = $especialidades;
+                return $p;
+            });
+
+        return response()->json([
+            'profesores' => $profesores,
+        ]);
+    }
+
+    public function extraescolares(Request $request)
+    {
+        $alumno = $request->user();
+
+        if (!$alumno instanceof Alumno) {
+            return response()->json(['message' => 'No autorizado'], 403);
+        }
+
+        $inscritos = DB::table('inscripcionextraescolar')
+            ->where('id_alumno', $alumno->id_alumno)
+            ->where('status', true)
+            ->pluck('id_extraescolar')
+            ->toArray();
+
+        $misInscripciones = DB::table('inscripcionextraescolar')
+            ->join('extraescolar', 'inscripcionextraescolar.id_extraescolar', '=', 'extraescolar.id_extraescolar')
+            ->where('inscripcionextraescolar.id_alumno', $alumno->id_alumno)
+            ->where('inscripcionextraescolar.status', true)
+            ->select(
+                'extraescolar.id_extraescolar',
+                'extraescolar.nombre',
+                'extraescolar.ubicacion',
+                'extraescolar.fecha_inicio',
+                'extraescolar.fecha_fin'
+            )
+            ->get();
+
+        $catalogo = DB::table('extraescolar')
+            ->where('estatus', true)
+            ->where(function ($q) use ($inscritos) {
+                $q->whereRaw('cupo_actual < cupo_maximo')
+                  ->orWhereIn('id_extraescolar', $inscritos);
+            })
+            ->select(
+                'id_extraescolar',
+                'nombre',
+                'descripcion',
+                'ubicacion',
+                'fecha_inicio',
+                'fecha_fin',
+                'cupo_maximo',
+                'cupo_actual'
+            )
+            ->orderBy('nombre')
+            ->get()
+            ->map(function ($e) use ($inscritos) {
+                $e->inscrito        = in_array($e->id_extraescolar, $inscritos);
+                $e->cupo_lleno      = $e->cupo_actual >= $e->cupo_maximo;
+                $e->cupo_disponible = $e->cupo_maximo - $e->cupo_actual;
+                return $e;
+            });
+
+        return response()->json([
+            'mis_inscripciones' => $misInscripciones,
+            'catalogo'          => $catalogo,
+        ]);
+    }
+
+    public function inscribirExtraescolar(Request $request, $id)
+    {
+        $alumno = $request->user();
+
+        if (!$alumno instanceof Alumno) {
+            return response()->json(['message' => 'No autorizado'], 403);
+        }
+
+        $extra = DB::table('extraescolar')
+            ->where('id_extraescolar', $id)
+            ->where('estatus', true)
+            ->first();
+
+        if (!$extra) {
+            return response()->json(['message' => 'Actividad no encontrada'], 404);
+        }
+
+        if ($extra->cupo_actual >= $extra->cupo_maximo) {
+            return response()->json(['message' => 'cupo_lleno'], 409);
+        }
+
+        $yaInscrito = DB::table('inscripcionextraescolar')
+            ->where('id_alumno', $alumno->id_alumno)
+            ->where('id_extraescolar', $id)
+            ->where('status', true)
+            ->exists();
+
+        if ($yaInscrito) {
+            return response()->json(['message' => 'Ya estás inscrito en esta actividad'], 409);
+        }
+
+        DB::table('inscripcionextraescolar')->insert([
+            'id_alumno'        => $alumno->id_alumno,
+            'id_extraescolar'  => $id,
+            'fecha_asignacion' => now(),
+            'status'           => true,
+        ]);
+
+        DB::table('extraescolar')
+            ->where('id_extraescolar', $id)
+            ->increment('cupo_actual');
+
+        return response()->json(['message' => 'Inscripción exitosa']);
+    }
+
+    public function cancelarExtraescolar(Request $request, $id)
+    {
+        $alumno = $request->user();
+
+        if (!$alumno instanceof Alumno) {
+            return response()->json(['message' => 'No autorizado'], 403);
+        }
+
+        $inscripcion = DB::table('inscripcionextraescolar')
+            ->where('id_alumno', $alumno->id_alumno)
+            ->where('id_extraescolar', $id)
+            ->where('status', true)
+            ->first();
+
+        if (!$inscripcion) {
+            return response()->json(['message' => 'No estás inscrito en esta actividad'], 404);
+        }
+
+        DB::table('inscripcionextraescolar')
+            ->where('id_alumno', $alumno->id_alumno)
+            ->where('id_extraescolar', $id)
+            ->update(['status' => false]);
+
+        DB::table('extraescolar')
+            ->where('id_extraescolar', $id)
+            ->decrement('cupo_actual');
+
+        return response()->json(['message' => 'Inscripción cancelada']);
     }
 }

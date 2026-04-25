@@ -26,15 +26,20 @@
     <link rel="stylesheet" href="{{ asset('css/alumno/dashboardAlumnoMiPerfil.css') }}">
 
     <!-- Hojas de estilos — vistas fusionadas de la carpeta dashboardAlumno -->
-    <link rel="stylesheet" href="{{ asset('css/dashboardAlumno/dashboardAlumno.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/dashboardAlumno/inicio.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/dashboardAlumno/profesores.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/dashboardAlumno/extraescolares.css') }}">
-    {{-- CSS secciones fusionadas Mariana --}}
-    <link rel="stylesheet" href="{{ asset('css/dashboardAlumno/mi_info.css') }}">
+    {{-- CSS interacciones dinámicas Mariana --}}
+    {{-- (clases integradas en dashboardAlumno.css desde S-46) --}}
 </head>
 
 <body>
+
+    <div id="loading-screen" style="
+    position: fixed; inset: 0; z-index: 9999;
+    background-color: #f4f6f9;
+    display: flex; align-items: center; justify-content: center;
+    flex-direction: column; gap: 16px;">
+        <img src="{{ asset('Logos/LogoEgau.png') }}" style="width: 80px; opacity: 0.8;">
+        <span style="font-family:'Cinzel',serif; font-size: 13px; color: #888; letter-spacing: 3px;">CARGANDO...</span>
+    </div>
 
     <!-- ===================== SIDEBAR ===================== -->
     <aside class="sidebar" id="sidebar">
@@ -87,20 +92,14 @@
                         <span>Pagos</span>
                     </a>
                 </li>
-                <li class="nav-item" data-section="miPerfil">
-                    <a href="#">
-                        <i class="ri-user-line"></i>
-                        <span>Mi Perfil</span>
-                    </a>
-                </li>
             </ul>
         </nav>
 
         <!-- Opciones al fondo -->
         <div class="sidebar-footer">
             <a href="#" class="nav-footer-item nav-item" data-section="opciones">
-                <i class="ri-settings-3-line"></i>
-                <span>Opciones</span>
+                <i class="ri-user-line"></i>
+                <span>Mi Perfil</span>
             </a>
         </div>
 
@@ -121,15 +120,15 @@
                 <div class="profile-menu-wrapper" id="profile-menu">
                     <!-- Área clickeable (Nombre + Círculo) -->
                     <div class="profile-trigger">
-                        <span class="alumno-name-topbar">Ana García</span>
-                        <div class="avatar-topbar">A</div>
+                        <span class="alumno-name-topbar">—</span>
+                        <div class="avatar-topbar">—</div>
                     </div>
 
                     <!-- Menú desplegable flotante -->
                     <div class="profile-dropdown">
                         <div class="profile-header">
-                            <span class="profile-name">Ana García</span>
-                            <span class="profile-email">ana.garcia@egau.com</span>
+                            <span class="profile-name">—</span>
+                            <span class="profile-email">—</span>
                         </div>
                         <ul class="profile-options">
                             <li id="btn-config-perfil"><i class="ri-settings-3-line"></i> Configuración</li>
@@ -150,7 +149,7 @@
 
                 {{-- Encabezado --}}
                 <div class="page-header">
-                    <h1 class="page-title">Bienvenido, Ana García</h1>
+                    <h1 class="page-title">Bienvenido</h1>
                     <p class="page-subtitle">Aquí está tu resumen académico</p>
                 </div>
 
@@ -163,7 +162,7 @@
                         </div>
                         <div class="kpi-info">
                             <span class="kpi-label">Nivel Actual</span>
-                            <span class="kpi-badge">Nivel 5</span>
+                            <span class="kpi-badge">—</span>
                         </div>
                     </div>
 
@@ -173,7 +172,7 @@
                         </div>
                         <div class="kpi-info">
                             <span class="kpi-label">Puntos</span>
-                            <span class="kpi-value">1450</span>
+                            <span class="kpi-value">—</span>
                             <span class="kpi-sub">de 2000</span>
                         </div>
                     </div>
@@ -184,7 +183,7 @@
                         </div>
                         <div class="kpi-info">
                             <span class="kpi-label">Grupo</span>
-                            <span class="kpi-value">Grupo A</span>
+                            <span class="kpi-value">—</span>
                         </div>
                     </div>
 
@@ -200,36 +199,7 @@
                             Mi Horario de Clases
                         </div>
                         <div class="horario-list">
-                            <div class="horario-item">
-                                <div class="horario-dia">
-                                    Lunes
-                                    <span>14:00 - 15:30</span>
-                                </div>
-                                <div>
-                                    <div class="horario-materia">Táctica</div>
-                                    <div class="horario-aula">Aula 101</div>
-                                </div>
-                            </div>
-                            <div class="horario-item">
-                                <div class="horario-dia">
-                                    Miércoles
-                                    <span>14:00 - 15:30</span>
-                                </div>
-                                <div>
-                                    <div class="horario-materia">Estrategia</div>
-                                    <div class="horario-aula">Aula 101</div>
-                                </div>
-                            </div>
-                            <div class="horario-item">
-                                <div class="horario-dia">
-                                    Viernes
-                                    <span>16:00 - 17:00</span>
-                                </div>
-                                <div>
-                                    <div class="horario-materia">Ajedrez Avanzado</div>
-                                    <div class="horario-aula">Aula 203</div>
-                                </div>
-                            </div>
+                            <!-- cargado por dashboardAlumnoInicio.js -->
                         </div>
                     </div>
 
@@ -240,27 +210,7 @@
                             Actividad Reciente
                         </div>
                         <div class="actividad-list">
-                            <div class="actividad-item">
-                                <div class="actividad-dot dot-verde"></div>
-                                <div>
-                                    <div class="actividad-texto">Nuevo logro desbloqueado</div>
-                                    <div class="actividad-sub">Has alcanzado el Nivel 5 · hace 2 días</div>
-                                </div>
-                            </div>
-                            <div class="actividad-item">
-                                <div class="actividad-dot dot-azul"></div>
-                                <div>
-                                    <div class="actividad-texto">Pago registrado</div>
-                                    <div class="actividad-sub">Mensualidad de Febrero · hace 3 días</div>
-                                </div>
-                            </div>
-                            <div class="actividad-item">
-                                <div class="actividad-dot dot-morado"></div>
-                                <div>
-                                    <div class="actividad-texto">Clase completada</div>
-                                    <div class="actividad-sub">Táctica Avanzada · hace 1 semana</div>
-                                </div>
-                            </div>
+                            <!-- cargado por dashboardAlumnoInicio.js -->
                         </div>
                     </div>
 
@@ -597,17 +547,12 @@
                     <p class="page-subtitle">Inscríbete en actividades extraescolares y desarrolla tus habilidades</p>
                 </div>
 
-                {{-- Mis Inscripciones --}}
+{{-- Mis Inscripciones --}}
                 <div class="mis-inscripciones">
-                    <div class="mis-inscripciones-titulo">Mis Inscripciones</div>
-                    <div id="sin-inscripciones" style="display:none; font-size:14px; color:var(--texto-suave); padding:8px 0;">Sin inscripciones activas.</div>
-                    <div id="lista-mis-inscripciones"><div class="inscripcion-activa">
-                        <div>
-                            <div class="inscripcion-activa-nombre">Táctica y Estrategia</div>
-                            <div class="inscripcion-activa-horario">Lunes y Miércoles · 14:00 - 15:30</div>
-                        </div>
-                        <i class="ri-checkbox-circle-line inscripcion-activa-check"></i>
-                    </div></div>
+                    <div class="mis-inscripciones-titulo">MIS INSCRIPCIONES</div>
+                    <div id="lista-mis-inscripciones">
+                        <!-- cargado por dashboardAlumnoExtraescolares.js -->
+                    </div>
                 </div>
 
                 {{-- Buscador + Filtros --}}
@@ -616,106 +561,12 @@
                         <i class="ri-search-line"></i>
                         <input type="text" id="buscador-extra" placeholder="Buscar actividad...">
                     </div>
-                    <div class="filtros-categorias">
-                        <button class="btn-filtro activo" data-categoria="todas">Todas</button>
-                        <button class="btn-filtro" data-categoria="ajedrez">Ajedrez</button>
-                        <button class="btn-filtro" data-categoria="teoria">Teoría</button>
-                    </div>
                 </div>
 
                 {{-- Catálogo de actividades --}}
                 <div class="actividades-grid" id="actividades-grid">
-
-                    {{-- Tarjeta 1: Ajedrez Avanzado --}}
-                    <div class="actividad-card" data-nombre="ajedrez avanzado" data-categoria="ajedrez" data-id="1" data-horario="Martes y Jueves · 16:00 - 18:00">
-                        <div class="actividad-nombre">Ajedrez Avanzado</div>
-                        <span class="badge badge-naranja" style="align-self:flex-start;">Ajedrez</span>
-                        <p style="font-size:13px; color:var(--texto-suave); margin:0;">Entrenamiento intensivo para torneos</p>
-                        <div class="actividad-info-row"><i class="ri-user-star-line"></i> Maestro González</div>
-                        <div class="actividad-info-row"><i class="ri-calendar-line"></i> Martes y Jueves</div>
-                        <div class="actividad-info-row"><i class="ri-time-line"></i> 16:00 - 18:00</div>
-                        <div>
-                            <div class="cupo-label">
-                                <span>Cupo disponible</span>
-                                <span>12 / 15</span>
-                            </div>
-                            <div class="progress-wrap">
-                                <div class="progress-fill" style="width:80%;"></div>
-                            </div>
-                        </div>
-                        <button class="btn-inscribirse inscribir">
-                            <i class="ri-checkbox-circle-line"></i> Inscribirse
-                        </button>
-                    </div>
-
-                    {{-- Tarjeta 2: Táctica y Estrategia (inscrito) --}}
-                    <div class="actividad-card" data-nombre="tactica y estrategia" data-categoria="ajedrez" data-id="2" data-horario="Lunes y Miércoles · 14:00 - 15:30">
-                        <i class="ri-checkbox-circle-line actividad-card-check"></i>
-                        <div class="actividad-nombre">Táctica y Estrategia</div>
-                        <span class="badge badge-naranja" style="align-self:flex-start;">Ajedrez</span>
-                        <p style="font-size:13px; color:var(--texto-suave); margin:0;">Desarrollo de habilidades tácticas</p>
-                        <div class="actividad-info-row"><i class="ri-user-star-line"></i> Maestra Ramírez</div>
-                        <div class="actividad-info-row"><i class="ri-calendar-line"></i> Lunes y Miércoles</div>
-                        <div class="actividad-info-row"><i class="ri-time-line"></i> 14:00 - 15:30</div>
-                        <div>
-                            <div class="cupo-label">
-                                <span>Cupo disponible</span>
-                                <span>18 / 20</span>
-                            </div>
-                            <div class="progress-wrap">
-                                <div class="progress-fill" style="width:90%;"></div>
-                            </div>
-                        </div>
-                        <button class="btn-inscribirse cancelar">
-                            <i class="ri-close-circle-line"></i> Cancelar Inscripción
-                        </button>
-                    </div>
-
-                    {{-- Tarjeta 3: Finales de Partida --}}
-                    <div class="actividad-card" data-nombre="finales de partida" data-categoria="ajedrez" data-id="3" data-horario="Viernes · 17:00 - 18:30">
-                        <div class="actividad-nombre">Finales de Partida</div>
-                        <span class="badge badge-naranja" style="align-self:flex-start;">Ajedrez</span>
-                        <p style="font-size:13px; color:var(--texto-suave); margin:0;">Especialización en finales</p>
-                        <div class="actividad-info-row"><i class="ri-user-star-line"></i> Maestro López</div>
-                        <div class="actividad-info-row"><i class="ri-calendar-line"></i> Viernes</div>
-                        <div class="actividad-info-row"><i class="ri-time-line"></i> 17:00 - 18:30</div>
-                        <div>
-                            <div class="cupo-label">
-                                <span>Cupo disponible</span>
-                                <span>8 / 12</span>
-                            </div>
-                            <div class="progress-wrap">
-                                <div class="progress-fill" style="width:67%;"></div>
-                            </div>
-                        </div>
-                        <button class="btn-inscribirse inscribir">
-                            <i class="ri-checkbox-circle-line"></i> Inscribirse
-                        </button>
-                    </div>
-
-                    {{-- Tarjeta 4: Análisis de Partidas Magistrales --}}
-                    <div class="actividad-card" data-nombre="analisis de partidas magistrales" data-categoria="teoria" data-id="4" data-horario="Sábado · 15:00 - 16:30">
-                        <div class="actividad-nombre">Análisis de Partidas Magistrales</div>
-                        <span class="badge badge-azul" style="align-self:flex-start;">Teoría</span>
-                        <p style="font-size:13px; color:var(--texto-suave); margin:0;">Estudio de partidas históricas</p>
-                        <div class="actividad-info-row"><i class="ri-user-star-line"></i> Maestro Hernández</div>
-                        <div class="actividad-info-row"><i class="ri-calendar-line"></i> Sábado</div>
-                        <div class="actividad-info-row"><i class="ri-time-line"></i> 15:00 - 16:30</div>
-                        <div>
-                            <div class="cupo-label">
-                                <span>Cupo disponible</span>
-                                <span>14 / 15</span>
-                            </div>
-                            <div class="progress-wrap">
-                                <div class="progress-fill lleno" style="width:93%;"></div>
-                            </div>
-                        </div>
-                        <button class="btn-inscribirse inscribir">
-                            <i class="ri-checkbox-circle-line"></i> Inscribirse
-                        </button>
-                    </div>
-
-                </div>{{-- /actividades-grid --}}
+                    <!-- cargado por dashboardAlumnoExtraescolares.js -->
+                </div>
 
                 <p class="actividades-empty" id="extra-empty">No se encontraron actividades.</p>
 
@@ -746,8 +597,8 @@
 
                         <div style="width: 100%; display: flex; flex-direction: column; gap: 8px;">
                             <div style="display: flex; justify-content: space-between; font-size: 14px; font-weight: 600;">
-                                <span style="color: var(--naranja);">1200 XP</span>
-                                <span style="color: var(--texto-suave);">1500 XP (Nivel 6)</span>
+                                <span style="color: var(--naranja);">1200</span>
+                                <span style="color: var(--texto-suave);">1500 (Nivel 6)</span>
                             </div>
                             <div class="progress-wrap" style="height: 12px; border-radius: 10px;">
                                 <div class="progress-fill" style="width: 80%; border-radius: 10px;"></div>
@@ -768,7 +619,7 @@
                                 </div>
                                 <div>
                                     <p style="font-size: 13px; color: var(--texto-suave); margin: 0 0 4px 0;">Puntos Obtenidos</p>
-                                    <h4 style="font-size: 20px; font-weight: 700; color: var(--texto); margin: 0;">+150 XP</h4>
+                                    <h4 style="font-size: 20px; font-weight: 700; color: var(--texto); margin: 0;">+150</h4>
                                 </div>
                             </div>
 
@@ -844,25 +695,25 @@
                                     <td style="padding: 16px; font-weight: 700; color: #d4af37;"><i class="ri-medal-fill"></i> 1</td>
                                     <td style="padding: 16px; font-weight: 500; color: var(--texto);">Daniela Paz Alfaro</td>
                                     <td style="padding: 16px;"><span class="badge badge-naranja">Nivel 6</span></td>
-                                    <td style="padding: 16px; text-align: right; font-weight: 600; color: var(--texto);">1650 XP</td>
+                                    <td style="padding: 16px; text-align: right; font-weight: 600; color: var(--texto);">1650</td>
                                 </tr>
                                 <tr style="border-bottom: 1px solid var(--borde);">
                                     <td style="padding: 16px; font-weight: 700; color: #c0c0c0;"><i class="ri-medal-fill"></i> 2</td>
                                     <td style="padding: 16px; font-weight: 500; color: var(--texto);">Jose Alejandro Aguilar Martinez</td>
                                     <td style="padding: 16px;"><span class="badge badge-naranja">Nivel 6</span></td>
-                                    <td style="padding: 16px; text-align: right; font-weight: 600; color: var(--texto);">1520 XP</td>
+                                    <td style="padding: 16px; text-align: right; font-weight: 600; color: var(--texto);">1520</td>
                                 </tr>
                                 <tr style="border-bottom: 1px solid var(--borde);">
                                     <td style="padding: 16px; font-weight: 700; color: #cd7f32;"><i class="ri-medal-fill"></i> 3</td>
                                     <td style="padding: 16px; font-weight: 500; color: var(--texto);">Carlos Mendoza</td>
                                     <td style="padding: 16px;"><span class="badge badge-naranja">Nivel 5</span></td>
-                                    <td style="padding: 16px; text-align: right; font-weight: 600; color: var(--texto);">1300 XP</td>
+                                    <td style="padding: 16px; text-align: right; font-weight: 600; color: var(--texto);">1300</td>
                                 </tr>
                                 <tr style="background-color: var(--naranja-light); border-left: 4px solid var(--naranja); border-bottom: 1px solid var(--borde);">
                                     <td style="padding: 16px; font-weight: 700; color: var(--naranja);">4</td>
                                     <td style="padding: 16px; font-weight: 700; color: var(--naranja);">Ana García (Tú)</td>
                                     <td style="padding: 16px;"><span class="badge badge-naranja">Nivel 5</span></td>
-                                    <td style="padding: 16px; text-align: right; font-weight: 700; color: var(--naranja);">1200 XP</td>
+                                    <td style="padding: 16px; text-align: right; font-weight: 700; color: var(--naranja);">1200</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -918,7 +769,7 @@
                                 </div>
                             </div>
                             <div style="margin-top: auto; padding-top: 12px;">
-                                <button class="btn-inscribirse" style="background-color: var(--naranja-light); color: var(--naranja); border: 1px solid rgba(224, 92, 42, 0.2);">
+                                <button class="btn-inscribirse" style="background-color: var(--naranja-light); color: var(--naranja);">
                                     Ir al curso <i class="ri-arrow-right-line"></i>
                                 </button>
                             </div>
@@ -942,7 +793,7 @@
                                 </div>
                             </div>
                             <div style="margin-top: auto; padding-top: 12px;">
-                                <button class="btn-inscribirse" style="background-color: var(--naranja-light); color: var(--naranja); border: 1px solid rgba(224, 92, 42, 0.2);">
+                                <button class="btn-inscribirse" style="background-color: var(--naranja-light); color: var(--naranja);">
                                     Ir al curso <i class="ri-arrow-right-line"></i>
                                 </button>
                             </div>
@@ -1087,13 +938,28 @@
 
 
         <!-- =============================================
-             SECCIÓN: MI PERFIL
-             Responsable: Mariana
+             SECCIÓN: MI PERFIL (stub — contenido movido a Opciones S-46)
              ============================================= -->
         <div id="section-miPerfil" class="section-content" style="display:none;">
             <div class="page-content">
+                <div class="stub-placeholder">
+                    <i class="ri-user-line"></i>
+                    <span>Usa "Mi Perfil" en la parte inferior del menú lateral.</span>
+                </div>
+            </div>
+        </div>
+        <!-- /SECCIÓN MI PERFIL -->
+
+
+        <!-- =============================================
+             SECCIÓN: MI PERFIL / OPCIONES
+             S-46: recibe contenido de Mi Perfil
+             ============================================= -->
+        <div id="section-opciones" class="section-content" style="display:none;">
+            <div class="page-content">
+
                 <div class="page-header">
-                    <h1 class="page-title">Configuración de Perfil</h1>
+                    <h1 class="page-title">Mi Perfil</h1>
                     <p class="page-subtitle">Gestiona tu información personal, académica y de seguridad.</p>
                 </div>
 
@@ -1109,7 +975,7 @@
                             </div>
                             <h2 style="margin: 0; font-size: 20px; color: var(--texto);">Ana García</h2>
                             <p style="color: var(--texto-suave); font-size: 14px; margin: 4px 0 20px;">Estudiante de Nivel 5</p>
-                            <button class="btn-inscribirse" style="background-color: var(--naranja-light); color: var(--naranja); border: 1px solid rgba(224,92,42,0.2); padding: 8px 16px; border-radius: 8px;">Editar Foto</button>
+                            <button class="btn-inscribirse" style="width: auto; padding: 8px 20px;">Editar Foto</button>
                         </div>
 
                         <div class="card" style="padding: 24px;">
@@ -1121,7 +987,7 @@
                                 </div>
                                 <div style="display: flex; justify-content: space-between;">
                                     <span style="color: var(--texto-suave); font-size: 14px;">Puntos Totales:</span>
-                                    <span style="font-weight: 600; color: var(--texto);">1,200 XP</span>
+                                    <span style="font-weight: 600; color: var(--texto);">1,200</span>
                                 </div>
                                 <div style="display: flex; justify-content: space-between;">
                                     <span style="color: var(--texto-suave); font-size: 14px;">Profesor:</span>
@@ -1141,23 +1007,23 @@
                             <form id="form-personal" style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
                                 <div style="display: flex; flex-direction: column; gap: 8px;">
                                     <label style="font-size: 13px; font-weight: 600; color: var(--texto-suave);">Nombre Completo</label>
-                                    <input type="text" value="Ana García" disabled style="padding: 10px; border: 1px solid var(--borde); border-radius: 8px; background: #f9f9f9;">
+                                    <input type="text" value="Ana García" disabled style="padding: 10px; border: 1px solid var(--borde); border-radius: 8px; background: #f9f9f9; font-family: 'Inter', sans-serif;">
                                 </div>
                                 <div style="display: flex; flex-direction: column; gap: 8px;">
                                     <label style="font-size: 13px; font-weight: 600; color: var(--texto-suave);">Correo Electrónico</label>
-                                    <input type="email" value="ana.garcia@mail.com" disabled class="perfil-editable" style="padding: 10px; border: 1px solid var(--borde); border-radius: 8px;">
+                                    <input type="email" value="ana.garcia@mail.com" disabled class="perfil-editable" style="padding: 10px; border: 1px solid var(--borde); border-radius: 8px; font-family: 'Inter', sans-serif;">
                                 </div>
                                 <div style="display: flex; flex-direction: column; gap: 8px;">
                                     <label style="font-size: 13px; font-weight: 600; color: var(--texto-suave);">Teléfono</label>
-                                    <input type="text" value="55 1234 5678" disabled class="perfil-editable" style="padding: 10px; border: 1px solid var(--borde); border-radius: 8px;">
+                                    <input type="text" value="55 1234 5678" disabled class="perfil-editable" style="padding: 10px; border: 1px solid var(--borde); border-radius: 8px; font-family: 'Inter', sans-serif;">
                                 </div>
                                 <div style="display: flex; flex-direction: column; gap: 8px;">
                                     <label style="font-size: 13px; font-weight: 600; color: var(--texto-suave);">Fecha de Nacimiento</label>
-                                    <input type="date" value="2005-06-15" disabled class="perfil-editable" style="padding: 10px; border: 1px solid var(--borde); border-radius: 8px;">
+                                    <input type="date" value="2005-06-15" disabled class="perfil-editable" style="padding: 10px; border: 1px solid var(--borde); border-radius: 8px; font-family: 'Inter', sans-serif;">
                                 </div>
                                 <div style="display: flex; flex-direction: column; gap: 8px;">
                                     <label style="font-size: 13px; font-weight: 600; color: var(--texto-suave);">Fecha de Ingreso</label>
-                                    <input type="text" value="12 Octubre 2024" disabled style="padding: 10px; border: 1px solid var(--borde); border-radius: 8px; background: #f9f9f9;">
+                                    <input type="text" value="12 Octubre 2024" disabled style="padding: 10px; border: 1px solid var(--borde); border-radius: 8px; background: #f9f9f9; font-family: 'Inter', sans-serif;">
                                 </div>
                                 <div style="display: flex; flex-direction: column; gap: 8px; justify-content: flex-end;">
                                     <button type="button" id="btnGuardarPerfil" class="btn-inscribirse inscribir" style="display: none;">Guardar Cambios</button>
@@ -1192,17 +1058,19 @@
                             <form id="formPassword" style="display: flex; flex-direction: column; gap: 16px; max-width: 400px;">
                                 <div style="display: flex; flex-direction: column; gap: 8px;">
                                     <label style="font-size: 13px; font-weight: 600; color: var(--texto-suave);">Contraseña Actual</label>
-                                    <input type="password" placeholder="••••••••" style="padding: 10px; border: 1px solid var(--borde); border-radius: 8px;">
+                                    <input type="password" placeholder="••••••••" style="padding: 10px; border: 1px solid var(--borde); border-radius: 8px; font-family: 'Inter', sans-serif;">
                                 </div>
                                 <div style="display: flex; flex-direction: column; gap: 8px;">
                                     <label style="font-size: 13px; font-weight: 600; color: var(--texto-suave);">Nueva Contraseña</label>
-                                    <input type="password" id="new_pass" placeholder="Mínimo 8 caracteres" style="padding: 10px; border: 1px solid var(--borde); border-radius: 8px;">
+                                    <input type="password" id="new_pass" placeholder="Mínimo 8 caracteres" style="padding: 10px; border: 1px solid var(--borde); border-radius: 8px; font-family: 'Inter', sans-serif;">
                                 </div>
                                 <div style="display: flex; flex-direction: column; gap: 8px;">
                                     <label style="font-size: 13px; font-weight: 600; color: var(--texto-suave);">Confirmar Nueva Contraseña</label>
-                                    <input type="password" id="confirm_pass" placeholder="Repite la contraseña" style="padding: 10px; border: 1px solid var(--borde); border-radius: 8px;">
+                                    <input type="password" id="confirm_pass" placeholder="Repite la contraseña" style="padding: 10px; border: 1px solid var(--borde); border-radius: 8px; font-family: 'Inter', sans-serif;">
                                 </div>
-                                <button type="button" onclick="validarPassword()" class="btn-inscribirse cancelar" style="margin-top: 8px;">Actualizar Contraseña</button>
+                                <button type="button" onclick="validarPassword()" class="btn-inscribirse cancelar" style="width: auto; align-self: flex-start; padding: 10px 24px;">
+                                    Actualizar Contraseña
+                                </button>
                             </form>
                         </div>
 
@@ -1211,25 +1079,7 @@
 
             </div>
         </div>
-        <!-- /SECCIÓN MI PERFIL -->
-
-
-        <!-- =============================================
-             SECCIÓN: OPCIONES
-             ============================================= -->
-        <div id="section-opciones" class="section-content" style="display:none;">
-            <div class="page-content">
-                <div class="page-header">
-                    <h1 class="page-title">Opciones</h1>
-                    <p class="page-subtitle">Configuración y preferencias de tu cuenta</p>
-                </div>
-                <div class="card" style="min-height:400px; display:flex; align-items:center; justify-content:center; flex-direction:column; gap:16px; color:var(--texto-suave);">
-                    <i class="ri-settings-3-line" style="font-size:48px; color:var(--borde);"></i>
-                    <p style="font-size:15px;">Sección en construcción</p>
-                </div>
-            </div>
-        </div>
-        <!-- /SECCIÓN OPCIONES -->
+        <!-- /SECCIÓN MI PERFIL / OPCIONES -->
 
 
     </main>
@@ -1246,10 +1096,5 @@
     <script src="{{ asset('animaciones/alumno/dashboardAlumnoMisGrupos.js') }}"></script>
     <script src="{{ asset('animaciones/alumno/dashboardAlumnoPagos.js') }}"></script>
     <script src="{{ asset('animaciones/alumno/dashboardAlumnoMiPerfil.js') }}"></script>
-    {{-- JS vistas fusionadas --}}
-    <script src="{{ asset('animaciones/alumno/extraescolares.js') }}"></script>
-    {{-- JS secciones fusionadas Mariana --}}
-    <script src="{{ asset('animaciones/alumno/mi_info.js') }}"></script>
-
 </body>
 </html>

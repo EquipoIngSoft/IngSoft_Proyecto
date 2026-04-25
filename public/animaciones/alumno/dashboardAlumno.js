@@ -4,7 +4,7 @@
 //  EGAU Chess | Portal del Estudiante
 // ==============================================
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
 
     // ---- Toggle del sidebar ----
     const menuToggle  = document.getElementById('menu-toggle');
@@ -21,7 +21,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
-        // Cerrar sidebar al hacer clic fuera en móvil
         document.addEventListener('click', (e) => {
             if (window.innerWidth <= 768 &&
                 !sidebar.contains(e.target) &&
@@ -31,63 +30,52 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // ---- Navegación: resaltar sección activa y cambiar contenido ----
+    // ---- Navegación ----
     document.querySelectorAll('.nav-item').forEach(item => {
         item.addEventListener('click', (e) => {
             e.preventDefault();
 
-            // 1. Cambiar clase activa en el menú
             document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
             item.classList.add('active');
 
-            // 2. Ocultar todas las secciones
             document.querySelectorAll('.section-content').forEach(sec => {
                 sec.style.display = 'none';
             });
 
-            // 3. Mostrar la sección relacionada
             const sectionId = item.getAttribute('data-section');
             const target = document.getElementById('section-' + sectionId);
             if (target) target.style.display = 'block';
 
-            // En móvil, cerrar sidebar al navegar
             if (window.innerWidth <= 768 && sidebar) {
                 sidebar.classList.remove('open');
             }
         });
     });
 
-    // ---- Menú de Perfil (Cuenta del Alumno) ----
+    // ---- Menú de Perfil ----
     const profileMenu = document.getElementById('profile-menu');
 
     if (profileMenu) {
         const profileTrigger = profileMenu.querySelector('.profile-trigger');
 
-        // Abrir / Cerrar al hacer clic en el nombre u avatar
         profileTrigger.addEventListener('click', (e) => {
-            e.stopPropagation(); // Prevenir que el listener global lo cierre de inmediato
+            e.stopPropagation();
             profileMenu.classList.toggle('open');
         });
 
-        // Cerrar si se da un clic fuera
         document.addEventListener('click', () => {
             profileMenu.classList.remove('open');
         });
 
-        // Botón Configuración en el menú perfil => Lleva a la sección Opciones
         const btnConfigPerfil = document.getElementById('btn-config-perfil');
         if (btnConfigPerfil) {
             btnConfigPerfil.addEventListener('click', () => {
-                // Simulamos un click en el enlace Opciones nativo de la barra lateral
                 const navOpciones = document.querySelector('.nav-footer-item[data-section="opciones"]');
-                if (navOpciones) {
-                    navOpciones.click();
-                }
+                if (navOpciones) navOpciones.click();
                 profileMenu.classList.remove('open');
             });
         }
 
-        // Botón Cerrar Sesión
         const btnLogout = document.getElementById('btn-logout');
         if (btnLogout) {
             btnLogout.addEventListener('click', async () => {
@@ -95,7 +83,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     const csrf  = document.querySelector('meta[name="csrf-token"]')?.content;
                     const token = document.querySelector('meta[name="user-token"]')?.content;
 
-                    // Borrar token de Sanctum en la BD
                     await fetch('/api/logout', {
                         method: 'POST',
                         headers: {
@@ -104,7 +91,6 @@ document.addEventListener('DOMContentLoaded', () => {
                         }
                     });
 
-                    // Limpiar sesión en servidor
                     await fetch('/guardar-token', {
                         method: 'POST',
                         headers: {
@@ -122,6 +108,30 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             });
         }
+    }
+
+    // ---- Carga paralela de TODAS las secciones ----
+    // Cada función es definida en su propio JS — si no existe, se ignora
+    const cargas = [
+        // Secciones de Angel
+        typeof cargarInicio         === 'function' ? cargarInicio()         : Promise.resolve(),
+        typeof cargarProfesores     === 'function' ? cargarProfesores()     : Promise.resolve(),
+        typeof cargarExtraescolares === 'function' ? cargarExtraescolares() : Promise.resolve(),
+        // Secciones de Mariana — se activan cuando ella implemente sus funciones
+        typeof cargarMiNivel        === 'function' ? cargarMiNivel()        : Promise.resolve(),
+        typeof cargarMisGrupos      === 'function' ? cargarMisGrupos()      : Promise.resolve(),
+        typeof cargarPagos          === 'function' ? cargarPagos()          : Promise.resolve(),
+        typeof cargarOpciones       === 'function' ? cargarOpciones()       : Promise.resolve(),
+    ];
+
+    try {
+        await Promise.all(cargas);
+    } catch (err) {
+        console.error('[Dashboard] Error en carga inicial:', err);
+    } finally {
+        // Ocultar pantalla de carga cuando todo esté listo
+        const loading = document.getElementById('loading-screen');
+        if (loading) loading.style.display = 'none';
     }
 
 });
