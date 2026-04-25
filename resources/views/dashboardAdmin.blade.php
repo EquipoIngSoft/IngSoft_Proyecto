@@ -24,7 +24,6 @@
     <link rel="stylesheet" href="{{ asset('css/admin/dashboardAdminNiveles.css') }}">
     <link rel="stylesheet" href="{{ asset('css/admin/dashboardAdminRoles.css') }}">
 </head>
-
 <body>
 
     <!-- ===================== SIDEBAR ===================== -->
@@ -106,7 +105,7 @@
         <div class="sidebar-footer">
             <a href="#" class="nav-footer-item nav-item" data-section="opciones">
                 <i class="ri-settings-3-line"></i>
-                <span>Opciones</span>
+                <span>Configuración</span>
             </a>
         </div>
 
@@ -1499,17 +1498,9 @@
             </div>
         </div>
 
-        <!-- Nueva sección Opciones / Configuración -->
-        <section class="section-content" id="section-opciones" style="display: none;">
-            <div class="section-header">
-                <h1 class="section-title">Configuración</h1>
-            </div>
-            <div class="card"
-                style="min-height: 480px; display: flex; align-items: center; justify-content: center; color: var(--texto-suave);">
-                Página en construcción (Ajustes del sistema)
-            </div>
+<section class="section-content" id="section-opciones" style="display: none;">
+            @include('admin.partials.configuracion')
         </section>
-
     </main>
 
     <!-- Sedes disponibles (dinámicas desde DB) -->
@@ -1538,6 +1529,9 @@
     <script src="{{ asset('animaciones/admin/dashboardAdminNiveles.js') }}"></script>
     <!-- JS Sección Roles -->
     <script src="{{ asset('animaciones/admin/dashboardAdminRoles.js') }}"></script>
+    <!-- JS Sección Configuración -->
+    <script src="{{ asset('animaciones/admin/dashboardAdminPerfil.js') }}"></script>
+
 
 </body>
 
