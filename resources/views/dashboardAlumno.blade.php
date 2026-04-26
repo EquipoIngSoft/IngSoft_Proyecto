@@ -173,17 +173,7 @@
                         <div class="kpi-info">
                             <span class="kpi-label">Puntos</span>
                             <span class="kpi-value">—</span>
-                            <span class="kpi-sub">de 2000</span>
-                        </div>
-                    </div>
-
-                    <div class="kpi-card">
-                        <div class="kpi-icon-wrap kpi-icon-azul">
-                            <i class="ri-group-line"></i>
-                        </div>
-                        <div class="kpi-info">
-                            <span class="kpi-label">Grupo</span>
-                            <span class="kpi-value">—</span>
+                            <span class="kpi-sub">de 0</span>
                         </div>
                     </div>
 
