@@ -73,19 +73,18 @@ class AlumnoController extends Controller
         $grupos = DB::table('inscripcion')
             ->join('grupo', 'inscripcion.id_grupo', '=', 'grupo.id_grupo')
             ->join('curso', 'grupo.id_curso', '=', 'curso.id_curso')
+            ->join('profesor', 'grupo.id_profesor', '=', 'profesor.id_profesor')
             ->where('inscripcion.id_alumno', $alumno->id_alumno)
             ->where('inscripcion.estatus', true)
             ->select(
                 'curso.nombre as curso',
                 'grupo.codigo_grupo',
-                'grupo.periodo'
+                'grupo.periodo',
+                'grupo.fecha_inicio',
+                'grupo.fecha_fin',
+                DB::raw("CONCAT(profesor.nombre, ' ', profesor.apellido_p) as profesor")
             )
             ->get();
-
-        $gruposActivos = DB::table('inscripcion')
-            ->where('id_alumno', $alumno->id_alumno)
-            ->where('estatus', true)
-            ->count();
 
         $actInscripcion = DB::table('inscripcion')
             ->join('grupo', 'inscripcion.id_grupo', '=', 'grupo.id_grupo')
@@ -136,9 +135,8 @@ class AlumnoController extends Controller
             ],
             'nivel'                   => $nivel,
             'puntaje_siguiente_nivel' => $puntajeSiguiente,
-            'grupos_activos' => $gruposActivos,
-            'grupos'         => $grupos,
             'horarios'                => $horarios,
+            'grupos'                  => $grupos,
             'actividad_reciente'      => $actividad,
         ]);
     }
