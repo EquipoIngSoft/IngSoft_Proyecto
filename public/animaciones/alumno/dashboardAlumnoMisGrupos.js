@@ -187,14 +187,19 @@
         }
     };
 
+    window.cargarMisGrupos = async function() {
+        if (gruposCargados) return;
+        await cargarGrupos();
+        gruposCargados = true;
+    };
+
     const section = document.getElementById('section-misGrupos');
     if (!section) return;
 
     const observer = new MutationObserver(function (mutations) {
         mutations.forEach(function (m) {
             if (m.attributeName === 'style' && section.style.display !== 'none' && !gruposCargados) {
-                cargarGrupos();
-                gruposCargados = true;
+                window.cargarMisGrupos();
             }
         });
     });
@@ -202,7 +207,6 @@
     observer.observe(section, { attributes: true });
 
     if (section.style.display !== 'none' && !gruposCargados) {
-        cargarGrupos();
-        gruposCargados = true;
+        window.cargarMisGrupos();
     }
 })();

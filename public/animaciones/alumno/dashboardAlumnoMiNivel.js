@@ -36,9 +36,9 @@
 
     function cargarDatosNivel() {
         const token = document.querySelector('meta[name="user-token"]')?.content;
-        if (!token) return;
+        if (!token) return Promise.resolve();
 
-        fetch('/alumno/perfil', {
+        return fetch('/alumno/perfil', {
             headers: {
                 'Authorization': 'Bearer ' + token,
                 'Accept': 'application/json'
@@ -77,6 +77,11 @@
         .catch(err => console.error('Error al cargar nivel:', err));
     }
 
+    window.cargarMiNivel = async function() {
+        initLogrosToggle();
+        await cargarDatosNivel();
+    };
+
     // Ejecutar cuando el section-miNivel se hace visible
     // (el SPA lo muestra/oculta cambiando display)
     const section = document.getElementById('section-miNivel');
@@ -85,8 +90,7 @@
     function initMiNivel() {
         if (section.dataset.perfilInit === '1') return;
         section.dataset.perfilInit = '1';
-        initLogrosToggle();
-        cargarDatosNivel();
+        window.cargarMiNivel();
     }
 
     const observer = new MutationObserver(function (mutations) {

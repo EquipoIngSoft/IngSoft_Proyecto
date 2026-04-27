@@ -63,7 +63,7 @@ window.validarPassword = function () {
 (function () {
 
     function cargarPerfil() {
-        fetch('/alumno/perfil', {
+        return fetch('/alumno/perfil', {
             headers: headers
         })
             .then(res => res.json())
@@ -122,6 +122,11 @@ window.validarPassword = function () {
             .catch(err => console.error('Error al cargar perfil:', err));
     }
 
+    window.cargarOpciones = async function() {
+        await cargarPerfil();
+        initMiPerfil();
+    };
+
     function initMiPerfil() {
         const section = document.getElementById('section-opciones');
         if (!section) return;
@@ -129,7 +134,7 @@ window.validarPassword = function () {
         if (section.dataset.perfilInit === '1') return;
         section.dataset.perfilInit = '1';
 
-        cargarPerfil();
+        window.cargarOpciones();
 
         const btnEdit = section.querySelector('#btnEditProfile');
         const btnSave = section.querySelector('#btnGuardarPerfil');
