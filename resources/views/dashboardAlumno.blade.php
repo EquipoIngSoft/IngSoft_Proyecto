@@ -131,7 +131,6 @@
                             <span class="profile-email">—</span>
                         </div>
                         <ul class="profile-options">
-                            <li id="btn-config-perfil"><i class="ri-settings-3-line"></i> Configuración</li>
                             <li id="btn-logout" class="text-danger"><i class="ri-logout-box-r-line"></i> Cerrar sesión</li>
                         </ul>
                     </div>
@@ -591,20 +590,19 @@
 
                     <div class="card" style="display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 32px 24px; border-top: 4px solid var(--naranja); align-self: start;">
                         <div style="width: 80px; height: 80px; background-color: var(--naranja-light); border-radius: 50%; display: flex; justify-content: center; align-items: center; margin-bottom: 16px;">
-                            <i class="ri-medal-fill" style="font-size: 40px; color: var(--naranja);"></i>
+                            <span id="nivel_icono" style="font-size: 48px; color: var(--naranja); visibility: hidden;"></span>
                         </div>
-                        <h2 style="font-size: 28px; font-weight: 700; color: var(--texto); margin: 0 0 8px 0; font-family: 'Cinzel', serif;">Nivel 5</h2>
-                        <p style="font-size: 15px; color: var(--texto-suave); margin: 0 0 24px 0;">Estratega Intermedio</p>
+                        <h2 id="nivel_nombre" style="font-size: 28px; font-weight: 700; color: var(--texto); margin: 0 0 8px 0; font-family: 'Cinzel', serif; visibility: hidden;">—</h2>
+                        <p id="nivel_desc" style="font-size: 15px; color: var(--texto-suave); margin: 0 0 24px 0; visibility: hidden;">—</p>
 
                         <div style="width: 100%; display: flex; flex-direction: column; gap: 8px;">
                             <div style="display: flex; justify-content: space-between; font-size: 14px; font-weight: 600;">
-                                <span style="color: var(--naranja);">1200</span>
-                                <span style="color: var(--texto-suave);">1500 (Nivel 6)</span>
+                                <span id="nivel_siguiente_texto" style="color: var(--texto-suave);">Progreso a Torre</span>
+                                <span id="nivel_progreso" style="color: var(--naranja);">0 / 200</span>
                             </div>
                             <div class="progress-wrap" style="height: 12px; border-radius: 10px;">
-                                <div class="progress-fill" style="width: 80%; border-radius: 10px;"></div>
+                                <div id="progress-fill-nivel" class="progress-fill" style="width: 0%; border-radius: 10px;"></div>
                             </div>
-                            <span style="font-size: 13px; color: var(--texto-suave); margin-top: 4px;">Faltan 300 puntos para subir de nivel</span>
                         </div>
                     </div>
 
@@ -750,56 +748,8 @@
                         <i class="ri-bookmark-3-line" style="color: var(--naranja);"></i> Grupos Inscritos
                     </h2>
 
-                    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 24px;">
-
-                        {{-- Grupo Inscrito 1 --}}
-                        <div class="card" style="display: flex; flex-direction: column; gap: 16px; border-top: 4px solid var(--verde);">
-                            <div style="display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 1px solid var(--borde); padding-bottom: 12px;">
-                                <h3 style="font-size: 18px; font-weight: 600; color: var(--texto); margin: 0;">Estrategia Intermedia</h3>
-                                <span class="badge badge-verde" style="display: flex; gap: 4px; align-items: center;"><i class="ri-check-line"></i> Inscrito</span>
-                            </div>
-                            <div style="display: flex; flex-direction: column; gap: 10px; font-size: 14px; color: var(--texto-suave);">
-                                <div style="display: flex; align-items: center; gap: 10px;">
-                                    <i class="ri-user-line" style="font-size: 16px; color: var(--naranja);"></i> <span>Mtra. Elena Rojas</span>
-                                </div>
-                                <div style="display: flex; align-items: center; gap: 10px;">
-                                    <i class="ri-time-line" style="font-size: 16px; color: var(--naranja);"></i> <span>Mar y Jue, 16:00 - 17:30</span>
-                                </div>
-                                <div style="display: flex; align-items: center; gap: 10px;">
-                                    <i class="ri-map-pin-line" style="font-size: 16px; color: var(--naranja);"></i> <span>Aula 204</span>
-                                </div>
-                            </div>
-                            <div style="margin-top: auto; padding-top: 12px;">
-                                <button class="btn-inscribirse" style="background-color: var(--naranja-light); color: var(--naranja);">
-                                    Ir al curso <i class="ri-arrow-right-line"></i>
-                                </button>
-                            </div>
-                        </div>
-
-                        {{-- Grupo Inscrito 2 --}}
-                        <div class="card" style="display: flex; flex-direction: column; gap: 16px; border-top: 4px solid var(--verde);">
-                            <div style="display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 1px solid var(--borde); padding-bottom: 12px;">
-                                <h3 style="font-size: 18px; font-weight: 600; color: var(--texto); margin: 0;">Finales Básicos</h3>
-                                <span class="badge badge-verde" style="display: flex; gap: 4px; align-items: center;"><i class="ri-check-line"></i> Inscrito</span>
-                            </div>
-                            <div style="display: flex; flex-direction: column; gap: 10px; font-size: 14px; color: var(--texto-suave);">
-                                <div style="display: flex; align-items: center; gap: 10px;">
-                                    <i class="ri-user-line" style="font-size: 16px; color: var(--naranja);"></i> <span>Mtro. Roberto M.</span>
-                                </div>
-                                <div style="display: flex; align-items: center; gap: 10px;">
-                                    <i class="ri-time-line" style="font-size: 16px; color: var(--naranja);"></i> <span>Sábados, 09:00 - 11:00</span>
-                                </div>
-                                <div style="display: flex; align-items: center; gap: 10px;">
-                                    <i class="ri-map-pin-line" style="font-size: 16px; color: var(--naranja);"></i> <span>Online (Zoom)</span>
-                                </div>
-                            </div>
-                            <div style="margin-top: auto; padding-top: 12px;">
-                                <button class="btn-inscribirse" style="background-color: var(--naranja-light); color: var(--naranja);">
-                                    Ir al curso <i class="ri-arrow-right-line"></i>
-                                </button>
-                            </div>
-                        </div>
-
+                    <div id="lista-mis-grupos" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 24px;">
+                        <!-- JS renders enrolled groups here -->
                     </div>
                 </div>
 
@@ -807,110 +757,10 @@
 
                 <div>
                     <h2 style="font-size: 20px; font-weight: 600; color: var(--texto); margin-bottom: 20px; display: flex; align-items: center; gap: 8px;">
-                        <i class="ri-search-eye-line" style="color: var(--azul);"></i> Grupos Disponibles para Nivel 5
+                        <i class="ri-search-eye-line" style="color: var(--azul);"></i> Grupos Disponibles
                     </h2>
-
-                    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 24px;">
-
-                        {{-- Disponible --}}
-                        <div class="card" style="display: flex; flex-direction: column; gap: 16px;">
-                            <div style="display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 1px solid var(--borde); padding-bottom: 12px;">
-                                <h3 style="font-size: 18px; font-weight: 600; color: var(--texto); margin: 0;">Grupo A - Táctica</h3>
-                                <span class="badge badge-naranja">Nivel 5</span>
-                            </div>
-                            <div style="display: flex; flex-direction: column; gap: 10px; font-size: 14px; color: var(--texto-suave);">
-                                <div style="display: flex; align-items: center; gap: 10px;">
-                                    <i class="ri-user-line" style="font-size: 16px; color: var(--naranja);"></i> <span>Mtro. Carlos Olivares</span>
-                                </div>
-                                <div style="display: flex; align-items: center; gap: 10px;">
-                                    <i class="ri-time-line" style="font-size: 16px; color: var(--naranja);"></i> <span>Lun y Mié, 14:00 - 15:30</span>
-                                </div>
-                                <div style="display: flex; align-items: center; gap: 10px;">
-                                    <i class="ri-map-pin-line" style="font-size: 16px; color: var(--naranja);"></i> <span>Aula 101</span>
-                                </div>
-                            </div>
-                            <div style="margin-top: 4px; display: flex; flex-direction: column; gap: 8px;">
-                                <div style="display: flex; justify-content: space-between; font-size: 13px; color: var(--texto-suave);">
-                                    <span>Lugares ocupados</span>
-                                    <strong style="color: var(--texto);">12 / 20</strong>
-                                </div>
-                                <div class="progress-wrap">
-                                    <div class="progress-fill" style="width: 60%;"></div>
-                                </div>
-                            </div>
-                            <div style="margin-top: auto; padding-top: 12px;">
-                                <button class="btn-inscribirse inscribir">
-                                    <i class="ri-add-circle-line"></i> Inscribirme
-                                </button>
-                            </div>
-                        </div>
-
-                        {{-- Disponible - Poco cupo --}}
-                        <div class="card" style="display: flex; flex-direction: column; gap: 16px;">
-                            <div style="display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 1px solid var(--borde); padding-bottom: 12px;">
-                                <h3 style="font-size: 18px; font-weight: 600; color: var(--texto); margin: 0;">Análisis de Partidas Clásicas</h3>
-                                <span class="badge badge-naranja">Nivel 5</span>
-                            </div>
-                            <div style="display: flex; flex-direction: column; gap: 10px; font-size: 14px; color: var(--texto-suave);">
-                                <div style="display: flex; align-items: center; gap: 10px;">
-                                    <i class="ri-user-line" style="font-size: 16px; color: var(--naranja);"></i> <span>Mtra. Sofia G.</span>
-                                </div>
-                                <div style="display: flex; align-items: center; gap: 10px;">
-                                    <i class="ri-time-line" style="font-size: 16px; color: var(--naranja);"></i> <span>Viernes, 16:00 - 18:00</span>
-                                </div>
-                                <div style="display: flex; align-items: center; gap: 10px;">
-                                    <i class="ri-map-pin-line" style="font-size: 16px; color: var(--naranja);"></i> <span>Aula 105</span>
-                                </div>
-                            </div>
-                            <div style="margin-top: 4px; display: flex; flex-direction: column; gap: 8px;">
-                                <div style="display: flex; justify-content: space-between; font-size: 13px; color: var(--texto-suave);">
-                                    <span>Lugares ocupados</span>
-                                    <strong style="color: #d93025;">19 / 20 (¡Casi lleno!)</strong>
-                                </div>
-                                <div class="progress-wrap">
-                                    <div class="progress-fill" style="width: 95%; background-color: #d93025;"></div>
-                                </div>
-                            </div>
-                            <div style="margin-top: auto; padding-top: 12px;">
-                                <button class="btn-inscribirse inscribir">
-                                    <i class="ri-add-circle-line"></i> Inscribirme
-                                </button>
-                            </div>
-                        </div>
-
-                        {{-- Lleno --}}
-                        <div class="card" style="display: flex; flex-direction: column; gap: 16px; opacity: 0.85;">
-                            <div style="display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 1px solid var(--borde); padding-bottom: 12px;">
-                                <h3 style="font-size: 18px; font-weight: 600; color: var(--texto); margin: 0;">Aperturas Modernas</h3>
-                                <span class="badge badge-naranja">Nivel 5</span>
-                            </div>
-                            <div style="display: flex; flex-direction: column; gap: 10px; font-size: 14px; color: var(--texto-suave);">
-                                <div style="display: flex; align-items: center; gap: 10px;">
-                                    <i class="ri-user-line" style="font-size: 16px; color: var(--naranja);"></i> <span>Mtro. David L.</span>
-                                </div>
-                                <div style="display: flex; align-items: center; gap: 10px;">
-                                    <i class="ri-time-line" style="font-size: 16px; color: var(--naranja);"></i> <span>Miércoles, 10:00 - 12:00</span>
-                                </div>
-                                <div style="display: flex; align-items: center; gap: 10px;">
-                                    <i class="ri-map-pin-line" style="font-size: 16px; color: var(--naranja);"></i> <span>Laboratorio 1</span>
-                                </div>
-                            </div>
-                            <div style="margin-top: 4px; display: flex; flex-direction: column; gap: 8px;">
-                                <div style="display: flex; justify-content: space-between; font-size: 13px; color: var(--texto-suave);">
-                                    <span>Lugares ocupados</span>
-                                    <strong style="color: var(--texto);">20 / 20</strong>
-                                </div>
-                                <div class="progress-wrap">
-                                    <div class="progress-fill lleno" style="width: 100%;"></div>
-                                </div>
-                            </div>
-                            <div style="margin-top: auto; padding-top: 12px;">
-                                <button disabled class="btn-inscribirse" style="background-color: var(--gris-light); color: var(--texto-suave); cursor: not-allowed;">
-                                    Grupo Lleno
-                                </button>
-                            </div>
-                        </div>
-
+                    <div id="lista-grupos-disponibles" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 24px;">
+                        <!-- JS renders available groups here -->
                     </div>
                 </div>
 
@@ -969,13 +819,13 @@
                     <div style="display: flex; flex-direction: column; gap: 24px;">
                         <div class="card" style="text-align: center; padding: 40px 24px;">
                             <div style="position: relative; width: 120px; height: 120px; margin: 0 auto 20px;">
-                                <div style="width: 100%; height: 100%; border-radius: 50%; background-color: var(--naranja); color: white; display: flex; align-items: center; justify-content: center; font-size: 48px; font-weight: 700;">A</div>
+                                <div id="perfil_avatar_inicial" style="width: 100%; height: 100%; border-radius: 50%; background-color: var(--naranja); color: white; display: flex; align-items: center; justify-content: center; font-size: 48px; font-weight: 700;">A</div>
                                 <button style="position: absolute; bottom: 0; right: 0; background: var(--blanco); border: 1px solid var(--borde); width: 36px; height: 36px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; color: var(--texto);">
                                     <i class="ri-camera-line"></i>
                                 </button>
                             </div>
-                            <h2 style="margin: 0; font-size: 20px; color: var(--texto);">Ana García</h2>
-                            <p style="color: var(--texto-suave); font-size: 14px; margin: 4px 0 20px;">Estudiante de Nivel 5</p>
+                            <h2 id="perfil_nombre_header" style="margin: 0; font-size: 20px; color: var(--texto);">Alumno</h2>
+                            <p id="perfil_nivel_header" style="color: var(--texto-suave); font-size: 14px; margin: 4px 0 20px;">Estudiante de Nivel </p>
                             <button class="btn-inscribirse" style="width: auto; padding: 8px 20px;">Editar Foto</button>
                         </div>
 
@@ -984,15 +834,23 @@
                             <div style="display: flex; flex-direction: column; gap: 16px;">
                                 <div style="display: flex; justify-content: space-between;">
                                     <span style="color: var(--texto-suave); font-size: 14px;">Nivel Actual:</span>
-                                    <span class="badge badge-naranja">Nivel 5</span>
+                                    <span id="perfil_nivel_badge" class="badge badge-naranja">Nivel </span>
                                 </div>
                                 <div style="display: flex; justify-content: space-between;">
                                     <span style="color: var(--texto-suave); font-size: 14px;">Puntos Totales:</span>
-                                    <span style="font-weight: 600; color: var(--texto);">1,200</span>
+                                    <span style="font-weight: 600; color: var(--texto);" id="info_puntaje">—</span>
                                 </div>
                                 <div style="display: flex; justify-content: space-between;">
-                                    <span style="color: var(--texto-suave); font-size: 14px;">Profesor:</span>
-                                    <span style="font-weight: 600; color: var(--texto);">Carlos Olivares</span>
+                                    <span style="color: var(--texto-suave); font-size: 14px;">Sede:</span>
+                                    <span style="font-weight: 600; color: var(--texto);" id="info_sede">—</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between;">
+                                    <span style="color: var(--texto-suave); font-size: 14px;">Fecha de Nacimiento:</span>
+                                    <span style="font-weight: 600; color: var(--texto);" id="info_nacimiento">—</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between;">
+                                    <span style="color: var(--texto-suave); font-size: 14px;">Fecha de Ingreso:</span>
+                                    <span style="font-weight: 600; color: var(--texto);" id="info_ingreso">—</span>
                                 </div>
                             </div>
                         </div>
@@ -1007,24 +865,40 @@
                             </div>
                             <form id="form-personal" style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
                                 <div style="display: flex; flex-direction: column; gap: 8px;">
-                                    <label style="font-size: 13px; font-weight: 600; color: var(--texto-suave);">Nombre Completo</label>
-                                    <input type="text" value="Ana García" disabled style="padding: 10px; border: 1px solid var(--borde); border-radius: 8px; background: #f9f9f9; font-family: 'Inter', sans-serif;">
+                                    <label style="font-size: 13px; font-weight: 600; color: var(--texto-suave);">Nombre(s)</label>
+                                    <input type="text" id="perfil_nombre" disabled class="perfil-editable" style="padding: 10px; border: 1px solid var(--borde); border-radius: 8px; font-family: 'Inter', sans-serif;">
+                                </div>
+                                <div style="display: flex; flex-direction: column; gap: 8px;">
+                                    <label style="font-size: 13px; font-weight: 600; color: var(--texto-suave);">Apellido Paterno</label>
+                                    <input type="text" id="perfil_apellido_p" disabled class="perfil-editable" style="padding: 10px; border: 1px solid var(--borde); border-radius: 8px; font-family: 'Inter', sans-serif;">
+                                </div>
+                                <div style="display: flex; flex-direction: column; gap: 8px;">
+                                    <label style="font-size: 13px; font-weight: 600; color: var(--texto-suave);">Apellido Materno</label>
+                                    <input type="text" id="perfil_apellido_m" disabled class="perfil-editable" style="padding: 10px; border: 1px solid var(--borde); border-radius: 8px; font-family: 'Inter', sans-serif;">
                                 </div>
                                 <div style="display: flex; flex-direction: column; gap: 8px;">
                                     <label style="font-size: 13px; font-weight: 600; color: var(--texto-suave);">Correo Electrónico</label>
-                                    <input type="email" value="ana.garcia@mail.com" disabled class="perfil-editable" style="padding: 10px; border: 1px solid var(--borde); border-radius: 8px; font-family: 'Inter', sans-serif;">
+                                    <input type="email" id="perfil_email" disabled class="perfil-editable" style="padding: 10px; border: 1px solid var(--borde); border-radius: 8px; font-family: 'Inter', sans-serif;">
                                 </div>
                                 <div style="display: flex; flex-direction: column; gap: 8px;">
                                     <label style="font-size: 13px; font-weight: 600; color: var(--texto-suave);">Teléfono</label>
-                                    <input type="text" value="55 1234 5678" disabled class="perfil-editable" style="padding: 10px; border: 1px solid var(--borde); border-radius: 8px; font-family: 'Inter', sans-serif;">
+                                    <input type="text" id="perfil_telefono" disabled class="perfil-editable" style="padding: 10px; border: 1px solid var(--borde); border-radius: 8px; font-family: 'Inter', sans-serif;">
                                 </div>
                                 <div style="display: flex; flex-direction: column; gap: 8px;">
-                                    <label style="font-size: 13px; font-weight: 600; color: var(--texto-suave);">Fecha de Nacimiento</label>
-                                    <input type="date" value="2005-06-15" disabled class="perfil-editable" style="padding: 10px; border: 1px solid var(--borde); border-radius: 8px; font-family: 'Inter', sans-serif;">
+                                    <label style="font-size: 13px; font-weight: 600; color: var(--texto-suave);">Calle</label>
+                                    <input type="text" id="perfil_calle" disabled class="perfil-editable" style="padding: 10px; border: 1px solid var(--borde); border-radius: 8px; font-family: 'Inter', sans-serif;">
                                 </div>
                                 <div style="display: flex; flex-direction: column; gap: 8px;">
-                                    <label style="font-size: 13px; font-weight: 600; color: var(--texto-suave);">Fecha de Ingreso</label>
-                                    <input type="text" value="12 Octubre 2024" disabled style="padding: 10px; border: 1px solid var(--borde); border-radius: 8px; background: #f9f9f9; font-family: 'Inter', sans-serif;">
+                                    <label style="font-size: 13px; font-weight: 600; color: var(--texto-suave);">Ciudad</label>
+                                    <input type="text" id="perfil_ciudad" disabled class="perfil-editable" style="padding: 10px; border: 1px solid var(--borde); border-radius: 8px; font-family: 'Inter', sans-serif;">
+                                </div>
+                                <div style="display: flex; flex-direction: column; gap: 8px;">
+                                    <label style="font-size: 13px; font-weight: 600; color: var(--texto-suave);">Estado</label>
+                                    <input type="text" id="perfil_estado" disabled class="perfil-editable" style="padding: 10px; border: 1px solid var(--borde); border-radius: 8px; font-family: 'Inter', sans-serif;">
+                                </div>
+                                <div style="display: flex; flex-direction: column; gap: 8px;">
+                                    <label style="font-size: 13px; font-weight: 600; color: var(--texto-suave);">Código Postal</label>
+                                    <input type="text" id="perfil_cp" disabled class="perfil-editable" style="padding: 10px; border: 1px solid var(--borde); border-radius: 8px; font-family: 'Inter', sans-serif;">
                                 </div>
                                 <div style="display: flex; flex-direction: column; gap: 8px; justify-content: flex-end;">
                                     <button type="button" id="btnGuardarPerfil" class="btn-inscribirse inscribir" style="display: none;">Guardar Cambios</button>
@@ -1036,20 +910,24 @@
                             <h3 style="font-size: 18px; margin-bottom: 24px;"><i class="ri-parent-line" style="color: var(--azul);"></i> Información del Tutor</h3>
                             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
                                 <div>
-                                    <p style="font-size: 13px; color: var(--texto-suave); margin-bottom: 4px;">Nombre</p>
-                                    <p style="font-weight: 600; color: var(--texto);">Roberto García</p>
+                                    <p style="font-size: 13px; color: var(--texto-suave); margin-bottom: 4px;">Nombre(s)</p>
+                                    <p style="font-weight: 600; color: var(--texto);" id="tutor_nombre">—</p>
                                 </div>
                                 <div>
-                                    <p style="font-size: 13px; color: var(--texto-suave); margin-bottom: 4px;">Relación</p>
-                                    <p style="font-weight: 600; color: var(--texto);">Padre</p>
+                                    <p style="font-size: 13px; color: var(--texto-suave); margin-bottom: 4px;">Apellidos</p>
+                                    <p style="font-weight: 600; color: var(--texto);" id="tutor_apellidos">—</p>
+                                </div>
+                                <div>
+                                    <p style="font-size: 13px; color: var(--texto-suave); margin-bottom: 4px;">Parentesco</p>
+                                    <p style="font-weight: 600; color: var(--texto);" id="tutor_parentesco">—</p>
+                                </div>
+                                <div>
+                                    <p style="font-size: 13px; color: var(--texto-suave); margin-bottom: 4px;">Teléfono</p>
+                                    <p style="font-weight: 600; color: var(--texto);" id="tutor_telefono">—</p>
                                 </div>
                                 <div>
                                     <p style="font-size: 13px; color: var(--texto-suave); margin-bottom: 4px;">Correo</p>
-                                    <p style="font-weight: 600; color: var(--texto);">r.garcia@mail.com</p>
-                                </div>
-                                <div>
-                                    <p style="font-size: 13px; color: var(--texto-suave); margin-bottom: 4px;">Teléfono Urgencias</p>
-                                    <p style="font-weight: 600; color: var(--texto);">55 9876 5432</p>
+                                    <p style="font-weight: 600; color: var(--texto);" id="tutor_email">—</p>
                                 </div>
                             </div>
                         </div>
@@ -1058,8 +936,8 @@
                             <h3 style="font-size: 18px; margin-bottom: 24px;"><i class="ri-lock-password-line" style="color: var(--naranja);"></i> Seguridad</h3>
                             <form id="formPassword" style="display: flex; flex-direction: column; gap: 16px; max-width: 400px;">
                                 <div style="display: flex; flex-direction: column; gap: 8px;">
-                                    <label style="font-size: 13px; font-weight: 600; color: var(--texto-suave);">Contraseña Actual</label>
-                                    <input type="password" placeholder="••••••••" style="padding: 10px; border: 1px solid var(--borde); border-radius: 8px; font-family: 'Inter', sans-serif;">
+                                    <label style="font-size: 13px; font-weight: 600; color: var(--texto-suave);">Contraseña Antigua</label>
+                                    <input type="password" id="old_pass" placeholder="••••••••" style="padding: 10px; border: 1px solid var(--borde); border-radius: 8px; font-family: 'Inter', sans-serif;">
                                 </div>
                                 <div style="display: flex; flex-direction: column; gap: 8px;">
                                     <label style="font-size: 13px; font-weight: 600; color: var(--texto-suave);">Nueva Contraseña</label>
@@ -1069,9 +947,11 @@
                                     <label style="font-size: 13px; font-weight: 600; color: var(--texto-suave);">Confirmar Nueva Contraseña</label>
                                     <input type="password" id="confirm_pass" placeholder="Repite la contraseña" style="padding: 10px; border: 1px solid var(--borde); border-radius: 8px; font-family: 'Inter', sans-serif;">
                                 </div>
-                                <button type="button" onclick="validarPassword()" class="btn-inscribirse cancelar" style="width: auto; align-self: flex-start; padding: 10px 24px;">
-                                    Actualizar Contraseña
-                                </button>
+                                <div style="display: flex; justify-content: flex-end; width: 100%;">
+                                    <button type="button" onclick="validarPassword()" class="btn-inscribirse inscribir" style="width: auto; padding: 10px 24px;">
+                                        Actualizar Contraseña
+                                    </button>
+                                </div>
                             </form>
                         </div>
 
