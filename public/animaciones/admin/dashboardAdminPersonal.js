@@ -16,11 +16,18 @@ document.addEventListener('DOMContentLoaded', () => {
     // Genera HTML de una fila de personal desde el JSON del backend
     const renderFila = (r) => {
         const rolTxt = r.nombre_rol || `Rol ${r.id_rol}`;
-        const sedeTxt = (window.SEDES_MAP && window.SEDES_MAP[r.id_sede]) ? window.SEDES_MAP[r.id_sede] : (r.id_sede ? `Sede ${r.id_sede}` : 'Sin sede');
+        const sedeTxt = r.info?.nombre_sede || (window.SEDES_MAP && window.SEDES_MAP[r.id_sede]) || 'Sin sede';
         const estatusBadge = r.estatus
             ? '<span class="badge badge-activo">Activo</span>'
             : '<span class="badge badge-inactivo">Inactivo</span>';
         const infoEsc = JSON.stringify(r.info).replace(/"/g, '&quot;');
+        const permisos = window.PERMISOS_PERSONAL || { edit: true, admin: true };
+        const btnEditar = permisos.edit
+            ? `<button class="btn-icon btn-editar btn-editar-personal" title="Editar" data-id="${r.id}"><i class="ri-edit-line"></i></button>`
+            : '';
+        const btnEliminar = (permisos.edit && permisos.admin)
+            ? `<button class="btn-icon btn-eliminar btn-eliminar-personal" title="Eliminar" data-id="${r.id}"><i class="ri-delete-bin-line"></i></button>`
+            : '';
 
         return `<tr>
             <td>${r.id}</td>
@@ -30,14 +37,19 @@ document.addEventListener('DOMContentLoaded', () => {
             <td>${estatusBadge}</td>
             <td class="acciones">
                 <button class="btn-icon btn-ver btn-ver-personal" title="Ver" data-id="${r.id}" data-info="${infoEsc}"><i class="ri-eye-line"></i></button>
-                <button class="btn-icon btn-editar btn-editar-personal" title="Editar" data-id="${r.id}"><i class="ri-edit-line"></i></button>
-                <button class="btn-icon btn-eliminar btn-eliminar-personal" title="Eliminar" data-id="${r.id}"><i class="ri-delete-bin-line"></i></button>
+                ${btnEditar}
+                ${btnEliminar}
             </td>
         </tr>`;
     };
 
-    // Función principal: fetch al backend con filtros
+
+    let fetchActivoPe = null;
     const buscarBackend = window.buscarPersonalBackend = () => {
+        if (fetchActivoPe) fetchActivoPe.abort();
+        const controller = new AbortController();
+        fetchActivoPe = controller;
+
         const q = buscador ? buscador.value.trim().toLowerCase() : '';
         const idRol = document.querySelector('#dropdown-nivel-personal .selected-text')?.getAttribute('data-value') || '';
         const idSede = document.querySelector('#dropdown-sede-personal .selected-text')?.getAttribute('data-value') || '';
@@ -47,21 +59,35 @@ document.addEventListener('DOMContentLoaded', () => {
 
         fetch(`/admin/buscar/personal?${params}`, {
             credentials: 'same-origin',
-            headers: { 'Accept': 'application/json' }
+            headers: { 'Accept': 'application/json' },
+            signal: controller.signal
         })
             .then(r => r.json())
             .then(res => {
+                fetchActivoPe = null;
                 if (!tbody) return;
                 if (res.error) { console.error(res.error); return; }
                 tbody.innerHTML = res.data.map(renderFila).join('');
                 if (infoEl) infoEl.textContent = `Mostrando ${res.total} resultado${res.total !== 1 ? 's' : ''}`;
             })
-            .catch(err => console.error('Error al buscar personal:', err));
+            .catch(err => {
+                if (err.name === 'AbortError') return;
+                console.error('Error al buscar personal:', err);
+            });
     };
 
     if (tabla) {
-        // Escuchar input en buscador
-        if (buscador) buscador.addEventListener('input', buscarBackend);
+        // Cargar al inicio
+        buscarBackend();
+
+        // Escuchar input en buscador con debounce
+        if (buscador) {
+            let debounceTimerPe = null;
+            buscador.addEventListener('input', () => {
+                clearTimeout(debounceTimerPe);
+                debounceTimerPe = setTimeout(buscarBackend, 350);
+            });
+        }
 
         // Lógica de los Custom Dropdowns (Específicos de Personal)
         const customDropdowns = document.querySelectorAll('#section-personal .custom-dropdown');

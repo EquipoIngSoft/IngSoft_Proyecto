@@ -6,7 +6,118 @@
 
 document.addEventListener('DOMContentLoaded', () => {
 
-    // ---- Modal: Agregar Sede ----
+    const CSRF = document.querySelector('meta[name="csrf-token"]')?.content || '';
+    const tbody = document.querySelector('#tabla-sedes tbody');
+    const infoEl = document.querySelector('#section-sede .pagination-info');
+
+    // ── Render fila ──────────────────────────────────────────────────
+    const renderFila = (s) => {
+        const permisos = window.PERMISOS_SEDES || { ver: true, edit: true, admin: true };
+        const btnEditar = permisos.edit
+            ? `<button class="btn-icon btn-editar btn-editar-sede" title="Editar" data-id="${s.id}"><i class="ri-edit-line"></i></button>`
+            : '';
+        const btnEliminar = (permisos.edit && permisos.admin)
+            ? `<button class="btn-icon btn-eliminar btn-eliminar-sede" title="Eliminar" data-id="${s.id}"><i class="ri-delete-bin-line"></i></button>`
+            : '';
+
+        return `<tr>
+        <td>${s.id}</td>
+        <td>${s.nombre}</td>
+        <td>${s.calle || '—'}, ${s.ciudad || '—'}</td>
+        <td>${s.telefono || '—'}</td>
+        <td>${s.estado_residencia || '—'}</td>
+        <td class="acciones">
+            <button class="btn-icon btn-ver btn-ver-sede" title="Ver" data-id="${s.id}"><i class="ri-eye-line"></i></button>
+            ${btnEditar}
+            ${btnEliminar}
+        </td>
+    </tr>`;
+    };
+
+    // ── Buscar backend con AbortController ────────────────────────────
+    let fetchActivo = null;
+    const buscarSedes = () => {
+        if (fetchActivo) fetchActivo.abort();
+        const controller = new AbortController();
+        fetchActivo = controller;
+
+        const q = document.getElementById('buscador-sedes')?.value.trim() || '';
+        const estado = document.querySelector('#dropdown-filtro-estado-sede .selected-text')
+            ?.getAttribute('data-value') || '';
+
+        const params = new URLSearchParams({ q, estado_residencia: estado });
+
+        fetch(`/admin/buscar/sedes?${params}`, {
+            credentials: 'same-origin',
+            headers: { 'Accept': 'application/json' },
+            signal: controller.signal
+        })
+            .then(r => r.json())
+            .then(res => {
+                fetchActivo = null;
+                if (!tbody) return;
+                if (res.error) { console.error(res.error); return; }
+                tbody.innerHTML = res.data.map(renderFila).join('');
+                if (infoEl) infoEl.textContent = `Mostrando ${res.total} resultado${res.total !== 1 ? 's' : ''}`;
+            })
+            .catch(err => {
+                if (err.name === 'AbortError') return;
+                console.error('Error al buscar sedes:', err);
+            });
+    };
+
+    buscarSedes();
+
+    // ── Buscador input con debounce ───────────────────────────────────
+    let debounceTimer = null;
+    document.getElementById('buscador-sedes')
+        ?.addEventListener('input', () => {
+            clearTimeout(debounceTimer);
+            debounceTimer = setTimeout(buscarSedes, 350);
+        });
+
+    // ── Filtro estado ─────────────────────────────────────────────────
+    const ddFiltroEstado = document.getElementById('dropdown-filtro-estado-sede');
+    if (ddFiltroEstado) {
+        const trigger = ddFiltroEstado.querySelector('.custom-select-trigger');
+        const opts = ddFiltroEstado.querySelectorAll('.custom-option');
+        const selText = ddFiltroEstado.querySelector('.selected-text');
+
+        trigger?.addEventListener('click', (e) => {
+            e.stopPropagation();
+            ddFiltroEstado.classList.toggle('open');
+        });
+
+        opts.forEach(opt => {
+            opt.addEventListener('click', (e) => {
+                e.stopPropagation();
+                opts.forEach(o => o.classList.remove('selected'));
+                opt.classList.add('selected');
+                selText.textContent = opt.textContent;
+                selText.setAttribute('data-value', opt.getAttribute('data-value'));
+                ddFiltroEstado.classList.remove('open');
+                buscarSedes();
+            });
+        });
+
+        document.addEventListener('click', () => ddFiltroEstado.classList.remove('open'));
+    }
+
+    // ── Limpiar filtros ───────────────────────────────────────────────
+    document.getElementById('btn-limpiar-sedes')?.addEventListener('click', () => {
+        const buscador = document.getElementById('buscador-sedes');
+        if (buscador) buscador.value = '';
+
+        const opts = ddFiltroEstado?.querySelectorAll('.custom-option');
+        const selText = ddFiltroEstado?.querySelector('.selected-text');
+        opts?.forEach(o => o.classList.remove('selected'));
+        if (opts?.[0]) opts[0].classList.add('selected');
+        if (selText) { selText.textContent = 'Todos los estados'; selText.setAttribute('data-value', ''); }
+
+        buscarSedes();
+    });
+
+    // ── Modal Agregar/Editar ──────────────────────────────────────────
     const modalOverlay = document.getElementById('modal-agregar-sede');
     const btnAgregar = document.getElementById('btn-agregar-sede');
     const btnCerrarModal = document.getElementById('modal-close-sede');
@@ -92,22 +203,6 @@ document.addEventListener('DOMContentLoaded', () => {
         formDropdownsSede.forEach(d => d.classList.remove('open'));
     });
 
-    // ---- Búsqueda de Sedes ----
-    const buscador = document.getElementById('buscador-sedes');
-    const tabla = document.getElementById('tabla-sedes');
-
-    if (buscador && tabla) {
-        buscador.addEventListener('input', () => {
-            const query = buscador.value.toLowerCase().trim();
-            const filas = tabla.querySelectorAll('tbody tr');
-
-            filas.forEach(fila => {
-                const visible = fila.textContent.toLowerCase().includes(query);
-                fila.style.display = visible ? '' : 'none';
-            });
-        });
-    }
-
     // ---- Validación del formulario Sede ----
     if (formAgregar) {
         const setError = (inputId, msgId, mensaje) => {
@@ -166,9 +261,143 @@ document.addEventListener('DOMContentLoaded', () => {
             });
 
             if (valido) {
-                console.log('Formulario Sede válido. Enviando...');
-                cerrarModal();
+                const btnSubmit = formAgregar.querySelector('.btn-modal-submit');
+                const textoOriginal = btnSubmit.innerHTML;
+                btnSubmit.innerHTML = '<i class="ri-loader-4-line ri-spin"></i> Guardando...';
+                btnSubmit.disabled = true;
+
+                const editId = formAgregar.getAttribute('data-edit-id');
+                const isEditMode = !!editId;
+
+                const payload = {
+                    nombre: document.getElementById('se-nombre')?.value.trim() || '',
+                    estado_residencia: document.getElementById('se-estado')?.value || '',
+                    ciudad: document.getElementById('se-ciudad')?.value.trim() || '',
+                    codigo_postal: document.getElementById('se-cp')?.value.trim() || '',
+                    calle: document.getElementById('se-calle')?.value.trim() || '',
+                    telefono: document.getElementById('se-telefono')?.value.trim() || '',
+                    correo: document.getElementById('se-correo')?.value.trim() || '',
+                };
+
+                const url = isEditMode ? `/admin/sedes/${editId}` : '/admin/sedes';
+                const method = isEditMode ? 'PUT' : 'POST';
+
+                fetch(url, {
+                    method,
+                    credentials: 'same-origin',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                        'X-CSRF-TOKEN': CSRF
+                    },
+                    body: JSON.stringify(payload)
+                })
+                    .then(async res => {
+                        const data = await res.json().catch(() => ({}));
+                        if (!res.ok) {
+                            const errMsg = data.errors
+                                ? Object.values(data.errors).flat().join('\n')
+                                : (data.error || data.message || 'Error desconocido');
+                            throw new Error(errMsg);
+                        }
+                        return data;
+                    })
+                    .then(data => {
+                        alert(data.message || 'Sede guardada correctamente');
+                        cerrarModal();
+                        buscarSedes();
+                    })
+                    .catch(err => {
+                        alert('No se pudo guardar la sede:\n' + (err.message || JSON.stringify(err)));
+                        btnSubmit.innerHTML = textoOriginal;
+                        btnSubmit.disabled = false;
+                    });
+
             }
+
+        });
+
+    }
+    // ── Ver / Editar / Eliminar ───────────────────────────────────────
+    document.addEventListener('click', (e) => {
+
+        // VER
+        const btnVer = e.target.closest('.btn-ver-sede');
+        if (btnVer) {
+            const id = btnVer.getAttribute('data-id');
+            fetch(`/admin/sedes/${id}`, {
+                credentials: 'same-origin',
+                headers: { 'Accept': 'application/json' }
+            })
+                .then(r => r.json())
+                .then(s => {
+                    if (s.error) { alert(s.error); return; }
+                    alert(`Sede: ${s.nombre}\nDirección: ${s.calle}, ${s.ciudad}\nEstado: ${s.estado_residencia}\nTeléfono: ${s.telefono}\nCorreo: ${s.correo}`);
+                })
+                .catch(err => alert('Error: ' + err));
+        }
+
+        // EDITAR
+        const btnEditar = e.target.closest('.btn-editar-sede');
+        if (btnEditar) {
+            const id = btnEditar.getAttribute('data-id');
+            fetch(`/admin/sedes/${id}`, {
+                credentials: 'same-origin',
+                headers: { 'Accept': 'application/json' }
+            })
+                .then(r => r.json())
+                .then(s => {
+                    if (s.error) { alert(s.error); return; }
+                    if (formAgregar) {
+                        formAgregar.setAttribute('data-edit-id', id);
+                        const title = document.querySelector('#modal-agregar-sede .modal-title');
+                        if (title) title.textContent = 'Editar Sede';
+                        document.getElementById('se-nombre').value = s.nombre || '';
+                        document.getElementById('se-ciudad').value = s.ciudad || '';
+                        document.getElementById('se-cp').value = s.codigo_postal || '';
+                        document.getElementById('se-calle').value = s.calle || '';
+                        document.getElementById('se-telefono').value = s.telefono || '';
+                        document.getElementById('se-correo').value = s.correo || '';
+                        if (s.estado_residencia) {
+                            const opt = [...document.querySelectorAll('#dropdown-se-estado .form-option')]
+                                .find(o => o.getAttribute('data-value').toLowerCase() === s.estado_residencia.toLowerCase());
+                            if (opt) opt.click();
+                        }
+                        abrirModal();
+                    }
+                })
+                .catch(err => alert('Error: ' + err));
+        }
+
+        // ELIMINAR
+        const btnEliminar = e.target.closest('.btn-eliminar-sede');
+        if (btnEliminar) {
+            const id = btnEliminar.getAttribute('data-id');
+            if (confirm('¿Seguro que deseas eliminar esta sede de forma permanente?')) {
+                fetch(`/admin/sedes/${id}`, {
+                    method: 'DELETE',
+                    credentials: 'same-origin',
+                    headers: {
+                        'Accept': 'application/json',
+                        'X-CSRF-TOKEN': CSRF
+                    }
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.error) alert(data.error);
+                        else { alert(data.message); buscarSedes(); }
+                    })
+                    .catch(err => alert('Error: ' + err));
+            }
+        }
+    });
+
+    // Reset modal al cancelar
+    if (btnCancelarModal) {
+        btnCancelarModal.addEventListener('click', () => {
+            if (formAgregar) formAgregar.removeAttribute('data-edit-id');
+            const title = document.querySelector('#modal-agregar-sede .modal-title');
+            if (title) title.textContent = 'Agregar Sede';
         });
     }
 
