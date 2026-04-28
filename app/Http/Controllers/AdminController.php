@@ -268,30 +268,68 @@ class AdminController extends Controller
                       ->select('profesor.*', 'sede.nombre as nombre_sede')
                       ->orderBy('profesor.id_profesor', 'asc'),
     'personal' => Personal::leftJoin('rol', 'personal.id_rol', '=', 'rol.id_rol')
-                      ->select('personal.*', 'rol.nombre as nombre_rol')
-                      ->orderBy('personal.id_personal', 'asc'),
+                  ->leftJoin('usuariosede', 'personal.id_personal', '=', 'usuariosede.id_personal')
+                  ->leftJoin('sede', 'usuariosede.id_sede', '=', 'sede.id_sede')
+                  ->select('personal.*', 'rol.nombre as nombre_rol', 'usuariosede.id_sede', 'sede.nombre as nombre_sede')
+                  ->orderBy('personal.id_personal', 'asc'),
                             };
 
-        // Búsqueda de texto: nombre, apellidos, email
-        if ($q !== '') {
-            $query->where(function ($sub) use ($q) {
-                $sub->whereRaw("LOWER(nombre) LIKE ?", ["%{$q}%"])
-                    ->orWhereRaw("LOWER(apellido_p) LIKE ?", ["%{$q}%"])
-                    ->orWhereRaw("LOWER(apellido_m) LIKE ?", ["%{$q}%"])
-                    ->orWhereRaw("LOWER(email) LIKE ?", ["%{$q}%"]);
-            });
+    if ($q !== '') {
+    $query->where(function ($sub) use ($q, $tipo) {
+        $tabla = $tipo === 'personal' ? 'personal' : $tipo;
+        $pk    = "id_{$tipo}";
+
+        // ID exacto
+        if (is_numeric($q)) {
+            $sub->orWhere("{$tabla}.{$pk}", (int) $q);
         }
 
-        // Filtro sede
-        if ($idSede !== '') {
-            $query->where('id_sede', (int) $idSede);
+        // Nombre, apellidos, email
+        $sub->orWhereRaw("LOWER({$tabla}.nombre) LIKE ?",    ["%{$q}%"])
+            ->orWhereRaw("LOWER({$tabla}.apellido_p) LIKE ?", ["%{$q}%"])
+            ->orWhereRaw("LOWER({$tabla}.apellido_m) LIKE ?", ["%{$q}%"])
+            ->orWhereRaw("LOWER({$tabla}.email) LIKE ?",      ["%{$q}%"]);
+
+        // Sede (solo alumno y profesor)
+        if (in_array($tipo, ['alumno', 'profesor'])) {
+            $sub->orWhereRaw("LOWER(sede.nombre) LIKE ?", ["%{$q}%"]);
         }
 
-        // Filtro estatus (acepta 'activo'/'inactivo' o 'true'/'false' o '1'/'0')
-        if ($estatus !== '') {
-            $esActivo = in_array($estatus, ['activo', 'true', '1'], true);
-            $query->where('estatus', $esActivo);
+        // Rol (solo personal)
+        if ($tipo === 'personal') {
+            $sub->orWhereRaw("LOWER(rol.nombre) LIKE ?", ["%{$q}%"]);
         }
+
+        // Estatus
+        if (in_array($q, ['activo', 'inactivo'])) {
+            $esActivo = $q === 'activo';
+            $sub->orWhere("{$tabla}.estatus", $esActivo);
+        }
+
+        // Nivel (solo alumno y profesor, basado en puntaje)
+        if (in_array($tipo, ['alumno', 'profesor'])) {
+            if (str_contains('principiante', $q)) {
+                $sub->orWhere("{$tabla}.puntaje", '<', 500);
+            } elseif (str_contains('intermedio', $q)) {
+                $sub->orWhereBetween("{$tabla}.puntaje", [500, 999]);
+            } elseif (str_contains('avanzado', $q)) {
+                $sub->orWhere("{$tabla}.puntaje", '>=', 1000);
+            }
+        }
+    });
+}
+
+if ($idSede !== '') {
+    if ($tipo === 'alumno') $query->where('alumno.id_sede', (int) $idSede);
+    elseif ($tipo === 'profesor') $query->where('profesor.id_sede', (int) $idSede);
+    elseif ($tipo === 'personal') $query->where('usuariosede.id_sede', (int) $idSede);
+}
+      // Filtro estatus
+if ($estatus !== '') {
+    $esActivo = in_array($estatus, ['activo', 'true', '1'], true);
+    $tabla = $tipo === 'personal' ? 'personal' : $tipo;
+    $query->where("{$tabla}.estatus", $esActivo);
+}
 
         // Filtro nivel (alumnos: basado en puntaje)
         if ($tipo === 'alumno' && $nivel !== '') {
@@ -303,10 +341,10 @@ class AdminController extends Controller
             };
         }
 
-        // Filtro rol (personal)
-        if ($tipo === 'personal' && $idRol !== '') {
-            $query->where('id_rol', (int) $idRol);
-        }
+     // Filtro rol (personal)
+if ($tipo === 'personal' && $idRol !== '') {
+    $query->where('personal.id_rol', (int) $idRol);
+}
 
         $resultados = $query->get();
 
@@ -339,4 +377,131 @@ class AdminController extends Controller
 
         return response()->json(['total' => $filas->count(), 'data' => $filas]);
     }
+
+    // ===================== SEDES =====================
+
+public function buscarSedes(Request $request)
+{
+    $q      = $request->get('q', '');
+    $estado = $request->get('estado_residencia', '');
+
+    $query = \App\Models\Sede::query();
+
+    if ($q) {
+        $query->where(function ($sub) use ($q) {
+            $sub->whereRaw('LOWER(nombre) LIKE ?', ['%' . strtolower($q) . '%'])
+                ->orWhereRaw('LOWER(ciudad) LIKE ?', ['%' . strtolower($q) . '%'])
+                ->orWhereRaw('LOWER(calle) LIKE ?', ['%' . strtolower($q) . '%']);
+        });
+    }
+
+    if ($estado) {
+        $query->whereRaw('LOWER(estado_residencia) = ?', [strtolower($estado)]);
+    }
+
+    $sedes = $query->orderBy('id_sede')->get();
+
+    return response()->json([
+        'data'  => $sedes->map(fn($s) => [
+            'id'                => $s->id_sede,
+            'nombre'            => $s->nombre,
+            'estado_residencia' => $s->estado_residencia,
+            'ciudad'            => $s->ciudad,
+            'codigo_postal'     => $s->codigo_postal,
+            'calle'             => $s->calle,
+            'telefono'          => $s->telefono,
+            'email'             => $s->email,
+            'estatus'           => $s->estatus,
+        ]),
+        'total' => $sedes->count(),
+    ]);
+}
+
+public function registrarSede(Request $request)
+{
+    $validator = \Illuminate\Support\Facades\Validator::make($request->all(), [
+        'nombre'            => 'required|string|max:50',
+        'estado_residencia' => 'required|string|max:50',
+        'ciudad'            => 'required|string|max:50',
+        'codigo_postal'     => 'required|digits:5',
+        'calle'             => 'required|string|max:50',
+        'telefono'          => 'required|digits:10',
+        'email'             => 'required|email|max:100',
+    ]);
+
+    if ($validator->fails()) {
+        return response()->json(['errors' => $validator->errors()], 422);
+    }
+
+    $sede = new \App\Models\Sede();
+    $sede->nombre            = $request->nombre;
+    $sede->estado_residencia = $request->estado_residencia;
+    $sede->ciudad            = $request->ciudad;
+    $sede->codigo_postal     = $request->codigo_postal;
+    $sede->calle             = $request->calle;
+    $sede->telefono          = $request->telefono;
+    $sede->email             = $request->email;
+    $sede->estatus           = true;
+    $sede->save();
+
+    return response()->json(['message' => 'Sede registrada correctamente.', 'id' => $sede->id_sede]);
+}
+
+public function obtenerSede($id)
+{
+    $sede = \App\Models\Sede::find($id);
+    if (!$sede) return response()->json(['error' => 'Sede no encontrada.'], 404);
+
+    return response()->json([
+        'id'                => $sede->id_sede,
+        'nombre'            => $sede->nombre,
+        'estado_residencia' => $sede->estado_residencia,
+        'ciudad'            => $sede->ciudad,
+        'codigo_postal'     => $sede->codigo_postal,
+        'calle'             => $sede->calle,
+        'telefono'          => $sede->telefono,
+        'email'             => $sede->email,
+        'estatus'           => $sede->estatus,
+    ]);
+}
+
+public function editarSede(Request $request, $id)
+{
+    $sede = \App\Models\Sede::find($id);
+    if (!$sede) return response()->json(['error' => 'Sede no encontrada.'], 404);
+
+    $validator = \Illuminate\Support\Facades\Validator::make($request->all(), [
+        'nombre'            => 'required|string|max:50',
+        'estado_residencia' => 'required|string|max:50',
+        'ciudad'            => 'required|string|max:50',
+        'codigo_postal'     => 'required|digits:5',
+        'calle'             => 'required|string|max:50',
+        'telefono'          => 'required|digits:10',
+        'email'             => 'required|email|max:100',
+    ]);
+
+    if ($validator->fails()) {
+        return response()->json(['errors' => $validator->errors()], 422);
+    }
+
+    $sede->nombre            = $request->nombre;
+    $sede->estado_residencia = $request->estado_residencia;
+    $sede->ciudad            = $request->ciudad;
+    $sede->codigo_postal     = $request->codigo_postal;
+    $sede->calle             = $request->calle;
+    $sede->telefono          = $request->telefono;
+    $sede->email             = $request->email;
+    $sede->save();
+
+    return response()->json(['message' => 'Sede actualizada correctamente.']);
+}
+
+public function eliminarSede($id)
+{
+    $sede = \App\Models\Sede::find($id);
+    if (!$sede) return response()->json(['error' => 'Sede no encontrada.'], 404);
+
+    $sede->delete();
+    return response()->json(['message' => 'Sede eliminada correctamente.']);
+}
 }

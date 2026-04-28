@@ -58,8 +58,6 @@ document.addEventListener('DOMContentLoaded', () => {
         if (ddEstado) ddEstado.classList.remove('input-error');
         const errE = document.getElementById('err-edit-estado_residencia');
         if (errE) errE.textContent = '';
-        const errPwd = document.getElementById('err-edit-pwd-antiguo');
-        if (errPwd) errPwd.textContent = '';
     };
 
     const cargarPerfil = () => {
@@ -95,9 +93,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const el = document.getElementById(id);
             if (el) el.textContent = val || '—';
         };
-        set('read-nombre', d.nombre);
-        set('read-apellido_p', d.apellido_p);
-        set('read-apellido_m', d.apellido_m || '—');
+        const nombreCompleto = [d.nombre, d.apellido_p, d.apellido_m].filter(Boolean).join(' ');
+        set('read-nombre-completo', nombreCompleto);
         set('read-telefono', d.telefono);
         set('read-email', d.email);
         set('read-fecha_nacimiento', formatFecha(d.fecha_nacimiento));
@@ -144,13 +141,23 @@ document.addEventListener('DOMContentLoaded', () => {
                 .find(o => o.getAttribute('data-value').toLowerCase() === d.estado_residencia.toLowerCase());
             if (optE) optE.click();
         }
-
-        ['edit-pwd-antiguo', 'edit-pwd-nuevo', 'edit-pwd-confirmar']
-            .forEach(id => { document.getElementById(id).value = ''; });
     };
 
     window.poblarSeccion = (d) => {
-        if (!d) return;
+        if (!d) {
+            fetch('/personal/perfil', {
+                credentials: 'same-origin',
+                headers: { 'Accept': 'application/json' }
+            })
+                .then(r => r.json())
+                .then(data => {
+                    if (!data.error) {
+                        window._perfilPersonal = data;
+                        window.poblarSeccion(data);
+                    }
+                });
+            return;
+        }
 
         const nombreCompleto = [d.nombre, d.apellido_p, d.apellido_m]
             .filter(Boolean).join(' ');
@@ -282,10 +289,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const calle = document.getElementById('edit-calle').value.trim();
             const codigo_postal = document.getElementById('edit-codigo_postal').value.trim();
             // ID del hidden que genera el partial: edit-estado
+
             const estado_residencia = document.getElementById('edit-estado')?.value || '';
-            const pwdAntiguo = document.getElementById('edit-pwd-antiguo').value;
-            const pwdNuevo = document.getElementById('edit-pwd-nuevo').value;
-            const pwdConfirmar = document.getElementById('edit-pwd-confirmar').value;
 
             let valido = true;
             const emailReg = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -355,22 +360,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             if (!valido) return;
 
-            const cambiarPwd = pwdAntiguo || pwdNuevo || pwdConfirmar;
-            if (cambiarPwd) {
-                if (!pwdAntiguo || !pwdNuevo || !pwdConfirmar) {
-                    showFeedback('Para cambiar la contraseña completa los tres campos.', false);
-                    return;
-                }
-                if (pwdNuevo.length < 6) {
-                    showFeedback('La nueva contraseña debe tener al menos 6 caracteres.', false);
-                    return;
-                }
-                if (pwdNuevo !== pwdConfirmar) {
-                    showFeedback('La nueva contraseña y su confirmación no coinciden.', false);
-                    return;
-                }
-            }
-
             const btnGuardar = document.getElementById('btn-guardar-perfil');
             const textoOrig = btnGuardar.innerHTML;
             btnGuardar.innerHTML = '<i class="ri-loader-4-line ri-spin"></i> Guardando...';
@@ -398,30 +387,6 @@ document.addEventListener('DOMContentLoaded', () => {
                         ? Object.values(dataRes.errors).flat().join('\n')
                         : (dataRes.error || 'Error al guardar.')
                 );
-
-                if (cambiarPwd) {
-                    const resPwd = await fetch('/personal/perfil/password', {
-                        method: 'PUT',
-                        credentials: 'same-origin',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'Accept': 'application/json',
-                            'X-CSRF-TOKEN': CSRF,
-                        },
-                        body: JSON.stringify({
-                            contrasena_antigua: pwdAntiguo,
-                            contrasena_nueva: pwdNuevo,
-                            contrasena_confirmar: pwdConfirmar,
-                        })
-                    });
-
-                    const pwdRes = await resPwd.json().catch(() => ({}));
-                    if (!resPwd.ok) {
-                        const errPwd = document.getElementById('err-edit-pwd-antiguo');
-                        if (errPwd && pwdRes.error) errPwd.textContent = pwdRes.error;
-                        throw new Error(pwdRes.error || 'Error al cambiar la contraseña.');
-                    }
-                }
 
                 const nuevos = {
                     ...window._perfilPersonal,
@@ -457,18 +422,99 @@ document.addEventListener('DOMContentLoaded', () => {
                     window.buscarPersonalBackend();
                 }
 
-                showFeedback(
-                    cambiarPwd
-                        ? '¡Perfil y contraseña actualizados correctamente!'
-                        : '¡Perfil actualizado correctamente!',
-                    true
-                );
+                showFeedback('¡Perfil actualizado correctamente!', true);
 
             } catch (err) {
                 showFeedback(err.message, false);
             } finally {
                 btnGuardar.innerHTML = textoOrig;
                 btnGuardar.disabled = false;
+            }
+        });
+
+    // ── Cambiar contraseña ────────────────────────────────────────────────
+    document.getElementById('btn-cambiar-pwd')
+        ?.addEventListener('click', () => {
+            document.getElementById('pwd-read').style.display = 'none';
+            document.getElementById('pwd-form').style.display = 'block';
+            document.getElementById('btn-cambiar-pwd').style.display = 'none';
+        });
+
+    document.getElementById('btn-cancelar-pwd')
+        ?.addEventListener('click', () => {
+            document.getElementById('pwd-read').style.display = 'block';
+            document.getElementById('pwd-form').style.display = 'none';
+            document.getElementById('btn-cambiar-pwd').style.display = 'flex';
+            ['edit-pwd-nuevo', 'edit-pwd-confirmar']
+                .forEach(id => { const el = document.getElementById(id); if (el) el.value = ''; });
+            const fb = document.getElementById('pwd-feedback');
+            if (fb) fb.style.display = 'none';
+        });
+
+    document.getElementById('btn-guardar-pwd')
+        ?.addEventListener('click', async () => {
+            const pwdNuevo = document.getElementById('edit-pwd-nuevo').value;
+            const pwdConfirmar = document.getElementById('edit-pwd-confirmar').value;
+            const fb = document.getElementById('pwd-feedback');
+
+            const showPwdFeedback = (msg, ok) => {
+                if (!fb) return;
+                fb.textContent = msg;
+                fb.style.display = 'block';
+                fb.style.background = ok ? '#e6f9ed' : '#fce8e6';
+                fb.style.color = ok ? '#1e8e3e' : '#d93025';
+                fb.style.border = `1px solid ${ok ? '#b7dfbf' : '#f5c6c2'}`;
+            };
+
+            if (!pwdNuevo || !pwdConfirmar) {
+                showPwdFeedback('Completa los campos de contraseña.', false); return;
+            }
+            if (pwdNuevo.length < 6) {
+                showPwdFeedback('La nueva contraseña debe tener al menos 6 caracteres.', false); return;
+            }
+            if (pwdNuevo !== pwdConfirmar) {
+                showPwdFeedback('Las contraseñas no coinciden.', false); return;
+            }
+
+            const btnGuardarPwd = document.getElementById('btn-guardar-pwd');
+            const textoOrig = btnGuardarPwd.innerHTML;
+            btnGuardarPwd.innerHTML = '<i class="ri-loader-4-line ri-spin"></i> Guardando...';
+            btnGuardarPwd.disabled = true;
+
+            try {
+                const res = await fetch('/personal/perfil/password', {
+                    method: 'PUT',
+                    credentials: 'same-origin',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                        'X-CSRF-TOKEN': CSRF,
+                    },
+                    body: JSON.stringify({
+                        contrasena_nueva: pwdNuevo,
+                        contrasena_confirmar: pwdConfirmar,
+                    })
+                });
+
+                const data = await res.json().catch(() => ({}));
+                if (!res.ok) throw new Error(data.error || 'Error al cambiar la contraseña.');
+
+                showPwdFeedback('¡Contraseña actualizada correctamente!', true);
+                ['edit-pwd-nuevo', 'edit-pwd-confirmar']
+                    .forEach(id => { const el = document.getElementById(id); if (el) el.value = ''; });
+
+                setTimeout(() => {
+                    document.getElementById('pwd-read').style.display = 'block';
+                    document.getElementById('pwd-form').style.display = 'none';
+                    document.getElementById('btn-cambiar-pwd').style.display = 'flex';
+                    if (fb) fb.style.display = 'none';
+                }, 2000);
+
+            } catch (err) {
+                showPwdFeedback(err.message, false);
+            } finally {
+                btnGuardarPwd.innerHTML = textoOrig;
+                btnGuardarPwd.disabled = false;
             }
         });
 

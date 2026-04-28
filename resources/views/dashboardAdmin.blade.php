@@ -35,71 +35,69 @@
             <span class="sidebar-brand">EGAU Chess</span>
         </div>
 
-        <!-- Navegación -->
-        <nav class="sidebar-nav">
-            <ul>
-                <li class="nav-item active" data-section="alumnos">
-                    <a href="#">
-                        <i class="ri-group-line"></i>
-                        <span>Alumnos</span>
-                    </a>
-                </li>
-                <li class="nav-item" data-section="profesores">
-                    <a href="#">
-                        <i class="ri-user-star-line"></i>
-                        <span>Profesores</span>
-                    </a>
-                </li>
-                <li class="nav-item" data-section="personal">
-                    <a href="#">
-                        <i class="ri-user-settings-line"></i>
-                        <span>Personal</span>
-                    </a>
-                </li>
-                <li class="nav-item" data-section="roles">
-                    <a href="#">
-                        <i class="ri-shield-user-line"></i>
-                        <span>Roles</span>
-                    </a>
-                </li>
-                <li class="nav-item" data-section="sede">
-                    <a href="#">
-                        <i class="ri-map-pin-line"></i>
-                        <span>Sede</span>
-                    </a>
-                </li>
-                <li class="nav-item" data-section="grupos">
-                    <a href="#">
-                        <i class="ri-grid-line"></i>
-                        <span>Grupos</span>
-                    </a>
-                </li>
-                <li class="nav-item" data-section="extraescolares">
-                    <a href="#">
-                        <i class="ri-bar-chart-2-line"></i>
-                        <span>Extraescolares</span>
-                    </a>
-                </li>
-                <li class="nav-item" data-section="status">
-                    <a href="#">
-                        <i class="ri-bookmark-line"></i>
-                        <span>Status</span>
-                    </a>
-                </li>
-                <li class="nav-item" data-section="pagos">
-                    <a href="#">
-                        <i class="ri-bank-card-line"></i>
-                        <span>Pagos</span>
-                    </a>
-                </li>
-                <li class="nav-item" data-section="niveles">
-                    <a href="#">
-                        <i class="ri-book-open-line"></i>
-                        <span>Niveles</span>
-                    </a>
-                </li>
-            </ul>
-        </nav>
+       <nav class="sidebar-nav">
+    <ul>
+        @if($permisos->alumno_ver ?? false)
+        <li class="nav-item active" data-section="alumnos">
+            <a href="#"><i class="ri-group-line"></i><span>Alumnos</span></a>
+        </li>
+        @endif
+
+        @if($permisos->profesor_ver ?? false)
+        <li class="nav-item" data-section="profesores">
+            <a href="#"><i class="ri-user-star-line"></i><span>Profesores</span></a>
+        </li>
+        @endif
+
+        @if($permisos->personal_ver ?? false)
+        <li class="nav-item" data-section="personal">
+            <a href="#"><i class="ri-user-settings-line"></i><span>Personal</span></a>
+        </li>
+        @endif
+
+        @if($permisos->roles_ver ?? false)
+        <li class="nav-item" data-section="roles">
+            <a href="#"><i class="ri-shield-user-line"></i><span>Roles</span></a>
+        </li>
+        @endif
+
+        @if($permisos->sedes_ver ?? false)
+        <li class="nav-item" data-section="sede">
+            <a href="#"><i class="ri-map-pin-line"></i><span>Sede</span></a>
+        </li>
+        @endif
+
+        @if($permisos->grupos_ver ?? false)
+        <li class="nav-item" data-section="grupos">
+            <a href="#"><i class="ri-grid-line"></i><span>Grupos</span></a>
+        </li>
+        @endif
+
+        @if($permisos->extracurriculares_ver ?? false)
+        <li class="nav-item" data-section="extraescolares">
+            <a href="#"><i class="ri-bar-chart-2-line"></i><span>Extraescolares</span></a>
+        </li>
+        @endif
+
+        @if($permisos->estatus_ver ?? false)
+        <li class="nav-item" data-section="status">
+            <a href="#"><i class="ri-bookmark-line"></i><span>Status</span></a>
+        </li>
+        @endif
+
+        @if($permisos->pagos_ver ?? false)
+        <li class="nav-item" data-section="pagos">
+            <a href="#"><i class="ri-bank-card-line"></i><span>Pagos</span></a>
+        </li>
+        @endif
+
+        @if($permisos->niveles_ver ?? false)
+        <li class="nav-item" data-section="niveles">
+            <a href="#"><i class="ri-book-open-line"></i><span>Niveles</span></a>
+        </li>
+        @endif
+    </ul>
+</nav>
 
         <!-- Opciones al fondo -->
         <div class="sidebar-footer">
@@ -152,9 +150,11 @@
             <!-- Cabecera de sección -->
             <div class="section-header">
                 <h1 class="section-title">Gestión de Roles</h1>
-                <button class="btn-primary" id="btn-agregar-rol">
-                    <i class="ri-add-line"></i> Agregar Rol
-                </button>
+                @if($permisos->roles_edit ?? false)
+                    <button class="btn-primary" id="btn-agregar-rol">
+                        <i class="ri-add-line"></i> Agregar Rol
+                    </button>
+                @endif
             </div>
 
             <!-- Tarjeta de tabla -->
@@ -212,11 +212,13 @@
                                 </td>
                                 <td><span class="badge badge-rol-activo">Activo</span></td>
                                 <td class="acciones">
-                                    <button class="btn-icon btn-ver" title="Ver"><i class="ri-eye-line"></i></button>
-                                    <button class="btn-icon btn-editar" title="Editar"><i
-                                            class="ri-edit-line"></i></button>
-                                    <button class="btn-icon btn-eliminar" title="Eliminar"><i
-                                            class="ri-delete-bin-line"></i></button>
+                                     <button class="btn-icon btn-ver" title="Ver"><i class="ri-eye-line"></i></button>
+    @if($permisos->roles_edit ?? false)
+    <button class="btn-icon btn-editar" title="Editar"><i class="ri-edit-line"></i></button>
+    @endif
+    @if(($permisos->roles_edit ?? false) && $administrativo)
+    <button class="btn-icon btn-eliminar" title="Eliminar"><i class="ri-delete-bin-line"></i></button>
+    @endif
                                 </td>
                             </tr>
                             <tr>
@@ -229,10 +231,12 @@
                                 <td><span class="badge badge-rol-activo">Activo</span></td>
                                 <td class="acciones">
                                     <button class="btn-icon btn-ver" title="Ver"><i class="ri-eye-line"></i></button>
-                                    <button class="btn-icon btn-editar" title="Editar"><i
-                                            class="ri-edit-line"></i></button>
-                                    <button class="btn-icon btn-eliminar" title="Eliminar"><i
-                                            class="ri-delete-bin-line"></i></button>
+    @if($permisos->roles_edit ?? false)
+    <button class="btn-icon btn-editar" title="Editar"><i class="ri-edit-line"></i></button>
+    @endif
+    @if(($permisos->roles_edit ?? false) && $administrativo)
+    <button class="btn-icon btn-eliminar" title="Eliminar"><i class="ri-delete-bin-line"></i></button>
+    @endif
                                 </td>
                             </tr>
                             <tr>
@@ -245,10 +249,12 @@
                                 <td><span class="badge badge-rol-inactivo">Inactivo</span></td>
                                 <td class="acciones">
                                     <button class="btn-icon btn-ver" title="Ver"><i class="ri-eye-line"></i></button>
-                                    <button class="btn-icon btn-editar" title="Editar"><i
-                                            class="ri-edit-line"></i></button>
-                                    <button class="btn-icon btn-eliminar" title="Eliminar"><i
-                                            class="ri-delete-bin-line"></i></button>
+    @if($permisos->roles_edit ?? false)
+    <button class="btn-icon btn-editar" title="Editar"><i class="ri-edit-line"></i></button>
+    @endif
+    @if(($permisos->roles_edit ?? false) && $administrativo)
+    <button class="btn-icon btn-eliminar" title="Eliminar"><i class="ri-delete-bin-line"></i></button>
+    @endif
                                 </td>
                             </tr>
                         </tbody>
@@ -269,192 +275,44 @@
         </section>
 
 
+
         {{-- ===================== ALUMNOS ===================== --}}
+<script>
+    window.PERMISOS_ALUMNOS = {
+        edit: {{ ($permisos->alumno_edit ?? false) ? 'true' : 'false' }},
+        admin: {{ ($administrativo ?? false) ? 'true' : 'false' }}
+    };
+</script>
 
         @include('admin.alumnos')
 
         {{-- ===================== PROFESORES ===================== --}}
-
+<script>
+    window.PERMISOS_PROFESORES = {
+        edit: {{ ($permisos->profesor_edit ?? false) ? 'true' : 'false' }},
+        admin: {{ ($administrativo ?? false) ? 'true' : 'false' }}
+    };
+</script>
         @include('admin.profesores')
 
         {{-- ===================== PERSONAL ===================== --}}
-
+<script>
+    window.PERMISOS_PERSONAL = {
+        edit: {{ ($permisos->personal_edit ?? false) ? 'true' : 'false' }},
+        admin: {{ ($administrativo ?? false) ? 'true' : 'false' }}
+    };
+</script>
         @include('admin.personal')
 
         {{-- ===================== SEDES ===================== --}}
-        <section class="section-content" id="section-sede" style="display: none;">
-
-            <!-- Cabecera de sección -->
-            <div class="section-header">
-                <h1 class="section-title">Gestión de Sedes</h1>
-                <button class="btn-primary" id="btn-agregar-sede">
-                    <i class="ri-add-line"></i> Agregar Sede
-                </button>
-            </div>
-
-            <!-- Tarjeta de tabla -->
-            <div class="card card-sedes">
-                <div class="controls-container" style="padding: 24px;">
-                    <div class="search-bar search-sede">
-                        <i class="ri-search-line search-icon"></i>
-                        <input type="text" id="buscador-sedes" placeholder="Buscar sede por nombre o dirección..."
-                            autocomplete="off">
-                    </div>
-                </div>
-
-                <div class="table-wrapper">
-                    <table class="data-table" id="tabla-sedes">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Nombre</th>
-                                <th>Dirección</th>
-                                <th>Teléfono</th>
-                                <th>Tipo</th>
-                                <th>Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>Sede Central</td>
-                                <td>Av. Universidad 123, Col. Centro</td>
-                                <td>555-0100</td>
-                                <td><span class="sede-status-badge status-principal">Principal</span></td>
-                                <td class="acciones">
-                                    <button class="btn-icon btn-ver" title="Ver"><i class="ri-eye-line"></i></button>
-                                    <button class="btn-icon btn-editar" title="Editar"><i
-                                            class="ri-edit-line"></i></button>
-                                    <button class="btn-icon btn-eliminar" title="Eliminar"><i
-                                            class="ri-delete-bin-line"></i></button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </section>
-
-        <!-- ======================= MODAL: AGREGAR SEDE ======================= -->
-        <div class="modal-overlay" id="modal-agregar-sede">
-            <div class="modal-box" style="max-width: 500px;">
-                <div class="modal-header">
-                    <div class="modal-title-group">
-                        <span class="modal-title-icon"><i class="ri-map-pin-line"></i></span>
-                        <h2 class="modal-title">Agregar Sede</h2>
-                    </div>
-                    <button type="button" class="modal-close-btn" id="modal-close-sede" title="Cerrar">
-                        <i class="ri-close-line"></i>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form id="form-agregar-sede" novalidate>
-                        <div class="modal-grid">
-                            <div class="form-group-modal modal-col-full">
-                                <label for="se-nombre">Nombre de la Sede <span
-                                        style="color:var(--naranja)">*</span></label>
-                                <input type="text" id="se-nombre" name="se_nombre" placeholder="Ej. Sede Central"
-                                    required>
-                                <span class="error-msg-modal" id="err-se-nombre"></span>
-                            </div>
-
-                            <div class="form-group-modal">
-                                <label for="se-estado">Estado <span style="color:var(--naranja)">*</span></label>
-                                <div class="form-dropdown" id="dropdown-se-estado" tabindex="0">
-                                    <div class="form-select-trigger">
-                                        <span class="selected-text" data-value="">Selecciona un estado</span>
-                                        <i class="ri-arrow-down-s-line"></i>
-                                    </div>
-                                    <div class="form-options-container" style="max-height: 200px; overflow-y: auto;">
-                                        <div class="form-option" data-value="Aguascalientes">Aguascalientes</div>
-                                        <div class="form-option" data-value="Baja California">Baja California</div>
-                                        <div class="form-option" data-value="Baja California Sur">Baja California Sur
-                                        </div>
-                                        <div class="form-option" data-value="Campeche">Campeche</div>
-                                        <div class="form-option" data-value="Chiapas">Chiapas</div>
-                                        <div class="form-option" data-value="Chihuahua">Chihuahua</div>
-                                        <div class="form-option" data-value="Ciudad de México">Ciudad de México</div>
-                                        <div class="form-option" data-value="Coahuila">Coahuila</div>
-                                        <div class="form-option" data-value="Colima">Colima</div>
-                                        <div class="form-option" data-value="Durango">Durango</div>
-                                        <div class="form-option" data-value="Estado de México">Estado de México</div>
-                                        <div class="form-option" data-value="Guanajuato">Guanajuato</div>
-                                        <div class="form-option" data-value="Guerrero">Guerrero</div>
-                                        <div class="form-option" data-value="Hidalgo">Hidalgo</div>
-                                        <div class="form-option" data-value="Jalisco">Jalisco</div>
-                                        <div class="form-option" data-value="Michoacán">Michoacán</div>
-                                        <div class="form-option" data-value="Morelos">Morelos</div>
-                                        <div class="form-option" data-value="Nayarit">Nayarit</div>
-                                        <div class="form-option" data-value="Nuevo León">Nuevo León</div>
-                                        <div class="form-option" data-value="Oaxaca">Oaxaca</div>
-                                        <div class="form-option" data-value="Puebla">Puebla</div>
-                                        <div class="form-option" data-value="Querétaro">Querétaro</div>
-                                        <div class="form-option" data-value="Quintana Roo">Quintana Roo</div>
-                                        <div class="form-option" data-value="San Luis Potosí">San Luis Potosí</div>
-                                        <div class="form-option" data-value="Sinaloa">Sinaloa</div>
-                                        <div class="form-option" data-value="Sonora">Sonora</div>
-                                        <div class="form-option" data-value="Tabasco">Tabasco</div>
-                                        <div class="form-option" data-value="Tamaulipas">Tamaulipas</div>
-                                        <div class="form-option" data-value="Tlaxcala">Tlaxcala</div>
-                                        <div class="form-option" data-value="Veracruz">Veracruz</div>
-                                        <div class="form-option" data-value="Yucatán">Yucatán</div>
-                                        <div class="form-option" data-value="Zacatecas">Zacatecas</div>
-                                    </div>
-                                    <input type="hidden" id="se-estado" name="se_estado" value="">
-                                </div>
-                                <span class="error-msg-modal" id="err-se-estado"></span>
-                            </div>
-
-                            <div class="form-group-modal">
-                                <div style="display: flex; gap: 1rem;">
-                                    <div style="flex: 2;">
-                                        <label for="se-ciudad">Ciudad <span
-                                                style="color:var(--naranja)">*</span></label>
-                                        <input type="text" id="se-ciudad" name="se_ciudad" placeholder="Ciudad"
-                                            required>
-                                        <span class="error-msg-modal" id="err-se-ciudad"></span>
-                                    </div>
-                                    <div style="flex: 1;">
-                                        <label for="se-cp">CP <span style="color:var(--naranja)">*</span></label>
-                                        <input type="text" id="se-cp" name="se_cp" placeholder="CP" maxlength="5"
-                                            required>
-                                        <span class="error-msg-modal" id="err-se-cp"></span>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="form-group-modal modal-col-full">
-                                <label for="se-calle">Dirección (Calle y Número) <span
-                                        style="color:var(--naranja)">*</span></label>
-                                <input type="text" id="se-calle" name="se_calle" placeholder="Calle, número, colonia..."
-                                    required>
-                                <span class="error-msg-modal" id="err-se-calle"></span>
-                            </div>
-
-                            <div class="form-group-modal">
-                                <label for="se-telefono">Teléfono <span style="color:var(--naranja)">*</span></label>
-                                <input type="tel" id="se-telefono" name="se_telefono" placeholder="10 dígitos"
-                                    maxlength="10" required>
-                                <span class="error-msg-modal" id="err-se-telefono"></span>
-                            </div>
-
-                            <div class="form-group-modal">
-                                <label for="se-correo">Email de Contacto <span
-                                        style="color:var(--naranja)">*</span></label>
-                                <input type="email" id="se-correo" name="se_correo" placeholder="correo@egau.com"
-                                    required>
-                                <span class="error-msg-modal" id="err-se-correo"></span>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn-modal-cancel"
-                                id="btn-cancelar-modal-sede">Cancelar</button>
-                            <button type="submit" class="btn-modal-submit">Guardar Sede</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
+<script>
+    window.PERMISOS_SEDES = {
+        ver:  {{ ($permisos->sedes_ver ?? false) ? 'true' : 'false' }},
+        edit: {{ ($permisos->sedes_edit ?? false) ? 'true' : 'false' }},
+        admin: {{ ($administrativo ?? false) ? 'true' : 'false' }}
+    };
+</script>
+        @include('admin.sedes')
 
         <!-- ======================= SECCIÓN GRUPOS ======================= -->
         <section class="section-content" id="section-grupos" style="display: none;">
@@ -462,14 +320,12 @@
             <!-- Cabecera de sección -->
             <div class="section-header">
                 <h1 class="section-title">Grupos y Cursos</h1>
-                <div style="display: flex; gap: 12px;">
-                    <button class="btn-secondary" id="btn-agregar-curso">
-                        <i class="ri-book-open-line"></i> Crear Curso
-                    </button>
-                    <button class="btn-primary" id="btn-agregar-grupo">
-                        <i class="ri-add-line"></i> Crear Grupo
-                    </button>
-                </div>
+                @if($permisos->grupos_edit ?? false)
+<div style="display: flex; gap: 12px;">
+    <button class="btn-secondary" id="btn-agregar-curso"><i class="ri-book-open-line"></i> Crear Curso</button>
+    <button class="btn-primary" id="btn-agregar-grupo"><i class="ri-add-line"></i> Crear Grupo</button>
+</div>
+@endif
             </div>
 
             <!-- Buscador -->
@@ -506,10 +362,14 @@
                         </div>
                     </div>
                     <div class="grupo-card-footer">
-                        <button class="btn-grupo-ver" title="Ver"><i class="ri-eye-line"></i> Ver</button>
-                        <button class="btn-grupo-editar"><i class="ri-edit-line"></i> Editar</button>
-                        <button class="btn-grupo-eliminar"><i class="ri-delete-bin-line"></i></button>
-                    </div>
+    <button class="btn-grupo-ver" title="Ver"><i class="ri-eye-line"></i> Ver</button>
+    @if($permisos->grupos_edit ?? false)
+    <button class="btn-grupo-editar"><i class="ri-edit-line"></i> Editar</button>
+    @endif
+    @if(($permisos->grupos_edit ?? false) && $administrativo)
+    <button class="btn-grupo-eliminar"><i class="ri-delete-bin-line"></i></button>
+    @endif
+</div>
                 </div>
 
                 <!-- Tarjeta 2 -->
@@ -535,10 +395,14 @@
                         </div>
                     </div>
                     <div class="grupo-card-footer">
-                        <button class="btn-grupo-ver" title="Ver"><i class="ri-eye-line"></i> Ver</button>
-                        <button class="btn-grupo-editar"><i class="ri-edit-line"></i> Editar</button>
-                        <button class="btn-grupo-eliminar"><i class="ri-delete-bin-line"></i></button>
-                    </div>
+    <button class="btn-grupo-ver" title="Ver"><i class="ri-eye-line"></i> Ver</button>
+    @if($permisos->grupos_edit ?? false)
+    <button class="btn-grupo-editar"><i class="ri-edit-line"></i> Editar</button>
+    @endif
+    @if(($permisos->grupos_edit ?? false) && $administrativo)
+    <button class="btn-grupo-eliminar"><i class="ri-delete-bin-line"></i></button>
+    @endif
+</div>
                 </div>
 
                 <!-- Tarjeta 3 -->
@@ -564,10 +428,14 @@
                         </div>
                     </div>
                     <div class="grupo-card-footer">
-                        <button class="btn-grupo-ver" title="Ver"><i class="ri-eye-line"></i> Ver</button>
-                        <button class="btn-grupo-editar"><i class="ri-edit-line"></i> Editar</button>
-                        <button class="btn-grupo-eliminar"><i class="ri-delete-bin-line"></i></button>
-                    </div>
+    <button class="btn-grupo-ver" title="Ver"><i class="ri-eye-line"></i> Ver</button>
+    @if($permisos->grupos_edit ?? false)
+    <button class="btn-grupo-editar"><i class="ri-edit-line"></i> Editar</button>
+    @endif
+    @if(($permisos->grupos_edit ?? false) && $administrativo)
+    <button class="btn-grupo-eliminar"><i class="ri-delete-bin-line"></i></button>
+    @endif
+</div>
                 </div>
 
             </div>
@@ -996,9 +864,11 @@
 
             <div class="section-header">
                 <h1 class="section-title">Actividades Extraescolares</h1>
-                <button class="btn-primary" id="btn-agregar-extraescolar">
-                    <i class="ri-add-line"></i> Agregar Actividad
-                </button>
+                @if($permisos->extracurriculares_edit ?? false)
+<button class="btn-primary" id="btn-agregar-extraescolar">
+    <i class="ri-add-line"></i> Agregar Actividad
+</button>
+@endif
             </div>
 
             <div class="search-bar" style="margin-bottom: 24px;">
@@ -1033,10 +903,14 @@
                         </div>
                     </div>
                     <div class="extraescolar-card-footer">
-                        <button class="btn-extraescolar-ver" title="Ver"><i class="ri-eye-line"></i> Ver</button>
-                        <button class="btn-extraescolar-editar"><i class="ri-edit-line"></i> Editar</button>
-                        <button class="btn-extraescolar-eliminar"><i class="ri-delete-bin-line"></i></button>
-                    </div>
+    <button class="btn-extraescolar-ver" title="Ver"><i class="ri-eye-line"></i> Ver</button>
+    @if($permisos->extracurriculares_edit ?? false)
+    <button class="btn-extraescolar-editar"><i class="ri-edit-line"></i> Editar</button>
+    @endif
+    @if(($permisos->extracurriculares_edit ?? false) && $administrativo)
+    <button class="btn-extraescolar-eliminar"><i class="ri-delete-bin-line"></i></button>
+    @endif
+</div>
                 </div>
             </div>
             <p class="extraescolares-empty" id="extraescolares-empty" style="display:none;">No se encontraron
@@ -1267,8 +1141,10 @@
                                 </td>
                                 <td>Grupo A</td>
                                 <td class="acciones-puntos">
-                                    <button class="btn-modificar-puntos"><i class="ri-edit-line"></i> Modificar</button>
-                                </td>
+    @if($permisos->niveles_edit ?? false)
+    <button class="btn-modificar-puntos"><i class="ri-edit-line"></i> Modificar</button>
+    @endif
+</td>
                             </tr>
                             <tr>
                                 <td>Carlos López</td>
@@ -1279,9 +1155,11 @@
                                     </div>
                                 </td>
                                 <td>Grupo B</td>
-                                <td class="acciones-puntos">
-                                    <button class="btn-modificar-puntos"><i class="ri-edit-line"></i> Modificar</button>
-                                </td>
+                               <td class="acciones-puntos">
+    @if($permisos->niveles_edit ?? false)
+    <button class="btn-modificar-puntos"><i class="ri-edit-line"></i> Modificar</button>
+    @endif
+</td>
                             </tr>
                             <tr>
                                 <td>María Rodríguez</td>
@@ -1292,9 +1170,11 @@
                                     </div>
                                 </td>
                                 <td>Grupo A</td>
-                                <td class="acciones-puntos">
-                                    <button class="btn-modificar-puntos"><i class="ri-edit-line"></i> Modificar</button>
-                                </td>
+                               <td class="acciones-puntos">
+    @if($permisos->niveles_edit ?? false)
+    <button class="btn-modificar-puntos"><i class="ri-edit-line"></i> Modificar</button>
+    @endif
+</td>
                             </tr>
                             <tr>
                                 <td>Juan Sánchez</td>
@@ -1305,9 +1185,11 @@
                                     </div>
                                 </td>
                                 <td>Grupo C</td>
-                                <td class="acciones-puntos">
-                                    <button class="btn-modificar-puntos"><i class="ri-edit-line"></i> Modificar</button>
-                                </td>
+                              <td class="acciones-puntos">
+    @if($permisos->niveles_edit ?? false)
+    <button class="btn-modificar-puntos"><i class="ri-edit-line"></i> Modificar</button>
+    @endif
+</td>
                             </tr>
                             <tr>
                                 <td>Laura Fernández</td>
@@ -1318,9 +1200,11 @@
                                     </div>
                                 </td>
                                 <td>Grupo B</td>
-                                <td class="acciones-puntos">
-                                    <button class="btn-modificar-puntos"><i class="ri-edit-line"></i> Modificar</button>
-                                </td>
+                               <td class="acciones-puntos">
+    @if($permisos->niveles_edit ?? false)
+    <button class="btn-modificar-puntos"><i class="ri-edit-line"></i> Modificar</button>
+    @endif
+</td>
                             </tr>
                         </tbody>
                     </table>
@@ -1511,27 +1395,26 @@
             @endforeach
         };
     </script>
-    <!-- JS General -->
-    <script src="{{ asset('animaciones/admin/dashboardAdmin.js') }}"></script>
+ <!-- JS General -->
+    <script src="{{ asset('animaciones/admin/dashboardAdmin.js') }}?v={{ time() }}"></script>
     <!-- JS Sección Personal -->
-    <script src="{{ asset('animaciones/admin/dashboardAdminPersonal.js') }}"></script>
+    <script src="{{ asset('animaciones/admin/dashboardAdminPersonal.js') }}?v={{ time() }}"></script>
     <!-- JS Sección Alumnos -->
-    <script src="{{ asset('animaciones/admin/dashboardAdminAlumnos.js') }}"></script>
+    <script src="{{ asset('animaciones/admin/dashboardAdminAlumnos.js') }}?v={{ time() }}"></script>
     <!-- JS Sección Profesores -->
-    <script src="{{ asset('animaciones/admin/dashboardAdminProfesores.js') }}"></script>
+    <script src="{{ asset('animaciones/admin/dashboardAdminProfesores.js') }}?v={{ time() }}"></script>
     <!-- JS Sección Sede -->
-    <script src="{{ asset('animaciones/admin/dashboardAdminSede.js') }}"></script>
+    <script src="{{ asset('animaciones/admin/dashboardAdminSede.js') }}?v={{ time() }}"></script>
     <!-- JS Sección Grupos -->
-    <script src="{{ asset('animaciones/admin/dashboardAdminGrupos.js') }}"></script>
+    <script src="{{ asset('animaciones/admin/dashboardAdminGrupos.js') }}?v={{ time() }}"></script>
     <!-- JS Sección Extraescolares -->
-    <script src="{{ asset('animaciones/admin/dashboardAdminExtraescolares.js') }}"></script>
+    <script src="{{ asset('animaciones/admin/dashboardAdminExtraescolares.js') }}?v={{ time() }}"></script>
     <!-- JS Sección Niveles -->
-    <script src="{{ asset('animaciones/admin/dashboardAdminNiveles.js') }}"></script>
+    <script src="{{ asset('animaciones/admin/dashboardAdminNiveles.js') }}?v={{ time() }}"></script>
     <!-- JS Sección Roles -->
-    <script src="{{ asset('animaciones/admin/dashboardAdminRoles.js') }}"></script>
+    <script src="{{ asset('animaciones/admin/dashboardAdminRoles.js') }}?v={{ time() }}"></script>
     <!-- JS Sección Configuración -->
-    <script src="{{ asset('animaciones/admin/dashboardAdminPerfil.js') }}"></script>
-
+    <script src="{{ asset('animaciones/admin/dashboardAdminPerfil.js') }}?v={{ time() }}"></script>
 
 </body>
 

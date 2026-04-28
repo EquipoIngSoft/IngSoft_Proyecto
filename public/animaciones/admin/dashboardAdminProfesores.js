@@ -18,48 +18,74 @@ document.addEventListener('DOMContentLoaded', () => {
     const msgEmpty = document.getElementById('profesores-empty');
 
     const renderTarjeta = (r) => {
-        const sedeTxt = (window.SEDES_MAP && window.SEDES_MAP[r.id_sede]) ? window.SEDES_MAP[r.id_sede] : (r.id_sede ? `Sede ${r.id_sede}` : 'Sin sede');
-        const estatusCls = r.estatus ? 'badge-activo' : 'badge-inactivo';
-        const estatusTxt = r.estatus ? 'Activo' : 'Inactivo';
+        const sedeTxt = (window.SEDES_MAP && window.SEDES_MAP[r.id_sede])
+            ? window.SEDES_MAP[r.id_sede]
+            : (r.info?.nombre_sede || `Sede ${r.id_sede}`);
+        const telefono = r.info?.telefono ?? 'N/A';
+        const permisos = window.PERMISOS_PROFESORES || { edit: true, admin: true };
+        const btnEditar = permisos.edit
+            ? `<button class="btn-profesor-editar" data-id="${r.id}"><i class="ri-edit-line"></i> Editar</button>`
+            : '';
+        const btnEliminar = (permisos.edit && permisos.admin)
+            ? `<button class="btn-profesor-eliminar" data-id="${r.id}"><i class="ri-delete-bin-line"></i></button>`
+            : '';
+
         return `
-    <div class="profesor-card" data-nombre="${r.nombre}" data-email="${r.email}">
-        <div class="profesor-avatar"><i class="ri-user-3-line"></i></div>
+<div class="profesor-card" data-nombre="${r.nombre}" data-email="${r.email}">
+    <div class="profesor-card-body">
+        <h3 class="profesor-nombre">${r.nombre}</h3>
         <div class="profesor-info">
-            <h3 class="profesor-nombre">${r.nombre}</h3>
-            <p class="profesor-email"><i class="ri-mail-line"></i> ${r.email}</p>
-            <p class="profesor-sede"><i class="ri-map-pin-line"></i> ${sedeTxt}</p>
+            <span><i class="ri-mail-line"></i> ${r.email}</span>
+            <span><i class="ri-phone-line"></i> ${telefono}</span>
         </div>
-        <div class="profesor-meta">
-            <span class="badge ${estatusCls}">${estatusTxt}</span>
-            <div class="profesor-acciones">
-                <button class="btn-icon btn-profesor-ver" title="Ver" data-id="${r.id}"><i class="ri-eye-line"></i></button>
-                <button class="btn-icon btn-profesor-editar" title="Editar" data-id="${r.id}"><i class="ri-edit-line"></i></button>
-                <button class="btn-icon btn-profesor-eliminar" title="Eliminar" data-id="${r.id}"><i class="ri-delete-bin-line"></i></button>
-            </div>
-        </div>
-    </div>`;
+    </div>
+    <div class="profesor-card-footer">
+        <button class="btn-profesor-ver" title="Ver" data-id="${r.id}"><i class="ri-eye-line"></i> Ver</button>
+        ${btnEditar}
+        ${btnEliminar}
+    </div>
+</div>`;
     };
 
+    let fetchActivoProf = null;
     const buscarProfesoresBackend = () => {
+        if (fetchActivoProf) fetchActivoProf.abort();
+        const controller = new AbortController();
+        fetchActivoProf = controller;
+
         const q = buscadorProf ? buscadorProf.value.trim().toLowerCase() : '';
         const status = document.querySelector('#section-profesores .custom-dropdown .selected-text')?.getAttribute('data-value') || '';
         const params = new URLSearchParams({ q, estatus: status });
 
         fetch(`/admin/buscar/profesor?${params}`, {
             credentials: 'same-origin',
-            headers: { 'Accept': 'application/json' }
+            headers: { 'Accept': 'application/json' },
+            signal: controller.signal
         })
             .then(r => r.json())
             .then(res => {
+                fetchActivoProf = null;
                 if (!gridProfesores) return;
                 if (res.error) { console.error(res.error); return; }
                 gridProfesores.innerHTML = res.data.map(renderTarjeta).join('');
                 if (msgEmpty) msgEmpty.style.display = res.total === 0 ? 'block' : 'none';
             })
-            .catch(err => console.error('Error al buscar profesores:', err));
+            .catch(err => {
+                if (err.name === 'AbortError') return;
+                console.error('Error al buscar profesores:', err);
+            });
     };
 
-    if (buscadorProf) buscadorProf.addEventListener('input', buscarProfesoresBackend);
+    buscarProfesoresBackend();
+
+    if (buscadorProf) {
+        let debounceTimerProf = null;
+        buscadorProf.addEventListener('input', () => {
+            clearTimeout(debounceTimerProf);
+            debounceTimerProf = setTimeout(buscarProfesoresBackend, 350);
+        });
+    }
+
     if (btnLimpiarProf) {
         btnLimpiarProf.addEventListener('click', () => {
             if (buscadorProf) buscadorProf.value = '';

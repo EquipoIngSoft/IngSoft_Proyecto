@@ -154,7 +154,13 @@ window.addEventListener('DOMContentLoaded', () => {
                     'Content-Type': 'application/json',
                     'X-CSRF-TOKEN': csrf,
                 },
-                body: JSON.stringify({ token: data.token })
+                body: JSON.stringify({
+                    token: data.token,
+                    tipo: data.tipo,
+                    id_sede: data.id_sede,
+                    administrativo: data.administrativo,
+                    permisos: data.permisos,
+                })
             });
 
             // 3. Guardar info en localStorage para el frontend

@@ -84,35 +84,6 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($alumnos as $a)
-                            <tr>
-                                <td>{{ $a->id_alumno }}</td>
-                                <td>{{ $a->nombre }} {{ $a->apellido_p }} {{ $a->apellido_m }}</td>
-                                <td>{{ \Carbon\Carbon::parse($a->fecha_nacimiento)->age }}</td>
-                                <td>
-                                    @if($a->puntos < 500)
-                                        <span class="badge badge-principiante">Principiante</span>
-                                    @elseif($a->puntos < 1000)
-                                        <span class="badge badge-intermedio">Intermedio</span>
-                                    @else
-                                        <span class="badge badge-avanzado">Avanzado</span>
-                                    @endif
-                                </td>
-                                <td>{{ $a->nombre_sede ?? 'Sin sede' }}</td>
-                                <td>
-                                    @if($a->estatus)
-                                        <span class="badge badge-activo">Activo</span>
-                                    @else
-                                        <span class="badge badge-inactivo">Inactivo</span>
-                                    @endif
-                                </td>
-                                <td class="acciones">
-                                    <button class="btn-icon btn-ver btn-ver-alumno" title="Ver" data-id="{{ $a->id_alumno }}" data-info="{{ json_encode($a) }}"><i class="ri-eye-line"></i></button>
-                                    <button class="btn-icon btn-editar btn-editar-alumno" title="Editar" data-id="{{ $a->id_alumno }}" data-info="{{ json_encode($a) }}"><i class="ri-edit-line"></i></button>
-                                    <button class="btn-icon btn-eliminar btn-eliminar-alumno" title="Eliminar" data-id="{{ $a->id_alumno }}"><i class="ri-delete-bin-line"></i></button>
-                                </td>
-                            </tr>
-                            @endforeach
                         </tbody>
                     </table>
                 </div>
