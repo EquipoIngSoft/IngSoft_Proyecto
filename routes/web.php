@@ -2,6 +2,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\PersonalProfileController;
+use App\Http\Controllers\AlumnoProfileController;
 use App\Http\Middleware\VerificarToken;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -93,4 +94,12 @@ return view('dashboardAdmin', compact('alumnos', 'profesores', 'personal', 'sede
     Route::get('/personal/perfil',          [PersonalProfileController::class, 'show']);
     Route::put('/personal/perfil',          [PersonalProfileController::class, 'update']);
     Route::put('/personal/perfil/password', [PersonalProfileController::class, 'updatePassword']);
+
+    Route::get('/alumno/perfil', [AlumnoProfileController::class, 'show']);
+    Route::put('/alumno/perfil', [AlumnoProfileController::class, 'update']);
+    Route::put('/alumno/perfil/password', [AlumnoProfileController::class, 'updatePassword']);
+    
+    Route::get('/api/alumno/grupos', [App\Http\Controllers\AlumnoGruposController::class, 'index']);
+    Route::post('/api/alumno/grupos/{id}/{accion}', [App\Http\Controllers\AlumnoGruposController::class, 'accion']);
+    
 });

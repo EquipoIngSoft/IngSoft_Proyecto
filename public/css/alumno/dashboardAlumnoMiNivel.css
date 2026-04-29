@@ -1,7 +1,172 @@
-/* =============================================
-   dashboardAlumnoMiNivel.css
-   Responsable: Mariana
-   EGAU Chess | Portal del Estudiante
-   ============================================= */
+/* Animaciones de piezas de ajedrez */
 
-/* Estilos de la sección MiNivel */
+/* Peón: Apareciendo suavemente */
+@keyframes animPeon {
+   0% {
+      opacity: 0;
+      transform: scale(0.5);
+   }
+
+   100% {
+      opacity: 1;
+      transform: scale(1);
+   }
+}
+
+.anim-peon {
+   display: inline-block;
+   animation: animPeon 1s ease-out forwards;
+}
+
+/* Caballo: Galopando (Saltos con inclinación de izquierda a derecha) */
+@keyframes animCaballo {
+   0% {
+      opacity: 0;
+      transform: translateX(-40px) translateY(0);
+   }
+
+   25% {
+      opacity: 1;
+      transform: translateX(-20px) translateY(-20px) rotate(-15deg);
+   }
+
+   50% {
+      transform: translateX(0px) translateY(0) rotate(0deg);
+   }
+
+   75% {
+      transform: translateX(10px) translateY(-10px) rotate(-10deg);
+   }
+
+   100% {
+      opacity: 1;
+      transform: translateX(0) translateY(0) rotate(0deg);
+   }
+}
+
+.anim-caballo {
+   display: inline-block;
+   animation: animCaballo 1.2s ease-in-out forwards;
+}
+
+/* Alfil: Entrando en diagonal */
+@keyframes animAlfil {
+   0% {
+      opacity: 0;
+      transform: translate(-40px, 40px);
+   }
+
+   100% {
+      opacity: 1;
+      transform: translate(0, 0);
+   }
+}
+
+.anim-alfil {
+   display: inline-block;
+   animation: animAlfil 0.8s ease-out forwards;
+}
+
+/* Torre: Entrando directamente horizontalmente */
+@keyframes animTorre {
+   0% {
+      opacity: 0;
+      transform: translateX(-100px);
+   }
+
+   60% {
+      opacity: 1;
+      transform: translateX(5px);
+      /* Se pasa un poquito de su posición final */
+   }
+
+   80% {
+      transform: translateX(-2px);
+      /* Retrocede un poco */
+   }
+
+   100% {
+      opacity: 1;
+      transform: translateX(0);
+      /* Posición final exacta */
+   }
+}
+
+.anim-torre {
+   display: inline-block;
+   animation: animTorre 0.7s cubic-bezier(0.215, 0.610, 0.355, 1.000) forwards;
+}
+
+/* Animación de la Reina */
+@keyframes animReina {
+   0% {
+      opacity: 0;
+      transform: translate(-60px, 60px) scale(0.3) rotate(-10deg);
+   }
+
+   40% {
+      opacity: 1;
+      transform: translate(0, 0) scale(1.1) rotate(5deg);
+   }
+
+   55% {
+      /* Pequeño 'saludo' */
+      transform: translate(0, 0) scale(1.1) rotate(-5deg);
+   }
+
+   70% {
+      /* Vuelve a centrarse */
+      transform: translate(0, 0) scale(1.1) rotate(0deg);
+   }
+
+   100% {
+      opacity: 1;
+      /* Baja verticalmente a su posición final */
+      transform: translate(0, 15px) scale(1) rotate(0deg);
+   }
+}
+
+.anim-reina {
+   display: inline-block;
+   animation: animReina 2s ease-in-out forwards;
+}
+
+
+/* Rey: Entrando a pasitos */
+@keyframes animRey {
+   0% {
+      opacity: 0;
+      transform: translateX(-30px) rotate(-5deg);
+   }
+
+   15% {
+      opacity: 1;
+      transform: translateX(-30px) rotate(0deg);
+   }
+
+   30% {
+      transform: translateX(-20px) rotate(5deg);
+   }
+
+   45% {
+      transform: translateX(-20px) rotate(0deg);
+   }
+
+   60% {
+      transform: translateX(-10px) rotate(-5deg);
+   }
+
+   75% {
+      transform: translateX(-10px) rotate(0deg);
+   }
+
+   100% {
+      opacity: 1;
+      transform: translateX(0) rotate(0deg);
+   }
+}
+
+.anim-rey {
+   display: inline-block;
+   animation: animRey 1.8s ease-in-out forwards;
+}
