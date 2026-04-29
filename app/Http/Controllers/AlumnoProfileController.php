@@ -36,42 +36,75 @@ class AlumnoProfileController extends Controller
         };
     }
 
-    public function show()
-    {
-        $alumno = $this->getAlumnoActual();
-        if (!$alumno) return response()->json(['error' => 'No autenticado'], 401);
 
-        $sede = DB::table('sede')->where('id_sede', $alumno->id_sede)->first();
-        $tutor = Tutor::find($alumno->id_tutor);
-        $nivel = $this->calcularNivel($alumno->puntaje ?? 0);
 
-        return response()->json([
-            'alumno' => [
-                'nombre' => $alumno->nombre,
-                'apellido_p' => $alumno->apellido_p,
-                'apellido_m' => $alumno->apellido_m,
-                'email' => $alumno->email,
-                'telefono' => $alumno->telefono,
-                'fecha_nacimiento' => $alumno->fecha_nacimiento,
-                'estado_residencia' => $alumno->estado_residencia,
-                'ciudad' => $alumno->ciudad,
-                'calle' => $alumno->calle,
-                'codigo_postal' => $alumno->codigo_postal,
-                'puntaje' => $alumno->puntaje,
-                'fecha_ingreso' => 'Sin registro', // No hay campo en BD
-            ],
-            'sede' => $sede ? $sede->nombre : '—',
-            'nivel' => $nivel,
-            'tutor' => $tutor ? [
-                'nombre' => $tutor->nombre,
-                'apellido_p' => $tutor->apellido_p,
-                'apellido_m' => $tutor->apellido_m,
-                'parentesco' => $tutor->parentesco,
-                'telefono' => $tutor->telefono,
-                'email' => $tutor->email,
-            ] : null
-        ]);
-    }
+public function show()
+{
+    $alumno = $this->getAlumnoActual();
+    if (!$alumno) return response()->json(['error' => 'No autenticado'], 401);
+
+    $sede = DB::table('sede')->where('id_sede', $alumno->id_sede)->first();
+    $tutor = Tutor::find($alumno->id_tutor);
+    $nivel = $this->calcularNivel($alumno->puntaje ?? 0);
+    $misPuntos = $alumno->puntaje ?? 0;
+
+    // --- CÁLCULO DE POSICIONES PERSONALES ---
+    // Posición Global: Contar cuántos puntajes únicos son mayores al mío y sumar 1
+    $posicionGlobal = Alumno::where('puntaje', '>', $misPuntos)
+        ->distinct('puntaje')
+        ->count('puntaje') + 1;
+
+    // Posición en Sede: Lo mismo pero filtrando por su sede
+    $posicionSede = Alumno::where('id_sede', $alumno->id_sede)
+        ->where('puntaje', '>', $misPuntos)
+        ->distinct('puntaje')
+        ->count('puntaje') + 1;
+
+    // --- RANKING GLOBAL (Top 10 puntajes únicos) ---
+    $topGlobal = Alumno::select('puntaje')->distinct()->whereNotNull('puntaje')
+        ->orderBy('puntaje', 'desc')->limit(10)->pluck('puntaje');
+    $minGlobal = $topGlobal->min() ?? 0;
+    
+    $rankingGlobal = Alumno::where('puntaje', '>=', $minGlobal)
+        ->orderBy('puntaje', 'desc')->get()->map(function($a) {
+            $n = $this->calcularNivel($a->puntaje ?? 0);
+            return [
+                'id_alumno' => $a->id_alumno,
+                'nombre' => $a->nombre . ' ' . $a->apellido_p,
+                'puntaje' => $a->puntaje,
+                'nivel' => $n['numero']
+            ];
+        });
+
+    // --- RANKING POR SEDE (Top 10 puntajes únicos) ---
+    $topSede = Alumno::where('id_sede', $alumno->id_sede)->select('puntaje')
+        ->distinct()->whereNotNull('puntaje')->orderBy('puntaje', 'desc')
+        ->limit(10)->pluck('puntaje');
+    $minSede = $topSede->min() ?? 0;
+
+    $rankingSede = Alumno::where('id_sede', $alumno->id_sede)
+        ->where('puntaje', '>=', $minSede)->orderBy('puntaje', 'desc')
+        ->get()->map(function($a) {
+            $n = $this->calcularNivel($a->puntaje ?? 0);
+            return [
+                'id_alumno' => $a->id_alumno,
+                'nombre' => $a->nombre . ' ' . $a->apellido_p,
+                'puntaje' => $a->puntaje,
+                'nivel' => $n['numero']
+            ];
+        });
+
+    return response()->json([
+        'alumno' => $alumno,
+        'posicion_global' => $posicionGlobal, // <--- Nueva
+        'posicion_sede' => $posicionSede,     // <--- Nueva
+        'sede' => $sede ? $sede->nombre : '—',
+        'nivel' => $nivel,
+        'ranking' => $rankingGlobal,
+        'ranking_sede' => $rankingSede,
+        'tutor' => $tutor
+    ]);
+}
 
     public function update(Request $request)
     {

@@ -583,7 +583,7 @@
             <div class="page-content">
                 <div class="page-header">
                     <h1 class="page-title">Mi Nivel y Progreso</h1>
-                    <p class="page-subtitle">Puntuaciones, progreso académico y tabla de clasificación general.</p>
+                    <p class="page-subtitle">Puntuaciones, progreso académico y tablas de clasificación.</p>
                 </div>
 
                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; margin-bottom: 40px;">
@@ -607,29 +607,29 @@
                     </div>
 
                     <div style="display: flex; flex-direction: column; gap: 16px;">
-                        <h3 style="font-size: 18px; font-weight: 600; color: var(--texto); margin: 0;">Resumen del Mes</h3>
+                        <h3 style="font-size: 18px; font-weight: 600; color: var(--texto); margin: 0;">Tus logros</h3>
 
                         <div style="display: grid; grid-template-columns: 1fr; gap: 16px;">
 
-                            {{-- Progreso en Puntos --}}
+                            {{-- Posición en Ranking Sede --}}
                             <div class="card" style="display: flex; align-items: center; gap: 16px; padding: 16px 20px;">
                                 <div style="width: 48px; height: 48px; background-color: rgba(46, 125, 50, 0.1); border-radius: 12px; display: flex; justify-content: center; align-items: center;">
                                     <i class="ri-arrow-up-circle-fill" style="font-size: 24px; color: var(--verde);"></i>
                                 </div>
                                 <div>
-                                    <p style="font-size: 13px; color: var(--texto-suave); margin: 0 0 4px 0;">Puntos Obtenidos</p>
-                                    <h4 style="font-size: 20px; font-weight: 700; color: var(--texto); margin: 0;">+150</h4>
+                                    <p style="font-size: 13px; color: var(--texto-suave); margin: 0 0 4px 0;">Tu Posición Local</p>
+                                    <h4 id="puesto_sede" style="font-size: 20px; font-weight: 700; color: var(--texto); margin: 0;"></h4>
                                 </div>
                             </div>
 
-                            {{-- Posición en Ranking --}}
+                            {{-- Posición en Ranking Global --}}
                             <div class="card" style="display: flex; align-items: center; gap: 16px; padding: 16px 20px;">
                                 <div style="width: 48px; height: 48px; background-color: rgba(26, 115, 232, 0.1); border-radius: 12px; display: flex; justify-content: center; align-items: center;">
                                     <i class="ri-trophy-fill" style="font-size: 24px; color: var(--azul);"></i>
                                 </div>
                                 <div>
-                                    <p style="font-size: 13px; color: var(--texto-suave); margin: 0 0 4px 0;">Tu Posición Actual</p>
-                                    <h4 style="font-size: 20px; font-weight: 700; color: var(--texto); margin: 0;">#4 General</h4>
+                                    <p style="font-size: 13px; color: var(--texto-suave); margin: 0 0 4px 0;">Tu Posición Global</p>
+                                    <h4 id="puesto_global" style="font-size: 20px; font-weight: 700; color: var(--texto); margin: 0;"></h4>
                                 </div>
                             </div>
 
@@ -640,34 +640,13 @@
                                 </div>
                                 <div style="flex-grow: 1;">
                                     <p style="font-size: 13px; color: var(--texto-suave); margin: 0 0 4px 0;">Logros Desbloqueados</p>
-                                    <h4 style="font-size: 20px; font-weight: 700; color: var(--texto); margin: 0;">3 Nuevos</h4>
+                                    <h4 style="font-size: 20px; font-weight: 700; color: var(--texto); margin: 0;"></h4>
                                 </div>
                                 <i class="ri-arrow-down-s-line" id="icon-logros" style="font-size: 24px; color: var(--texto-suave); transition: transform 0.3s ease;"></i>
                             </div>
 
                             {{-- Logros Desplegables (ocultos por defecto) --}}
-                            <div id="logros-desplegables" style="display: none; flex-direction: column; gap: 12px;">
-                                <div style="background: var(--blanco); padding: 12px; border-radius: 8px; border: 1px solid var(--borde); border-left: 4px solid var(--naranja); display: flex; align-items: center; gap: 12px;">
-                                    <i class="ri-fire-fill" style="color: var(--naranja); font-size: 20px;"></i>
-                                    <div>
-                                        <h5 style="margin: 0; font-size: 14px; color: var(--texto);">Racha de 7 días</h5>
-                                        <p style="margin: 0; font-size: 12px; color: var(--texto-suave);">¡No has faltado en una semana!</p>
-                                    </div>
-                                </div>
-                                <div style="background: var(--blanco); padding: 12px; border-radius: 8px; border: 1px solid var(--borde); border-left: 4px solid var(--azul); display: flex; align-items: center; gap: 12px;">
-                                    <i class="ri-sword-fill" style="color: var(--azul); font-size: 20px;"></i>
-                                    <div>
-                                        <h5 style="margin: 0; font-size: 14px; color: var(--texto);">Maestro Táctico</h5>
-                                        <p style="margin: 0; font-size: 12px; color: var(--texto-suave);">Resolviste 50 problemas de ajedrez.</p>
-                                    </div>
-                                </div>
-                                <div style="background: var(--blanco); padding: 12px; border-radius: 8px; border: 1px solid var(--borde); border-left: 4px solid var(--verde); display: flex; align-items: center; gap: 12px;">
-                                    <i class="ri-book-open-fill" style="color: var(--verde); font-size: 20px;"></i>
-                                    <div>
-                                        <h5 style="margin: 0; font-size: 14px; color: var(--texto);">Apertura Italiana</h5>
-                                        <p style="margin: 0; font-size: 12px; color: var(--texto-suave);">Completaste el módulo teórico.</p>
-                                    </div>
-                                </div>
+                            <div id="logros-desplegables" style="display: none; flex-direction: column; gap: 12px; margin-top: 12px;">
                             </div>
 
                         </div>
@@ -676,7 +655,33 @@
 
                 <div>
                     <h2 style="font-size: 20px; font-weight: 600; color: var(--texto); margin-bottom: 20px; display: flex; align-items: center; gap: 8px;">
-                        <i class="ri-bar-chart-grouped-fill" style="color: var(--naranja);"></i> Tabla de Clasificación Global
+                        <i class="ri-bar-chart-grouped-fill" style="color: var(--naranja);"></i>Clasificación Local <small>(Top 10)</small>
+                    </h2>
+                    <div class="card" style="padding: 0; overflow-x: auto;">
+                        <table style="width: 100%; border-collapse: collapse; text-align: left; min-width: 600px;">
+                            <thead>
+                                <tr style="background-color: #f8f9fa; border-bottom: 2px solid var(--borde);">
+                                    <th style="padding: 16px; font-size: 13px; font-weight: 600; color: var(--texto-suave); text-transform: uppercase;">Pos</th>
+                                    <th style="padding: 16px; font-size: 13px; font-weight: 600; color: var(--texto-suave); text-transform: uppercase;">Alumno</th>
+                                    <th style="padding: 16px; font-size: 13px; font-weight: 600; color: var(--texto-suave); text-transform: uppercase;">Nivel</th>
+                                    <th style="padding: 16px; font-size: 13px; font-weight: 600; color: var(--texto-suave); text-transform: uppercase; text-align: right;">Puntos Totales</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tabla-ranking-sede-body">
+                                <tr style="border-bottom: 1px solid var(--borde);">
+                                    <td style="padding: 16px; font-weight: 700; color: #d4af37;"><i class="ri-medal-fill"></i> 1</td>
+                                    <td style="padding: 16px; font-weight: 500; color: var(--texto);">Daniela Paz Alfaro</td>
+                                    <td style="padding: 16px;"><span class="badge badge-naranja">Nivel 6</span></td>
+                                    <td style="padding: 16px; text-align: right; font-weight: 600; color: var(--texto);">1650</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <br><br>
+                <div>
+                    <h2 style="font-size: 20px; font-weight: 600; color: var(--texto); margin-bottom: 20px; display: flex; align-items: center; gap: 8px;">
+                        <i class="ri-bar-chart-grouped-fill" style="color: var(--naranja);"></i>Clasificación Global <small>(Top 10)</small>
                     </h2>
 
                     <div class="card" style="padding: 0; overflow-x: auto;">
@@ -689,30 +694,12 @@
                                     <th style="padding: 16px; font-size: 13px; font-weight: 600; color: var(--texto-suave); text-transform: uppercase; text-align: right;">Puntos Totales</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody id="tabla-ranking-body">
                                 <tr style="border-bottom: 1px solid var(--borde);">
                                     <td style="padding: 16px; font-weight: 700; color: #d4af37;"><i class="ri-medal-fill"></i> 1</td>
                                     <td style="padding: 16px; font-weight: 500; color: var(--texto);">Daniela Paz Alfaro</td>
                                     <td style="padding: 16px;"><span class="badge badge-naranja">Nivel 6</span></td>
                                     <td style="padding: 16px; text-align: right; font-weight: 600; color: var(--texto);">1650</td>
-                                </tr>
-                                <tr style="border-bottom: 1px solid var(--borde);">
-                                    <td style="padding: 16px; font-weight: 700; color: #c0c0c0;"><i class="ri-medal-fill"></i> 2</td>
-                                    <td style="padding: 16px; font-weight: 500; color: var(--texto);">Jose Alejandro Aguilar Martinez</td>
-                                    <td style="padding: 16px;"><span class="badge badge-naranja">Nivel 6</span></td>
-                                    <td style="padding: 16px; text-align: right; font-weight: 600; color: var(--texto);">1520</td>
-                                </tr>
-                                <tr style="border-bottom: 1px solid var(--borde);">
-                                    <td style="padding: 16px; font-weight: 700; color: #cd7f32;"><i class="ri-medal-fill"></i> 3</td>
-                                    <td style="padding: 16px; font-weight: 500; color: var(--texto);">Carlos Mendoza</td>
-                                    <td style="padding: 16px;"><span class="badge badge-naranja">Nivel 5</span></td>
-                                    <td style="padding: 16px; text-align: right; font-weight: 600; color: var(--texto);">1300</td>
-                                </tr>
-                                <tr style="background-color: var(--naranja-light); border-left: 4px solid var(--naranja); border-bottom: 1px solid var(--borde);">
-                                    <td style="padding: 16px; font-weight: 700; color: var(--naranja);">4</td>
-                                    <td style="padding: 16px; font-weight: 700; color: var(--naranja);">Ana García (Tú)</td>
-                                    <td style="padding: 16px;"><span class="badge badge-naranja">Nivel 5</span></td>
-                                    <td style="padding: 16px; text-align: right; font-weight: 700; color: var(--naranja);">1200</td>
                                 </tr>
                             </tbody>
                         </table>
