@@ -184,6 +184,22 @@
                         </div>
                         <span class="error-msg-modal" id="err-pr-password-confirm"></span>
                     </div>
+
+<div class="form-group-modal">
+    <label for="pr-estatus">Estatus</label>
+    <div class="form-dropdown" id="dropdown-pr-estatus" tabindex="0">
+        <div class="form-select-trigger">
+            <span class="selected-text" data-value="1">Activo</span>
+            <i class="ri-arrow-down-s-line"></i>
+        </div>
+        <div class="form-options-container">
+            <div class="form-option selected" data-value="1">Activo</div>
+            <div class="form-option" data-value="0">Inactivo</div>
+        </div>
+        <input type="hidden" id="pr-estatus" name="pr_estatus" value="1">
+    </div>
+</div>
+
                 </div>
 
                 <div class="modal-footer">

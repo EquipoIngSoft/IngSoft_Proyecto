@@ -454,7 +454,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     ciudad: prCiudad ? prCiudad.value.trim() : '',
                     calle: calleCompleta,
                     codigo_postal: prCP ? prCP.value.trim() : '',
-                    telefono: prTelefono ? prTelefono.value.trim() : ''
+                    telefono: prTelefono ? prTelefono.value.trim() : '',
+                    estatus: document.getElementById('pr-estatus') ? parseInt(document.getElementById('pr-estatus').value) : 1,
                 };
 
                 if (prPass && prPass.value) {
@@ -622,6 +623,11 @@ document.addEventListener('DOMContentLoaded', () => {
                         }
                         if (info.id_sede) {
                             const opt = document.querySelector(`#dropdown-pr-sede .form-option[data-value="${info.id_sede}"]`);
+                            if (opt) opt.click();
+                        }
+
+                        if (info.estatus !== undefined) {
+                            const opt = document.querySelector(`#dropdown-pr-estatus .form-option[data-value="${info.estatus ? '1' : '0'}"]`);
                             if (opt) opt.click();
                         }
 

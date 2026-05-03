@@ -487,7 +487,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     calle: calleCompleta,
                     codigo_postal: alCP.value.trim(),
                     email: alCorreo.value.trim(),
-                    telefono: document.getElementById('al-telefono') ? document.getElementById('al-telefono').value.trim() : ''
+                    telefono: document.getElementById('al-telefono') ? document.getElementById('al-telefono').value.trim() : '',
+                    estatus: document.getElementById('al-estatus') ? parseInt(document.getElementById('al-estatus').value) : 1,
                 };
 
                 const tuNombre = document.getElementById('tu-nombre');
@@ -686,6 +687,10 @@ document.addEventListener('DOMContentLoaded', () => {
                         }
                         if (info.id_sede) {
                             const opt = document.querySelector(`#dropdown-al-sede .form-option[data-value="${info.id_sede}"]`);
+                            if (opt) opt.click();
+                        }
+                        if (info.estatus !== undefined) {
+                            const opt = document.querySelector(`#dropdown-al-estatus .form-option[data-value="${info.estatus ? '1' : '0'}"]`);
                             if (opt) opt.click();
                         }
                         abrirModal();

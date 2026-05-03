@@ -263,6 +263,20 @@
                                 </div>
                                 <span class="error-msg-modal" id="err-al-password-confirm"></span>
                             </div>
+                            <div class="form-group-modal">
+    <label for="al-estatus">Estatus</label>
+    <div class="form-dropdown" id="dropdown-al-estatus" tabindex="0">
+        <div class="form-select-trigger">
+            <span class="selected-text" data-value="1">Activo</span>
+            <i class="ri-arrow-down-s-line"></i>
+        </div>
+        <div class="form-options-container">
+            <div class="form-option selected" data-value="1">Activo</div>
+            <div class="form-option" data-value="0">Inactivo</div>
+        </div>
+        <input type="hidden" id="al-estatus" name="al_estatus" value="1">
+    </div>
+</div>
                         </div>
 
                         <!-- ===== DIVISOR ===== -->

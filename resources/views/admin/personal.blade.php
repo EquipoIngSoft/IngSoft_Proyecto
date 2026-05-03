@@ -256,6 +256,23 @@
                         </div>
                         <span class="error-msg-modal" id="err-pe-password-confirm"></span>
                     </div>
+
+                    {{-- ===== ESTATUS ===== --}}
+                    <div class="form-group-modal">
+                        <label for="pe-estatus">Estatus</label>
+                        <div class="form-dropdown" id="dropdown-pe-estatus" tabindex="0">
+                            <div class="form-select-trigger">
+                                <span class="selected-text" data-value="1">Activo</span>
+                                <i class="ri-arrow-down-s-line"></i>
+                            </div>
+                            <div class="form-options-container">
+                                <div class="form-option selected" data-value="1">Activo</div>
+                                <div class="form-option" data-value="0">Inactivo</div>
+                            </div>
+                            <input type="hidden" id="pe-estatus" name="pe_estatus" value="1">
+                        </div>
+                    </div>
+
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn-modal-cancel" id="btn-cancelar-modal-personal">Cancelar</button>
