@@ -388,6 +388,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     codigo_postal: peCp ? peCp.value.trim() : '',
                     email: peCorreo ? peCorreo.value.trim() : '',
                     telefono: peTelefono ? peTelefono.value.trim() : '',
+                    estatus: document.getElementById('pe-estatus') ? parseInt(document.getElementById('pe-estatus').value) : 1,
                 };
 
                 if (pePass && pePass.value) {
@@ -557,6 +558,10 @@ document.addEventListener('DOMContentLoaded', () => {
                             if (optR) optR.click();
                         }
 
+                        if (info.estatus !== undefined) {
+                            const opt = document.querySelector(`#dropdown-pe-estatus .form-option[data-value="${info.estatus ? '1' : '0'}"]`);
+                            if (opt) opt.click();
+                        }
                         const passEl = document.getElementById('pe-password');
                         if (passEl) passEl.removeAttribute('required');
 
