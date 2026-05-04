@@ -30,9 +30,12 @@
                             </div>
                             <div class="custom-options-container">
                                 <div class="custom-option selected" data-value="">Todos los niveles</div>
-                                <div class="custom-option" data-value="principiante">Principiante</div>
-                                <div class="custom-option" data-value="intermedio">Intermedio</div>
-                                <div class="custom-option" data-value="avanzado">Avanzado</div>
+                                <div class="custom-option" data-value="peon">♟ Peón (0–149)</div>
+                                <div class="custom-option" data-value="caballo">♞ Caballo (150–399)</div>
+                                <div class="custom-option" data-value="alfil">♝ Alfil (400–799)</div>
+                                <div class="custom-option" data-value="torre">♜ Torre (800–1499)</div>
+                                <div class="custom-option" data-value="reina">♛ Reina (1500–2999)</div>
+                                <div class="custom-option" data-value="rey">♚ Rey (3000+)</div>
                             </div>
                         </div>
 

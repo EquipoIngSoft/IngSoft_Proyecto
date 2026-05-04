@@ -306,14 +306,20 @@ class AdminController extends Controller
             $sub->orWhere("{$tabla}.estatus", $esActivo);
         }
 
-        // Nivel (solo alumno y profesor, basado en puntaje)
-        if (in_array($tipo, ['alumno', 'profesor'])) {
-            if (str_contains('principiante', $q)) {
-                $sub->orWhere("{$tabla}.puntaje", '<', 500);
-            } elseif (str_contains('intermedio', $q)) {
-                $sub->orWhereBetween("{$tabla}.puntaje", [500, 999]);
-            } elseif (str_contains('avanzado', $q)) {
-                $sub->orWhere("{$tabla}.puntaje", '>=', 1000);
+        // Nivel (solo alumnos, basado en puntaje — piezas de ajedrez)
+        if ($tipo === 'alumno') {
+            if (str_contains('peón', $q) || str_contains('peon', $q)) {
+                $sub->orWhere("{$tabla}.puntaje", '<', 150);
+            } elseif (str_contains('caballo', $q)) {
+                $sub->orWhereBetween("{$tabla}.puntaje", [150, 399]);
+            } elseif (str_contains('alfil', $q)) {
+                $sub->orWhereBetween("{$tabla}.puntaje", [400, 799]);
+            } elseif (str_contains('torre', $q)) {
+                $sub->orWhereBetween("{$tabla}.puntaje", [800, 1499]);
+            } elseif (str_contains('reina', $q)) {
+                $sub->orWhereBetween("{$tabla}.puntaje", [1500, 2999]);
+            } elseif (str_contains('rey', $q)) {
+                $sub->orWhere("{$tabla}.puntaje", '>=', 3000);
             }
         }
     });
@@ -331,13 +337,16 @@ if ($estatus !== '') {
     $query->where("{$tabla}.estatus", $esActivo);
 }
 
-        // Filtro nivel (alumnos: basado en puntaje)
+        // Filtro nivel (alumnos: basado en puntaje — piezas de ajedrez)
         if ($tipo === 'alumno' && $nivel !== '') {
             match($nivel) {
-                'principiante' => $query->where('puntaje', '<', 500),
-                'intermedio'   => $query->whereBetween('puntaje', [500, 999]),
-                'avanzado'     => $query->where('puntaje', '>=', 1000),
-                default        => null,
+                'peon'    => $query->where('puntaje', '<', 150),
+                'caballo' => $query->whereBetween('puntaje', [150, 399]),
+                'alfil'   => $query->whereBetween('puntaje', [400, 799]),
+                'torre'   => $query->whereBetween('puntaje', [800, 1499]),
+                'reina'   => $query->whereBetween('puntaje', [1500, 2999]),
+                'rey'     => $query->where('puntaje', '>=', 3000),
+                default   => null,
             };
         }
 
@@ -360,7 +369,15 @@ if ($tipo === 'personal' && $idRol !== '') {
 
             if ($tipo === 'alumno') {
                 $edad = \Carbon\Carbon::parse($r->fecha_nacimiento)->age;
-                $nivel = $r->puntaje < 500 ? 'Principiante' : ($r->puntaje < 1000 ? 'Intermedio' : 'Avanzado');
+                $puntaje = (int) ($r->puntaje ?? 0);
+                $nivel = match (true) {
+                    $puntaje >= 3000 => 'Rey',
+                    $puntaje >= 1500 => 'Reina',
+                    $puntaje >= 800  => 'Torre',
+                    $puntaje >= 400  => 'Alfil',
+                    $puntaje >= 150  => 'Caballo',
+                    default          => 'Peón',
+                };
                 $base['edad']    = $edad;
                 $base['nivel']   = $nivel;
                 $base['id_sede'] = $r->id_sede;

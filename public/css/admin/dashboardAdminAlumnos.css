@@ -385,19 +385,36 @@
     white-space: nowrap;
 }
 
-.badge-principiante {
-    background-color: #fce8e6;
-    color: #c0392b;
+/* ---- Badges de Nivel (piezas de ajedrez) ---- */
+.badge-peon {
+    background-color: #f0f0f0;
+    color: #555;
 }
 
-.badge-intermedio {
-    background-color: #fde8d8;
-    color: #e05c2a;
+.badge-caballo {
+    background-color: #e8f4fd;
+    color: #1565c0;
 }
 
-.badge-avanzado {
+.badge-alfil {
+    background-color: #e8f5e9;
+    color: #2e7d32;
+}
+
+.badge-torre {
     background-color: #fff3e0;
     color: #e65100;
+}
+
+.badge-reina {
+    background-color: #fce4ec;
+    color: #ad1457;
+}
+
+.badge-rey {
+    background-color: #fff8e1;
+    color: #f57f17;
+    border: 1px solid #ffe082;
 }
 
 /* ---- Badges de Status ---- */
