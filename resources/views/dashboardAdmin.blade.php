@@ -24,7 +24,6 @@
     <link rel="stylesheet" href="{{ asset('css/admin/dashboardAdminNiveles.css') }}">
     <link rel="stylesheet" href="{{ asset('css/admin/dashboardAdminRoles.css') }}">
 </head>
-
 <body>
 
     <!-- ===================== SIDEBAR ===================== -->
@@ -36,77 +35,75 @@
             <span class="sidebar-brand">EGAU Chess</span>
         </div>
 
-        <!-- Navegación -->
-        <nav class="sidebar-nav">
-            <ul>
-                <li class="nav-item active" data-section="alumnos">
-                    <a href="#">
-                        <i class="ri-group-line"></i>
-                        <span>Alumnos</span>
-                    </a>
-                </li>
-                <li class="nav-item" data-section="profesores">
-                    <a href="#">
-                        <i class="ri-user-star-line"></i>
-                        <span>Profesores</span>
-                    </a>
-                </li>
-                <li class="nav-item" data-section="personal">
-                    <a href="#">
-                        <i class="ri-user-settings-line"></i>
-                        <span>Personal</span>
-                    </a>
-                </li>
-                <li class="nav-item" data-section="roles">
-                    <a href="#">
-                        <i class="ri-shield-user-line"></i>
-                        <span>Roles</span>
-                    </a>
-                </li>
-                <li class="nav-item" data-section="sede">
-                    <a href="#">
-                        <i class="ri-map-pin-line"></i>
-                        <span>Sede</span>
-                    </a>
-                </li>
-                <li class="nav-item" data-section="grupos">
-                    <a href="#">
-                        <i class="ri-grid-line"></i>
-                        <span>Grupos</span>
-                    </a>
-                </li>
-                <li class="nav-item" data-section="extraescolares">
-                    <a href="#">
-                        <i class="ri-bar-chart-2-line"></i>
-                        <span>Extraescolares</span>
-                    </a>
-                </li>
-                <li class="nav-item" data-section="status">
-                    <a href="#">
-                        <i class="ri-bookmark-line"></i>
-                        <span>Status</span>
-                    </a>
-                </li>
-                <li class="nav-item" data-section="pagos">
-                    <a href="#">
-                        <i class="ri-bank-card-line"></i>
-                        <span>Pagos</span>
-                    </a>
-                </li>
-                <li class="nav-item" data-section="niveles">
-                    <a href="#">
-                        <i class="ri-book-open-line"></i>
-                        <span>Niveles</span>
-                    </a>
-                </li>
-            </ul>
-        </nav>
+       <nav class="sidebar-nav">
+    <ul>
+        @if($permisos->alumno_ver ?? false)
+        <li class="nav-item active" data-section="alumnos">
+            <a href="#"><i class="ri-group-line"></i><span>Alumnos</span></a>
+        </li>
+        @endif
+
+        @if($permisos->profesor_ver ?? false)
+        <li class="nav-item" data-section="profesores">
+            <a href="#"><i class="ri-user-star-line"></i><span>Profesores</span></a>
+        </li>
+        @endif
+
+        @if($permisos->personal_ver ?? false)
+        <li class="nav-item" data-section="personal">
+            <a href="#"><i class="ri-user-settings-line"></i><span>Personal</span></a>
+        </li>
+        @endif
+
+        @if($permisos->roles_ver ?? false)
+        <li class="nav-item" data-section="roles">
+            <a href="#"><i class="ri-shield-user-line"></i><span>Roles</span></a>
+        </li>
+        @endif
+
+        @if($permisos->sedes_ver ?? false)
+        <li class="nav-item" data-section="sede">
+            <a href="#"><i class="ri-map-pin-line"></i><span>Sede</span></a>
+        </li>
+        @endif
+
+        @if($permisos->grupos_ver ?? false)
+        <li class="nav-item" data-section="grupos">
+            <a href="#"><i class="ri-grid-line"></i><span>Grupos</span></a>
+        </li>
+        @endif
+
+        @if($permisos->extracurriculares_ver ?? false)
+        <li class="nav-item" data-section="extraescolares">
+            <a href="#"><i class="ri-bar-chart-2-line"></i><span>Extraescolares</span></a>
+        </li>
+        @endif
+
+        @if($permisos->estatus_ver ?? false)
+        <li class="nav-item" data-section="status">
+            <a href="#"><i class="ri-bookmark-line"></i><span>Status</span></a>
+        </li>
+        @endif
+
+        @if($permisos->pagos_ver ?? false)
+        <li class="nav-item" data-section="pagos">
+            <a href="#"><i class="ri-bank-card-line"></i><span>Pagos</span></a>
+        </li>
+        @endif
+
+        @if($permisos->niveles_ver ?? false)
+        <li class="nav-item" data-section="niveles">
+            <a href="#"><i class="ri-book-open-line"></i><span>Niveles</span></a>
+        </li>
+        @endif
+    </ul>
+</nav>
 
         <!-- Opciones al fondo -->
         <div class="sidebar-footer">
             <a href="#" class="nav-footer-item nav-item" data-section="opciones">
                 <i class="ri-settings-3-line"></i>
-                <span>Opciones</span>
+                <span>Configuración</span>
             </a>
         </div>
 
@@ -145,120 +142,7 @@
             </div>
         </header>
 
-        <!-- Área de sección activa: PERSONAL -->
-        <section class="section-content" id="section-personal" style="display: none;">
 
-            <!-- Cabecera de sección -->
-            <div class="section-header">
-                <h1 class="section-title">Gestión de Personal</h1>
-                <button class="btn-primary" id="btn-agregar-personal">
-                    <i class="ri-add-line"></i> Agregar Personal
-                </button>
-            </div>
-
-            <!-- Tarjeta de tabla -->
-            <div class="card">
-
-                <!-- Cabecera de controles: Búsqueda y Filtros -->
-                <div class="controls-container">
-                    <!-- Buscador -->
-                    <div class="search-bar">
-                        <i class="ri-search-line search-icon"></i>
-                        <input type="text" id="buscador-personal" placeholder="Buscar personal..." autocomplete="off">
-                    </div>
-
-                    <!-- Filtros -->
-                    <div class="filters-row">
-                        <!-- Rol -->
-                        <div class="select-wrapper custom-dropdown" id="dropdown-nivel-personal">
-                            <div class="custom-select-trigger">
-                                <span class="selected-text" data-value="">Todos los roles</span>
-                                <i class="ri-arrow-down-s-line"></i>
-                            </div>
-                            <div class="custom-options-container">
-                                <div class="custom-option selected" data-value="">Todos los roles</div>
-                                <div class="custom-option" data-value="administrativo">Administrativo</div>
-                                <div class="custom-option" data-value="mantenimiento">Mantenimiento</div>
-                                <div class="custom-option" data-value="seguridad">Seguridad</div>
-                            </div>
-                        </div>
-
-                        <!-- Status -->
-                        <div class="select-wrapper custom-dropdown" id="dropdown-status-personal">
-                            <div class="custom-select-trigger">
-                                <span class="selected-text" data-value="">Todos los estatus</span>
-                                <i class="ri-arrow-down-s-line"></i>
-                            </div>
-                            <div class="custom-options-container">
-                                <div class="custom-option selected" data-value="">Todos los estatus</div>
-                                <div class="custom-option" data-value="activo">Activo</div>
-                                <div class="custom-option" data-value="inactivo">Inactivo</div>
-                            </div>
-                        </div>
-
-                        <!-- Sede -->
-                        <div class="select-wrapper custom-dropdown" id="dropdown-sede-personal">
-                            <div class="custom-select-trigger">
-                                <span class="selected-text" data-value="">Todas las sedes</span>
-                                <i class="ri-arrow-down-s-line"></i>
-                            </div>
-                            <div class="custom-options-container">
-                                <div class="custom-option selected" data-value="">Todas las sedes</div>
-                                <div class="custom-option" data-value="sede central">Sede Central</div>
-                                <div class="custom-option" data-value="sede norte">Sede Norte</div>
-                            </div>
-                        </div>
-
-                        <button id="btn-limpiar-personal" class="btn-clear-filters">
-                            Limpiar filtros
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Tabla -->
-                <div class="table-wrapper">
-                    <table class="data-table" id="tabla-personal">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Nombre</th>
-                                <th>Rol</th>
-                                <th>Sede</th>
-                                <th>Status</th>
-                                <th>Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>Roberto Sánchez</td>
-                                <td>Administrativo</td>
-                                <td>Sede Central</td>
-                                <td><span class="badge badge-activo">Activo</span></td>
-                                <td class="acciones">
-                                    <button class="btn-icon btn-ver" title="Ver"><i class="ri-eye-line"></i></button>
-                                    <button class="btn-icon btn-editar" title="Editar"><i
-                                            class="ri-edit-line"></i></button>
-                                    <button class="btn-icon btn-eliminar" title="Eliminar"><i
-                                            class="ri-delete-bin-line"></i></button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-
-                <!-- Paginación -->
-                <div class="pagination">
-                    <div class="pagination-info">Mostrando 1 resultado</div>
-                    <div class="pagination-btns">
-                        <button class="pag-btn" disabled><i class="ri-arrow-left-s-line"></i></button>
-                        <button class="pag-btn active">1</button>
-                        <button class="pag-btn" disabled><i class="ri-arrow-right-s-line"></i></button>
-                    </div>
-                </div>
-
-            </div><!-- /card -->
-        </section>
 
         <!-- Área de sección activa: ROLES -->
         <section class="section-content" id="section-roles" style="display: none;">
@@ -266,9 +150,11 @@
             <!-- Cabecera de sección -->
             <div class="section-header">
                 <h1 class="section-title">Gestión de Roles</h1>
-                <button class="btn-primary" id="btn-agregar-rol">
-                    <i class="ri-add-line"></i> Agregar Rol
-                </button>
+                @if($permisos->roles_edit ?? false)
+                    <button class="btn-primary" id="btn-agregar-rol">
+                        <i class="ri-add-line"></i> Agregar Rol
+                    </button>
+                @endif
             </div>
 
             <!-- Tarjeta de tabla -->
@@ -326,11 +212,13 @@
                                 </td>
                                 <td><span class="badge badge-rol-activo">Activo</span></td>
                                 <td class="acciones">
-                                    <button class="btn-icon btn-ver" title="Ver"><i class="ri-eye-line"></i></button>
-                                    <button class="btn-icon btn-editar" title="Editar"><i
-                                            class="ri-edit-line"></i></button>
-                                    <button class="btn-icon btn-eliminar" title="Eliminar"><i
-                                            class="ri-delete-bin-line"></i></button>
+                                     <button class="btn-icon btn-ver" title="Ver"><i class="ri-eye-line"></i></button>
+    @if($permisos->roles_edit ?? false)
+    <button class="btn-icon btn-editar" title="Editar"><i class="ri-edit-line"></i></button>
+    @endif
+    @if(($permisos->roles_edit ?? false) && $administrativo)
+    <button class="btn-icon btn-eliminar" title="Eliminar"><i class="ri-delete-bin-line"></i></button>
+    @endif
                                 </td>
                             </tr>
                             <tr>
@@ -343,10 +231,12 @@
                                 <td><span class="badge badge-rol-activo">Activo</span></td>
                                 <td class="acciones">
                                     <button class="btn-icon btn-ver" title="Ver"><i class="ri-eye-line"></i></button>
-                                    <button class="btn-icon btn-editar" title="Editar"><i
-                                            class="ri-edit-line"></i></button>
-                                    <button class="btn-icon btn-eliminar" title="Eliminar"><i
-                                            class="ri-delete-bin-line"></i></button>
+    @if($permisos->roles_edit ?? false)
+    <button class="btn-icon btn-editar" title="Editar"><i class="ri-edit-line"></i></button>
+    @endif
+    @if(($permisos->roles_edit ?? false) && $administrativo)
+    <button class="btn-icon btn-eliminar" title="Eliminar"><i class="ri-delete-bin-line"></i></button>
+    @endif
                                 </td>
                             </tr>
                             <tr>
@@ -359,10 +249,12 @@
                                 <td><span class="badge badge-rol-inactivo">Inactivo</span></td>
                                 <td class="acciones">
                                     <button class="btn-icon btn-ver" title="Ver"><i class="ri-eye-line"></i></button>
-                                    <button class="btn-icon btn-editar" title="Editar"><i
-                                            class="ri-edit-line"></i></button>
-                                    <button class="btn-icon btn-eliminar" title="Eliminar"><i
-                                            class="ri-delete-bin-line"></i></button>
+    @if($permisos->roles_edit ?? false)
+    <button class="btn-icon btn-editar" title="Editar"><i class="ri-edit-line"></i></button>
+    @endif
+    @if(($permisos->roles_edit ?? false) && $administrativo)
+    <button class="btn-icon btn-eliminar" title="Eliminar"><i class="ri-delete-bin-line"></i></button>
+    @endif
                                 </td>
                             </tr>
                         </tbody>
@@ -382,1132 +274,45 @@
             </div><!-- /card -->
         </section>
 
-        <!-- Área de sección activa: ALUMNOS -->
-        <section class="section-content" id="section-alumnos">
-
-            <!-- Cabecera de sección -->
-            <div class="section-header">
-                <h1 class="section-title">Gestión de Alumnos</h1>
-                <button class="btn-primary" id="btn-agregar">
-                    <i class="ri-add-line"></i> Agregar Alumno
-                </button>
-            </div>
-
-            <!-- Tarjeta de tabla -->
-            <div class="card">
-
-                <!-- Cabecera de controles: Búsqueda y Filtros -->
-                <div class="controls-container">
-                    <!-- Buscador -->
-                    <div class="search-bar">
-                        <i class="ri-search-line search-icon"></i>
-                        <input type="text" id="buscador" placeholder="Buscar alumno..." autocomplete="off">
-                    </div>
-
-                    <!-- Filtros -->
-                    <div class="filters-row">
-                        <!-- Nivel -->
-                        <div class="select-wrapper custom-dropdown" id="dropdown-nivel">
-                            <div class="custom-select-trigger">
-                                <span class="selected-text" data-value="">Todos los niveles</span>
-                                <i class="ri-arrow-down-s-line"></i>
-                            </div>
-                            <div class="custom-options-container">
-                                <div class="custom-option selected" data-value="">Todos los niveles</div>
-                                <div class="custom-option" data-value="principiante">Principiante</div>
-                                <div class="custom-option" data-value="intermedio">Intermedio</div>
-                                <div class="custom-option" data-value="avanzado">Avanzado</div>
-                            </div>
-                        </div>
-
-                        <!-- Sede -->
-                        <div class="select-wrapper custom-dropdown" id="dropdown-sede">
-                            <div class="custom-select-trigger">
-                                <span class="selected-text" data-value="">Todas las sedes</span>
-                                <i class="ri-arrow-down-s-line"></i>
-                            </div>
-                            <div class="custom-options-container">
-                                <div class="custom-option selected" data-value="">Todas las sedes</div>
-                                <div class="custom-option" data-value="sede central">Sede Central</div>
-                                <div class="custom-option" data-value="sede norte">Sede Norte</div>
-                            </div>
-                        </div>
-
-                        <!-- Status -->
-                        <div class="select-wrapper custom-dropdown" id="dropdown-status">
-                            <div class="custom-select-trigger">
-                                <span class="selected-text" data-value="">Todos los estatus</span>
-                                <i class="ri-arrow-down-s-line"></i>
-                            </div>
-                            <div class="custom-options-container">
-                                <div class="custom-option selected" data-value="">Todos los estatus</div>
-                                <div class="custom-option" data-value="activo">Activo</div>
-                                <div class="custom-option" data-value="inactivo">Inactivo</div>
-                            </div>
-                        </div>
-
-                        <button id="btn-limpiar" class="btn-clear-filters">
-                            Limpiar filtros
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Tabla -->
-                <div class="table-wrapper">
-                    <table class="data-table" id="tabla-alumnos">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Nombre</th>
-                                <th>Edad</th>
-                                <th>Nivel</th>
-                                <th>Sede</th>
-                                <th>Status</th>
-                                <th>Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>Ana García Martínez</td>
-                                <td>10</td>
-                                <td><span class="badge badge-principiante">Principiante</span></td>
-                                <td>Sede Central</td>
-                                <td><span class="badge badge-activo">Activo</span></td>
-                                <td class="acciones">
-                                    <button class="btn-icon btn-ver" title="Ver"><i class="ri-eye-line"></i></button>
-                                    <button class="btn-icon btn-editar" title="Editar"><i
-                                            class="ri-edit-line"></i></button>
-                                    <button class="btn-icon btn-eliminar" title="Eliminar"><i
-                                            class="ri-delete-bin-line"></i></button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>Carlos López Hernández</td>
-                                <td>12</td>
-                                <td><span class="badge badge-intermedio">Intermedio</span></td>
-                                <td>Sede Norte</td>
-                                <td><span class="badge badge-activo">Activo</span></td>
-                                <td class="acciones">
-                                    <button class="btn-icon btn-ver" title="Ver"><i class="ri-eye-line"></i></button>
-                                    <button class="btn-icon btn-editar" title="Editar"><i
-                                            class="ri-edit-line"></i></button>
-                                    <button class="btn-icon btn-eliminar" title="Eliminar"><i
-                                            class="ri-delete-bin-line"></i></button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>3</td>
-                                <td>María Rodríguez Pérez</td>
-                                <td>9</td>
-                                <td><span class="badge badge-principiante">Principiante</span></td>
-                                <td>Sede Central</td>
-                                <td><span class="badge badge-activo">Activo</span></td>
-                                <td class="acciones">
-                                    <button class="btn-icon btn-ver" title="Ver"><i class="ri-eye-line"></i></button>
-                                    <button class="btn-icon btn-editar" title="Editar"><i
-                                            class="ri-edit-line"></i></button>
-                                    <button class="btn-icon btn-eliminar" title="Eliminar"><i
-                                            class="ri-delete-bin-line"></i></button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>4</td>
-                                <td>Juan Sánchez Torres</td>
-                                <td>11</td>
-                                <td><span class="badge badge-avanzado">Avanzado</span></td>
-                                <td>Sede Norte</td>
-                                <td><span class="badge badge-activo">Activo</span></td>
-                                <td class="acciones">
-                                    <button class="btn-icon btn-ver" title="Ver"><i class="ri-eye-line"></i></button>
-                                    <button class="btn-icon btn-editar" title="Editar"><i
-                                            class="ri-edit-line"></i></button>
-                                    <button class="btn-icon btn-eliminar" title="Eliminar"><i
-                                            class="ri-delete-bin-line"></i></button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>5</td>
-                                <td>Laura Fernández Ruiz</td>
-                                <td>10</td>
-                                <td><span class="badge badge-intermedio">Intermedio</span></td>
-                                <td>Sede Norte</td>
-                                <td><span class="badge badge-activo">Activo</span></td>
-                                <td class="acciones">
-                                    <button class="btn-icon btn-ver" title="Ver"><i class="ri-eye-line"></i></button>
-                                    <button class="btn-icon btn-editar" title="Editar"><i
-                                            class="ri-edit-line"></i></button>
-                                    <button class="btn-icon btn-eliminar" title="Eliminar"><i
-                                            class="ri-delete-bin-line"></i></button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>6</td>
-                                <td>Diego Morales Vega</td>
-                                <td>13</td>
-                                <td><span class="badge badge-avanzado">Avanzado</span></td>
-                                <td>Sede Central</td>
-                                <td><span class="badge badge-inactivo">Inactivo</span></td>
-                                <td class="acciones">
-                                    <button class="btn-icon btn-ver" title="Ver"><i class="ri-eye-line"></i></button>
-                                    <button class="btn-icon btn-editar" title="Editar"><i
-                                            class="ri-edit-line"></i></button>
-                                    <button class="btn-icon btn-eliminar" title="Eliminar"><i
-                                            class="ri-delete-bin-line"></i></button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-
-                <!-- Paginación -->
-                <div class="pagination">
-                    <div class="pagination-btns">
-                        <button class="pag-btn" disabled><i class="ri-arrow-left-s-line"></i></button>
-                        <button class="pag-btn active">1</button>
-                        <button class="pag-btn"><i class="ri-arrow-right-s-line"></i></button>
-                    </div>
-                </div>
-
-            </div><!-- /card -->
-        </section>
-
-        <!-- ===================== MODAL: AGREGAR PERSONAL ===================== -->
-        <div class="modal-overlay" id="modal-agregar-personal">
-            <div class="modal-box">
-
-                <!-- Cabecera del modal -->
-                <div class="modal-header">
-                    <div class="modal-title-group">
-                        <i class="ri-user-add-line modal-title-icon"></i>
-                        <h2 class="modal-title">Agregar Personal</h2>
-                    </div>
-                    <button class="modal-close-btn" id="modal-close-personal" title="Cerrar">
-                        <i class="ri-close-line"></i>
-                    </button>
-                </div>
-
-                <!-- Cuerpo del modal con scroll -->
-                <div class="modal-body">
-                    <form id="form-agregar-personal" novalidate>
-
-                        <div class="modal-section-label">
-                            <i class="ri-id-card-line"></i> Información del Personal
-                        </div>
-
-                        <div class="modal-grid">
-                            <div class="form-group-modal">
-                                <label for="pe-nombre">Nombre <span style="color:var(--naranja)">*</span></label>
-                                <input type="text" id="pe-nombre" name="pe_nombre" placeholder="Nombre(s)" required>
-                                <span class="error-msg-modal" id="err-pe-nombre"></span>
-                            </div>
-                            <div class="form-group-modal">
-                                <label for="pe-ap-paterno">Apellido Paterno <span
-                                        style="color:var(--naranja)">*</span></label>
-                                <input type="text" id="pe-ap-paterno" name="pe_ap_paterno"
-                                    placeholder="Apellido paterno" required>
-                                <span class="error-msg-modal" id="err-pe-ap-paterno"></span>
-                            </div>
-                            <div class="form-group-modal">
-                                <label for="pe-ap-materno">Apellido Materno</label>
-                                <input type="text" id="pe-ap-materno" name="pe_ap_materno"
-                                    placeholder="Apellido materno">
-                            </div>
-                            <div class="form-group-modal">
-                                <label for="pe-fecha-nacimiento">Fecha de Nacimiento <span
-                                        style="color:var(--naranja)">*</span></label>
-                                <input type="date" id="pe-fecha-nacimiento" name="pe_fecha_nacimiento" required>
-                                <span class="error-msg-modal" id="err-pe-fecha-nacimiento"></span>
-                            </div>
-                            <div class="form-group-modal">
-                                <label for="pe-telefono">Número de Teléfono</label>
-                                <input type="tel" id="pe-telefono" name="pe_telefono" placeholder="10 dígitos"
-                                    maxlength="10">
-                                <span class="error-msg-modal" id="err-pe-telefono"></span>
-                            </div>
-                            <div class="form-group-modal">
-                                <label for="pe-genero">Género</label>
-                                <div class="form-dropdown" id="dropdown-pe-genero" tabindex="0">
-                                    <div class="form-select-trigger">
-                                        <span class="selected-text" data-value="">Selecciona una opción</span>
-                                        <i class="ri-arrow-down-s-line"></i>
-                                    </div>
-                                    <div class="form-options-container">
-                                        <div class="form-option" data-value="F">Femenino (F)</div>
-                                        <div class="form-option" data-value="M">Masculino (M)</div>
-                                        <div class="form-option" data-value="O">Otro (O)</div>
-                                    </div>
-                                    <input type="hidden" id="pe-genero" name="pe_genero" value="">
-                                </div>
-                                <span class="error-msg-modal" id="err-pe-genero"></span>
-                            </div>
-                            <div class="form-group-modal modal-col-full">
-                                <label for="pe-sede">Sede <span style="color:var(--naranja)">*</span></label>
-                                <div class="form-dropdown" id="dropdown-pe-sede" tabindex="0">
-                                    <div class="form-select-trigger">
-                                        <span class="selected-text" data-value="">Selecciona una sede</span>
-                                        <i class="ri-arrow-down-s-line"></i>
-                                    </div>
-                                    <div class="form-options-container">
-                                        <div class="form-option" data-value="sede central">Sede Central</div>
-                                        <div class="form-option" data-value="sede norte">Sede Norte</div>
-                                    </div>
-                                    <input type="hidden" id="pe-sede" name="pe_sede" value="">
-                                </div>
-                                <span class="error-msg-modal" id="err-pe-sede"></span>
-                            </div>
-                            <div class="form-group-modal modal-col-full">
-                                <label for="pe-rol">Rol <span style="color:var(--naranja)">*</span></label>
-                                <div class="form-dropdown" id="dropdown-pe-rol" tabindex="0">
-                                    <div class="form-select-trigger">
-                                        <span class="selected-text" data-value="">Selecciona una opción</span>
-                                        <i class="ri-arrow-down-s-line"></i>
-                                    </div>
-                                    <div class="form-options-container">
-                                        <div class="form-option" data-value="administrativo">Administrativo</div>
-                                        <div class="form-option" data-value="mantenimiento">Mantenimiento</div>
-                                        <div class="form-option" data-value="seguridad">Seguridad</div>
-                                    </div>
-                                    <input type="hidden" id="pe-rol" name="pe_rol" value="">
-                                </div>
-                                <span class="error-msg-modal" id="err-pe-rol"></span>
-                            </div>
-                            <div class="form-group-modal">
-                                <label for="pe-estado">Estado <span style="color:var(--naranja)">*</span></label>
-                                <div class="form-dropdown" id="dropdown-pe-estado" tabindex="0">
-                                    <div class="form-select-trigger">
-                                        <span class="selected-text" data-value="">Selecciona un estado</span>
-                                        <i class="ri-arrow-down-s-line"></i>
-                                    </div>
-                                    <div class="form-options-container" style="max-height: 200px; overflow-y: auto;">
-                                        <div class="form-option" data-value="Aguascalientes">Aguascalientes</div>
-                                        <div class="form-option" data-value="Baja California">Baja California</div>
-                                        <div class="form-option" data-value="Baja California Sur">Baja California Sur
-                                        </div>
-                                        <div class="form-option" data-value="Campeche">Campeche</div>
-                                        <div class="form-option" data-value="Chiapas">Chiapas</div>
-                                        <div class="form-option" data-value="Chihuahua">Chihuahua</div>
-                                        <div class="form-option" data-value="Ciudad de México">Ciudad de México</div>
-                                        <div class="form-option" data-value="Coahuila">Coahuila</div>
-                                        <div class="form-option" data-value="Colima">Colima</div>
-                                        <div class="form-option" data-value="Durango">Durango</div>
-                                        <div class="form-option" data-value="Estado de México">Estado de México</div>
-                                        <div class="form-option" data-value="Guanajuato">Guanajuato</div>
-                                        <div class="form-option" data-value="Guerrero">Guerrero</div>
-                                        <div class="form-option" data-value="Hidalgo">Hidalgo</div>
-                                        <div class="form-option" data-value="Jalisco">Jalisco</div>
-                                        <div class="form-option" data-value="Michoacán">Michoacán</div>
-                                        <div class="form-option" data-value="Morelos">Morelos</div>
-                                        <div class="form-option" data-value="Nayarit">Nayarit</div>
-                                        <div class="form-option" data-value="Nuevo León">Nuevo León</div>
-                                        <div class="form-option" data-value="Oaxaca">Oaxaca</div>
-                                        <div class="form-option" data-value="Puebla">Puebla</div>
-                                        <div class="form-option" data-value="Querétaro">Querétaro</div>
-                                        <div class="form-option" data-value="Quintana Roo">Quintana Roo</div>
-                                        <div class="form-option" data-value="San Luis Potosí">San Luis Potosí</div>
-                                        <div class="form-option" data-value="Sinaloa">Sinaloa</div>
-                                        <div class="form-option" data-value="Sonora">Sonora</div>
-                                        <div class="form-option" data-value="Tabasco">Tabasco</div>
-                                        <div class="form-option" data-value="Tamaulipas">Tamaulipas</div>
-                                        <div class="form-option" data-value="Tlaxcala">Tlaxcala</div>
-                                        <div class="form-option" data-value="Veracruz">Veracruz</div>
-                                        <div class="form-option" data-value="Yucatán">Yucatán</div>
-                                        <div class="form-option" data-value="Zacatecas">Zacatecas</div>
-                                    </div>
-                                    <input type="hidden" id="pe-estado" name="pe_estado" value="">
-                                </div>
-                                <span class="error-msg-modal" id="err-pe-estado"></span>
-                            </div>
-                            <div class="form-group-modal">
-                                <div style="display: flex; gap: 1rem;">
-                                    <div style="flex: 2;">
-                                        <label for="pe-ciudad">Ciudad <span
-                                                style="color:var(--naranja)">*</span></label>
-                                        <input type="text" id="pe-ciudad" name="pe_ciudad" placeholder="Ciudad"
-                                            required>
-                                        <span class="error-msg-modal" id="err-pe-ciudad"></span>
-                                    </div>
-                                    <div style="flex: 1;">
-                                        <label for="pe-cp">CP <span style="color:var(--naranja)">*</span></label>
-                                        <input type="text" id="pe-cp" name="pe_cp" placeholder="CP" maxlength="5"
-                                            required>
-                                        <span class="error-msg-modal" id="err-pe-cp"></span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group-modal modal-col-full">
-                                <label for="pe-calle">Calle y Número <span style="color:var(--naranja)">*</span></label>
-                                <input type="text" id="pe-calle" name="pe_calle" placeholder="Calle, número, colonia..."
-                                    required>
-                                <span class="error-msg-modal" id="err-pe-calle"></span>
-                            </div>
-                            <div class="form-group-modal modal-col-full">
-                                <label for="pe-correo">Correo Electrónico <span
-                                        style="color:var(--naranja)">*</span></label>
-                                <input type="email" id="pe-correo" name="pe_correo" placeholder="correo@ejemplo.com"
-                                    required>
-                                <span class="error-msg-modal" id="err-pe-correo"></span>
-                            </div>
-                            <div class="form-group-modal">
-                                <label for="pe-password">Contraseña <span style="color:var(--naranja)">*</span></label>
-                                <div class="input-password-wrapper">
-                                    <input type="password" id="pe-password" name="pe_password"
-                                        placeholder="Mínimo 6 caracteres" required>
-                                    <button type="button" class="toggle-password" data-target="pe-password">
-                                        <i class="ri-eye-line"></i>
-                                    </button>
-                                </div>
-                                <span class="error-msg-modal" id="err-pe-password"></span>
-                            </div>
-                            <div class="form-group-modal">
-                                <label for="pe-password-confirm">Confirmar Contraseña <span
-                                        style="color:var(--naranja)">*</span></label>
-                                <div class="input-password-wrapper">
-                                    <input type="password" id="pe-password-confirm" name="pe_password_confirm"
-                                        placeholder="Repite la contraseña" required>
-                                    <button type="button" class="toggle-password" data-target="pe-password-confirm">
-                                        <i class="ri-eye-line"></i>
-                                    </button>
-                                </div>
-                                <span class="error-msg-modal" id="err-pe-password-confirm"></span>
-                            </div>
-                        </div>
-
-                        <div class="modal-footer">
-                            <button type="button" class="btn-modal-cancel"
-                                id="btn-cancelar-modal-personal">Cancelar</button>
-                            <button type="submit" class="btn-modal-submit">
-                                <i class="ri-save-line"></i> Guardar Personal
-                            </button>
-                        </div>
-
-                    </form>
-                </div>
-            </div>
-        </div>
-
-        <!-- ===================== MODAL: AGREGAR ALUMNO ===================== -->
-        <div class="modal-overlay" id="modal-agregar-alumno">
-            <div class="modal-box">
-
-                <!-- Cabecera del modal -->
-                <div class="modal-header">
-                    <div class="modal-title-group">
-                        <i class="ri-user-add-line modal-title-icon"></i>
-                        <h2 class="modal-title">Agregar Alumno</h2>
-                    </div>
-                    <button class="modal-close-btn" id="modal-close-alumno" title="Cerrar">
-                        <i class="ri-close-line"></i>
-                    </button>
-                </div>
-
-                <!-- Cuerpo del modal con scroll -->
-                <div class="modal-body">
-                    <form id="form-agregar-alumno" novalidate>
-
-                        <!-- ===== SECCIÓN: Datos del Alumno ===== -->
-                        <div class="modal-section-label">
-                            <i class="ri-graduation-cap-line"></i> Datos del Alumno
-                        </div>
-
-                        <div class="modal-grid">
-                            <div class="form-group-modal">
-                                <label for="al-nombre">Nombre</label>
-                                <input type="text" id="al-nombre" name="al_nombre" placeholder="Nombre(s)" required>
-                                <span class="error-msg-modal" id="err-al-nombre"></span>
-                            </div>
-                            <div class="form-group-modal">
-                                <label for="al-ap-paterno">Apellido Paterno</label>
-                                <input type="text" id="al-ap-paterno" name="al_ap_paterno"
-                                    placeholder="Apellido paterno" required>
-                                <span class="error-msg-modal" id="err-al-ap-paterno"></span>
-                            </div>
-                            <div class="form-group-modal">
-                                <label for="al-ap-materno">Apellido Materno</label>
-                                <input type="text" id="al-ap-materno" name="al_ap_materno"
-                                    placeholder="Apellido materno">
-                            </div>
-                            <div class="form-group-modal">
-                                <label for="al-fecha-nacimiento">Fecha de Nacimiento <span
-                                        style="color:var(--naranja)">*</span></label>
-                                <input type="date" id="al-fecha-nacimiento" name="al_fecha_nacimiento" required>
-                                <span class="error-msg-modal" id="err-al-fecha-nacimiento"></span>
-                            </div>
-                            <div class="form-group-modal">
-                                <label for="al-telefono">Número de Teléfono</label>
-                                <input type="tel" id="al-telefono" name="al_telefono" placeholder="10 dígitos"
-                                    maxlength="10">
-                                <span class="error-msg-modal" id="err-al-telefono"></span>
-                            </div>
-                            <div class="form-group-modal">
-                                <label for="al-genero">Género</label>
-                                <div class="form-dropdown" id="dropdown-al-genero" tabindex="0">
-                                    <div class="form-select-trigger" id="trigger-al-genero">
-                                        <span class="selected-text" data-value="">Selecciona una opción</span>
-                                        <i class="ri-arrow-down-s-line"></i>
-                                    </div>
-                                    <div class="form-options-container">
-                                        <div class="form-option" data-value="F">Femenino (F)</div>
-                                        <div class="form-option" data-value="M">Masculino (M)</div>
-                                        <div class="form-option" data-value="O">Otro (O)</div>
-                                    </div>
-                                    <input type="hidden" id="al-genero" name="al_genero" value="">
-                                </div>
-                                <span class="error-msg-modal" id="err-al-genero"></span>
-                            </div>
-                            <div class="form-group-modal modal-col-full">
-                                <label for="al-sede">Sede <span style="color:var(--naranja)">*</span></label>
-                                <div class="form-dropdown" id="dropdown-al-sede" tabindex="0">
-                                    <div class="form-select-trigger">
-                                        <span class="selected-text" data-value="">Selecciona una sede</span>
-                                        <i class="ri-arrow-down-s-line"></i>
-                                    </div>
-                                    <div class="form-options-container">
-                                        <div class="form-option" data-value="sede central">Sede Central</div>
-                                        <div class="form-option" data-value="sede norte">Sede Norte</div>
-                                    </div>
-                                    <input type="hidden" id="al-sede" name="al_sede" value="">
-                                </div>
-                                <span class="error-msg-modal" id="err-al-sede"></span>
-                            </div>
-                            <div class="form-group-modal modal-col-full">
-                                <label for="al-puntos-inicial">Puntaje Inicial <span
-                                        style="color:var(--naranja)">*</span></label>
-                                <input type="number" id="al-puntos-inicial" name="al_puntos_inicial"
-                                    placeholder="Ej. 500" min="0" max="2000" value="0" required>
-                                <span class="error-msg-modal" id="err-al-puntos-inicial"></span>
-                            </div>
-                            <div class="form-group-modal">
-                                <label for="al-estado">Estado <span style="color:var(--naranja)">*</span></label>
-                                <div class="form-dropdown" id="dropdown-al-estado" tabindex="0">
-                                    <div class="form-select-trigger">
-                                        <span class="selected-text" data-value="">Selecciona un estado</span>
-                                        <i class="ri-arrow-down-s-line"></i>
-                                    </div>
-                                    <div class="form-options-container" style="max-height: 200px; overflow-y: auto;">
-                                        <div class="form-option" data-value="Aguascalientes">Aguascalientes</div>
-                                        <div class="form-option" data-value="Baja California">Baja California</div>
-                                        <div class="form-option" data-value="Baja California Sur">Baja California Sur
-                                        </div>
-                                        <div class="form-option" data-value="Campeche">Campeche</div>
-                                        <div class="form-option" data-value="Chiapas">Chiapas</div>
-                                        <div class="form-option" data-value="Chihuahua">Chihuahua</div>
-                                        <div class="form-option" data-value="Ciudad de México">Ciudad de México</div>
-                                        <div class="form-option" data-value="Coahuila">Coahuila</div>
-                                        <div class="form-option" data-value="Colima">Colima</div>
-                                        <div class="form-option" data-value="Durango">Durango</div>
-                                        <div class="form-option" data-value="Estado de México">Estado de México</div>
-                                        <div class="form-option" data-value="Guanajuato">Guanajuato</div>
-                                        <div class="form-option" data-value="Guerrero">Guerrero</div>
-                                        <div class="form-option" data-value="Hidalgo">Hidalgo</div>
-                                        <div class="form-option" data-value="Jalisco">Jalisco</div>
-                                        <div class="form-option" data-value="Michoacán">Michoacán</div>
-                                        <div class="form-option" data-value="Morelos">Morelos</div>
-                                        <div class="form-option" data-value="Nayarit">Nayarit</div>
-                                        <div class="form-option" data-value="Nuevo León">Nuevo León</div>
-                                        <div class="form-option" data-value="Oaxaca">Oaxaca</div>
-                                        <div class="form-option" data-value="Puebla">Puebla</div>
-                                        <div class="form-option" data-value="Querétaro">Querétaro</div>
-                                        <div class="form-option" data-value="Quintana Roo">Quintana Roo</div>
-                                        <div class="form-option" data-value="San Luis Potosí">San Luis Potosí</div>
-                                        <div class="form-option" data-value="Sinaloa">Sinaloa</div>
-                                        <div class="form-option" data-value="Sonora">Sonora</div>
-                                        <div class="form-option" data-value="Tabasco">Tabasco</div>
-                                        <div class="form-option" data-value="Tamaulipas">Tamaulipas</div>
-                                        <div class="form-option" data-value="Tlaxcala">Tlaxcala</div>
-                                        <div class="form-option" data-value="Veracruz">Veracruz</div>
-                                        <div class="form-option" data-value="Yucatán">Yucatán</div>
-                                        <div class="form-option" data-value="Zacatecas">Zacatecas</div>
-                                    </div>
-                                    <input type="hidden" id="al-estado" name="al_estado" value="">
-                                </div>
-                                <span class="error-msg-modal" id="err-al-estado"></span>
-                            </div>
-                            <div class="form-group-modal">
-                                <div style="display: flex; gap: 1rem;">
-                                    <div style="flex: 2;">
-                                        <label for="al-ciudad">Ciudad <span
-                                                style="color:var(--naranja)">*</span></label>
-                                        <input type="text" id="al-ciudad" name="al_ciudad" placeholder="Ciudad"
-                                            required>
-                                        <span class="error-msg-modal" id="err-al-ciudad"></span>
-                                    </div>
-                                    <div style="flex: 1;">
-                                        <label for="al-cp">CP <span style="color:var(--naranja)">*</span></label>
-                                        <input type="text" id="al-cp" name="al_cp" placeholder="CP" maxlength="5"
-                                            required>
-                                        <span class="error-msg-modal" id="err-al-cp"></span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group-modal modal-col-full">
-                                <label for="al-calle">Calle y Número <span style="color:var(--naranja)">*</span></label>
-                                <input type="text" id="al-calle" name="al_calle" placeholder="Calle, número, colonia..."
-                                    required>
-                                <span class="error-msg-modal" id="err-al-calle"></span>
-                            </div>
-                            <div class="form-group-modal modal-col-full">
-                                <label for="al-correo">Correo Electrónico</label>
-                                <input type="email" id="al-correo" name="al_correo" placeholder="correo@ejemplo.com"
-                                    required>
-                                <span class="error-msg-modal" id="err-al-correo"></span>
-                            </div>
-                            <div class="form-group-modal">
-                                <label for="al-password">Contraseña</label>
-                                <div class="input-password-wrapper">
-                                    <input type="password" id="al-password" name="al_password"
-                                        placeholder="Mínimo 6 caracteres" required minlength="6">
-                                    <button type="button" class="toggle-password" data-target="al-password"
-                                        title="Mostrar/Ocultar">
-                                        <i class="ri-eye-line"></i>
-                                    </button>
-                                </div>
-                                <span class="error-msg-modal" id="err-al-password"></span>
-                            </div>
-                            <div class="form-group-modal">
-                                <label for="al-password-confirm">Confirmar Contraseña</label>
-                                <div class="input-password-wrapper">
-                                    <input type="password" id="al-password-confirm" name="al_password_confirm"
-                                        placeholder="Repite la contraseña" required>
-                                    <button type="button" class="toggle-password" data-target="al-password-confirm"
-                                        title="Mostrar/Ocultar">
-                                        <i class="ri-eye-line"></i>
-                                    </button>
-                                </div>
-                                <span class="error-msg-modal" id="err-al-password-confirm"></span>
-                            </div>
-                        </div>
-
-                        <!-- ===== DIVISOR ===== -->
-                        <div class="modal-divider">
-                            <span>Datos del Tutor (OPCIONAL)</span>
-                        </div>
-
-                        <!-- ===== SECCIÓN: Datos del Tutor ===== -->
-                        <div class="modal-section-label">
-                            <i class="ri-parent-line"></i> Información del Tutor
-                        </div>
-
-                        <div class="modal-grid">
-                            <div class="form-group-modal">
-                                <label for="tu-nombre">Nombre</label>
-                                <input type="text" id="tu-nombre" name="tu_nombre" placeholder="Nombre(s)">
-                                <span class="error-msg-modal" id="err-tu-nombre"></span>
-                            </div>
-                            <div class="form-group-modal">
-                                <label for="tu-ap-paterno">Apellido Paterno</label>
-                                <input type="text" id="tu-ap-paterno" name="tu_ap_paterno"
-                                    placeholder="Apellido paterno">
-                                <span class="error-msg-modal" id="err-tu-ap-paterno"></span>
-                            </div>
-                            <div class="form-group-modal">
-                                <label for="tu-ap-materno">Apellido Materno</label>
-                                <input type="text" id="tu-ap-materno" name="tu_ap_materno"
-                                    placeholder="Apellido materno">
-                            </div>
-                            <div class="form-group-modal">
-                                <label for="tu-telefono">Número de Teléfono</label>
-                                <input type="tel" id="tu-telefono" name="tu_telefono" placeholder="10 dígitos"
-                                    maxlength="10">
-                                <span class="error-msg-modal" id="err-tu-telefono"></span>
-                            </div>
-                            <div class="form-group-modal modal-col-full">
-                                <label for="tu-parentesco">Parentesco</label>
-                                <div class="form-dropdown" id="dropdown-tu-parentesco" tabindex="0">
-                                    <div class="form-select-trigger">
-                                        <span class="selected-text" data-value="">Selecciona el parentesco</span>
-                                        <i class="ri-arrow-down-s-line"></i>
-                                    </div>
-                                    <div class="form-options-container">
-                                        <div class="form-option" data-value="padre">Padre</div>
-                                        <div class="form-option" data-value="madre">Madre</div>
-                                        <div class="form-option" data-value="abuelo_a">Abuelo/a</div>
-                                        <div class="form-option" data-value="tutor_legal">Tutor Legal</div>
-                                        <div class="form-option" data-value="familiar">Familiar</div>
-                                        <div class="form-option" data-value="otro">Otro</div>
-                                    </div>
-                                    <input type="hidden" id="tu-parentesco" name="tu_parentesco" value="">
-                                </div>
-                                <span class="error-msg-modal" id="err-tu-parentesco"></span>
-                            </div>
-                            <div class="form-group-modal modal-col-full">
-                                <label for="tu-correo">Correo Electrónico</label>
-                                <input type="email" id="tu-correo" name="tu_correo" placeholder="correo@ejemplo.com">
-                                <span class="error-msg-modal" id="err-tu-correo"></span>
-                            </div>
-                        </div>
-
-                        <!-- ===== PIE DEL FORMULARIO ===== -->
-                        <div class="modal-footer">
-                            <button type="button" class="btn-modal-cancel" id="btn-cancelar-modal">Cancelar</button>
-                            <button type="submit" class="btn-modal-submit">
-                                <i class="ri-save-line"></i> Guardar Alumno
-                            </button>
-                        </div>
-
-                    </form>
-                </div>
-            </div>
-        </div>
 
 
-        <!-- ======================= SECCIÓN PROFESORES ======================= -->
-        <section class="section-content" id="section-profesores" style="display: none;">
+        {{-- ===================== ALUMNOS ===================== --}}
+<script>
+    window.PERMISOS_ALUMNOS = {
+        edit: {{ ($permisos->alumno_edit ?? false) ? 'true' : 'false' }},
+        admin: {{ ($administrativo ?? false) ? 'true' : 'false' }}
+    };
+</script>
 
-            <!-- Cabecera de sección -->
-            <div class="section-header">
-                <h1 class="section-title">Profesores</h1>
-                <button class="btn-primary" id="btn-agregar-profesor">
-                    <i class="ri-add-line"></i> Agregar Profesor
-                </button>
-            </div>
+        @include('admin.alumnos')
 
-            <!-- Buscador -->
-            <div class="search-bar" style="margin-bottom: 24px;">
-                <i class="ri-search-line search-icon"></i>
-                <input type="text" id="buscador-profesores"
-                    placeholder="Buscar profesor por nombre, especialidad o email..." autocomplete="off">
-            </div>
+        {{-- ===================== PROFESORES ===================== --}}
+<script>
+    window.PERMISOS_PROFESORES = {
+        edit: {{ ($permisos->profesor_edit ?? false) ? 'true' : 'false' }},
+        admin: {{ ($administrativo ?? false) ? 'true' : 'false' }}
+    };
+</script>
+        @include('admin.profesores')
 
-            <!-- Grid de tarjetas -->
-            <div class="profesores-grid" id="grid-profesores">
+        {{-- ===================== PERSONAL ===================== --}}
+<script>
+    window.PERMISOS_PERSONAL = {
+        edit: {{ ($permisos->personal_edit ?? false) ? 'true' : 'false' }},
+        admin: {{ ($administrativo ?? false) ? 'true' : 'false' }}
+    };
+</script>
+        @include('admin.personal')
 
-                <div class="profesor-card" data-nombre="Maestro González" data-email="gonzalez@egau.edu">
-                    <div class="profesor-card-body">
-                        <h3 class="profesor-nombre">Maestro González</h3>
-                        <div class="profesor-info">
-                            <span><i class="ri-mail-line"></i> gonzalez@egau.edu</span>
-                            <span><i class="ri-phone-line"></i> 555-0101</span>
-                        </div>
-                    </div>
-                    <div class="profesor-card-footer">
-                        <button class="btn-profesor-ver" title="Ver"><i class="ri-eye-line"></i> Ver</button>
-                        <button class="btn-profesor-editar"><i class="ri-edit-line"></i> Editar</button>
-                        <button class="btn-profesor-eliminar"><i class="ri-delete-bin-line"></i></button>
-                    </div>
-                </div>
-
-                <div class="profesor-card" data-nombre="Maestra Ramírez" data-email="ramirez@egau.edu">
-                    <div class="profesor-card-body">
-                        <h3 class="profesor-nombre">Maestra Ramírez</h3>
-                        <div class="profesor-info">
-                            <span><i class="ri-mail-line"></i> ramirez@egau.edu</span>
-                            <span><i class="ri-phone-line"></i> 555-0102</span>
-                        </div>
-                    </div>
-                    <div class="profesor-card-footer">
-                        <button class="btn-profesor-ver" title="Ver"><i class="ri-eye-line"></i> Ver</button>
-                        <button class="btn-profesor-editar"><i class="ri-edit-line"></i> Editar</button>
-                        <button class="btn-profesor-eliminar"><i class="ri-delete-bin-line"></i></button>
-                    </div>
-                </div>
-
-                <div class="profesor-card" data-nombre="Maestro López" data-email="lopez@egau.edu">
-                    <div class="profesor-card-body">
-                        <h3 class="profesor-nombre">Maestro López</h3>
-                        <div class="profesor-info">
-                            <span><i class="ri-mail-line"></i> lopez@egau.edu</span>
-                            <span><i class="ri-phone-line"></i> 555-0103</span>
-                        </div>
-                    </div>
-                    <div class="profesor-card-footer">
-                        <button class="btn-profesor-ver" title="Ver"><i class="ri-eye-line"></i> Ver</button>
-                        <button class="btn-profesor-editar"><i class="ri-edit-line"></i> Editar</button>
-                        <button class="btn-profesor-eliminar"><i class="ri-delete-bin-line"></i></button>
-                    </div>
-                </div>
-
-            </div>
-            <!-- Mensaje sin resultados -->
-            <p class="profesores-empty" id="profesores-empty" style="display:none;">No se encontraron profesores.</p>
-
-        </section>
-
-        <!-- ======================= SECCIÓN SEDES ======================= -->
-        <section class="section-content" id="section-sede" style="display: none;">
-
-            <!-- Cabecera de sección -->
-            <div class="section-header">
-                <h1 class="section-title">Gestión de Sedes</h1>
-                <button class="btn-primary" id="btn-agregar-sede">
-                    <i class="ri-add-line"></i> Agregar Sede
-                </button>
-            </div>
-
-            <!-- Tarjeta de tabla -->
-            <div class="card card-sedes">
-                <div class="controls-container" style="padding: 24px;">
-                    <div class="search-bar search-sede">
-                        <i class="ri-search-line search-icon"></i>
-                        <input type="text" id="buscador-sedes" placeholder="Buscar sede por nombre o dirección..."
-                            autocomplete="off">
-                    </div>
-                </div>
-
-                <div class="table-wrapper">
-                    <table class="data-table" id="tabla-sedes">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Nombre</th>
-                                <th>Dirección</th>
-                                <th>Teléfono</th>
-                                <th>Tipo</th>
-                                <th>Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>Sede Central</td>
-                                <td>Av. Universidad 123, Col. Centro</td>
-                                <td>555-0100</td>
-                                <td><span class="sede-status-badge status-principal">Principal</span></td>
-                                <td class="acciones">
-                                    <button class="btn-icon btn-ver" title="Ver"><i class="ri-eye-line"></i></button>
-                                    <button class="btn-icon btn-editar" title="Editar"><i
-                                            class="ri-edit-line"></i></button>
-                                    <button class="btn-icon btn-eliminar" title="Eliminar"><i
-                                            class="ri-delete-bin-line"></i></button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </section>
-
-        <!-- ======================= MODAL: AGREGAR PROFESOR ======================= -->
-        <div class="modal-overlay" id="modal-agregar-profesor">
-            <div class="modal-box">
-
-                <!-- Header -->
-                <div class="modal-header">
-                    <div class="modal-title-group">
-                        <span class="modal-title-icon"><i class="ri-user-star-line"></i></span>
-                        <h2 class="modal-title">Agregar Profesor</h2>
-                    </div>
-                    <button type="button" class="modal-close-btn" id="modal-close-profesor" title="Cerrar">
-                        <i class="ri-close-line"></i>
-                    </button>
-                </div>
-
-                <!-- Cuerpo con scroll -->
-                <div class="modal-body">
-                    <form id="form-agregar-profesor" novalidate>
-                        @csrf
-                        <input type="hidden" name="rol" value="profesor">
-
-                        <!-- ===== DATOS PERSONALES ===== -->
-                        <div class="modal-section-label">
-                            <i class="ri-user-line"></i> Información del Profesor
-                        </div>
-
-                        <div class="modal-grid">
-                            <div class="form-group-modal">
-                                <label for="pr-nombre">Nombre <span style="color:var(--naranja)">*</span></label>
-                                <input type="text" id="pr-nombre" name="pr_nombre" placeholder="Nombre(s)" required>
-                                <span class="error-msg-modal" id="err-pr-nombre"></span>
-                            </div>
-                            <div class="form-group-modal">
-                                <label for="pr-ap-paterno">Apellido Paterno <span
-                                        style="color:var(--naranja)">*</span></label>
-                                <input type="text" id="pr-ap-paterno" name="pr_ap_paterno"
-                                    placeholder="Apellido paterno" required>
-                                <span class="error-msg-modal" id="err-pr-ap-paterno"></span>
-                            </div>
-                            <div class="form-group-modal">
-                                <label for="pr-ap-materno">Apellido Materno</label>
-                                <input type="text" id="pr-ap-materno" name="pr_ap_materno"
-                                    placeholder="Apellido materno">
-                            </div>
-                            <div class="form-group-modal">
-                                <label for="pr-fecha-nacimiento">Fecha de Nacimiento <span
-                                        style="color:var(--naranja)">*</span></label>
-                                <input type="date" id="pr-fecha-nacimiento" name="pr_fecha_nacimiento" required>
-                                <span class="error-msg-modal" id="err-pr-fecha-nacimiento"></span>
-                            </div>
-                            <div class="form-group-modal">
-                                <label for="pr-telefono">Número de Teléfono</label>
-                                <input type="tel" id="pr-telefono" name="pr_telefono" placeholder="10 dígitos"
-                                    maxlength="10">
-                                <span class="error-msg-modal" id="err-pr-telefono"></span>
-                            </div>
-                            <div class="form-group-modal">
-                                <label for="pr-genero">Género</label>
-                                <div class="form-dropdown" id="dropdown-pr-genero" tabindex="0">
-                                    <div class="form-select-trigger" id="trigger-pr-genero">
-                                        <span class="selected-text" data-value="">Selecciona una opción</span>
-                                        <i class="ri-arrow-down-s-line"></i>
-                                    </div>
-                                    <div class="form-options-container">
-                                        <div class="form-option" data-value="F">Femenino (F)</div>
-                                        <div class="form-option" data-value="M">Masculino (M)</div>
-                                        <div class="form-option" data-value="O">Otro (O)</div>
-                                    </div>
-                                    <input type="hidden" id="pr-genero" name="pr_genero" value="">
-                                </div>
-                                <span class="error-msg-modal" id="err-pr-genero"></span>
-                            </div>
-                            <div class="form-group-modal modal-col-full">
-                                <label for="pr-sede">Sede <span style="color:var(--naranja)">*</span></label>
-                                <div class="form-dropdown" id="dropdown-pr-sede" tabindex="0">
-                                    <div class="form-select-trigger">
-                                        <span class="selected-text" data-value="">Selecciona una sede</span>
-                                        <i class="ri-arrow-down-s-line"></i>
-                                    </div>
-                                    <div class="form-options-container">
-                                        <div class="form-option" data-value="sede central">Sede Central</div>
-                                        <div class="form-option" data-value="sede norte">Sede Norte</div>
-                                    </div>
-                                    <input type="hidden" id="pr-sede" name="pr_sede" value="">
-                                </div>
-                                <span class="error-msg-modal" id="err-pr-sede"></span>
-                            </div>
-                            <div class="form-group-modal modal-col-full">
-                                <label for="pr-puntos">Puntos<span style="color:var(--naranja)">*</span></label>
-                                <input type="number" id="pr-puntos" name="pr_puntos" placeholder="Ej. 100" min="0"
-                                    max="2000" value="0" required>
-                                <span class="error-msg-modal" id="err-pr-puntos"></span>
-                            </div>
-                            <div class="form-group-modal">
-                                <label for="pr-estado">Estado <span style="color:var(--naranja)">*</span></label>
-                                <div class="form-dropdown" id="dropdown-pr-estado" tabindex="0">
-                                    <div class="form-select-trigger">
-                                        <span class="selected-text" data-value="">Selecciona un estado</span>
-                                        <i class="ri-arrow-down-s-line"></i>
-                                    </div>
-                                    <div class="form-options-container" style="max-height: 200px; overflow-y: auto;">
-                                        <div class="form-option" data-value="Aguascalientes">Aguascalientes</div>
-                                        <div class="form-option" data-value="Baja California">Baja California</div>
-                                        <div class="form-option" data-value="Baja California Sur">Baja California Sur
-                                        </div>
-                                        <div class="form-option" data-value="Campeche">Campeche</div>
-                                        <div class="form-option" data-value="Chiapas">Chiapas</div>
-                                        <div class="form-option" data-value="Chihuahua">Chihuahua</div>
-                                        <div class="form-option" data-value="Ciudad de México">Ciudad de México</div>
-                                        <div class="form-option" data-value="Coahuila">Coahuila</div>
-                                        <div class="form-option" data-value="Colima">Colima</div>
-                                        <div class="form-option" data-value="Durango">Durango</div>
-                                        <div class="form-option" data-value="Estado de México">Estado de México</div>
-                                        <div class="form-option" data-value="Guanajuato">Guanajuato</div>
-                                        <div class="form-option" data-value="Guerrero">Guerrero</div>
-                                        <div class="form-option" data-value="Hidalgo">Hidalgo</div>
-                                        <div class="form-option" data-value="Jalisco">Jalisco</div>
-                                        <div class="form-option" data-value="Michoacán">Michoacán</div>
-                                        <div class="form-option" data-value="Morelos">Morelos</div>
-                                        <div class="form-option" data-value="Nayarit">Nayarit</div>
-                                        <div class="form-option" data-value="Nuevo León">Nuevo León</div>
-                                        <div class="form-option" data-value="Oaxaca">Oaxaca</div>
-                                        <div class="form-option" data-value="Puebla">Puebla</div>
-                                        <div class="form-option" data-value="Querétaro">Querétaro</div>
-                                        <div class="form-option" data-value="Quintana Roo">Quintana Roo</div>
-                                        <div class="form-option" data-value="San Luis Potosí">San Luis Potosí</div>
-                                        <div class="form-option" data-value="Sinaloa">Sinaloa</div>
-                                        <div class="form-option" data-value="Sonora">Sonora</div>
-                                        <div class="form-option" data-value="Tabasco">Tabasco</div>
-                                        <div class="form-option" data-value="Tamaulipas">Tamaulipas</div>
-                                        <div class="form-option" data-value="Tlaxcala">Tlaxcala</div>
-                                        <div class="form-option" data-value="Veracruz">Veracruz</div>
-                                        <div class="form-option" data-value="Yucatán">Yucatán</div>
-                                        <div class="form-option" data-value="Zacatecas">Zacatecas</div>
-                                    </div>
-                                    <input type="hidden" id="pr-estado" name="pr_estado" value="">
-                                </div>
-                                <span class="error-msg-modal" id="err-pr-estado"></span>
-                            </div>
-                            <div class="form-group-modal">
-                                <div style="display: flex; gap: 1rem;">
-                                    <div style="flex: 2;">
-                                        <label for="pr-ciudad">Ciudad <span
-                                                style="color:var(--naranja)">*</span></label>
-                                        <input type="text" id="pr-ciudad" name="pr_ciudad" placeholder="Ciudad"
-                                            required>
-                                        <span class="error-msg-modal" id="err-pr-ciudad"></span>
-                                    </div>
-                                    <div style="flex: 1;">
-                                        <label for="pr-cp">CP <span style="color:var(--naranja)">*</span></label>
-                                        <input type="text" id="pr-cp" name="pr_cp" placeholder="CP" maxlength="5"
-                                            required>
-                                        <span class="error-msg-modal" id="err-pr-cp"></span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group-modal modal-col-full">
-                                <label for="pr-calle">Calle y Número <span style="color:var(--naranja)">*</span></label>
-                                <input type="text" id="pr-calle" name="pr_calle" placeholder="Calle, número, colonia..."
-                                    required>
-                                <span class="error-msg-modal" id="err-pr-calle"></span>
-                            </div>
-                            <div class="form-group-modal modal-col-full">
-                                <label for="pr-correo">Correo Electrónico <span
-                                        style="color:var(--naranja)">*</span></label>
-                                <input type="email" id="pr-correo" name="pr_correo" placeholder="correo@ejemplo.com"
-                                    required>
-                                <span class="error-msg-modal" id="err-pr-correo"></span>
-                            </div>
-                            <div class="form-group-modal">
-                                <label for="pr-password">Contraseña <span style="color:var(--naranja)">*</span></label>
-                                <div class="input-password-wrapper">
-                                    <input type="password" id="pr-password" name="pr_password"
-                                        placeholder="Mínimo 6 caracteres" required minlength="6">
-                                    <button type="button" class="toggle-password" data-target="pr-password"
-                                        title="Mostrar/Ocultar">
-                                        <i class="ri-eye-line"></i>
-                                    </button>
-                                </div>
-                                <span class="error-msg-modal" id="err-pr-password"></span>
-                            </div>
-                            <div class="form-group-modal">
-                                <label for="pr-password-confirm">Confirmar Contraseña <span
-                                        style="color:var(--naranja)">*</span></label>
-                                <div class="input-password-wrapper">
-                                    <input type="password" id="pr-password-confirm" name="pr_password_confirm"
-                                        placeholder="Repite la contraseña" required>
-                                    <button type="button" class="toggle-password" data-target="pr-password-confirm"
-                                        title="Mostrar/Ocultar">
-                                        <i class="ri-eye-line"></i>
-                                    </button>
-                                </div>
-                                <span class="error-msg-modal" id="err-pr-password-confirm"></span>
-                            </div>
-                        </div>
-
-                        <!-- ===== PIE DEL FORMULARIO ===== -->
-                        <div class="modal-footer">
-                            <button type="button" class="btn-modal-cancel"
-                                id="btn-cancelar-modal-profesor">Cancelar</button>
-                            <button type="submit" class="btn-modal-submit">
-                                <i class="ri-save-line"></i> Guardar Profesor
-                            </button>
-                        </div>
-
-                    </form>
-                </div>
-            </div>
-        </div>
-
-        <!-- ======================= MODAL: AGREGAR SEDE ======================= -->
-        <div class="modal-overlay" id="modal-agregar-sede">
-            <div class="modal-box" style="max-width: 500px;">
-                <div class="modal-header">
-                    <div class="modal-title-group">
-                        <span class="modal-title-icon"><i class="ri-map-pin-line"></i></span>
-                        <h2 class="modal-title">Agregar Sede</h2>
-                    </div>
-                    <button type="button" class="modal-close-btn" id="modal-close-sede" title="Cerrar">
-                        <i class="ri-close-line"></i>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form id="form-agregar-sede" novalidate>
-                        <div class="modal-grid">
-                            <div class="form-group-modal modal-col-full">
-                                <label for="se-nombre">Nombre de la Sede <span
-                                        style="color:var(--naranja)">*</span></label>
-                                <input type="text" id="se-nombre" name="se_nombre" placeholder="Ej. Sede Central"
-                                    required>
-                                <span class="error-msg-modal" id="err-se-nombre"></span>
-                            </div>
-
-                            <div class="form-group-modal">
-                                <label for="se-estado">Estado <span style="color:var(--naranja)">*</span></label>
-                                <div class="form-dropdown" id="dropdown-se-estado" tabindex="0">
-                                    <div class="form-select-trigger">
-                                        <span class="selected-text" data-value="">Selecciona un estado</span>
-                                        <i class="ri-arrow-down-s-line"></i>
-                                    </div>
-                                    <div class="form-options-container" style="max-height: 200px; overflow-y: auto;">
-                                        <div class="form-option" data-value="Aguascalientes">Aguascalientes</div>
-                                        <div class="form-option" data-value="Baja California">Baja California</div>
-                                        <div class="form-option" data-value="Baja California Sur">Baja California Sur
-                                        </div>
-                                        <div class="form-option" data-value="Campeche">Campeche</div>
-                                        <div class="form-option" data-value="Chiapas">Chiapas</div>
-                                        <div class="form-option" data-value="Chihuahua">Chihuahua</div>
-                                        <div class="form-option" data-value="Ciudad de México">Ciudad de México</div>
-                                        <div class="form-option" data-value="Coahuila">Coahuila</div>
-                                        <div class="form-option" data-value="Colima">Colima</div>
-                                        <div class="form-option" data-value="Durango">Durango</div>
-                                        <div class="form-option" data-value="Estado de México">Estado de México</div>
-                                        <div class="form-option" data-value="Guanajuato">Guanajuato</div>
-                                        <div class="form-option" data-value="Guerrero">Guerrero</div>
-                                        <div class="form-option" data-value="Hidalgo">Hidalgo</div>
-                                        <div class="form-option" data-value="Jalisco">Jalisco</div>
-                                        <div class="form-option" data-value="Michoacán">Michoacán</div>
-                                        <div class="form-option" data-value="Morelos">Morelos</div>
-                                        <div class="form-option" data-value="Nayarit">Nayarit</div>
-                                        <div class="form-option" data-value="Nuevo León">Nuevo León</div>
-                                        <div class="form-option" data-value="Oaxaca">Oaxaca</div>
-                                        <div class="form-option" data-value="Puebla">Puebla</div>
-                                        <div class="form-option" data-value="Querétaro">Querétaro</div>
-                                        <div class="form-option" data-value="Quintana Roo">Quintana Roo</div>
-                                        <div class="form-option" data-value="San Luis Potosí">San Luis Potosí</div>
-                                        <div class="form-option" data-value="Sinaloa">Sinaloa</div>
-                                        <div class="form-option" data-value="Sonora">Sonora</div>
-                                        <div class="form-option" data-value="Tabasco">Tabasco</div>
-                                        <div class="form-option" data-value="Tamaulipas">Tamaulipas</div>
-                                        <div class="form-option" data-value="Tlaxcala">Tlaxcala</div>
-                                        <div class="form-option" data-value="Veracruz">Veracruz</div>
-                                        <div class="form-option" data-value="Yucatán">Yucatán</div>
-                                        <div class="form-option" data-value="Zacatecas">Zacatecas</div>
-                                    </div>
-                                    <input type="hidden" id="se-estado" name="se_estado" value="">
-                                </div>
-                                <span class="error-msg-modal" id="err-se-estado"></span>
-                            </div>
-
-                            <div class="form-group-modal">
-                                <div style="display: flex; gap: 1rem;">
-                                    <div style="flex: 2;">
-                                        <label for="se-ciudad">Ciudad <span
-                                                style="color:var(--naranja)">*</span></label>
-                                        <input type="text" id="se-ciudad" name="se_ciudad" placeholder="Ciudad"
-                                            required>
-                                        <span class="error-msg-modal" id="err-se-ciudad"></span>
-                                    </div>
-                                    <div style="flex: 1;">
-                                        <label for="se-cp">CP <span style="color:var(--naranja)">*</span></label>
-                                        <input type="text" id="se-cp" name="se_cp" placeholder="CP" maxlength="5"
-                                            required>
-                                        <span class="error-msg-modal" id="err-se-cp"></span>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="form-group-modal modal-col-full">
-                                <label for="se-calle">Dirección (Calle y Número) <span
-                                        style="color:var(--naranja)">*</span></label>
-                                <input type="text" id="se-calle" name="se_calle" placeholder="Calle, número, colonia..."
-                                    required>
-                                <span class="error-msg-modal" id="err-se-calle"></span>
-                            </div>
-
-                            <div class="form-group-modal">
-                                <label for="se-telefono">Teléfono <span style="color:var(--naranja)">*</span></label>
-                                <input type="tel" id="se-telefono" name="se_telefono" placeholder="10 dígitos"
-                                    maxlength="10" required>
-                                <span class="error-msg-modal" id="err-se-telefono"></span>
-                            </div>
-
-                            <div class="form-group-modal">
-                                <label for="se-correo">Email de Contacto <span
-                                        style="color:var(--naranja)">*</span></label>
-                                <input type="email" id="se-correo" name="se_correo" placeholder="correo@egau.com"
-                                    required>
-                                <span class="error-msg-modal" id="err-se-correo"></span>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn-modal-cancel"
-                                id="btn-cancelar-modal-sede">Cancelar</button>
-                            <button type="submit" class="btn-modal-submit">Guardar Sede</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
+        {{-- ===================== SEDES ===================== --}}
+<script>
+    window.PERMISOS_SEDES = {
+        ver:  {{ ($permisos->sedes_ver ?? false) ? 'true' : 'false' }},
+        edit: {{ ($permisos->sedes_edit ?? false) ? 'true' : 'false' }},
+        admin: {{ ($administrativo ?? false) ? 'true' : 'false' }}
+    };
+</script>
+        @include('admin.sedes')
 
         <!-- ======================= SECCIÓN GRUPOS ======================= -->
         <section class="section-content" id="section-grupos" style="display: none;">
@@ -1515,14 +320,12 @@
             <!-- Cabecera de sección -->
             <div class="section-header">
                 <h1 class="section-title">Grupos y Cursos</h1>
-                <div style="display: flex; gap: 12px;">
-                    <button class="btn-secondary" id="btn-agregar-curso">
-                        <i class="ri-book-open-line"></i> Crear Curso
-                    </button>
-                    <button class="btn-primary" id="btn-agregar-grupo">
-                        <i class="ri-add-line"></i> Crear Grupo
-                    </button>
-                </div>
+                @if($permisos->grupos_edit ?? false)
+<div style="display: flex; gap: 12px;">
+    <button class="btn-secondary" id="btn-agregar-curso"><i class="ri-book-open-line"></i> Crear Curso</button>
+    <button class="btn-primary" id="btn-agregar-grupo"><i class="ri-add-line"></i> Crear Grupo</button>
+</div>
+@endif
             </div>
 
             <!-- Buscador -->
@@ -1559,10 +362,14 @@
                         </div>
                     </div>
                     <div class="grupo-card-footer">
-                        <button class="btn-grupo-ver" title="Ver"><i class="ri-eye-line"></i> Ver</button>
-                        <button class="btn-grupo-editar"><i class="ri-edit-line"></i> Editar</button>
-                        <button class="btn-grupo-eliminar"><i class="ri-delete-bin-line"></i></button>
-                    </div>
+    <button class="btn-grupo-ver" title="Ver"><i class="ri-eye-line"></i> Ver</button>
+    @if($permisos->grupos_edit ?? false)
+    <button class="btn-grupo-editar"><i class="ri-edit-line"></i> Editar</button>
+    @endif
+    @if(($permisos->grupos_edit ?? false) && $administrativo)
+    <button class="btn-grupo-eliminar"><i class="ri-delete-bin-line"></i></button>
+    @endif
+</div>
                 </div>
 
                 <!-- Tarjeta 2 -->
@@ -1588,10 +395,14 @@
                         </div>
                     </div>
                     <div class="grupo-card-footer">
-                        <button class="btn-grupo-ver" title="Ver"><i class="ri-eye-line"></i> Ver</button>
-                        <button class="btn-grupo-editar"><i class="ri-edit-line"></i> Editar</button>
-                        <button class="btn-grupo-eliminar"><i class="ri-delete-bin-line"></i></button>
-                    </div>
+    <button class="btn-grupo-ver" title="Ver"><i class="ri-eye-line"></i> Ver</button>
+    @if($permisos->grupos_edit ?? false)
+    <button class="btn-grupo-editar"><i class="ri-edit-line"></i> Editar</button>
+    @endif
+    @if(($permisos->grupos_edit ?? false) && $administrativo)
+    <button class="btn-grupo-eliminar"><i class="ri-delete-bin-line"></i></button>
+    @endif
+</div>
                 </div>
 
                 <!-- Tarjeta 3 -->
@@ -1617,10 +428,14 @@
                         </div>
                     </div>
                     <div class="grupo-card-footer">
-                        <button class="btn-grupo-ver" title="Ver"><i class="ri-eye-line"></i> Ver</button>
-                        <button class="btn-grupo-editar"><i class="ri-edit-line"></i> Editar</button>
-                        <button class="btn-grupo-eliminar"><i class="ri-delete-bin-line"></i></button>
-                    </div>
+    <button class="btn-grupo-ver" title="Ver"><i class="ri-eye-line"></i> Ver</button>
+    @if($permisos->grupos_edit ?? false)
+    <button class="btn-grupo-editar"><i class="ri-edit-line"></i> Editar</button>
+    @endif
+    @if(($permisos->grupos_edit ?? false) && $administrativo)
+    <button class="btn-grupo-eliminar"><i class="ri-delete-bin-line"></i></button>
+    @endif
+</div>
                 </div>
 
             </div>
@@ -2049,9 +864,11 @@
 
             <div class="section-header">
                 <h1 class="section-title">Actividades Extraescolares</h1>
-                <button class="btn-primary" id="btn-agregar-extraescolar">
-                    <i class="ri-add-line"></i> Agregar Actividad
-                </button>
+                @if($permisos->extracurriculares_edit ?? false)
+<button class="btn-primary" id="btn-agregar-extraescolar">
+    <i class="ri-add-line"></i> Agregar Actividad
+</button>
+@endif
             </div>
 
             <div class="search-bar" style="margin-bottom: 24px;">
@@ -2086,10 +903,14 @@
                         </div>
                     </div>
                     <div class="extraescolar-card-footer">
-                        <button class="btn-extraescolar-ver" title="Ver"><i class="ri-eye-line"></i> Ver</button>
-                        <button class="btn-extraescolar-editar"><i class="ri-edit-line"></i> Editar</button>
-                        <button class="btn-extraescolar-eliminar"><i class="ri-delete-bin-line"></i></button>
-                    </div>
+    <button class="btn-extraescolar-ver" title="Ver"><i class="ri-eye-line"></i> Ver</button>
+    @if($permisos->extracurriculares_edit ?? false)
+    <button class="btn-extraescolar-editar"><i class="ri-edit-line"></i> Editar</button>
+    @endif
+    @if(($permisos->extracurriculares_edit ?? false) && $administrativo)
+    <button class="btn-extraescolar-eliminar"><i class="ri-delete-bin-line"></i></button>
+    @endif
+</div>
                 </div>
             </div>
             <p class="extraescolares-empty" id="extraescolares-empty" style="display:none;">No se encontraron
@@ -2320,8 +1141,10 @@
                                 </td>
                                 <td>Grupo A</td>
                                 <td class="acciones-puntos">
-                                    <button class="btn-modificar-puntos"><i class="ri-edit-line"></i> Modificar</button>
-                                </td>
+    @if($permisos->niveles_edit ?? false)
+    <button class="btn-modificar-puntos"><i class="ri-edit-line"></i> Modificar</button>
+    @endif
+</td>
                             </tr>
                             <tr>
                                 <td>Carlos López</td>
@@ -2332,9 +1155,11 @@
                                     </div>
                                 </td>
                                 <td>Grupo B</td>
-                                <td class="acciones-puntos">
-                                    <button class="btn-modificar-puntos"><i class="ri-edit-line"></i> Modificar</button>
-                                </td>
+                               <td class="acciones-puntos">
+    @if($permisos->niveles_edit ?? false)
+    <button class="btn-modificar-puntos"><i class="ri-edit-line"></i> Modificar</button>
+    @endif
+</td>
                             </tr>
                             <tr>
                                 <td>María Rodríguez</td>
@@ -2345,9 +1170,11 @@
                                     </div>
                                 </td>
                                 <td>Grupo A</td>
-                                <td class="acciones-puntos">
-                                    <button class="btn-modificar-puntos"><i class="ri-edit-line"></i> Modificar</button>
-                                </td>
+                               <td class="acciones-puntos">
+    @if($permisos->niveles_edit ?? false)
+    <button class="btn-modificar-puntos"><i class="ri-edit-line"></i> Modificar</button>
+    @endif
+</td>
                             </tr>
                             <tr>
                                 <td>Juan Sánchez</td>
@@ -2358,9 +1185,11 @@
                                     </div>
                                 </td>
                                 <td>Grupo C</td>
-                                <td class="acciones-puntos">
-                                    <button class="btn-modificar-puntos"><i class="ri-edit-line"></i> Modificar</button>
-                                </td>
+                              <td class="acciones-puntos">
+    @if($permisos->niveles_edit ?? false)
+    <button class="btn-modificar-puntos"><i class="ri-edit-line"></i> Modificar</button>
+    @endif
+</td>
                             </tr>
                             <tr>
                                 <td>Laura Fernández</td>
@@ -2371,9 +1200,11 @@
                                     </div>
                                 </td>
                                 <td>Grupo B</td>
-                                <td class="acciones-puntos">
-                                    <button class="btn-modificar-puntos"><i class="ri-edit-line"></i> Modificar</button>
-                                </td>
+                               <td class="acciones-puntos">
+    @if($permisos->niveles_edit ?? false)
+    <button class="btn-modificar-puntos"><i class="ri-edit-line"></i> Modificar</button>
+    @endif
+</td>
                             </tr>
                         </tbody>
                     </table>
@@ -2551,38 +1382,39 @@
             </div>
         </div>
 
-        <!-- Nueva sección Opciones / Configuración -->
-        <section class="section-content" id="section-opciones" style="display: none;">
-            <div class="section-header">
-                <h1 class="section-title">Configuración</h1>
-            </div>
-            <div class="card"
-                style="min-height: 480px; display: flex; align-items: center; justify-content: center; color: var(--texto-suave);">
-                Página en construcción (Ajustes del sistema)
-            </div>
+<section class="section-content" id="section-opciones" style="display: none;">
+            @include('admin.partials.configuracion')
         </section>
-
     </main>
 
-
-    <!-- JS General -->
-    <script src="{{ asset('animaciones/admin/dashboardAdmin.js') }}"></script>
+    <!-- Sedes disponibles (dinámicas desde DB) -->
+    <script>
+        window.SEDES_MAP = {
+            @foreach($sedes as $s)
+            {{ $s->id_sede }}: "{{ $s->nombre }}",
+            @endforeach
+        };
+    </script>
+ <!-- JS General -->
+    <script src="{{ asset('animaciones/admin/dashboardAdmin.js') }}?v={{ time() }}"></script>
     <!-- JS Sección Personal -->
-    <script src="{{ asset('animaciones/admin/dashboardAdminPersonal.js') }}"></script>
+    <script src="{{ asset('animaciones/admin/dashboardAdminPersonal.js') }}?v={{ time() }}"></script>
     <!-- JS Sección Alumnos -->
-    <script src="{{ asset('animaciones/admin/dashboardAdminAlumnos.js') }}"></script>
+    <script src="{{ asset('animaciones/admin/dashboardAdminAlumnos.js') }}?v={{ time() }}"></script>
     <!-- JS Sección Profesores -->
-    <script src="{{ asset('animaciones/admin/dashboardAdminProfesores.js') }}"></script>
+    <script src="{{ asset('animaciones/admin/dashboardAdminProfesores.js') }}?v={{ time() }}"></script>
     <!-- JS Sección Sede -->
-    <script src="{{ asset('animaciones/admin/dashboardAdminSede.js') }}"></script>
+    <script src="{{ asset('animaciones/admin/dashboardAdminSede.js') }}?v={{ time() }}"></script>
     <!-- JS Sección Grupos -->
-    <script src="{{ asset('animaciones/admin/dashboardAdminGrupos.js') }}"></script>
+    <script src="{{ asset('animaciones/admin/dashboardAdminGrupos.js') }}?v={{ time() }}"></script>
     <!-- JS Sección Extraescolares -->
-    <script src="{{ asset('animaciones/admin/dashboardAdminExtraescolares.js') }}"></script>
+    <script src="{{ asset('animaciones/admin/dashboardAdminExtraescolares.js') }}?v={{ time() }}"></script>
     <!-- JS Sección Niveles -->
-    <script src="{{ asset('animaciones/admin/dashboardAdminNiveles.js') }}"></script>
+    <script src="{{ asset('animaciones/admin/dashboardAdminNiveles.js') }}?v={{ time() }}"></script>
     <!-- JS Sección Roles -->
-    <script src="{{ asset('animaciones/admin/dashboardAdminRoles.js') }}"></script>
+    <script src="{{ asset('animaciones/admin/dashboardAdminRoles.js') }}?v={{ time() }}"></script>
+    <!-- JS Sección Configuración -->
+    <script src="{{ asset('animaciones/admin/dashboardAdminPerfil.js') }}?v={{ time() }}"></script>
 
 </body>
 
