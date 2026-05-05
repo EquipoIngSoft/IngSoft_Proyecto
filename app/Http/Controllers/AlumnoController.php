@@ -10,12 +10,12 @@ class AlumnoController extends Controller
     private function calcularNivel(int $puntaje): array
     {
         return match (true) {
-            $puntaje >= 3000 => ['numero' => 6, 'nombre' => 'Rey',     'emoji' => '♚'],
-            $puntaje >= 1500 => ['numero' => 5, 'nombre' => 'Reina',   'emoji' => '♛'],
-            $puntaje >= 800  => ['numero' => 4, 'nombre' => 'Torre',   'emoji' => '♜'],
-            $puntaje >= 400  => ['numero' => 3, 'nombre' => 'Alfil',   'emoji' => '♝'],
-            $puntaje >= 150  => ['numero' => 2, 'nombre' => 'Caballo', 'emoji' => '♞'],
-            default          => ['numero' => 1, 'nombre' => 'Peón',    'emoji' => '♟'],
+            $puntaje >= 3000 => ['numero' => 6, 'nombre' => 'Rey', 'emoji' => '♚'],
+            $puntaje >= 1500 => ['numero' => 5, 'nombre' => 'Reina', 'emoji' => '♛'],
+            $puntaje >= 800 => ['numero' => 4, 'nombre' => 'Torre', 'emoji' => '♜'],
+            $puntaje >= 400 => ['numero' => 3, 'nombre' => 'Alfil', 'emoji' => '♝'],
+            $puntaje >= 150 => ['numero' => 2, 'nombre' => 'Caballo', 'emoji' => '♞'],
+            default => ['numero' => 1, 'nombre' => 'Peón', 'emoji' => '♟'],
         };
     }
 
@@ -24,10 +24,10 @@ class AlumnoController extends Controller
         return match (true) {
             $puntaje >= 3000 => 3000,
             $puntaje >= 1500 => 3000,
-            $puntaje >= 800  => 1500,
-            $puntaje >= 400  => 800,
-            $puntaje >= 150  => 400,
-            default          => 150,
+            $puntaje >= 800 => 1500,
+            $puntaje >= 400 => 800,
+            $puntaje >= 150 => 400,
+            default => 150,
         };
     }
 
@@ -60,12 +60,17 @@ class AlumnoController extends Controller
             ->get()
             ->map(function ($h) {
                 $dias = [
-                    1 => 'Lunes', 2 => 'Martes', 3 => 'Miércoles',
-                    4 => 'Jueves', 5 => 'Viernes', 6 => 'Sábado', 7 => 'Domingo'
+                    1 => 'Lunes',
+                    2 => 'Martes',
+                    3 => 'Miércoles',
+                    4 => 'Jueves',
+                    5 => 'Viernes',
+                    6 => 'Sábado',
+                    7 => 'Domingo'
                 ];
                 $h->dia = $dias[$h->dia_semana] ?? 'Desconocido';
                 $h->hora_inicio = substr($h->hora_inicio, 0, 5);
-                $h->hora_fin    = substr($h->hora_fin, 0, 5);
+                $h->hora_fin = substr($h->hora_fin, 0, 5);
                 unset($h->dia_semana);
                 return $h;
             });
@@ -128,16 +133,16 @@ class AlumnoController extends Controller
 
         return response()->json([
             'alumno' => [
-                'nombre'  => trim($alumno->nombre . ' ' . $alumno->apellido_p),
+                'nombre' => trim($alumno->nombre . ' ' . $alumno->apellido_p),
                 'inicial' => strtoupper(mb_substr($alumno->nombre, 0, 1)),
-                'email'   => $alumno->email,
+                'email' => $alumno->email,
                 'puntaje' => $puntaje,
             ],
-            'nivel'                   => $nivel,
+            'nivel' => $nivel,
             'puntaje_siguiente_nivel' => $puntajeSiguiente,
-            'horarios'                => $horarios,
-            'grupos'                  => $grupos,
-            'actividad_reciente'      => $actividad,
+            'horarios' => $horarios,
+            'grupos' => $grupos,
+            'actividad_reciente' => $actividad,
         ]);
     }
 
@@ -214,7 +219,7 @@ class AlumnoController extends Controller
             ->where('estatus', true)
             ->where(function ($q) use ($inscritos) {
                 $q->whereRaw('cupo_actual < cupo_maximo')
-                  ->orWhereIn('id_extraescolar', $inscritos);
+                    ->orWhereIn('id_extraescolar', $inscritos);
             })
             ->select(
                 'id_extraescolar',
@@ -229,15 +234,15 @@ class AlumnoController extends Controller
             ->orderBy('nombre')
             ->get()
             ->map(function ($e) use ($inscritos) {
-                $e->inscrito        = in_array($e->id_extraescolar, $inscritos);
-                $e->cupo_lleno      = $e->cupo_actual >= $e->cupo_maximo;
+                $e->inscrito = in_array($e->id_extraescolar, $inscritos);
+                $e->cupo_lleno = $e->cupo_actual >= $e->cupo_maximo;
                 $e->cupo_disponible = $e->cupo_maximo - $e->cupo_actual;
                 return $e;
             });
 
         return response()->json([
             'mis_inscripciones' => $misInscripciones,
-            'catalogo'          => $catalogo,
+            'catalogo' => $catalogo,
         ]);
     }
 
@@ -273,10 +278,10 @@ class AlumnoController extends Controller
         }
 
         DB::table('inscripcionextraescolar')->insert([
-            'id_alumno'        => $alumno->id_alumno,
-            'id_extraescolar'  => $id,
+            'id_alumno' => $alumno->id_alumno,
+            'id_extraescolar' => $id,
             'fecha_asignacion' => now(),
-            'status'           => true,
+            'status' => true,
         ]);
 
         DB::table('extraescolar')
