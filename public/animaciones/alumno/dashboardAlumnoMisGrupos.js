@@ -172,7 +172,7 @@
             const data = await res.json();
 
             if (!res.ok) {
-                alert(data.message || 'Error al procesar la acción');
+                egauAlert(data.message || 'Error al procesar la acción', 'error');
                 btn.disabled = false;
                 btn.innerHTML = textoOriginal;
                 return;
