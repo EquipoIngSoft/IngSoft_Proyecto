@@ -109,6 +109,11 @@
 
 .btn-filtro:hover { border-color: var(--naranja); color: var(--naranja); }
 
+.btn-filtro:active {
+    transform: scale(0.93) translateY(1px);
+    transition: transform 0.08s ease;
+}
+
 .btn-filtro.activo {
     background-color: var(--naranja);
     color: var(--blanco);
