@@ -27,6 +27,19 @@
 
 <body>
 
+    <!-- Pantalla de carga -->
+    <div id="loading-screen" style="
+    position: fixed; inset: 0; z-index: 9999;
+    background-color: #f4f6f9;
+    display: flex; align-items: center; justify-content: center;
+    flex-direction: column; gap: 16px;
+    transition: opacity 0.4s ease;">
+        <img src="{{ asset('Logos/LogoEgau.png') }}" id="loading-logo" style="width: 80px; opacity: 0.8;">
+        <span style="font-family:'Cinzel',serif; font-size: 13px; color: #888; letter-spacing: 3px;">
+            CARGANDO<span class="loading-dot">.</span><span class="loading-dot">.</span><span class="loading-dot">.</span>
+        </span>
+    </div>
+
     <!-- ===================== SIDEBAR ===================== -->
     <aside class="sidebar" id="sidebar">
 
