@@ -151,14 +151,9 @@
         }).join('');
     }
 
-    window.accionGrupo = async function (id, accion, btn, confirmado = false) {
+    window.accionGrupo = async function(id, accion, btn, forzar = false) {
         const token = document.querySelector('meta[name="user-token"]')?.content;
         if (!token) return;
-
-        if (accion === 'inscribir' && !confirmado) {
-            if (!confirm('¿Estás seguro de que deseas inscribirte a este grupo? Se generará una factura.')) return;
-            confirmado = true;
-        }
 
         btn.disabled = true;
         const textoOriginal = btn.innerHTML;
@@ -172,8 +167,7 @@
                     'Accept': 'application/json',
                     'Content-Type': 'application/json',
                     'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.content,
-                },
-                body: JSON.stringify({ confirmado: confirmado })
+                }
             });
 
             const data = await res.json();
@@ -189,14 +183,14 @@
                     }
                 }
 
-                alert(data.message || 'Error al procesar la acción');
+                egauAlert(data.message || 'Error al procesar la acción', 'error');
                 btn.disabled = false;
                 btn.innerHTML = textoOriginal;
                 return;
             }
 
             if (accion === 'inscribir') {
-                alert('¡Inscripción exitosa! Puedes revisar tu factura en la sección de Pagos.');
+                egauAlert('¡Inscripción exitosa! Puedes revisar tu factura en la sección de Pagos.', 'success');
                 window.pagosCargados = false;
             }
 

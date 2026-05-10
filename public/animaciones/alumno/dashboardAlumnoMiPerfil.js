@@ -22,14 +22,14 @@ window.validarPassword = function () {
     if (!oldPass || !pass || !confirm) return;
 
     if (!oldPass.value) {
-        alert('Por favor, ingresa tu contraseña antigua.');
+        egauAlert('Por favor, ingresa tu contraseña antigua.', 'warning')
         return;
     }
 
     if (pass.value !== confirm.value) {
-        alert('Las contraseñas no coinciden. Por favor, verifica.');
+        egauAlert('Las contraseñas no coinciden. Por favor, verifica.', 'error')
     } else if (pass.value.length < 8) {
-        alert('La contraseña debe tener al menos 8 caracteres.');
+        egauAlert('La contraseña debe tener al menos 8 caracteres.', 'warning')
     } else {
         fetch('/alumno/perfil/password', {
             method: 'PUT',
@@ -47,15 +47,15 @@ window.validarPassword = function () {
                     if (data.errors) {
                         msg = Object.values(data.errors).flat().join('\n');
                     }
-                    alert('Error:\n' + msg);
+                    egauAlert(msg || 'Error al actualizar la contraseña.', 'error')
                 } else {
-                    alert('¡Contraseña actualizada con éxito!');
+                    egauAlert('¡Contraseña actualizada con éxito!', 'success')
                     document.getElementById('formPassword')?.reset();
                 }
             })
             .catch(err => {
                 console.error('Error al actualizar contraseña:', err);
-                alert('Hubo un error al actualizar la contraseña.');
+                egauAlert('Hubo un error al actualizar la contraseña.', 'error')
             });
     }
 };
@@ -178,9 +178,9 @@ window.validarPassword = function () {
                             if (data.errors) {
                                 msg = Object.values(data.errors).flat().join('\n');
                             }
-                            alert('Error al guardar:\n' + msg);
+                            egauAlert(msg || 'Error al guardar los cambios.', 'error')
                         } else {
-                            alert('¡Cambios guardados correctamente!');
+                            egauAlert('¡Cambios guardados correctamente!', 'success')
                             editables.forEach(function (el) {
                                 el.disabled = true;
                                 el.style.background = '#f9f9f9';
@@ -193,7 +193,7 @@ window.validarPassword = function () {
                     })
                     .catch(err => {
                         console.error('Error al guardar:', err);
-                        alert('Hubo un error al guardar los cambios.');
+                        egauAlert('Hubo un error al guardar los cambios.', 'error')
                     });
             });
         }
