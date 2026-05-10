@@ -102,4 +102,6 @@ return view('dashboardAdmin', compact('alumnos', 'profesores', 'personal', 'sede
     Route::get('/api/alumno/grupos', [App\Http\Controllers\AlumnoGruposController::class, 'index']);
     Route::post('/api/alumno/grupos/{id}/{accion}', [App\Http\Controllers\AlumnoGruposController::class, 'accion']);
     
+    Route::get('/api/alumno/pagos', [App\Http\Controllers\AlumnoPagosController::class, 'index']);
+    
 });
