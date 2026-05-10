@@ -20,7 +20,7 @@
         return `
             <div style="display: flex; align-items: center; gap: 10px;">
                 <i class="ri-time-line" style="font-size: 16px; color: var(--naranja);"></i>
-                <span>${nombreDia(h.dia_semana)}, ${h.hora_inicio.substring(0,5)} - ${h.hora_fin.substring(0,5)}</span>
+                <span>${nombreDia(h.dia_semana)}, ${h.hora_inicio.substring(0, 5)} - ${h.hora_fin.substring(0, 5)}</span>
             </div>
             <div style="display: flex; align-items: center; gap: 10px;">
                 <i class="ri-map-pin-line" style="font-size: 16px; color: var(--naranja);"></i>
@@ -79,9 +79,9 @@
                     ${horariosHtml}
                 </div>
                 <div style="margin-top: auto; padding-top: 12px;">
-                    <button class="btn-inscribirse cancelar" onclick="window.accionGrupo(${g.id_grupo}, 'cancelar', this)">
-                        <i class="ri-close-circle-line"></i> Cancelar inscripción
-                    </button>
+                    <p style="font-size: 13px; color: var(--texto-suave); margin: 0; display: flex; align-items: center; gap: 6px;">
+                        <i class="ri-information-line"></i> Para cancelar tu inscripción, contacta a la sede.
+                    </p>
                 </div>
             </div>
         `}).join('');
@@ -97,7 +97,8 @@
         }
 
         contenedor.innerHTML = grupos.map(g => {
-            const porcentaje = g.cupo_maximo > 0 ? Math.min((g.cupo_actual / g.cupo_maximo) * 100, 100) : 0;
+            const cupoReal = Math.max(0, g.cupo_actual);
+            const porcentaje = g.cupo_maximo > 0 ? Math.min((cupoReal / g.cupo_maximo) * 100, 100) : 0;
             const lleno = g.cupo_lleno;
             const casiLleno = !lleno && porcentaje >= 75;
 
@@ -135,7 +136,7 @@
                 <div style="margin-top: 4px; display: flex; flex-direction: column; gap: 8px;">
                     <div style="display: flex; justify-content: space-between; font-size: 13px; color: var(--texto-suave);">
                         <span>Lugares ocupados</span>
-                        <strong style="color: ${lleno || casiLleno ? '#d93025' : 'var(--texto)'};"> ${g.cupo_actual} / ${g.cupo_maximo}</strong>
+                        <strong style="color: ${lleno || casiLleno ? '#d93025' : 'var(--texto)'};"> ${cupoReal} / ${g.cupo_maximo}</strong>
                     </div>
                     <div class="progress-wrap">
                         <div class="progress-fill ${lleno || casiLleno ? 'lleno' : ''}" style="width: ${porcentaje}%;"></div>
@@ -150,7 +151,7 @@
         }).join('');
     }
 
-    window.accionGrupo = async function(id, accion, btn) {
+    window.accionGrupo = async function(id, accion, btn, forzar = false) {
         const token = document.querySelector('meta[name="user-token"]')?.content;
         if (!token) return;
 
@@ -172,10 +173,25 @@
             const data = await res.json();
 
             if (!res.ok) {
+                if (data.requires_confirmation) {
+                    btn.disabled = false;
+                    btn.innerHTML = textoOriginal;
+                    if (confirm(data.message)) {
+                        return window.accionGrupo(id, accion, btn, true);
+                    } else {
+                        return;
+                    }
+                }
+
                 egauAlert(data.message || 'Error al procesar la acción', 'error');
                 btn.disabled = false;
                 btn.innerHTML = textoOriginal;
                 return;
+            }
+
+            if (accion === 'inscribir') {
+                egauAlert('¡Inscripción exitosa! Puedes revisar tu factura en la sección de Pagos.', 'success');
+                window.pagosCargados = false;
             }
 
             await cargarGrupos();
@@ -187,7 +203,7 @@
         }
     };
 
-    window.cargarMisGrupos = async function() {
+    window.cargarMisGrupos = async function () {
         if (gruposCargados) return;
         await cargarGrupos();
         gruposCargados = true;

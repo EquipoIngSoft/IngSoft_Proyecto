@@ -828,13 +828,106 @@
         <div id="section-pagos" class="section-content" style="display:none;">
             <div class="page-content">
                 <div class="page-header">
-                    <h1 class="page-title">Pagos</h1>
-                    <p class="page-subtitle">Esta sección estará disponible próximamente</p>
+                    <h1 class="page-title">Mis Pagos</h1>
+                    <p class="page-subtitle">Consulta tus facturas, descarga comprobantes y revisa tus estados de pago.</p>
                 </div>
-                <div class="card"
-                    style="min-height:400px; display:flex; align-items:center; justify-content:center; flex-direction:column; gap:16px; color:var(--texto-suave);">
-                    <i class="ri-bank-card-line" style="font-size:48px; color:var(--borde);"></i>
-                    <p style="font-size:15px;">Sección en construcción</p>
+
+                <!-- Contacto de la Sede -->
+                <div style="background-color: var(--azul-light); color: var(--azul); padding: 16px; border-radius: 12px; margin-bottom: 24px; display: flex; align-items: flex-start; gap: 12px; border: 1px solid rgba(26, 115, 232, 0.2);">
+                    <i class="ri-phone-line" style="font-size: 24px;"></i>
+                    <div id="contacto-sede-container">
+                        <h4 style="margin: 0 0 4px 0; font-size: 15px;">¿Tienes dudas sobre tus pagos?</h4>
+                        <p style="margin: 0; font-size: 14px; opacity: 0.9;">Contacta a tu sede para aclaraciones: <span id="sede-telefono">Cargando...</span> | <span id="sede-email"></span></p>
+                    </div>
+                </div>
+
+                <!-- Filtros -->
+                <div class="search-filtros-card" style="margin-bottom: 20px;">
+                    <div style="display: flex; gap: 10px; align-items: center;">
+                        <i class="ri-filter-3-line" style="color: var(--texto-suave);"></i>
+                        <span style="font-weight: 600; color: var(--texto-suave);">Filtrar por estado:</span>
+                        <select id="filtro-estado-pagos" style="padding: 8px 12px; border-radius: 8px; border: 1px solid var(--borde); outline: none;">
+                            <option value="todos">Todos</option>
+                            <option value="enproceso">En Proceso</option>
+                            <option value="pagado">Pagados</option>
+                            <option value="cancelado">Cancelados</option>
+                            <option value="expirado">Expirados</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Tabla de Facturas -->
+                <div class="card" style="padding: 0; overflow-x: auto;">
+                    <table style="width: 100%; border-collapse: collapse; text-align: left; min-width: 600px;">
+                        <thead>
+                            <tr style="background-color: #f8f9fa; border-bottom: 2px solid var(--borde);">
+                                <th style="padding: 16px; font-size: 13px; font-weight: 600; color: var(--texto-suave); text-transform: uppercase;">Folio</th>
+                                <th style="padding: 16px; font-size: 13px; font-weight: 600; color: var(--texto-suave); text-transform: uppercase;">Concepto</th>
+                                <th style="padding: 16px; font-size: 13px; font-weight: 600; color: var(--texto-suave); text-transform: uppercase;">Fecha Emisión</th>
+                                <th style="padding: 16px; font-size: 13px; font-weight: 600; color: var(--texto-suave); text-transform: uppercase;">Vencimiento</th>
+                                <th style="padding: 16px; font-size: 13px; font-weight: 600; color: var(--texto-suave); text-transform: uppercase;">Total</th>
+                                <th style="padding: 16px; font-size: 13px; font-weight: 600; color: var(--texto-suave); text-transform: uppercase;">Estado</th>
+                                <th style="padding: 16px; font-size: 13px; font-weight: 600; color: var(--texto-suave); text-transform: uppercase; text-align: center;">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabla-pagos-body">
+                            <!-- JS renders invoices here -->
+                            <tr>
+                                <td colspan="7" style="padding: 30px; text-align: center; color: var(--texto-suave);">Cargando facturas...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Modal Detalles Factura / PDF -->
+        <div id="modalFactura" class="modal-overlay" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.5); z-index:1000; align-items:center; justify-content:center;">
+            <div class="modal-content card" style="width: 90%; max-width: 600px; padding: 0; overflow: hidden; border-radius: 12px; display: flex; flex-direction: column;">
+                <div style="padding: 20px 24px; border-bottom: 1px solid var(--borde); display: flex; justify-content: space-between; align-items: center; background-color: #f8f9fa;">
+                    <h3 style="margin: 0; font-size: 18px; color: var(--texto);"><i class="ri-file-text-line"></i> Detalles de Factura</h3>
+                    <button onclick="document.getElementById('modalFactura').style.display='none'" style="background:none; border:none; font-size:24px; cursor:pointer; color:var(--texto-suave);">&times;</button>
+                </div>
+                
+                <div id="pdf-content" style="padding: 30px 40px; background-color: white;">
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 30px;">
+                        <div>
+                            <h2 style="margin: 0; font-family: 'Cinzel', serif; font-size: 24px; color: var(--texto);">EGAU Chess</h2>
+                            <p style="margin: 5px 0 0 0; font-size: 12px; color: var(--texto-suave);">Escuela de Ajedrez</p>
+                        </div>
+                        <div style="text-align: right;">
+                            <h3 style="margin: 0; font-size: 20px; color: var(--texto); text-transform: uppercase;">Factura</h3>
+                            <p style="margin: 5px 0 0 0; font-size: 14px; color: var(--texto-suave);">Folio: <span id="modal-folio" style="font-weight: 600; color: var(--texto);"></span></p>
+                        </div>
+                    </div>
+                    
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 30px; border-top: 1px solid var(--borde); border-bottom: 1px solid var(--borde); padding: 15px 0;">
+                        <div>
+                            <p style="margin: 0 0 5px 0; font-size: 12px; font-weight: 600; color: var(--texto-suave); text-transform: uppercase;">Facturado a:</p>
+                            <p style="margin: 0; font-size: 14px; font-weight: 600; color: var(--texto);" id="modal-alumno"></p>
+                        </div>
+                        <div style="text-align: right;">
+                            <p style="margin: 0 0 5px 0; font-size: 13px; color: var(--texto-suave);">Fecha Emisión: <span id="modal-fecha-emision" style="font-weight: 500; color: var(--texto);"></span></p>
+                            <p style="margin: 0 0 5px 0; font-size: 13px; color: var(--texto-suave);">Vencimiento: <span id="modal-fecha-limite" style="font-weight: 500; color: var(--texto);"></span></p>
+                            <p style="margin: 0; font-size: 13px; color: var(--texto-suave);">Estado: <span id="modal-estado" style="font-weight: 600;"></span></p>
+                        </div>
+                    </div>
+                    
+                    <div style="margin-bottom: 30px;">
+                        <p style="margin: 0 0 10px 0; font-size: 14px; font-weight: 600; color: var(--texto);">Concepto:</p>
+                        <p style="margin: 0; font-size: 14px; color: var(--texto-suave);" id="modal-concepto"></p>
+                        <p style="margin: 10px 0 0 0; font-size: 13px; color: #888;" id="modal-descripcion"></p>
+                    </div>
+                    
+                    <div style="text-align: right; border-top: 2px solid var(--texto); padding-top: 15px;">
+                        <p style="margin: 0; font-size: 18px; font-weight: 700; color: var(--texto);">Total a Pagar: $<span id="modal-total"></span></p>
+                    </div>
+                </div>
+                
+                <div style="padding: 20px 24px; border-top: 1px solid var(--borde); background-color: #f8f9fa; display: flex; justify-content: flex-end; gap: 10px;">
+                    <button onclick="document.getElementById('modalFactura').style.display='none'" class="btn-cancelar" style="padding: 8px 16px; border-radius: 8px; border: 1px solid var(--borde); background: white; cursor: pointer; font-weight: 600;">Cerrar</button>
+                    <button onclick="imprimirFactura()" class="btn-inscribirse" style="padding: 8px 16px; border-radius: 8px; border: none; background: var(--naranja); color: white; cursor: pointer; font-weight: 600; display: flex; align-items: center; gap: 6px;"><i class="ri-printer-line"></i> Imprimir PDF</button>
                 </div>
             </div>
         </div>

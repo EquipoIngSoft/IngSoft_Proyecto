@@ -53,6 +53,9 @@ class AlumnoGruposController extends Controller
 
         $misGrupos = \App\Models\Academico\Grupo::with(['curso', 'profesor', 'horarios'])
             ->whereIn('id_grupo', $misInscripciones)
+            ->whereHas('curso', function ($q) use ($alumno) {
+                $q->where('id_sede', $alumno->id_sede);
+            })
             ->get()
             ->map(function ($g) {
                 $nivelDB = $g->curso ? (int) $g->curso->nivel : 0;
@@ -77,8 +80,9 @@ class AlumnoGruposController extends Controller
         $gruposDisponibles = \App\Models\Academico\Grupo::with(['curso', 'profesor', 'horarios'])
             ->whereNotIn('id_grupo', $misInscripciones)
             ->where('estatus', true)
-            ->whereHas('curso', function ($q) use ($puntaje) {
-                $q->where('nivel', '<=', $puntaje);
+            ->whereHas('curso', function ($q) use ($puntaje, $alumno) {
+                $q->where('nivel', '<=', $puntaje)
+                  ->where('id_sede', $alumno->id_sede);
             })
             ->get()
             ->map(function ($g) {
@@ -117,6 +121,22 @@ class AlumnoGruposController extends Controller
             return response()->json(['message' => 'Grupo no encontrado'], 404);
 
         if ($accion === 'inscribir') {
+            $curso = DB::table('curso')->where('id_curso', $grupo->id_curso)->first();
+            if (!$curso) {
+                return response()->json(['message' => 'Curso no válido.'], 400);
+            }
+
+            // Validar Sede
+            if ($curso->id_sede != $alumno->id_sede) {
+                return response()->json(['message' => 'Este grupo pertenece a una sede distinta a la tuya.'], 403);
+            }
+
+            // Validar Nivel
+            $puntaje = $alumno->puntaje ?? 0;
+            if ($curso->nivel > $puntaje) {
+                return response()->json(['message' => 'No tienes el nivel suficiente para inscribirte a este grupo.'], 403);
+            }
+
             if ($grupo->cupo_actual >= $grupo->cupo_maximo) {
                 return response()->json(['message' => 'El grupo está lleno.'], 400);
             }
@@ -130,43 +150,30 @@ class AlumnoGruposController extends Controller
             if ($yaInscrito)
                 return response()->json(['message' => 'Ya estás inscrito en este grupo.'], 400);
 
-            DB::table('inscripcion')->insert([
+            $id_inscripcion = DB::table('inscripcion')->insertGetId([
                 'id_alumno' => $alumno->id_alumno,
                 'id_grupo' => $id,
                 'fecha_asignacion' => now(),
                 'estatus' => true
-            ]);
+            ], 'id_inscripcion');
 
             DB::table('grupo')->where('id_grupo', $id)->increment('cupo_actual');
+
+            DB::table('factura')->insert([
+                'id_alumno' => $alumno->id_alumno,
+                'id_inscripcion' => $id_inscripcion,
+                'fecha_emision' => now(),
+                'fecha_limite' => now()->addMonth(),
+                'total_pago' => $curso->costo_base ?? 0,
+                'vigencia' => 'enproceso',
+                'descripcion' => $curso->descripcion ?? 'Inscripción a curso',
+                'concepto' => 'Pago de inscripcion a grupo ' . $grupo->codigo_grupo
+            ]);
 
             return response()->json(['message' => '¡Te has inscrito al grupo exitosamente!']);
 
         } elseif ($accion === 'cancelar') {
-            // Verificar que existe una inscripción activa
-            $inscripcion = DB::table('inscripcion')
-                ->where('id_alumno', $alumno->id_alumno)
-                ->where('id_grupo', $id)
-                ->where('estatus', true)
-                ->first();
-
-            if (!$inscripcion) {
-                return response()->json(['message' => 'No tienes una inscripción activa en este grupo.'], 400);
-            }
-
-            // Dar de baja sin eliminar: solo cambia estatus y registra fecha_baja
-            DB::table('inscripcion')
-                ->where('id_alumno', $alumno->id_alumno)
-                ->where('id_grupo', $id)
-                ->where('estatus', true)
-                ->update([
-                    'estatus' => false,
-                    'fecha_baja' => now(),
-                    'motivo_baja' => $request->input('motivo_baja', 'Cancelación voluntaria'),
-                ]);
-
-            DB::table('grupo')->where('id_grupo', $id)->decrement('cupo_actual');
-
-            return response()->json(['message' => 'Se canceló tu inscripción al grupo.']);
+            return response()->json(['message' => 'Para cancelar tu inscripción, por favor comunícate con la administración de tu sede.'], 403);
         }
 
         return response()->json(['message' => 'Acción inválida'], 400);
