@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Alumno;
+use App\Models\Academico\Factura;
 use Illuminate\Support\Facades\DB;
 
 class AlumnoController extends Controller
@@ -196,6 +197,14 @@ class AlumnoController extends Controller
             return response()->json(['message' => 'No autorizado'], 403);
         }
 
+        // Auto-expirar facturas vencidas
+        DB::table('factura')
+            ->where('id_alumno', $alumno->id_alumno)
+            ->whereNotNull('id_inscripcionextra')
+            ->where('vigencia', 'enproceso')
+            ->where('fecha_limite', '<', now())
+            ->update(['vigencia' => 'expirado']);
+
         $inscritos = DB::table('inscripcionextraescolar')
             ->where('id_alumno', $alumno->id_alumno)
             ->where('status', true)
@@ -204,6 +213,7 @@ class AlumnoController extends Controller
 
         $misInscripciones = DB::table('inscripcionextraescolar')
             ->join('extraescolar', 'inscripcionextraescolar.id_extraescolar', '=', 'extraescolar.id_extraescolar')
+            ->leftJoin('factura', 'factura.id_inscripcionextra', '=', 'inscripcionextraescolar.id_inscripcionextra')
             ->where('inscripcionextraescolar.id_alumno', $alumno->id_alumno)
             ->where('inscripcionextraescolar.status', true)
             ->select(
@@ -211,7 +221,9 @@ class AlumnoController extends Controller
                 'extraescolar.nombre',
                 'extraescolar.ubicacion',
                 'extraescolar.fecha_inicio',
-                'extraescolar.fecha_fin'
+                'extraescolar.fecha_fin',
+                'factura.vigencia',
+                'factura.total_pago'
             )
             ->get();
 
@@ -233,10 +245,23 @@ class AlumnoController extends Controller
             )
             ->orderBy('nombre')
             ->get()
-            ->map(function ($e) use ($inscritos) {
-                $e->inscrito = in_array($e->id_extraescolar, $inscritos);
+            ->map(function ($e) use ($inscritos, $alumno) {
+                $e->inscrito   = in_array($e->id_extraescolar, $inscritos);
                 $e->cupo_lleno = $e->cupo_actual >= $e->cupo_maximo;
                 $e->cupo_disponible = $e->cupo_maximo - $e->cupo_actual;
+
+                $e->vigencia_factura = null;
+                if ($e->inscrito) {
+                    $f = DB::table('factura')
+                        ->join('inscripcionextraescolar', 'factura.id_inscripcionextra', '=', 'inscripcionextraescolar.id_inscripcionextra')
+                        ->where('inscripcionextraescolar.id_alumno', $alumno->id_alumno)
+                        ->where('inscripcionextraescolar.id_extraescolar', $e->id_extraescolar)
+                        ->where('inscripcionextraescolar.status', true)
+                        ->select('factura.vigencia')
+                        ->first();
+                    $e->vigencia_factura = $f?->vigencia;
+                }
+
                 return $e;
             });
 
@@ -277,11 +302,22 @@ class AlumnoController extends Controller
             return response()->json(['message' => 'Ya estás inscrito en esta actividad'], 409);
         }
 
-        DB::table('inscripcionextraescolar')->insert([
-            'id_alumno' => $alumno->id_alumno,
-            'id_extraescolar' => $id,
+        // DESPUÉS
+        $idInscripcion = DB::table('inscripcionextraescolar')->insertGetId([
+            'id_alumno'        => $alumno->id_alumno,
+            'id_extraescolar'  => $id,
             'fecha_asignacion' => now(),
-            'status' => true,
+            'status'           => true,
+        ], 'id_inscripcionextra');
+
+        Factura::create([
+            'id_alumno'           => $alumno->id_alumno,
+            'id_inscripcionextra' => $idInscripcion,
+            'fecha_emision'       => now(),
+            'fecha_limite'        => $extra->fecha_inicio,
+            'total_pago'          => $extra->costo_base,
+            'vigencia'            => 'enproceso',
+            'concepto'            => 'Inscripción a actividad extraescolar: ' . $extra->nombre,
         ]);
 
         DB::table('extraescolar')
@@ -308,6 +344,21 @@ class AlumnoController extends Controller
         if (!$inscripcion) {
             return response()->json(['message' => 'No estás inscrito en esta actividad'], 404);
         }
+
+        // DESPUÉS
+        $factura = DB::table('factura')
+            ->where('id_inscripcionextra', $inscripcion->id_inscripcionextra)
+            ->where('id_alumno', $alumno->id_alumno)
+            ->first();
+
+        // DESPUÉS
+        if (!$factura || $factura->vigencia !== 'pagado') {
+            return response()->json(['message' => 'Solo puedes cancelar una inscripción ya pagada y aprobada.'], 409);
+        }
+
+        DB::table('factura')
+            ->where('id_factura', $factura->id_factura)
+            ->update(['vigencia' => 'cancelado']);
 
         DB::table('inscripcionextraescolar')
             ->where('id_alumno', $alumno->id_alumno)
