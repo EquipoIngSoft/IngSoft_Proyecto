@@ -101,10 +101,8 @@ function pintarCatalogo(catalogo) {
 
         // DESPUÉS
         const vigencia  = e.vigencia_factura ?? 'enproceso';
-        const bloqueado = vigencia !== 'pagado';
-        const tituloBloqueado = vigencia === 'expirado'
-            ? 'Pago expirado, contacta a un administrador'
-            : 'Pendiente de pago y aprobación';
+        const bloqueado = vigencia === 'pagado';
+        const tituloBloqueado = 'Tu inscripción ya fue pagada. Contacta a la sede para cancelar.';
 
         const boton = e.inscrito
             ? `<button class="btn-inscribirse cancelar"

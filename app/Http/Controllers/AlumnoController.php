@@ -345,20 +345,21 @@ class AlumnoController extends Controller
             return response()->json(['message' => 'No estás inscrito en esta actividad'], 404);
         }
 
-        // DESPUÉS
         $factura = DB::table('factura')
             ->where('id_inscripcionextra', $inscripcion->id_inscripcionextra)
             ->where('id_alumno', $alumno->id_alumno)
             ->first();
 
         // DESPUÉS
-        if (!$factura || $factura->vigencia !== 'pagado') {
-            return response()->json(['message' => 'Solo puedes cancelar una inscripción ya pagada y aprobada.'], 409);
+        if ($factura && $factura->vigencia === 'pagado') {
+            return response()->json(['message' => 'Tu inscripción ya fue pagada. Para cancelarla comunícate con la sede.'], 409);
         }
 
-        DB::table('factura')
-            ->where('id_factura', $factura->id_factura)
-            ->update(['vigencia' => 'cancelado']);
+        if ($factura) {
+            DB::table('factura')
+                ->where('id_factura', $factura->id_factura)
+                ->update(['vigencia' => 'cancelado']);
+        }
 
         DB::table('inscripcionextraescolar')
             ->where('id_alumno', $alumno->id_alumno)
