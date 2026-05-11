@@ -34,6 +34,7 @@ class AlumnoPagosController extends Controller
             ->update(['vigencia' => 'expirado']);
 
         $facturas = Factura::where('id_alumno', $alumno->id_alumno)
+            ->where('vigencia', '!=', 'cancelado')
             ->orderBy('fecha_emision', 'desc')
             ->get();
 

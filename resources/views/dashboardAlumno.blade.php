@@ -850,7 +850,6 @@
                             <option value="todos">Todos</option>
                             <option value="enproceso">En Proceso</option>
                             <option value="pagado">Pagados</option>
-                            <option value="cancelado">Cancelados</option>
                             <option value="expirado">Expirados</option>
                         </select>
                     </div>
@@ -932,6 +931,21 @@
             </div>
         </div>
         <!-- /SECCIÓN PAGOS -->
+
+        <!-- Modal Confirmar Baja -->
+        <div id="modalConfirmarBaja" class="modal-overlay" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.5); z-index:1000; align-items:center; justify-content:center;">
+            <div class="modal-content card" style="width: 90%; max-width: 400px; padding: 32px; border-radius: 12px; text-align: center;">
+                <i class="ri-error-warning-line" style="font-size: 48px; color: #d93025;"></i>
+                <h3 style="margin: 16px 0 8px; color: var(--texto); font-size: 20px;">¿Confirmar Baja?</h3>
+                <p id="modal-confirmar-texto" style="color: var(--texto-suave); font-size: 14px; margin-bottom: 24px; line-height: 1.5;">
+                    Tu inscripción ya fue pagada. ¿Estás seguro de que deseas darte de baja? La factura permanecerá como pagada.
+                </p>
+                <div style="display: flex; gap: 12px; justify-content: center;">
+                    <button onclick="document.getElementById('modalConfirmarBaja').style.display='none'" style="padding: 10px 20px; border-radius: 8px; border: 1px solid var(--borde); background: white; cursor: pointer; font-weight: 600; color: var(--texto); font-family: 'Inter', sans-serif; font-size: 14px; transition: background-color 0.2s;" onmouseover="this.style.backgroundColor='var(--gris-light)'" onmouseout="this.style.backgroundColor='white'">Cancelar</button>
+                    <button id="btn-confirmar-baja" class="btn-inscribirse cancelar" style="padding: 10px 20px; border-radius: 8px; border: none; background-color: #d93025; color: white; cursor: pointer; font-weight: 600; font-family: 'Inter', sans-serif; font-size: 14px; transition: background-color 0.2s;" onmouseover="this.style.backgroundColor='#b71c1c'" onmouseout="this.style.backgroundColor='#d93025'">Sí, dar de baja</button>
+                </div>
+            </div>
+        </div>
 
 
         <!-- =============================================
