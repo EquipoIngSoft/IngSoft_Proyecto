@@ -173,7 +173,43 @@ class AlumnoGruposController extends Controller
             return response()->json(['message' => '¡Te has inscrito al grupo exitosamente!']);
 
         } elseif ($accion === 'cancelar') {
-            return response()->json(['message' => 'Para cancelar tu inscripción, por favor comunícate con la administración de tu sede.'], 403);
+            $inscripcion = DB::table('inscripcion')
+                ->where('id_alumno', $alumno->id_alumno)
+                ->where('id_grupo', $id)
+                ->where('estatus', true)
+                ->first();
+
+            if (!$inscripcion) {
+                return response()->json(['message' => 'No estás inscrito en este grupo.'], 404);
+            }
+
+            $factura = DB::table('factura')
+                ->where('id_inscripcion', $inscripcion->id_inscripcion)
+                ->where('id_alumno', $alumno->id_alumno)
+                ->first();
+
+            $forzar = $request->input('forzar', false);
+
+            if ($factura && $factura->vigencia === 'pagado' && !$forzar) {
+                return response()->json([
+                    'requires_confirmation' => true,
+                    'message' => 'Tu inscripción ya fue pagada. ¿Estás en serio de que deseas darte de baja del grupo? En caso afirmativo, la factura permanecerá como pagada.'
+                ], 400);
+            }
+
+            DB::table('inscripcion')
+                ->where('id_inscripcion', $inscripcion->id_inscripcion)
+                ->update(['estatus' => false]);
+                
+            DB::table('grupo')->where('id_grupo', $id)->decrement('cupo_actual');
+
+            if ($factura && $factura->vigencia !== 'pagado') {
+                DB::table('factura')
+                    ->where('id_factura', $factura->id_factura)
+                    ->update(['vigencia' => 'cancelado']);
+            }
+
+            return response()->json(['message' => 'Inscripción cancelada exitosamente.']);
         }
 
         return response()->json(['message' => 'Acción inválida'], 400);

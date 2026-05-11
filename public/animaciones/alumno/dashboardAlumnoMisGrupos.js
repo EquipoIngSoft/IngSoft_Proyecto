@@ -79,9 +79,9 @@
                     ${horariosHtml}
                 </div>
                 <div style="margin-top: auto; padding-top: 12px;">
-                    <p style="font-size: 13px; color: var(--texto-suave); margin: 0; display: flex; align-items: center; gap: 6px;">
-                        <i class="ri-information-line"></i> Para cancelar tu inscripción, contacta a la sede.
-                    </p>
+                    <button class="btn-inscribirse cancelar" onclick="window.accionGrupo(${g.id_grupo}, 'cancelar', this)">
+                        <i class="ri-close-circle-line"></i> Dar de baja
+                    </button>
                 </div>
             </div>
         `}).join('');
@@ -151,7 +151,7 @@
         }).join('');
     }
 
-    window.accionGrupo = async function(id, accion, btn, forzar = false) {
+    window.accionGrupo = async function (id, accion, btn, forzar = false) {
         const token = document.querySelector('meta[name="user-token"]')?.content;
         if (!token) return;
 
@@ -167,7 +167,8 @@
                     'Accept': 'application/json',
                     'Content-Type': 'application/json',
                     'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.content,
-                }
+                },
+                body: JSON.stringify({ forzar })
             });
 
             const data = await res.json();
@@ -176,11 +177,20 @@
                 if (data.requires_confirmation) {
                     btn.disabled = false;
                     btn.innerHTML = textoOriginal;
-                    if (confirm(data.message)) {
-                        return window.accionGrupo(id, accion, btn, true);
-                    } else {
-                        return;
+
+                    const modal = document.getElementById('modalConfirmarBaja');
+                    if (modal) {
+                        document.getElementById('modal-confirmar-texto').textContent = data.message;
+                        modal.style.display = 'flex';
+
+                        const btnConfirmar = document.getElementById('btn-confirmar-baja');
+                        // Usamos onclick para reemplazar cualquier evento anterior
+                        btnConfirmar.onclick = () => {
+                            modal.style.display = 'none';
+                            window.accionGrupo(id, accion, btn, true);
+                        };
                     }
+                    return;
                 }
 
                 egauAlert(data.message || 'Error al procesar la acción', 'error');
@@ -191,6 +201,9 @@
 
             if (accion === 'inscribir') {
                 egauAlert('¡Inscripción exitosa! Puedes revisar tu factura en la sección de Pagos.', 'success');
+                window.pagosCargados = false;
+            } else if (accion === 'cancelar') {
+                egauAlert('¡Inscripción cancelada exitosamente!', 'success');
                 window.pagosCargados = false;
             }
 
