@@ -4,6 +4,30 @@
 //  EGAU Chess | AMAAC
 // ==============================================
 
+// ── Toast global EGAU ──
+window.egauAlert = function(mensaje, tipo = 'success') {
+    const iconos = {
+        success: 'ri-checkbox-circle-line',
+        error:   'ri-error-warning-line',
+        warning: 'ri-alert-line'
+    };
+    let toast = document.getElementById('egau-toast');
+    if (!toast) {
+        toast = document.createElement('div');
+        toast.id = 'egau-toast';
+        document.body.appendChild(toast);
+    }
+    toast.className = `egau-toast egau-toast--${tipo}`;
+    toast.innerHTML = `<i class="${iconos[tipo] || iconos.success}"></i><span>${mensaje}</span>`;
+    requestAnimationFrame(() => {
+        requestAnimationFrame(() => toast.classList.add('visible'));
+    });
+    clearTimeout(toast._timer);
+    toast._timer = setTimeout(() => {
+        toast.classList.remove('visible');
+    }, 3500);
+};
+
 document.addEventListener('DOMContentLoaded', () => {
 
     // ---- Toggle del sidebar (Móvil y Escritorio) ----
@@ -153,5 +177,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
             window._perfilPersonal = d;
         })
-        .catch(err => console.error('Error cargando perfil:', err));
+        .catch(err => console.error('Error cargando perfil:', err))
+        .finally(() => {
+            const loading = document.getElementById('loading-screen');
+            if (loading) {
+                loading.style.opacity = '0';
+                setTimeout(() => loading.style.display = 'none', 400);
+            }
+        });
 });

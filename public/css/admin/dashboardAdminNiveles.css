@@ -265,3 +265,55 @@
         gap: 12px;
     }
 }
+
+/* ── Badge ampliado con emoji ─────────────────────────── */
+.badge-nivel {
+    display: inline-flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 5px;
+    padding: 4px 10px;
+    border-radius: 8px;
+    font-size: 13px;
+}
+
+.badge-nivel-emoji {
+    font-size: 16px;
+    line-height: 1;
+}
+
+.badge-nivel-texto {
+    font-weight: 600;
+}
+
+.badge-nivel-num {
+    font-size: 11px;
+    font-weight: 700;
+    opacity: 0.75;
+}
+
+/* Colores de nivel 1 y 2 */
+.badge-nivel-1 {
+    background-color: #f5f5f5;
+    color: #555;
+}
+
+.badge-nivel-2 {
+    background-color: #fff3e0;
+    color: #e65100;
+}
+
+/* Columna sede compacta */
+#tabla-niveles td:nth-child(2) {
+    font-size: 12px;
+    color: var(--texto-suave);
+    max-width: 120px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Emoji en opciones del dropdown de nivel */
+.niv-emoji {
+    margin-right: 4px;
+}

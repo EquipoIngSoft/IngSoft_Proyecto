@@ -5,3 +5,33 @@
    ============================================= */
 
 /* Estilos de la sección Pagos */
+
+/* Badges de estado */
+.badge-verde {
+    background-color: rgba(46, 125, 50, 0.1);
+    color: #2e7d32;
+    border: 1px solid rgba(46, 125, 50, 0.2);
+}
+
+.badge-naranja {
+    background-color: rgba(212, 175, 55, 0.1);
+    color: #b08d20;
+    border: 1px solid rgba(212, 175, 55, 0.2);
+}
+
+.badge-rojo {
+    background-color: rgba(211, 47, 47, 0.1);
+    color: #d32f2f;
+    border: 1px solid rgba(211, 47, 47, 0.2);
+}
+
+.badge-gris {
+    background-color: #f0f0f0;
+    color: #666;
+    border: 1px solid #ccc;
+}
+
+/* Hover effect table rows */
+#tabla-pagos-body tr:hover {
+    background-color: #f9f9fa;
+}

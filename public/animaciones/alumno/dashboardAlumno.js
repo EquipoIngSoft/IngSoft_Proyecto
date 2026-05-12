@@ -4,6 +4,37 @@
 //  EGAU Chess | Portal del Estudiante
 // ==============================================
 
+// ── Toast global EGAU ──
+window.egauAlert = function(mensaje, tipo = 'success') {
+    const iconos = {
+        success: 'ri-checkbox-circle-line',
+        error:   'ri-error-warning-line',
+        warning: 'ri-alert-line'
+    };
+
+    let toast = document.getElementById('egau-toast');
+    if (!toast) {
+        toast = document.createElement('div');
+        toast.id = 'egau-toast';
+        document.body.appendChild(toast);
+    }
+
+    // Limpiar clases anteriores
+    toast.className = `egau-toast egau-toast--${tipo}`;
+    toast.innerHTML = `<i class="${iconos[tipo] || iconos.success}"></i><span>${mensaje}</span>`;
+
+    // Mostrar
+    requestAnimationFrame(() => {
+        requestAnimationFrame(() => toast.classList.add('visible'));
+    });
+
+    // Auto-ocultar después de 3.5s
+    clearTimeout(toast._timer);
+    toast._timer = setTimeout(() => {
+        toast.classList.remove('visible');
+    }, 3500);
+};
+
 document.addEventListener('DOMContentLoaded', async () => {
 
     // ---- Toggle del sidebar ----
@@ -131,7 +162,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     } finally {
         // Ocultar pantalla de carga cuando todo esté listo
         const loading = document.getElementById('loading-screen');
-        if (loading) loading.style.display = 'none';
+        if (loading) {
+            loading.style.opacity = '0';
+            setTimeout(() => loading.style.display = 'none', 400);
+        }
     }
 
 });

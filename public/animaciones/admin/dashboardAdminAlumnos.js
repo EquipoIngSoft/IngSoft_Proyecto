@@ -13,13 +13,19 @@ document.addEventListener('DOMContentLoaded', () => {
     const tbody = tabla ? tabla.querySelector('tbody') : null;
     const info = document.querySelector('.pagination-info');
 
+    const calcNivel = (puntaje) => {
+        if (puntaje >= 3000) return { nombre: 'Rey',     emoji: '♔', css: 'badge-rey' };
+        if (puntaje >= 1500) return { nombre: 'Reina',   emoji: '♕', css: 'badge-reina' };
+        if (puntaje >= 800)  return { nombre: 'Torre',   emoji: '♖', css: 'badge-torre' };
+        if (puntaje >= 400)  return { nombre: 'Alfil',   emoji: '♗', css: 'badge-alfil' };
+        if (puntaje >= 150)  return { nombre: 'Caballo', emoji: '♘', css: 'badge-caballo' };
+        return { nombre: 'Peón', emoji: '♙', css: 'badge-peon' };
+    };
+
     // Función: genera el HTML de una fila de alumno desde el JSON del backend
     const renderFila = (r) => {
-        const nivelBadge = r.nivel === 'Principiante'
-            ? '<span class="badge badge-principiante">Principiante</span>'
-            : r.nivel === 'Intermedio'
-                ? '<span class="badge badge-intermedio">Intermedio</span>'
-                : '<span class="badge badge-avanzado">Avanzado</span>';
+        const nv = calcNivel(r.info?.puntaje ?? 0);
+        const nivelBadge = `<span class="badge ${nv.css}">${nv.emoji} ${nv.nombre}</span>`;
         const sedeTxt = (window.SEDES_MAP && window.SEDES_MAP[r.id_sede]) ? window.SEDES_MAP[r.id_sede] : `Sede ${r.id_sede}`;
         const estatusBadge = r.estatus
             ? '<span class="badge badge-activo">Activo</span>'
@@ -607,7 +613,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     set('ver-telefono', info.telefono || '—');
                     set('ver-correo', info.email || '—');
                     const puntaje = parseInt(info.puntaje ?? 0);
-                    const nivel = puntaje < 500 ? 'Principiante' : puntaje < 1000 ? 'Intermedio' : 'Avanzado';
+                    const nv = calcNivel(puntaje);
+                    const nivel = `${nv.emoji} ${nv.nombre}`;
                     set('ver-estatus', info.estatus ? 'Activo' : 'Inactivo');
                     const sedeNombre = (window.SEDES_MAP && window.SEDES_MAP[info.id_sede])
                         ? window.SEDES_MAP[info.id_sede]
