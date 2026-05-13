@@ -1,6 +1,10 @@
 <?php
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\FacturaController;
+use App\Http\Controllers\RolController;
+use App\Http\Controllers\ExtraescolarController;
+use App\Http\Controllers\NivelesController;
 use App\Http\Controllers\PersonalProfileController;
 use App\Http\Controllers\AlumnoProfileController;
 use App\Http\Middleware\VerificarToken;
@@ -82,6 +86,31 @@ return view('dashboardAdmin', compact('alumnos', 'profesores', 'personal', 'sede
     Route::get('/admin/obtener/sede/{id}',     [AdminController::class, 'obtenerSede']);
     Route::put('/admin/editar/sede/{id}',      [AdminController::class, 'editarSede']);
     Route::delete('/admin/eliminar/sede/{id}', [AdminController::class, 'eliminarSede']);
+
+    // ── Facturas ──────────────────────────────────────────────────────
+    Route::get('/admin/facturas',                [FacturaController::class, 'listar']);
+    Route::get('/admin/facturas/{id}',           [FacturaController::class, 'obtener']);
+    Route::put('/admin/facturas/{id}/vigencia',  [FacturaController::class, 'actualizarVigencia']);
+
+    // ── Roles y Permisos ──────────────────────────────────────────────
+    Route::get('/admin/roles',           [RolController::class, 'listar']);
+    Route::get('/admin/roles/{id}',      [RolController::class, 'obtener']);
+    Route::post('/admin/roles',          [RolController::class, 'crear']);
+    Route::put('/admin/roles/{id}',      [RolController::class, 'editar']);
+    Route::delete('/admin/roles/{id}',   [RolController::class, 'eliminar']);
+
+    // ── Extraescolares ────────────────────────────────────────────────
+    Route::get('/admin/extraescolares',                      [ExtraescolarController::class, 'listar']);
+    Route::get('/admin/extraescolares/{id}',                 [ExtraescolarController::class, 'obtener']);
+    Route::post('/admin/extraescolares',                     [ExtraescolarController::class, 'crear']);
+    Route::put('/admin/extraescolares/baja/{idInscripcion}', [ExtraescolarController::class, 'darDeBajaAlumno']);
+    Route::put('/admin/extraescolares/{id}',                 [ExtraescolarController::class, 'editar']);
+    Route::delete('/admin/extraescolares/{id}',              [ExtraescolarController::class, 'eliminar']);
+
+    // ── Niveles ──────────────────────────────────────────────────────
+    Route::get('/admin/niveles/alumnos',                  [NivelesController::class, 'listar']);
+    Route::get('/admin/niveles/grupos',                   [NivelesController::class, 'grupos']);
+    Route::put('/admin/niveles/alumnos/{id}/puntaje',     [NivelesController::class, 'editarPuntaje']);
 
     // ── Rutas genéricas — DESPUÉS de las específicas ──────────────────
     Route::get('/admin/buscar/{tipo}',          [AdminController::class, 'buscarUsuarios']);

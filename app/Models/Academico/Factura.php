@@ -2,6 +2,7 @@
 namespace App\Models\Academico;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Alumno;
 
 class Factura extends Model
 {
@@ -20,4 +21,19 @@ class Factura extends Model
         'descripcion',
         'concepto',
     ];
+
+    public function alumno()
+    {
+        return $this->belongsTo(Alumno::class, 'id_alumno', 'id_alumno');
+    }
+
+    public function inscripcion()
+    {
+        return $this->belongsTo(Inscripcion::class, 'id_inscripcion', 'id_inscripcion');
+    }
+
+    public function inscripcionExtra()
+    {
+        return $this->belongsTo(InscripcionExtraescolar::class, 'id_inscripcionextra', 'id_inscripcionextra');
+    }
 }
