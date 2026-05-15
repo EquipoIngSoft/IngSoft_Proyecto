@@ -45,15 +45,33 @@ function pintarMisInscripciones(inscripciones) {
         return;
     }
 
-    const items = inscripciones.map(i => `
-        <div class="inscripcion-activa">
-            <div>
-                <div class="inscripcion-activa-nombre">${i.nombre}</div>
-                <div class="inscripcion-activa-horario">${i.ubicacion} · ${formatearFecha(i.fecha_inicio)} - ${formatearFecha(i.fecha_fin)}</div>
+    const etiquetas = {
+        enproceso: { texto: 'Pago pendiente', color: '#b7770d', bg: '#fef9ec' },
+        pagado:    { texto: 'Pagado',          color: '#1e8449', bg: '#eafaf1' },
+        cancelado: { texto: 'Cancelado',       color: '#888',    bg: '#f5f5f5' },
+        expirado:  { texto: 'Pago expirado',   color: '#d93025', bg: '#fdf0ef' },
+    };
+
+    const items = inscripciones.map(i => {
+        const v   = etiquetas[i.vigencia] ?? etiquetas.enproceso;
+        const badge = `<span style="
+            font-size:11px; font-family:'Inter',sans-serif; font-weight:600;
+            padding:2px 10px; border-radius:20px;
+            color:${v.color}; background:${v.bg};">
+            ${v.texto}
+        </span>`;
+
+        return `
+            <div class="inscripcion-activa">
+                <div>
+                    <div class="inscripcion-activa-nombre">${i.nombre}</div>
+                    <div class="inscripcion-activa-horario">${i.ubicacion} · ${formatearFecha(i.fecha_inicio)} - ${formatearFecha(i.fecha_fin)}</div>
+                    <div style="margin-top:6px;">${badge}</div>
+                </div>
+                <i class="ri-checkbox-circle-fill inscripcion-activa-check"></i>
             </div>
-            <i class="ri-checkbox-circle-fill inscripcion-activa-check"></i>
-        </div>
-    `).join('');
+        `;
+    }).join('');
 
     contenedor.innerHTML = `
         <div class="mis-inscripciones-titulo">MIS INSCRIPCIONES</div>
@@ -81,10 +99,17 @@ function pintarCatalogo(catalogo) {
 
         const lleno = e.cupo_lleno && !e.inscrito;
 
+        // DESPUÉS
+        const vigencia  = e.vigencia_factura ?? 'enproceso';
+        const bloqueado = vigencia === 'pagado';
+        const tituloBloqueado = 'Tu inscripción ya fue pagada. Contacta a la sede para cancelar.';
+
         const boton = e.inscrito
-            ? `<button class="btn-inscribirse cancelar" onclick="accionExtraescolar(${e.id_extraescolar}, 'cancelar', this)">
+            ? `<button class="btn-inscribirse cancelar"
+                    onclick="accionExtraescolar(${e.id_extraescolar}, 'cancelar', this)"
+                    ${bloqueado ? `disabled title="${tituloBloqueado}"` : ''}>
                     <i class="ri-close-circle-line"></i> Cancelar Inscripción
-               </button>`
+            </button>`
             : `<button class="btn-inscribirse inscribir" onclick="accionExtraescolar(${e.id_extraescolar}, 'inscribir', this)" ${lleno ? 'disabled' : ''}>
                     <i class="ri-add-circle-line"></i> Inscribirse
                </button>`;

@@ -125,3 +125,17 @@
     border-radius: 12px;
     border: 1px dashed var(--borde);
 }
+
+/* Fix: dropdowns del modal de profesor */
+#modal-agregar-profesor .form-dropdown {
+    position: relative;
+    z-index: 10;
+}
+
+#modal-agregar-profesor .form-dropdown.open {
+    z-index: 100;
+}
+
+#modal-agregar-profesor .form-dropdown .form-options-container {
+    z-index: 999;
+}

@@ -4,6 +4,30 @@
 //  EGAU Chess | AMAAC
 // ==============================================
 
+// ── Toast global EGAU ──
+window.egauAlert = function (mensaje, tipo = 'success') {
+    const iconos = {
+        success: 'ri-checkbox-circle-line',
+        error: 'ri-error-warning-line',
+        warning: 'ri-alert-line'
+    };
+    let toast = document.getElementById('egau-toast');
+    if (!toast) {
+        toast = document.createElement('div');
+        toast.id = 'egau-toast';
+        document.body.appendChild(toast);
+    }
+    toast.className = `egau-toast egau-toast--${tipo}`;
+    toast.innerHTML = `<i class="${iconos[tipo] || iconos.success}"></i><span>${mensaje}</span>`;
+    requestAnimationFrame(() => {
+        requestAnimationFrame(() => toast.classList.add('visible'));
+    });
+    clearTimeout(toast._timer);
+    toast._timer = setTimeout(() => {
+        toast.classList.remove('visible');
+    }, 3500);
+};
+
 document.addEventListener('DOMContentLoaded', () => {
 
     // ---- Toggle del sidebar (Móvil y Escritorio) ----
@@ -130,7 +154,9 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
     // ---- Datos reales del personal en sesión ----
-    fetch('/personal/perfil', {
+    const esProfesor = window.ES_PROFESOR || false;
+    const perfilUrl = esProfesor ? '/profesor/perfil' : '/personal/perfil';
+    fetch(perfilUrl, {
         credentials: 'same-origin',
         headers: { 'Accept': 'application/json' }
     })
@@ -153,5 +179,80 @@ document.addEventListener('DOMContentLoaded', () => {
 
             window._perfilPersonal = d;
         })
-        .catch(err => console.error('Error cargando perfil:', err));
+        .catch(err => console.error('Error cargando perfil:', err))
+        .finally(() => {
+            const loading = document.getElementById('loading-screen');
+            if (loading) {
+                loading.style.opacity = '0';
+                setTimeout(() => loading.style.display = 'none', 400);
+            }
+        });
+
+
+
+    // ---- Handler global form-dropdowns (inline styles, sin depender de CSS) ----
+    function cerrarTodosDropdowns() {
+        document.querySelectorAll('.form-dropdown').forEach(d => {
+            d.classList.remove('open');
+            const c = d.querySelector('.form-options-container');
+            if (c) c.style.display = 'none';
+        });
+    }
+
+    document.addEventListener('click', (e) => {
+        const trigger = e.target.closest('.form-select-trigger');
+        if (trigger) {
+            e.stopImmediatePropagation();
+            const dropdown = trigger.closest('.form-dropdown');
+            if (!dropdown) return;
+            const container = dropdown.querySelector('.form-options-container');
+            const estaAbierto = dropdown.classList.contains('open');
+
+            cerrarTodosDropdowns();
+
+            if (!estaAbierto && container) {
+                dropdown.classList.add('open');
+                container.style.cssText = `
+                display: block !important;
+                position: absolute;
+                top: calc(100% + 4px);
+                left: 0;
+                right: 0;
+                z-index: 99999;
+                background: #fff;
+                border: 1.5px solid #ebebeb;
+                border-radius: 10px;
+                box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+                max-height: 200px;
+                overflow-y: auto;
+            `;
+            }
+            return;
+        }
+
+        const option = e.target.closest('.form-option');
+        if (option) {
+            e.stopImmediatePropagation();
+            const dropdown = option.closest('.form-dropdown');
+            if (!dropdown) return;
+            dropdown.querySelectorAll('.form-option').forEach(o => o.classList.remove('selected'));
+            option.classList.add('selected');
+            const selectedText = dropdown.querySelector('.selected-text');
+            const hiddenInput = dropdown.querySelector('input[type="hidden"]');
+            if (selectedText) {
+                selectedText.textContent = option.textContent.trim();
+                selectedText.setAttribute('data-value', option.getAttribute('data-value'));
+            }
+            if (hiddenInput) {
+                hiddenInput.value = option.getAttribute('data-value');
+                const err = document.getElementById(`err-${hiddenInput.id}`);
+                if (err) err.textContent = '';
+                dropdown.classList.remove('input-error');
+            }
+            cerrarTodosDropdowns();
+            return;
+        }
+
+        cerrarTodosDropdowns();
+    });
 });

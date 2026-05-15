@@ -120,9 +120,8 @@
    }
 
    100% {
-      opacity: 1;
-      /* Baja verticalmente a su posición final */
-      transform: translate(0, 15px) scale(1) rotate(0deg);
+    opacity: 1;
+    transform: translate(0, 2px) scale(1) rotate(0deg);
    }
 }
 

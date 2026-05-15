@@ -7,6 +7,8 @@
 document.addEventListener('DOMContentLoaded', () => {
 
     const CSRF = document.querySelector('meta[name="csrf-token"]')?.content || '';
+    const esProfesor = window.ES_PROFESOR || false;
+    const perfilUrl = esProfesor ? '/profesor/perfil' : '/personal/perfil';
     const generoLabel = { f: 'Femenino', m: 'Masculino', o: 'Otro' };
 
     const getIniciales = (nombre, apellido_p) =>
@@ -61,7 +63,7 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const cargarPerfil = () => {
-        fetch('/personal/perfil', {
+        fetch(perfilUrl, {
             credentials: 'same-origin',
             headers: { 'Accept': 'application/json' }
         })
@@ -145,7 +147,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     window.poblarSeccion = (d) => {
         if (!d) {
-            fetch('/personal/perfil', {
+            fetch(perfilUrl, {
                 credentials: 'same-origin',
                 headers: { 'Accept': 'application/json' }
             })
@@ -366,7 +368,7 @@ document.addEventListener('DOMContentLoaded', () => {
             btnGuardar.disabled = true;
 
             try {
-                const resData = await fetch('/personal/perfil', {
+                const resData = await fetch(perfilUrl, {
                     method: 'PUT',
                     credentials: 'same-origin',
                     headers: {
@@ -482,7 +484,7 @@ document.addEventListener('DOMContentLoaded', () => {
             btnGuardarPwd.disabled = true;
 
             try {
-                const res = await fetch('/personal/perfil/password', {
+                const res = await fetch(`${perfilUrl}/password`, {
                     method: 'PUT',
                     credentials: 'same-origin',
                     headers: {
