@@ -40,7 +40,7 @@
             CARGANDO<span class="loading-dot">.</span><span class="loading-dot">.</span><span class="loading-dot">.</span>
         </span>
     </div>
-
+@php $esProfesor = ($tipo ?? 'personal') === 'profesor'; @endphp
     <!-- ===================== SIDEBAR ===================== -->
     <aside class="sidebar" id="sidebar">
 
@@ -51,68 +51,66 @@
         </div>
 
         <nav class="sidebar-nav">
-            <ul>
-                @if($permisos->alumno_ver ?? false)
-                    <li class="nav-item active" data-section="alumnos">
-                        <a href="#"><i class="ri-group-line"></i><span>Alumnos</span></a>
-                    </li>
-                @endif
+    <ul>
+        @if(!$esProfesor)
+            @if($permisos->alumno_ver ?? false)
+                <li class="nav-item active" data-section="alumnos">
+                    <a href="#"><i class="ri-group-line"></i><span>Alumnos</span></a>
+                </li>
+            @endif
+            @if($permisos->profesor_ver ?? false)
+                <li class="nav-item" data-section="profesores">
+                    <a href="#"><i class="ri-user-star-line"></i><span>Profesores</span></a>
+                </li>
+            @endif
+            @if($permisos->personal_ver ?? false)
+                <li class="nav-item" data-section="personal">
+                    <a href="#"><i class="ri-user-settings-line"></i><span>Personal</span></a>
+                </li>
+            @endif
+            @if($permisos->roles_ver ?? false)
+                <li class="nav-item" data-section="roles">
+                    <a href="#"><i class="ri-shield-user-line"></i><span>Roles</span></a>
+                </li>
+            @endif
+            @if($permisos->sedes_ver ?? false)
+                <li class="nav-item" data-section="sede">
+                    <a href="#"><i class="ri-map-pin-line"></i><span>Sede</span></a>
+                </li>
+            @endif
+        @endif
 
-                @if($permisos->profesor_ver ?? false)
-                    <li class="nav-item" data-section="profesores">
-                        <a href="#"><i class="ri-user-star-line"></i><span>Profesores</span></a>
-                    </li>
-                @endif
+        @if($esProfesor || ($permisos->grupos_ver ?? false))
+            <li class="nav-item {{ $esProfesor ? 'active' : '' }}" data-section="grupos">
+                <a href="#"><i class="ri-grid-line"></i><span>Grupos</span></a>
+            </li>
+        @endif
 
-                @if($permisos->personal_ver ?? false)
-                    <li class="nav-item" data-section="personal">
-                        <a href="#"><i class="ri-user-settings-line"></i><span>Personal</span></a>
-                    </li>
-                @endif
+        @if(!$esProfesor)
+            @if($permisos->extracurriculares_ver ?? false)
+                <li class="nav-item" data-section="extraescolares">
+                    <a href="#"><i class="ri-bar-chart-2-line"></i><span>Extraescolares</span></a>
+                </li>
+            @endif
+            @if($permisos->estatus_ver ?? false)
+                <li class="nav-item" data-section="status">
+                    <a href="#"><i class="ri-bookmark-line"></i><span>Status</span></a>
+                </li>
+            @endif
+            @if($permisos->pagos_ver ?? false)
+                <li class="nav-item" data-section="pagos">
+                    <a href="#"><i class="ri-bank-card-line"></i><span>Pagos</span></a>
+                </li>
+            @endif
+        @endif
 
-                @if($permisos->roles_ver ?? false)
-                    <li class="nav-item" data-section="roles">
-                        <a href="#"><i class="ri-shield-user-line"></i><span>Roles</span></a>
-                    </li>
-                @endif
-
-                @if($permisos->sedes_ver ?? false)
-                    <li class="nav-item" data-section="sede">
-                        <a href="#"><i class="ri-map-pin-line"></i><span>Sede</span></a>
-                    </li>
-                @endif
-
-                @if($permisos->grupos_ver ?? false)
-                    <li class="nav-item" data-section="grupos">
-                        <a href="#"><i class="ri-grid-line"></i><span>Grupos</span></a>
-                    </li>
-                @endif
-
-                @if($permisos->extracurriculares_ver ?? false)
-                    <li class="nav-item" data-section="extraescolares">
-                        <a href="#"><i class="ri-bar-chart-2-line"></i><span>Extraescolares</span></a>
-                    </li>
-                @endif
-
-                @if($permisos->estatus_ver ?? false)
-                    <li class="nav-item" data-section="status">
-                        <a href="#"><i class="ri-bookmark-line"></i><span>Status</span></a>
-                    </li>
-                @endif
-
-                @if($permisos->pagos_ver ?? false)
-                    <li class="nav-item" data-section="pagos">
-                        <a href="#"><i class="ri-bank-card-line"></i><span>Pagos</span></a>
-                    </li>
-                @endif
-
-                @if($permisos->niveles_ver ?? false)
-                    <li class="nav-item" data-section="niveles">
-                        <a href="#"><i class="ri-book-open-line"></i><span>Niveles</span></a>
-                    </li>
-                @endif
-            </ul>
-        </nav>
+        @if($esProfesor || ($permisos->niveles_ver ?? false))
+            <li class="nav-item" data-section="niveles">
+                <a href="#"><i class="ri-book-open-line"></i><span>Niveles</span></a>
+            </li>
+        @endif
+    </ul>
+</nav>
 
         <!-- Opciones al fondo -->
         <div class="sidebar-footer">
@@ -211,12 +209,22 @@
         </script>
         @include('admin.sedes')
 
+        {{-- ===================== GRUPOS ===================== --}}
+        <script>
+    window.PERMISOS_GRUPOS = {
+        ver:   {{ $esProfesor ? 'true' : (($permisos->grupos_ver  ?? false) ? 'true' : 'false') }},
+        edit:  {{ $esProfesor ? 'false' : (($permisos->grupos_edit ?? false) ? 'true' : 'false') }},
+        admin: {{ ($administrativo ?? false) ? 'true' : 'false' }}
+    };
+    window.ID_PROFESOR = {{ $idProfesor ?? 'null' }};
+    window.ES_PROFESOR = {{ $esProfesor ? 'true' : 'false' }};
+</script>
         <!-- ======================= SECCIÓN GRUPOS ======================= -->
         <section class="section-content" id="section-grupos" style="display: none;">
 
             <!-- Cabecera de sección -->
             <div class="section-header">
-                <h1 class="section-title">Grupos y Cursos</h1>
+                <h1 class="section-title">{{ $esProfesor ? 'Grupos' : 'Grupos y Cursos' }}</h1> 
                 @if($permisos->grupos_edit ?? false)
                     <div style="display: flex; gap: 12px;">
                         <button class="btn-secondary" id="btn-agregar-curso"><i class="ri-book-open-line"></i> Crear
@@ -235,112 +243,14 @@
 
             <!-- Grid de tarjetas de grupos -->
             <div class="grupos-grid" id="grid-grupos">
-
-                <!-- Tarjeta 1 -->
-                <div class="grupo-card" data-nombre="Grupo A" data-nivel="principiantes"
-                    data-profesor="Maestro González">
-                    <div class="grupo-card-header">
-                        <h3 class="grupo-nombre">Grupo A</h3>
-                        <span class="badge badge-principiantes">Principiantes</span>
-                    </div>
-                    <div class="grupo-card-body">
-                        <div class="grupo-info-line">
-                            <i class="ri-user-star-line"></i> Maestro González
-                        </div>
-                        <div class="grupo-inscritos-wrapper">
-                            <div class="grupo-info-line">
-                                <i class="ri-group-line"></i> 15 / 20 inscritos
-                            </div>
-                            <div class="progress-bar-container">
-                                <div class="progress-bar-fill" style="width: 75%;"></div>
-                            </div>
-                        </div>
-                        <div class="grupo-info-line">
-                            <i class="ri-time-line"></i> Lunes y Miércoles 14:00-15:30
-                        </div>
-                    </div>
-                    <div class="grupo-card-footer">
-                        <button class="btn-grupo-ver" title="Ver"><i class="ri-eye-line"></i> Ver</button>
-                        @if($permisos->grupos_edit ?? false)
-                            <button class="btn-grupo-editar"><i class="ri-edit-line"></i> Editar</button>
-                        @endif
-                        @if(($permisos->grupos_edit ?? false) && $administrativo)
-                            <button class="btn-grupo-eliminar"><i class="ri-delete-bin-line"></i></button>
-                        @endif
-                    </div>
-                </div>
-
-                <!-- Tarjeta 2 -->
-                <div class="grupo-card" data-nombre="Grupo B" data-nivel="intermedios" data-profesor="Maestra Ramírez">
-                    <div class="grupo-card-header">
-                        <h3 class="grupo-nombre">Grupo B</h3>
-                        <span class="badge badge-intermedios">Intermedios</span>
-                    </div>
-                    <div class="grupo-card-body">
-                        <div class="grupo-info-line">
-                            <i class="ri-user-star-line"></i> Maestra Ramírez
-                        </div>
-                        <div class="grupo-inscritos-wrapper">
-                            <div class="grupo-info-line">
-                                <i class="ri-group-line"></i> 12 / 15 inscritos
-                            </div>
-                            <div class="progress-bar-container">
-                                <div class="progress-bar-fill" style="width: 80%;"></div>
-                            </div>
-                        </div>
-                        <div class="grupo-info-line">
-                            <i class="ri-time-line"></i> Martes y Jueves 16:00-17:30
-                        </div>
-                    </div>
-                    <div class="grupo-card-footer">
-                        <button class="btn-grupo-ver" title="Ver"><i class="ri-eye-line"></i> Ver</button>
-                        @if($permisos->grupos_edit ?? false)
-                            <button class="btn-grupo-editar"><i class="ri-edit-line"></i> Editar</button>
-                        @endif
-                        @if(($permisos->grupos_edit ?? false) && $administrativo)
-                            <button class="btn-grupo-eliminar"><i class="ri-delete-bin-line"></i></button>
-                        @endif
-                    </div>
-                </div>
-
-                <!-- Tarjeta 3 -->
-                <div class="grupo-card" data-nombre="Grupo C" data-nivel="avanzados" data-profesor="Maestro López">
-                    <div class="grupo-card-header">
-                        <h3 class="grupo-nombre">Grupo C</h3>
-                        <span class="badge badge-avanzados">Avanzados</span>
-                    </div>
-                    <div class="grupo-card-body">
-                        <div class="grupo-info-line">
-                            <i class="ri-user-star-line"></i> Maestro López
-                        </div>
-                        <div class="grupo-inscritos-wrapper">
-                            <div class="grupo-info-line">
-                                <i class="ri-group-line"></i> 8 / 20 inscritos
-                            </div>
-                            <div class="progress-bar-container">
-                                <div class="progress-bar-fill" style="width: 40%;"></div>
-                            </div>
-                        </div>
-                        <div class="grupo-info-line">
-                            <i class="ri-time-line"></i> Viernes 17:00-19:00
-                        </div>
-                    </div>
-                    <div class="grupo-card-footer">
-                        <button class="btn-grupo-ver" title="Ver"><i class="ri-eye-line"></i> Ver</button>
-                        @if($permisos->grupos_edit ?? false)
-                            <button class="btn-grupo-editar"><i class="ri-edit-line"></i> Editar</button>
-                        @endif
-                        @if(($permisos->grupos_edit ?? false) && $administrativo)
-                            <button class="btn-grupo-eliminar"><i class="ri-delete-bin-line"></i></button>
-                        @endif
-                    </div>
-                </div>
-
+                <!-- Las tarjetas se generan dinámicamente por dashboardAdminGrupos.js -->
             </div>
             <!-- Mensaje sin resultados -->
             <p class="grupos-empty" id="grupos-empty" style="display:none;">No se encontraron grupos.</p>
 
+          @if(!$esProfesor)
             <!-- ======================= TABLA DEMOSTRATIVA DE CURSOS ======================= -->
+          
             <div style="margin-top: 40px;">
                 <div
                     style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; gap: 24px;">
@@ -385,94 +295,13 @@
                                     Acciones</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <tr style="border-bottom: 1px solid var(--borde); transition: background-color 0.2s;">
-                                <td style="padding: 16px; font-size: 14px; color: var(--texto);">1</td>
-                                <td style="padding: 16px; font-size: 14px; color: var(--texto); font-weight: 500;">
-                                    Ajedrez Principiantes</td>
-                                <td style="padding: 16px;"><span class="badge badge-principiantes">Principiante</span>
-                                </td>
-                                <td style="padding: 16px; font-size: 14px; color: var(--texto);">12 Semanas (24 hrs)
-                                </td>
-                                <td style="padding: 16px; font-size: 14px; color: var(--texto);">$1,200.00</td>
-                                <td style="padding: 16px; font-size: 14px; color: var(--texto);">Sede Central</td>
-                                <td style="padding: 16px;"><span
-                                        style="color: #1e8e3e; font-size: 12px; font-weight: 600;"><i
-                                            class="ri-checkbox-circle-fill"></i> Activo</span></td>
-                                <td style="padding: 16px; text-align: center;">
-                                    <div style="display: flex; gap: 8px; justify-content: center;">
-                                        <button title="Editar"
-                                            style="background:none; border:none; color:var(--texto-suave); font-size:18px; cursor:pointer;"
-                                            onmouseover="this.style.color='var(--naranja)'"
-                                            onmouseout="this.style.color='var(--texto-suave)'"><i
-                                                class="ri-edit-line"></i></button>
-                                        <button title="Eliminar"
-                                            style="background:none; border:none; color:var(--texto-suave); font-size:18px; cursor:pointer;"
-                                            onmouseover="this.style.color='#d93025'"
-                                            onmouseout="this.style.color='var(--texto-suave)'"><i
-                                                class="ri-delete-bin-line"></i></button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr style="border-bottom: 1px solid var(--borde); transition: background-color 0.2s;">
-                                <td style="padding: 16px; font-size: 14px; color: var(--texto);">2</td>
-                                <td style="padding: 16px; font-size: 14px; color: var(--texto); font-weight: 500;">
-                                    Ajedrez Intermedio (Táctica)</td>
-                                <td style="padding: 16px;"><span class="badge badge-intermedios">Intermedio</span></td>
-                                <td style="padding: 16px; font-size: 14px; color: var(--texto);">16 Semanas (48 hrs)
-                                </td>
-                                <td style="padding: 16px; font-size: 14px; color: var(--texto);">$1,800.00</td>
-                                <td style="padding: 16px; font-size: 14px; color: var(--texto);">Sede Norte</td>
-                                <td style="padding: 16px;"><span
-                                        style="color: #1e8e3e; font-size: 12px; font-weight: 600;"><i
-                                            class="ri-checkbox-circle-fill"></i> Activo</span></td>
-                                <td style="padding: 16px; text-align: center;">
-                                    <div style="display: flex; gap: 8px; justify-content: center;">
-                                        <button title="Editar"
-                                            style="background:none; border:none; color:var(--texto-suave); font-size:18px; cursor:pointer;"
-                                            onmouseover="this.style.color='var(--naranja)'"
-                                            onmouseout="this.style.color='var(--texto-suave)'"><i
-                                                class="ri-edit-line"></i></button>
-                                        <button title="Eliminar"
-                                            style="background:none; border:none; color:var(--texto-suave); font-size:18px; cursor:pointer;"
-                                            onmouseover="this.style.color='#d93025'"
-                                            onmouseout="this.style.color='var(--texto-suave)'"><i
-                                                class="ri-delete-bin-line"></i></button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr style="transition: background-color 0.2s;">
-                                <td style="padding: 16px; font-size: 14px; color: var(--texto);">3</td>
-                                <td style="padding: 16px; font-size: 14px; color: var(--texto); font-weight: 500;">
-                                    Estrategia y Finales</td>
-                                <td style="padding: 16px;"><span class="badge badge-avanzados">Avanzado</span></td>
-                                <td style="padding: 16px; font-size: 14px; color: var(--texto);">20 Semanas (60 hrs)
-                                </td>
-                                <td style="padding: 16px; font-size: 14px; color: var(--texto);">$2,500.00</td>
-                                <td style="padding: 16px; font-size: 14px; color: var(--texto);">Sede Central</td>
-                                <td style="padding: 16px;"><span
-                                        style="color: var(--texto-suave); font-size: 12px; font-weight: 600;"><i
-                                            class="ri-close-circle-fill"></i> Inactivo</span></td>
-                                <td style="padding: 16px; text-align: center;">
-                                    <div style="display: flex; gap: 8px; justify-content: center;">
-                                        <button title="Editar"
-                                            style="background:none; border:none; color:var(--texto-suave); font-size:18px; cursor:pointer;"
-                                            onmouseover="this.style.color='var(--naranja)'"
-                                            onmouseout="this.style.color='var(--texto-suave)'"><i
-                                                class="ri-edit-line"></i></button>
-                                        <button title="Eliminar"
-                                            style="background:none; border:none; color:var(--texto-suave); font-size:18px; cursor:pointer;"
-                                            onmouseover="this.style.color='#d93025'"
-                                            onmouseout="this.style.color='var(--texto-suave)'"><i
-                                                class="ri-delete-bin-line"></i></button>
-                                    </div>
-                                </td>
-                            </tr>
+                        <tbody id="tbody-cursos">
+                            <!-- Filas generadas por dashboardAdminGrupos.js -->
                         </tbody>
                     </table>
                 </div>
             </div>
-
+            @endif
         </section>
 
         <!-- ======================= MODAL: AGREGAR GRUPO ======================= -->
@@ -507,11 +336,8 @@
                                         <span class="selected-text" data-value="">Selecciona un curso...</span>
                                         <i class="ri-arrow-down-s-line"></i>
                                     </div>
-                                    <div class="form-options-container">
-                                        <!-- Esto se llenará con un loop de Laravel en un futuro -->
-                                        <div class="form-option" data-value="1">Ajedrez Principiantes</div>
-                                        <div class="form-option" data-value="2">Ajedrez Intermedio</div>
-                                        <div class="form-option" data-value="3">Ajedrez Avanzado (Estrategia)</div>
+                                    <div class="form-options-container" id="opciones-gr-curso">
+                                        <!-- Se llena dinámicamente via AJAX -->
                                     </div>
                                     <input type="hidden" id="gr-curso" name="id_curso" value="">
                                 </div>
@@ -527,11 +353,8 @@
                                         <span class="selected-text" data-value="">Asignar un profesor...</span>
                                         <i class="ri-arrow-down-s-line"></i>
                                     </div>
-                                    <div class="form-options-container">
-                                        <!-- Simulación de Profesores -->
-                                        <div class="form-option" data-value="1">Maestro González</div>
-                                        <div class="form-option" data-value="2">Maestra Ramírez</div>
-                                        <div class="form-option" data-value="3">Maestro López</div>
+                                    <div class="form-options-container" id="opciones-gr-instructor">
+                                        <!-- Se llena dinámicamente via AJAX -->
                                     </div>
                                     <input type="hidden" id="gr-instructor" name="id_instructor" value="">
                                 </div>
@@ -545,7 +368,10 @@
                                     required>
                                 <span class="error-msg-modal" id="err-gr-codigo"></span>
                             </div>
-
+                            <div class="form-group-modal">
+                                <label for="gr-nombre">Nombre del Grupo</label>
+                                <input type="text" id="gr-nombre" name="nombre" placeholder="Ej. Grupo Principiantes Tarde">
+                            </div>
                             <div class="form-group-modal">
                                 <label for="gr-periodo">Periodo</label>
                                 <input type="text" id="gr-periodo" name="periodo" placeholder="Ej. 2026-A"
@@ -664,9 +490,8 @@
                                         <span class="selected-text" data-value="">Selecciona una sede...</span>
                                         <i class="ri-arrow-down-s-line"></i>
                                     </div>
-                                    <div class="form-options-container" style="z-index:100;">
-                                        <div class="form-option" data-value="1">Sede Central</div>
-                                        <div class="form-option" data-value="2">Sede Norte</div>
+                                    <div class="form-options-container" id="opciones-cu-sede" style="z-index:100;">
+                                        <!-- Se llena dinámicamente via AJAX -->
                                     </div>
                                     <input type="hidden" id="cu-sede" name="id_sede" value="">
                                 </div>
@@ -682,13 +507,13 @@
                                         <i class="ri-arrow-down-s-line"></i>
                                     </div>
                                     <div class="form-options-container" style="z-index:99;">
-                                        <div class="form-option" data-value="Peón">♟ Peón</div>
-                                        <div class="form-option" data-value="Caballo">♞ Caballo</div>
-                                        <div class="form-option" data-value="Alfil">♝ Alfil</div>
-                                        <div class="form-option" data-value="Torre">♜ Torre</div>
-                                        <div class="form-option" data-value="Reina">♛ Reina</div>
-                                        <div class="form-option" data-value="Rey">♚ Rey</div>
-                                    </div>
+                                        <div class="form-option" data-value="0">♟ Peón</div>
+                                        <div class="form-option" data-value="150">♞ Caballo</div>
+                                        <div class="form-option" data-value="400">♝ Alfil</div>
+                                        <div class="form-option" data-value="800">♜ Torre</div>
+                                        <div class="form-option" data-value="1500">♛ Reina</div>
+                                        <div class="form-option" data-value="3000">♚ Rey</div>
+                                        </div>
                                     <input type="hidden" id="cu-nivel" name="nivel" value="">
                                 </div>
                             </div>
@@ -759,6 +584,65 @@
                 </div>
             </div>
         </div>
+        <!-- ======================= MODAL: VER CURSO ======================= -->
+<div class="modal-overlay" id="modal-ver-curso">
+    <div class="modal-box">
+        <div class="modal-header">
+            <div class="modal-title-group">
+                <span class="modal-title-icon"><i class="ri-book-open-line"></i></span>
+                <h2 class="modal-title">Detalle del Curso</h2>
+            </div>
+            <button type="button" class="modal-close-btn" id="modal-close-ver-curso" title="Cerrar">
+                <i class="ri-close-line"></i>
+            </button>
+        </div>
+        <div class="modal-body" id="ver-curso-content">
+            <div class="modal-section-label"><i class="ri-information-line"></i> Información del Curso</div>
+            <div class="modal-grid">
+                <div class="form-group-modal modal-col-full">
+                    <label>Nombre</label>
+                    <div id="vcu-nombre" style="padding:10px; background:#f5f5f5; border-radius:8px; font-size:14px;">—</div>
+                </div>
+                <div class="form-group-modal">
+                    <label>Sede</label>
+                    <div id="vcu-sede" style="padding:10px; background:#f5f5f5; border-radius:8px; font-size:14px;">—</div>
+                </div>
+                <div class="form-group-modal">
+                    <label>Nivel</label>
+                    <div id="vcu-nivel" style="padding:10px; background:#f5f5f5; border-radius:8px; font-size:14px;">—</div>
+                </div>
+                <div class="form-group-modal">
+                    <label>Duración</label>
+                    <div id="vcu-duracion" style="padding:10px; background:#f5f5f5; border-radius:8px; font-size:14px;">—</div>
+                </div>
+                <div class="form-group-modal">
+                    <label>Horas Totales</label>
+                    <div id="vcu-horas" style="padding:10px; background:#f5f5f5; border-radius:8px; font-size:14px;">—</div>
+                </div>
+                <div class="form-group-modal">
+                    <label>Costo Base</label>
+                    <div id="vcu-costo" style="padding:10px; background:#f5f5f5; border-radius:8px; font-size:14px;">—</div>
+                </div>
+                <div class="form-group-modal">
+                    <label>Estatus</label>
+                    <div id="vcu-estatus" style="padding:10px; background:#f5f5f5; border-radius:8px; font-size:14px;">—</div>
+                </div>
+                <div class="form-group-modal modal-col-full">
+                    <label>Descripción</label>
+                    <div id="vcu-descripcion" style="padding:10px; background:#f5f5f5; border-radius:8px; font-size:14px; min-height:60px;">—</div>
+                </div>
+                <div class="form-group-modal modal-col-full">
+                    <label>Requisitos</label>
+                    <div id="vcu-requisitos" style="padding:10px; background:#f5f5f5; border-radius:8px; font-size:14px; min-height:48px;">—</div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn-modal-cancel" id="btn-cerrar-ver-curso">Cerrar</button>
+        </div>
+    </div>
+</div>
+
 
         {{-- ===================== EXTRAESCOLARES ===================== --}}
         <script>
@@ -774,11 +658,40 @@
 
         <section class="section-content" id="section-status" style="display: none;">
             <div class="section-header">
-                <h1 class="section-title">Status</h1>
+                <h1 class="section-title">Status General</h1>
+                <button class="btn-secondary" id="btn-refresh-status" title="Actualizar datos">
+                    <i class="ri-refresh-line"></i> Actualizar
+                </button>
             </div>
-            <div class="card"
-                style="min-height: 480px; display: flex; align-items: center; justify-content: center; color: var(--texto-suave);">
-                Página en construcción
+            
+            <!-- KPIs -->
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 30px;">
+                <div class="card" style="padding: 20px;">
+                    <p style="color: var(--texto-suave); font-size: 14px; margin-bottom: 8px;">Total Alumnos</p>
+                    <h2 id="kpi-alumnos" style="font-size: 28px; font-weight: 700; color: var(--texto); margin: 0;">—</h2>
+                </div>
+                <div class="card" style="padding: 20px;">
+                    <p style="color: var(--texto-suave); font-size: 14px; margin-bottom: 8px;">Extraescolares</p>
+                    <h2 id="kpi-actividades" style="font-size: 28px; font-weight: 700; color: var(--texto); margin: 0;">—</h2>
+                </div>
+                <div class="card" style="padding: 20px;">
+                    <p style="color: var(--texto-suave); font-size: 14px; margin-bottom: 8px;">Profesores</p>
+                    <h2 id="kpi-profesores" style="font-size: 28px; font-weight: 700; color: var(--texto); margin: 0;">—</h2>
+                </div>
+                <div class="card" style="padding: 20px;">
+                    <p style="color: var(--texto-suave); font-size: 14px; margin-bottom: 8px;">Crecimiento (Mes)</p>
+                    <h2 id="kpi-crecimiento" style="font-size: 28px; font-weight: 700; margin: 0; color: var(--texto-suave);">—</h2>
+                </div>
+            </div>
+
+            <!-- Feed de Actividad Reciente -->
+            <div class="card" style="padding: 24px;">
+                <h3 style="font-size: 16px; font-weight: 600; color: var(--texto); margin-bottom: 16px; border-bottom: 1px solid var(--borde); padding-bottom: 12px;">
+                    <i class="ri-time-line"></i> Actividad Reciente
+                </h3>
+                <div id="lista-actividad-reciente">
+                    <!-- Se llena dinámicamente con dashboardAdminStatus.js -->
+                </div>
             </div>
         </section>
 
@@ -998,6 +911,8 @@
     <script src="{{ asset('animaciones/admin/dashboardAdminSede.js') }}?v={{ time() }}"></script>
     <!-- JS Sección Grupos -->
     <script src="{{ asset('animaciones/admin/dashboardAdminGrupos.js') }}?v={{ time() }}"></script>
+    <!-- JS Sección Status -->
+    <script src="{{ asset('animaciones/admin/dashboardAdminStatus.js') }}?v={{ time() }}"></script>
     <!-- JS Sección Extraescolares -->
     <script src="{{ asset('animaciones/admin/dashboardAdminExtraescolares.js') }}?v={{ time() }}"></script>
     <!-- JS Sección Facturas -->

@@ -550,4 +550,461 @@ class AdminController extends Controller
         $sede->delete();
         return response()->json(['message' => 'Sede eliminada correctamente.']);
     }
+
+    // =========================================================
+    // GRUPOS
+    // =========================================================
+
+    public function buscarGrupos(Request $request)
+    {
+        $q = $request->query('q', '');
+        $idProfesor = $request->query('id_profesor', '');
+
+        $grupos = \Illuminate\Support\Facades\DB::table('grupo')
+            ->join('curso',    'grupo.id_curso',    '=', 'curso.id_curso')
+            ->join('profesor', 'grupo.id_profesor', '=', 'profesor.id_profesor')
+            ->selectRaw("
+                grupo.nombre,
+                grupo.id_grupo,
+                grupo.codigo_grupo,
+                grupo.periodo,
+                grupo.fecha_inicio,
+                grupo.fecha_fin,
+                grupo.cupo_maximo,
+                grupo.estatus,
+                grupo.id_curso,
+                grupo.id_profesor,
+                curso.nivel,
+                curso.nombre AS nombre_curso,
+                profesor.nombre AS prof_nombre,
+                profesor.apellido_p AS prof_apellido,
+                (SELECT COUNT(*) FROM inscripcion
+                 WHERE inscripcion.id_grupo = grupo.id_grupo
+                   AND inscripcion.estatus = true) AS inscritos
+            ")
+            ->when($q !== '', function ($query) use ($q) {
+                $ql = '%' . mb_strtolower($q) . '%';
+                $query->where(function ($sub) use ($ql) {
+                    $sub->whereRaw('LOWER(grupo.codigo_grupo) LIKE ?', [$ql])
+                        ->orWhereRaw('LOWER(curso.nivel::text) LIKE ?',     [$ql])
+                        ->orWhereRaw('LOWER(profesor.nombre) LIKE ?', [$ql])
+                        ->orWhereRaw('LOWER(curso.nombre) LIKE ?',    [$ql]);
+                });
+            })
+          ->when($idProfesor !== '', fn($q) => $q->where('grupo.id_profesor', (int) $idProfesor))
+            ->orderBy('grupo.id_grupo')
+            ->get();
+
+        $ids = $grupos->pluck('id_grupo')->toArray();
+        $horariosPorGrupo = \Illuminate\Support\Facades\DB::table('horario')
+            ->whereIn('id_grupo', $ids)
+            ->get()
+            ->groupBy('id_grupo');
+
+        $result = $grupos->map(function ($g) use ($horariosPorGrupo) {
+            $hList = collect($horariosPorGrupo->get($g->id_grupo, []));
+            return [
+                'id_grupo'        => $g->id_grupo,
+                'codigo_grupo'    => $g->codigo_grupo,
+                'nombre' => $g->nombre,
+                'periodo'         => $g->periodo,
+                'nivel'           => $g->nivel,
+                'nombre_curso'    => $g->nombre_curso,
+                'id_curso'        => $g->id_curso,
+                'id_profesor'     => $g->id_profesor,
+                'nombre_profesor' => trim($g->prof_nombre . ' ' . $g->prof_apellido),
+                'inscritos'       => (int) $g->inscritos,
+                'cupo_maximo'     => (int) $g->cupo_maximo,
+                'fecha_inicio'    => $g->fecha_inicio,
+                'fecha_fin'       => $g->fecha_fin,
+                'estatus'         => (bool) $g->estatus,
+                'horarios'        => $hList->map(fn($h) => [
+                    'id_horario'  => $h->id_horario,
+                    'dia_semana'  => (int) $h->dia_semana,
+                    'hora_inicio' => substr($h->hora_inicio, 0, 5),
+                    'hora_fin'    => substr($h->hora_fin, 0, 5),
+                    'ubicacion'   => $h->ubicacion ?? '',
+                ])->values(),
+            ];
+        });
+
+        return response()->json(['data' => $result]);
+    }
+
+    public function registrarGrupo(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'id_curso'     => 'required|integer',
+            'id_profesor'  => 'required|integer',
+            'codigo_grupo' => 'required|string|max:20',
+            'periodo' => 'nullable|string|max:20',
+            'fecha_inicio' => 'required|date',
+            'fecha_fin'    => 'required|date|after:fecha_inicio',
+            'cupo_maximo'  => 'required|integer|min:1',
+            'horarios'     => 'required|array|min:1',
+        ]);
+        if ($validator->fails())
+            return response()->json(['errors' => $validator->errors()], 422);
+
+        $grupo = new \App\Models\Academico\Grupo();
+        $grupo->id_curso     = $request->id_curso;
+        $grupo->id_profesor  = $request->id_profesor;
+        $grupo->codigo_grupo = $request->codigo_grupo;
+        $grupo->nombre = $request->input('nombre', '');
+      $grupo->periodo = $request->input('periodo', '');
+        $grupo->fecha_inicio = $request->fecha_inicio;
+        $grupo->fecha_fin    = $request->fecha_fin;
+        $grupo->cupo_maximo  = $request->cupo_maximo;
+        $grupo->estatus      = filter_var($request->input('estatus', true), FILTER_VALIDATE_BOOLEAN);
+        $grupo->save();
+
+        foreach ($request->horarios as $h) {
+            \Illuminate\Support\Facades\DB::table('horario')->insert([
+                'id_grupo'    => $grupo->id_grupo,
+                'dia_semana'  => (int) $h['dia_semana'],
+                'hora_inicio' => $h['hora_inicio'],
+                'hora_fin'    => $h['hora_fin'],
+                'ubicacion'   => $h['ubicacion'] ?? '',
+            ]);
+        }
+
+        return response()->json(['message' => 'Grupo creado correctamente.', 'id' => $grupo->id_grupo]);
+    }
+
+    public function obtenerGrupo($id)
+    {
+        $g = \Illuminate\Support\Facades\DB::table('grupo')
+            ->join('curso',    'grupo.id_curso',    '=', 'curso.id_curso')
+            ->join('profesor', 'grupo.id_profesor', '=', 'profesor.id_profesor')
+            ->selectRaw("
+                grupo.nombre,
+                grupo.id_grupo, grupo.codigo_grupo, grupo.periodo,
+                grupo.fecha_inicio, grupo.fecha_fin, grupo.cupo_maximo, grupo.estatus,
+                grupo.id_curso, grupo.id_profesor,
+                curso.nivel, curso.nombre AS nombre_curso,
+                profesor.nombre AS prof_nombre, profesor.apellido_p AS prof_apellido,
+                (SELECT COUNT(*) FROM inscripcion
+                 WHERE inscripcion.id_grupo = grupo.id_grupo
+                   AND inscripcion.estatus = true) AS inscritos
+            ")
+            ->where('grupo.id_grupo', (int) $id)
+            ->first();
+
+        if (!$g) return response()->json(['error' => 'Grupo no encontrado.'], 404);
+
+        $horarios = \Illuminate\Support\Facades\DB::table('horario')
+            ->where('id_grupo', (int) $id)
+            ->get()
+            ->map(fn($h) => [
+                'id_horario'  => $h->id_horario,
+                'dia_semana'  => (int) $h->dia_semana,
+                'hora_inicio' => substr($h->hora_inicio, 0, 5),
+                'hora_fin'    => substr($h->hora_fin, 0, 5),
+                'ubicacion'   => $h->ubicacion ?? '',
+            ]);
+
+        return response()->json([
+            'id_grupo'        => $g->id_grupo,
+            'codigo_grupo'    => $g->codigo_grupo,
+            'periodo'         => $g->periodo,
+            'nivel'           => $g->nivel,
+            'nombre_curso'    => $g->nombre_curso,
+            'id_curso'        => $g->id_curso,
+            'id_profesor'     => $g->id_profesor,
+            'nombre_profesor' => trim($g->prof_nombre . ' ' . $g->prof_apellido),
+            'inscritos'       => (int) $g->inscritos,
+            'cupo_maximo'     => (int) $g->cupo_maximo,
+            'fecha_inicio'    => $g->fecha_inicio,
+            'fecha_fin'       => $g->fecha_fin,
+            'estatus'         => (bool) $g->estatus,
+            'horarios'        => $horarios->values(),
+            'nombre' => $g->nombre,
+        ]);
+    }
+
+    public function editarGrupo(Request $request, $id)
+    {
+        $grupo = \App\Models\Academico\Grupo::find((int) $id);
+        if (!$grupo) return response()->json(['error' => 'Grupo no encontrado.'], 404);
+
+        $validator = Validator::make($request->all(), [
+            'id_curso'     => 'required|integer',
+            'id_profesor'  => 'required|integer',
+            'codigo_grupo' => 'required|string|max:20',
+            'periodo' => 'nullable|string|max:20',
+            'fecha_inicio' => 'required|date',
+            'fecha_fin'    => 'required|date|after:fecha_inicio',
+            'cupo_maximo'  => 'required|integer|min:1',
+            'horarios'     => 'required|array|min:1',
+        ]);
+        if ($validator->fails())
+            return response()->json(['errors' => $validator->errors()], 422);
+
+        $grupo->id_curso     = $request->id_curso;
+        $grupo->id_profesor  = $request->id_profesor;
+        $grupo->codigo_grupo = $request->codigo_grupo;
+        $grupo->nombre = $request->input('nombre', $grupo->nombre ?? '');
+        $grupo->periodo = $request->input('periodo', '');
+        $grupo->fecha_inicio = $request->fecha_inicio;
+        $grupo->fecha_fin    = $request->fecha_fin;
+        $grupo->cupo_maximo  = $request->cupo_maximo;
+        $grupo->estatus      = filter_var($request->input('estatus', $grupo->estatus), FILTER_VALIDATE_BOOLEAN);
+        $grupo->save();
+
+        \Illuminate\Support\Facades\DB::table('horario')->where('id_grupo', $grupo->id_grupo)->delete();
+        foreach ($request->horarios as $h) {
+            \Illuminate\Support\Facades\DB::table('horario')->insert([
+                'id_grupo'    => $grupo->id_grupo,
+                'dia_semana'  => (int) $h['dia_semana'],
+                'hora_inicio' => $h['hora_inicio'],
+                'hora_fin'    => $h['hora_fin'],
+                'ubicacion'   => $h['ubicacion'] ?? '',
+            ]);
+        }
+
+        return response()->json(['message' => 'Grupo actualizado correctamente.']);
+    }
+
+    public function eliminarGrupo($id)
+    {
+        $activos = \Illuminate\Support\Facades\DB::table('inscripcion')
+            ->where('id_grupo', (int) $id)
+            ->where('estatus', true)
+            ->count();
+
+        if ($activos > 0)
+            return response()->json([
+                'error' => "No se puede eliminar: hay {$activos} inscripción(es) activa(s) en este grupo."
+            ], 422);
+
+        \Illuminate\Support\Facades\DB::table('horario')->where('id_grupo', (int) $id)->delete();
+        \App\Models\Academico\Grupo::destroy((int) $id);
+
+        return response()->json(['message' => 'Grupo eliminado correctamente.']);
+    }
+
+    public function verGrupo($id)
+{
+    $g = \Illuminate\Support\Facades\DB::table('grupo')
+        ->join('curso',    'grupo.id_curso',    '=', 'curso.id_curso')
+        ->join('profesor', 'grupo.id_profesor', '=', 'profesor.id_profesor')
+        ->leftJoin('sede', 'curso.id_sede',     '=', 'sede.id_sede')
+        ->selectRaw("
+            grupo.id_grupo, grupo.codigo_grupo, grupo.periodo,
+            grupo.fecha_inicio, grupo.fecha_fin, grupo.cupo_maximo, grupo.estatus,
+            curso.nombre AS nombre_curso, curso.nivel,
+            sede.nombre AS nombre_sede,
+            profesor.nombre AS prof_nombre,
+            profesor.apellido_p AS prof_apellido_p,
+            profesor.apellido_m AS prof_apellido_m
+        ")
+        ->where('grupo.id_grupo', (int) $id)
+        ->first();
+
+    if (!$g) abort(404, 'Grupo no encontrado.');
+
+    $g->estatus = filter_var($g->estatus, FILTER_VALIDATE_BOOLEAN);
+
+    $horarios = \Illuminate\Support\Facades\DB::table('horario')
+        ->where('id_grupo', (int) $id)
+        ->orderBy('dia_semana')
+        ->get();
+$alumnos = \Illuminate\Support\Facades\DB::table('inscripcion')
+    ->join('alumno', 'inscripcion.id_alumno', '=', 'alumno.id_alumno')
+    ->select(
+        'alumno.id_alumno',
+        'alumno.nombre',
+        'alumno.apellido_p',
+        'alumno.apellido_m',
+        'alumno.email',
+        'alumno.telefono',
+        'inscripcion.estatus as estatus_inscripcion'
+    )
+        ->where('inscripcion.id_grupo', (int) $id)
+        ->orderBy('alumno.apellido_p')
+        ->get()
+        ->map(function ($a) {
+            $a->estatus_inscripcion = filter_var($a->estatus_inscripcion, FILTER_VALIDATE_BOOLEAN);
+            return $a;
+        });
+
+    $inscritos = $alumnos->where('estatus_inscripcion', true)->count();
+
+    return view('admin.grupo-detalle', compact('g', 'horarios', 'alumnos', 'inscritos'));
 }
+
+    // =========================================================
+    // CURSOS
+    // =========================================================
+
+    public function buscarCursos(Request $request)
+    {
+        $q = $request->query('q', '');
+
+        $cursos = \Illuminate\Support\Facades\DB::table('curso')
+            ->leftJoin('sede', 'curso.id_sede', '=', 'sede.id_sede')
+            ->selectRaw("
+                curso.id_curso,
+                curso.nombre,
+                curso.nivel,
+                curso.duracion_semanas,
+                curso.horas_totales,
+                curso.costo_base,
+                curso.estatus,
+                curso.id_sede,
+                curso.descripcion,
+                curso.requisitos,
+                sede.nombre AS nombre_sede
+            ")
+            ->when($q !== '', function ($query) use ($q) {
+                $ql = '%' . mb_strtolower($q) . '%';
+                $query->where(function ($sub) use ($ql) {
+                    $sub->whereRaw('LOWER(curso.nombre) LIKE ?', [$ql])
+                        ->orWhereRaw('LOWER(curso.nivel::text)  LIKE ?', [$ql])
+                        ->orWhereRaw('LOWER(sede.nombre)  LIKE ?', [$ql]);
+                });
+            })
+            ->orderBy('curso.id_curso')
+            ->get();
+
+        return response()->json(['data' => $cursos]);
+    }
+
+    public function registrarCurso(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'nombre'  => 'required|string|max:50',
+            'id_sede' => 'required|integer',
+        ]);
+        if ($validator->fails())
+            return response()->json(['errors' => $validator->errors()], 422);
+
+        $curso = new \App\Models\Academico\Curso();
+        $curso->nombre           = $request->nombre;
+        $curso->id_sede          = $request->id_sede;
+        $curso->nivel            = $request->input('nivel', '');
+        $curso->duracion_semanas = (int) $request->input('duracion_semanas', 0);
+        $curso->horas_totales    = (int) $request->input('horas_totales', 0);
+        $curso->costo_base       = $request->input('costo_base');
+        $curso->estatus          = filter_var($request->input('estatus', true), FILTER_VALIDATE_BOOLEAN);
+        $curso->descripcion      = $request->input('descripcion');
+        $curso->requisitos       = $request->input('requisitos');
+        $curso->save();
+
+        return response()->json(['message' => 'Curso creado correctamente.', 'id' => $curso->id_curso]);
+    }
+
+    public function obtenerCurso($id)
+    {
+        $curso = \Illuminate\Support\Facades\DB::table('curso')
+            ->leftJoin('sede', 'curso.id_sede', '=', 'sede.id_sede')
+            ->selectRaw("curso.*, sede.nombre AS nombre_sede")
+            ->where('curso.id_curso', (int) $id)
+            ->first();
+
+        if (!$curso) return response()->json(['error' => 'Curso no encontrado.'], 404);
+
+        return response()->json($curso);
+    }
+
+    public function editarCurso(Request $request, $id)
+    {
+        $curso = \App\Models\Academico\Curso::find((int) $id);
+        if (!$curso) return response()->json(['error' => 'Curso no encontrado.'], 404);
+
+        $validator = Validator::make($request->all(), [
+            'nombre'  => 'required|string|max:50',
+            'id_sede' => 'required|integer',
+        ]);
+        if ($validator->fails())
+            return response()->json(['errors' => $validator->errors()], 422);
+
+        $curso->nombre           = $request->nombre;
+        $curso->id_sede          = $request->id_sede;
+        $curso->nivel            = $request->input('nivel', $curso->nivel);
+        $curso->duracion_semanas = $request->input('duracion_semanas') ?? $curso->duracion_semanas;
+        $curso->horas_totales    = $request->input('horas_totales')    ?? $curso->horas_totales;
+        $curso->costo_base       = $request->input('costo_base')       ?? $curso->costo_base;
+        $curso->estatus          = filter_var($request->input('estatus', $curso->estatus), FILTER_VALIDATE_BOOLEAN);
+        $curso->descripcion      = $request->input('descripcion', $curso->descripcion);
+        $curso->requisitos       = $request->input('requisitos',  $curso->requisitos);
+        $curso->save();
+
+        return response()->json(['message' => 'Curso actualizado correctamente.']);
+    }
+
+    public function eliminarCurso($id)
+    {
+        $activos = \Illuminate\Support\Facades\DB::table('grupo')
+            ->where('id_curso', (int) $id)
+            ->where('estatus', true)
+            ->count();
+
+        if ($activos > 0)
+            return response()->json([
+                'error' => "No se puede eliminar: hay {$activos} grupo(s) activo(s) asociado(s) a este curso."
+            ], 422);
+
+        \App\Models\Academico\Curso::destroy((int) $id);
+        return response()->json(['message' => 'Curso eliminado correctamente.']);
+    }
+
+    // =========================================================
+    // STATUS DASHBOARD
+    // =========================================================
+
+    public function obtenerStatus()
+    {
+        $totalAlumnos = \Illuminate\Support\Facades\DB::table('alumno')->where('estatus', true)->count();
+        $totalExtraescolares = \Illuminate\Support\Facades\DB::table('extraescolar')->where('estatus', true)->count();
+        $totalProfesores = \Illuminate\Support\Facades\DB::table('profesor')->where('estatus', true)->count();
+
+        $mesActual = \Illuminate\Support\Facades\DB::table('alumno')
+            ->whereRaw('EXTRACT(MONTH FROM fecha_registro) = EXTRACT(MONTH FROM CURRENT_DATE)')
+            ->whereRaw('EXTRACT(YEAR FROM fecha_registro) = EXTRACT(YEAR FROM CURRENT_DATE)')
+            ->count();
+            
+        $mesAnterior = \Illuminate\Support\Facades\DB::table('alumno')
+            ->whereRaw("EXTRACT(MONTH FROM fecha_registro) = EXTRACT(MONTH FROM CURRENT_DATE - INTERVAL '1 month')")
+            ->whereRaw("EXTRACT(YEAR FROM fecha_registro) = EXTRACT(YEAR FROM CURRENT_DATE - INTERVAL '1 month')")
+            ->count();
+
+        if ($mesAnterior == 0) {
+            $crecimiento = "N/A";
+        } else {
+            $calc = (($mesActual - $mesAnterior) / $mesAnterior) * 100;
+            $signo = $calc > 0 ? '+' : '';
+            $crecimiento = $signo . round($calc) . "%";
+        }
+
+        $actividadAlumnos = \Illuminate\Support\Facades\DB::table('alumno')
+            ->selectRaw("'alumno' as tipo, nombre || ' ' || apellido_p as descripcion, fecha_registro as fecha")
+            ->orderBy('fecha_registro', 'desc')
+            ->limit(5)
+            ->get();
+
+        $actividadGrupos = \Illuminate\Support\Facades\DB::table('grupo')
+            ->selectRaw("'grupo' as tipo, codigo_grupo as descripcion, fecha_inicio::timestamp as fecha")
+            ->orderBy('fecha_inicio', 'desc')
+            ->limit(5)
+            ->get();
+
+        $actividadMerge = $actividadAlumnos->concat($actividadGrupos)->sortByDesc('fecha')->take(8)->values();
+        
+        \Carbon\Carbon::setLocale('es');
+        $actividadReciente = $actividadMerge->map(function($item) {
+            $item->hace = \Carbon\Carbon::parse($item->fecha)->diffForHumans();
+            return $item;
+        });
+
+        return response()->json([
+            'total_alumnos' => $totalAlumnos,
+            'total_extraescolares' => $totalExtraescolares,
+            'total_profesores' => $totalProfesores,
+            'crecimiento' => $crecimiento,
+            'actividad_reciente' => $actividadReciente
+        ]);
+    }
+}
+
+
