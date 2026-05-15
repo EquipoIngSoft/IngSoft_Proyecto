@@ -10,6 +10,11 @@ class Grupo extends Model
     protected $primaryKey = 'id_grupo';
     public $timestamps = false;
 
+    protected $fillable = [
+        'id_curso','id_profesor','codigo_grupo',
+        'periodo','fecha_inicio','fecha_fin','cupo_maximo','estatus'
+    ];
+
     public function curso()
     {
         return $this->belongsTo(Curso::class, 'id_curso', 'id_curso');
@@ -23,5 +28,10 @@ class Grupo extends Model
     public function profesor()
     {
         return $this->belongsTo(Profesor::class, 'id_profesor', 'id_profesor');
+    }
+
+    public function inscripciones()
+    {
+        return $this->hasMany(Inscripcion::class, 'id_grupo', 'id_grupo');
     }
 }

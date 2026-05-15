@@ -160,6 +160,7 @@ window.addEventListener('DOMContentLoaded', () => {
                     id_sede: data.id_sede,
                     administrativo: data.administrativo,
                     permisos: data.permisos,
+                    id_profesor: data.usuario?.id_profesor ?? null,
                 })
             });
 

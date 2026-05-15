@@ -276,7 +276,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     codigo_postal: document.getElementById('se-cp')?.value.trim() || '',
                     calle: document.getElementById('se-calle')?.value.trim() || '',
                     telefono: document.getElementById('se-telefono')?.value.trim() || '',
-                    correo: document.getElementById('se-correo')?.value.trim() || '',
+                    email: document.getElementById('se-correo')?.value.trim() || '',
                 };
 
                 const url = isEditMode ? `/admin/sedes/${editId}` : '/admin/sedes';
@@ -325,6 +325,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const btnVer = e.target.closest('.btn-ver-sede');
         if (btnVer) {
             const id = btnVer.getAttribute('data-id');
+            const modalVer = document.getElementById('modal-ver-sede');
+            if (modalVer) { modalVer.classList.add('open'); document.body.style.overflow = 'hidden'; }
             fetch(`/admin/sedes/${id}`, {
                 credentials: 'same-origin',
                 headers: { 'Accept': 'application/json' }
@@ -332,7 +334,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 .then(r => r.json())
                 .then(s => {
                     if (s.error) { alert(s.error); return; }
-                    alert(`Sede: ${s.nombre}\nDirección: ${s.calle}, ${s.ciudad}\nEstado: ${s.estado_residencia}\nTeléfono: ${s.telefono}\nCorreo: ${s.correo}`);
+                    const setV = (elId, val) => { const el = document.getElementById(elId); if (el) el.textContent = val || '—'; };
+                    setV('vse-nombre', s.nombre);
+                    setV('vse-estado', s.estado_residencia);
+                    setV('vse-ciudad', s.ciudad);
+                    setV('vse-cp', s.codigo_postal);
+                    setV('vse-calle', s.calle);
+                    setV('vse-telefono', s.telefono);
+                    setV('vse-email', s.email);
+                    setV('vse-estatus', s.estatus ? 'Activo' : 'Inactivo');
                 })
                 .catch(err => alert('Error: ' + err));
         }
@@ -400,5 +410,9 @@ document.addEventListener('DOMContentLoaded', () => {
             if (title) title.textContent = 'Agregar Sede';
         });
     }
-
+    const modalVerSede = document.getElementById('modal-ver-sede');
+    const cerrarVerSede = () => { if (modalVerSede) { modalVerSede.classList.remove('open'); document.body.style.overflow = ''; } };
+    document.getElementById('btn-cerrar-ver-sede')?.addEventListener('click', cerrarVerSede);
+    document.getElementById('modal-close-ver-sede')?.addEventListener('click', cerrarVerSede);
+    modalVerSede?.addEventListener('click', (e) => { if (e.target === modalVerSede) cerrarVerSede(); });
 });

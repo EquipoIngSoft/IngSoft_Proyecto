@@ -18,6 +18,8 @@ class NivelesController extends Controller
         $administrativo = filter_var(session('administrativo', false), FILTER_VALIDATE_BOOLEAN);
         $idPersonal     = session('id_personal');
         $idSedeSesion   = session('id_sede');
+        $tipo       = session('tipo', 'personal');
+        $idProfesor = session('id_profesor');
 
         $idSede  = $request->query('id_sede',  '');
         $idGrupo = $request->query('id_grupo', '');
@@ -51,21 +53,23 @@ class NivelesController extends Controller
             ->orderBy('alumno.nombre');
 
         // ── Restricción por sede ────────────────────────────
-        if (!$administrativo) {
-            // Solo alumnos de la sede asignada al personal
-            $sedePersonal = DB::table('usuariosede')
-                ->where('id_personal', $idPersonal)
-                ->value('id_sede');
+if ($tipo === 'profesor' && $idProfesor) {
+    $gruposProfesor = DB::table('grupo')
+        ->where('id_profesor', (int) $idProfesor)
+        ->pluck('id_grupo');
+    $query->whereIn('inscripcion.id_grupo', $gruposProfesor);
+} elseif (!$administrativo) {
+    $sedePersonal = DB::table('usuariosede')
+        ->where('id_personal', $idPersonal)
+        ->value('id_sede');
+    $sedeEfectiva = $sedePersonal ?? $idSedeSesion;
+    if ($sedeEfectiva) {
+        $query->where('alumno.id_sede', $sedeEfectiva);
+    }
+} elseif ($idSede !== '') {
+    $query->where('alumno.id_sede', (int) $idSede);
+}
 
-            $sedeEfectiva = $sedePersonal ?? $idSedeSesion;
-
-            if ($sedeEfectiva) {
-                $query->where('alumno.id_sede', $sedeEfectiva);
-            }
-        } elseif ($idSede !== '') {
-            // Admin puede filtrar por sede
-            $query->where('alumno.id_sede', (int) $idSede);
-        }
 
         // ── Filtro grupo ────────────────────────────────────
         if ($idGrupo !== '') {
@@ -132,6 +136,8 @@ class NivelesController extends Controller
         $administrativo = filter_var(session('administrativo', false), FILTER_VALIDATE_BOOLEAN);
         $idPersonal     = session('id_personal');
         $idSedeSesion   = session('id_sede');
+        $tipo       = session('tipo', 'personal');
+        $idProfesor = session('id_profesor');
 
         $query = DB::table('grupo')
             ->leftJoin('curso', 'grupo.id_curso', '=', 'curso.id_curso')
@@ -139,21 +145,23 @@ class NivelesController extends Controller
             ->where('grupo.estatus', true)
             ->orderBy('grupo.codigo_grupo');
 
-        // Si no es admin, filtrar grupos de su sede
-        if (!$administrativo) {
-            $sedePersonal = DB::table('usuariosede')
-                ->where('id_personal', $idPersonal)
-                ->value('id_sede');
-            $sedeEfectiva = $sedePersonal ?? $idSedeSesion;
-            if ($sedeEfectiva) {
-                $query->where('curso.id_sede', $sedeEfectiva);
-            }
-        }
-
-        $grupos = $query->get();
-
-        return response()->json(['data' => $grupos]);
+  if ($tipo === 'profesor' && $idProfesor) {
+    $query->where('grupo.id_profesor', (int) $idProfesor);
+} elseif (!$administrativo) {
+    $sedePersonal = DB::table('usuariosede')
+        ->where('id_personal', $idPersonal)
+        ->value('id_sede');
+    $sedeEfectiva = $sedePersonal ?? $idSedeSesion;
+    if ($sedeEfectiva) {
+        $query->where('curso.id_sede', $sedeEfectiva);
     }
+}
+
+$grupos = $query->get();
+
+return response()->json(['data' => $grupos]);
+}
+
 
     // -------------------------------------------------------
     // PUT /admin/niveles/alumnos/{id}/puntaje
